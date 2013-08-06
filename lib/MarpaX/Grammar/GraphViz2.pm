@@ -112,16 +112,6 @@ sub add_lexeme
 sub BUILD
 {
 	my($self)  = @_;
-	my($graph) ||= GraphViz2 -> new
-		(
-			edge   => {color => 'grey'},
-			global => {directed => 1},
-			graph  => {rankdir => 'TB'},
-			logger => '',
-			node   => {shape => 'oval'},
-		);
-
-	$self -> graph($graph);
 
 	if (! defined $self -> logger)
 	{
@@ -136,6 +126,17 @@ sub BUILD
 			}
 		);
 	}
+
+	my($graph) ||= GraphViz2 -> new
+		(
+			edge   => {color => 'grey'},
+			global => {directed => 1},
+			graph  => {rankdir => 'TB'},
+			logger => $self -> logger,
+			node   => {shape => 'oval'},
+		);
+
+	$self -> graph($graph);
 
 } # End of BUILD.
 
