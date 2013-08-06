@@ -44,11 +44,11 @@ __END__
 
 =head1 NAME
 
-gem.pl - Run MarpaX::Grammar::GraphViz2 on a Marpa::R2 grammar.
+g2g.pl - Run MarpaX::Grammar::GraphViz2 on a Marpa::R2 grammar.
 
 =head1 SYNOPSIS
 
-gem.pl [options]
+g2g.pl [options]
 
 	Options:
 	-format imageFormat
