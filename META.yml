@@ -22,11 +22,11 @@ requires:
   GraphViz2: 2.17
   List::AllUtils: 0.03
   Moo: 1.002
-  Path::Tiny: 0.025
   Perl6::Slurp: 0.03
   Pod::Usage: 1.36
   Text::Xslate: 1.4001
   Tree::DAG_Node: 1.12
+  charnames: 0
   open: 0
   strict: 0
   utf8: 0
