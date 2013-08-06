@@ -320,4 +320,127 @@ L<MarpaX::Grammar::GraphViz2> - Convert a Marpa grammar into an image
 
 =head1 Synopsis
 
-Typical usage:
+=head1 Description
+
+=head1 Installation
+
+Install L<MarpaX::Grammar::GraphViz2> as you would for any C<Perl> module:
+
+Run:
+
+	cpanm MarpaX::Grammar::GraphViz2
+
+or run:
+
+	sudo cpan MarpaX::Grammar::GraphViz2
+
+or unpack the distro, and then either:
+
+	perl Build.PL
+	./Build
+	./Build test
+	sudo ./Build install
+
+or:
+
+	perl Makefile.PL
+	make (or dmake or nmake)
+	make test
+	make install
+
+=head1 Scripts Shipped with this Module
+
+=head1 Constructor and Initialization
+
+C<new()> is called as C<< my($parser) = MarpaX::Grammar::GraphViz2 -> new(k1 => v1, k2 => v2, ...) >>.
+
+It returns a new object of type C<MarpaX::Grammar::GraphViz2>.
+
+Key-value pairs accepted in the parameter list (see corresponding methods for details
+[e.g. description($graph)]):
+
+=over 4
+
+=item o description => '[node.1]->[node.2]'
+
+Specify a string for the graph definition.
+
+You are strongly encouraged to surround this string with '...' to protect it from your shell if using
+this module directly from the command line.
+
+See also the I<input_file> key which reads the graph from a file.
+
+The I<description> key takes precedence over the I<input_file> key.
+
+Default: ''.
+
+=item o input_file => $graph_file_name
+
+Read the graph definition from this file.
+
+See also the I<description> key to read the graph from the command line.
+
+The whole file is slurped in as a single graph.
+
+The first lines of the file can start with /^\s*#/, and will be discarded as comments.
+
+The I<description> key takes precedence over the I<input_file> key.
+
+Default: ''.
+
+=item o report_tokens => $Boolean
+
+When set to 1, calls L</report()> to print the items recognized by the parser.
+
+Default: 0.
+
+=item o token_file => $file_name
+
+The name of the CSV file in which parsed tokens are to be saved.
+
+If '', the file is not written.
+
+Default: ''.
+
+=item o verbose => $integer
+
+Prints more (1, 2) or less (0) progress messages.
+
+Default: 0.
+
+=back
+
+=head1 Methods
+
+=head1 FAQ
+
+=head1 Machine-Readable Change Log
+
+The file Changes was converted into Changelog.ini by L<Module::Metadata::Changes>.
+
+=head1 Version Numbers
+
+Version numbers < 1.00 represent development versions. From 1.00 up, they are production versions.
+
+=head1 Support
+
+Email the author, or log a bug on RT:
+
+L<https://rt.cpan.org/Public/Dist/Display.html?Name=MarpaX::Grammar::GraphViz2>.
+
+=head1 Author
+
+L<MarpaX::Grammar::GraphViz2> was written by Ron Savage I<E<lt>ron@savage.net.auE<gt>> in 2013.
+
+Home page: L<http://savage.net.au/>.
+
+=head1 Copyright
+
+Australian copyright (c) 2013, Ron Savage.
+
+	All Programs of mine are 'OSI Certified Open Source Software';
+	you can redistribute them and/or modify them under the terms of
+	The Artistic License, a copy of which is available at:
+	http://www.opensource.org/licenses/index.html
+
+=cut
