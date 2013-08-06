@@ -1,0 +1,42 @@
+graph_grammar
+   |---graph_definition
+   |   |---graph
+   |   |---node_definition
+   |   |   |---node_statement
+   |   |   |   |---node_name
+   |   |   |   |   |---start_node
+   |   |   |   |   |   |---before/start_node
+   |   |   |   |   |   |---'['
+   |   |   |   |   |---end_node
+   |   |   |   |       |---']'
+   |   |   |   |---node_name
+   |   |   |   |---attribute_definition
+   |   |   |   |   |---attribute_statement
+   |   |   |   |       |---start_attributes
+   |   |   |   |       |   |---before/start_attributes
+   |   |   |   |       |   |---'{'
+   |   |   |   |       |---end_attributes
+   |   |   |   |           |---'}'
+   |   |   |   |---(',')
+   |   |   |---node_statement
+   |   |   |---graph_definition
+   |   |---edge_definition
+   |       |---edge_statement
+   |       |   |---edge_name
+   |       |   |   |---directed_edge
+   |       |   |   |   |---before/directed_edge
+   |       |   |   |   |---'->'
+   |       |   |   |---undirected_edge
+   |       |   |       |---before/undirected_edge
+   |       |   |       |---'--'
+   |       |   |---edge_name
+   |       |   |---attribute_definition
+   |       |   |---(',')
+   |       |---edge_statement
+   |       |---graph_definition
+   |---:default
+   |   |---action = [values]
+   |---:discard
+       |---whitespace
+           |---[\\s]+
+
