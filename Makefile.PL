@@ -24,12 +24,12 @@ my(%params) =
 	PL_FILES  => {},
 	PREREQ_PM =>
 	{
+		'charnames'      => 0,
 		'File::Spec'     => 3.33,
 		'GraphViz2'      => 2.17,
 		'List::AllUtils' => 0.03,
 		'Moo'            => 1.002000,
 		'open'           => 0,
-		'Path::Tiny'     => 0.025,
 		'perl'           => '5.8.1', # For the utf8 stuff.
 		'Perl6::Slurp'   => 0.03,
 		'Pod::Usage'     => 1.36,
@@ -55,7 +55,7 @@ if ($ExtUtils::MakeMaker::VERSION ge '6.46')
 	{
 		resources =>
 		{
-			bugtracker => 'http://github.com/petdance/ack2',
+			bugtracker => 'https://rt.cpan.org/Public/Dist/Display.html?Name=MarpaX-Grammar-GraphViz2',
 			license    => 'http://www.perlfoundation.org/artistic_license_2_0',
 		},
 	};

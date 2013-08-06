@@ -1,3 +1,6 @@
+use strict;
+use warnings;
+
 use Module::Build;
 
 my $class = Module::Build->subclass(code => <<'EOF');
@@ -27,27 +30,32 @@ $class -> new
 	dist_author    => 'Ron Savage <ron@savage.net.au>',
 	build_requires =>
 	{
-		Test::More=> 0.94,
-#		Test::Pod  => 1.45, # Make it optional. See t/pod.t
+		'Test::More' => 0.94,
+#		'Test::Pod'  => 1.45, # Make it optional. See t/pod.t
 	},
 	configure_requires =>
 	{
-		Module::Build => 0.3800,
+		'Module::Build' => 0.3800,
 	},
 	requires =>
 	{
-		File::Spec     => 3.33,
-		GraphViz2      => 2.17,
-		List::AllUtils => 0.03,
-		Moo            => 1.002000,
-		open           => 0,
-		Path::Tiny     => 0.025,
-		Perl6::Slurp   => 0.03,
-		Pod::Usage     => 1.36,
-		Tree::DAG_Node => 1.12,
-		strict         => 0,
-		Text::Xslate   => 1.4001,
-		utf8           => 0,
-		warnings       => 0,
+		'charnames'        => 0,
+		'File::Spec'     => 3.33,
+		'GraphViz2'      => 2.17,
+		'List::AllUtils' => 0.03,
+		'Moo'            => 1.002000,
+		'open'           => 0,
+		'Perl6::Slurp'   => 0.03,
+		'Pod::Usage'     => 1.36,
+		'Tree::DAG_Node' => 1.12,
+		'strict'         => 0,
+		'Text::Xslate'   => 1.4001,
+		'utf8'           => 0,
+		'warnings'       => 0,
+	},
+	resources =>
+	{
+		bugtracker => 'https://rt.cpan.org/Public/Dist/Display.html?Name=MarpaX-Grammar-GraphViz2',
+		license    => 'http://www.perlfoundation.org/artistic_license_2_0',
 	},
 ) -> create_build_script();
