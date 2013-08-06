@@ -13,6 +13,8 @@ use GraphViz2;
 
 use List::AllUtils qw/first_index indexes/;
 
+use Log::Handler;
+
 use Moo;
 
 use Perl6::Slurp; # For slurp().
@@ -21,26 +23,26 @@ use Tree::DAG_Node;
 
 has format =>
 (
-	default  = sub{return 'sv'},
-	is       = 'rw',
-	#isa     = 'Str',
-	required = 0,
+	default  => sub{return 'svg'},
+	is       => 'rw',
+	#isa     => 'Str',
+	required => 0,
 );
 
 has graph =>
 (
-	default  = sub{return ''},
-	is       = 'rw',
-	#isa     = 'GraphViz',
-	required = 0,
+	default  => sub{return ''},
+	is       => 'rw',
+	#isa     => 'GraphViz',
+	required => 0,
 );
 
 has input_file =>
 (
-	default  = sub{return 'grammar.bnf'},
-	is       = 'rw',
-	#isa     = 'Str',
-	required = 0,
+	default  => sub{return 'grammar.bnf'},
+	is       => 'rw',
+	#isa     => 'Str',
+	required => 0,
 );
 
 has logger =>
@@ -69,10 +71,10 @@ has minlevel =>
 
 has output_file =>
 (
-	default  = sub{return 'grammar.svg'},
-	is       = 'rw',
-	#isa     = 'Str',
-	required = 0,
+	default  => sub{return 'grammar.svg'},
+	is       => 'rw',
+	#isa     => 'Str',
+	required => 0,
 );
 
 our $VERSION = '1.00';
@@ -254,7 +256,7 @@ sub run
 
 	for (my $i = 0; $i <= $#grammar; $i++)
 	{
-		$line = $string[$i];
+		$line = $grammar[$i];
 
 		next if ($line =~ /^(\s*\#|\s*$)/);
 
@@ -319,7 +321,7 @@ sub run
 	$self -> add_lexeme($start, \%node, \@default) if ($#default >= 0);
 	$self -> add_lexeme($start, \%node, \@discard) if ($#discard >= 0);
 
-	say map{"$_\n"} @{$node{$start} -> tree2string({no_attributes => 1})};
+	#say map{"$_\n"} @{$node{$start} -> tree2string({no_attributes => 1})};
 
 	$node{$start} -> walk_down
 	({
@@ -332,8 +334,8 @@ sub run
 			# o label     => $l.
 			# o shape     => $s.
 
-			$graph -> add_node(name => $n -> name, %{$n -> attributes});
-			$graph -> add_edge(from => $n -> mother -> name, to => $n -> name) if ($n -> mother);
+			$self -> graph -> add_node(name => $n -> name, %{$n -> attributes});
+			$self -> graph -> add_edge(from => $n -> mother -> name, to => $n -> name) if ($n -> mother);
 
 			# 1 => Keep walking.
 
@@ -344,7 +346,7 @@ sub run
 
 	my($output_file) = $self -> output_file;
 
-	$graph -> run(format => $self -> format, output_file => $output_file);
+	$self -> graph -> run(format => $self -> format, output_file => $output_file);
 
 } # End of run.
 

@@ -43,6 +43,7 @@ $class -> new
 		'File::Spec'     => 3.33,
 		'GraphViz2'      => 2.17,
 		'List::AllUtils' => 0.03,
+		'Log::Handler'   => 0.78,
 		'Moo'            => 1.002000,
 		'open'           => 0,
 		'Perl6::Slurp'   => 0.03,

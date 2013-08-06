@@ -28,6 +28,7 @@ my(%params) =
 		'File::Spec'     => 3.33,
 		'GraphViz2'      => 2.17,
 		'List::AllUtils' => 0.03,
+		'Log::Handler'   => 0.78,
 		'Moo'            => 1.002000,
 		'open'           => 0,
 		'perl'           => '5.8.1', # For the utf8 stuff.
