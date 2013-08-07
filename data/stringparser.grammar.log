@@ -39,10 +39,4 @@ graph_grammar
    |---:discard
    |   |---whitespace
    |       |---[\\s]+
-   |---lexeme default
-       |---action
-           |---=>
-               |---[start,length,value]
-                   |---bless
-                       |---=>
-                           |---::name
+   |---[start,location,length]/::name

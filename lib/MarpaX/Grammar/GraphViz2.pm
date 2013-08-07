@@ -21,6 +21,14 @@ use Perl6::Slurp; # For slurp().
 
 use Tree::DAG_Node;
 
+has adverbs =>
+(
+	default  => sub{return ''},
+	is       => 'rw',
+	#isa     => 'Str',
+	required => 0,
+);
+
 has format =>
 (
 	default  => sub{return 'svg'},
@@ -117,6 +125,31 @@ sub add_lexeme
 
 # ------------------------------------------------
 
+sub add_adverb_record
+{
+	my($self, $parent, $field) = @_;
+	my($adverbs) = $self -> adverbs;
+	my(@index)   = indexes{$_ =~ /^(?:$adverbs)/} @$field;
+
+	if ($#index >= 0)
+	{
+		my($label) = [map{"$$field[$_] = $$field[$_ + 2]"} sort{$$field[$a] cmp $$field[$b]} @index];
+		$label     = '{' . join('|', @$label) . '}';
+
+		$parent -> add_daughter
+		(
+			Tree::DAG_Node -> new
+			({
+				attributes => {fillcolor => 'lightblue', label => $label, shape => 'record', style => 'filled'},
+				name       => join('/', map{$$field[$_ + 2]} @index),
+			})
+		);
+	}
+
+} # End of add_adverb_record.
+
+# ------------------------------------------------
+
 sub BUILD
 {
 	my($self)  = @_;
@@ -146,6 +179,21 @@ sub BUILD
 
 	$self -> graph($graph);
 
+	my(%adverbs) =
+	(
+		action    => 1,
+		assoc     => 1,
+		bless     => 1,
+		event     => 1,
+		pause     => 1,
+		priority  => 1,
+		proper    => 1,
+		rank      => 1,
+		separator => 1,
+	);
+
+	$self -> adverbs(join('|', sort keys %adverbs) );
+
 } # End of BUILD.
 
 # --------------------------------------------------
@@ -163,19 +211,6 @@ sub log
 sub process_rhs
 {
 	my($self, $start, $node, $field, $lhs) = @_;
-	my(%adverbs) =
-	(
-		action    => 1,
-		assoc     => 1,
-		bless     => 1,
-		event     => 1,
-		pause     => 1,
-		priority  => 1,
-		proper    => 1,
-		rank      => 1,
-		separator => 1,
-	);
-	my($adverbs) = join('|', sort keys %adverbs);
 
 	my($parent);
 
@@ -192,12 +227,11 @@ sub process_rhs
 		_depth => 0,
 	});
 
-	$parent    = $$node{$start} if (! $parent);
-	my($index) = first_index{$_ =~ /^$adverbs$/} @$field;
+	$parent      = $$node{$start} if (! $parent);
+	my($adverbs) = $self -> adverbs;
+	my($index)   = first_index{$_ =~ /^$adverbs$/} @$field;
 
-	my($first);
 	my($kid);
-	my($label);
 	my($rhs);
 
 	if ($index >= 0)
@@ -218,24 +252,7 @@ sub process_rhs
 			$parent = $kid;
 		}
 
-		my(@index) = indexes{$_ =~ /^(?:$adverbs)/} @$field;
-
-		if ($#index >= 0)
-		{
-			$label = [map{"$$field[$_] = $$field[$_ + 2]"} sort{$$field[$a] cmp $$field[$b]} @index];
-			$label = '{' . join('|', @$label) . '}';
-
-			$self -> log(info => "Found $label");
-
-			$parent -> add_daughter
-			(
-				Tree::DAG_Node -> new
-				({
-					attributes => {fillcolor => 'lightblue', label => $label, shape => 'record', style => 'filled'},
-					name       => join('/', map{$$field[$_ + 2]} @index),
-				})
-			);
-		}
+		$self -> add_adverb_record($parent, $field);
 	}
 	else
 	{
@@ -295,14 +312,16 @@ sub run
 
 		$line    =~ tr/ 	/  /s;
 		$line    =~ s/\\/\\\\/g;
-		@field   = split(/\s+/, $line);
-		$g_index = first_index{$_ =~ /(?:~|::=|=)/} @field;
+		@field   = split(/\s/, $line);
+		$g_index = first_index{$_ =~ /^(?:~|::=|=$)/} @field;
 
-		$self -> log(info => "\t<$line>");
+		$self -> log(debug => "\t<$line>");
 
 		if ($g_index > 0)
 		{
 			$lhs = join(' ', @field[0 .. $g_index - 1]);
+
+			$self -> log(info => "lhs => <$lhs>");
 
 			if ($lhs eq ':default')
 			{
@@ -324,7 +343,31 @@ sub run
 			}
 			elsif ($lhs eq 'lexeme default')
 			{
-				push @lexeme_default, $lhs, @field[3 .. $#field];
+				# Clean up the 'lexeme default' line, which may look like one of:
+				# o lexeme default = action => [start,length,value]
+				# o lexeme default = action => [start,length,value] bless => ::name
+				# Steps:
+				# o Check for spaces in '[start, length, value]'.
+				# o Combine these 2 or 3 fields into 1.
+
+				@field       = @field[3 .. $#field];
+				my(@indexes) = indexes{$_ =~ /[[\]]/} @field;
+
+				# If the '[' and ']' are at different indexes, then spaces were found.
+
+				if ($#indexes > 0)
+				{
+					splice
+					(
+						@field,
+						$indexes[0],
+						$indexes[$#indexes],
+						join('', @field[$indexes[0] .. $indexes[$#indexes] ]),
+						@field[$indexes[$#indexes] + 1 .. $#field]
+					);
+				}
+
+				push @lexeme_default, $lhs, @field;
 
 				next;
 			}
@@ -342,10 +385,14 @@ sub run
 
 			if ( ($#discard >= 0) && ($field[0] eq $discard[$#discard]) )
 			{
+				# Grab the thing previously mentioned in a ':discard'.
+
 				push @discard, $field[2];
 			}
 			else
 			{
+				# Otherwise, it's a 'normal' line.
+
 				$self -> process_rhs($start, \%node, \@field, $lhs);
 			}
 		}
@@ -355,9 +402,11 @@ sub run
 		}
 	}
 
-	$self -> add_lexeme($start, \%node, \@default)        if ($#default >= 0);
-	$self -> add_lexeme($start, \%node, \@discard)        if ($#discard >= 0);
-	$self -> add_lexeme($start, \%node, \@lexeme_default) if ($#lexeme_default >= 0);
+	# Process the things we stockpiled, since by now $start is defined.
+
+	$self -> add_lexeme($start, \%node, \@default)     if ($#default >= 0);
+	$self -> add_lexeme($start, \%node, \@discard)     if ($#discard >= 0);
+	$self -> add_adverb_record($node{$start}, \@lexeme_default) if ($#lexeme_default >= 0);
 
 	$self -> log(info => 'Building tree');
 
