@@ -150,6 +150,24 @@ sub add_adverb_record
 
 # ------------------------------------------------
 
+sub add_event_record
+{
+	my($self, $parent, $field) = @_;
+	my($label) = '{' . join('|', @$field) . '}';
+
+	$parent -> add_daughter
+	(
+		Tree::DAG_Node -> new
+		({
+			attributes => {fillcolor => 'lightblue', label => $label, shape => 'record', style => 'filled'},
+			name       => join('/', @$field),
+		})
+	);
+
+} # End of add_adverb_record.
+
+# ------------------------------------------------
+
 sub BUILD
 {
 	my($self)  = @_;
@@ -290,6 +308,7 @@ sub run
 	$self -> log(info => 'Entered run()');
 
 	my(@default, @discard);
+	my(@event);
 	my(@field);
 	my($g_index);
 	my($line, $lhs, @lexeme_default);
@@ -306,14 +325,16 @@ sub run
 		# Clean up input line:
 		# o Squash multiple spaces into 1 and tabs into 1 space.
 		# o Convert things like [\s] to [\\s].
+		# o Remove leading spaces.
 		#
 		# TODO:
 		# o Handle in-line comments, '... # ...'.
 
-		$line    =~ tr/ 	/  /s;
-		$line    =~ s/\\/\\\\/g;
-		@field   = split(/\s/, $line);
-		$g_index = first_index{$_ =~ /^(?:~|::=|=$)/} @field;
+		$line     =~ tr/ 	/  /s;
+		$line     =~ s/\\/\\\\/g;
+		@field    = split(/\s/, $line);
+		$field[0] =~ s/^\s+//;
+		$g_index  = first_index{$_ =~ /^(?:~|::=|=$)/} @field;
 
 		$self -> log(debug => "\t<$line>");
 
@@ -338,6 +359,12 @@ sub run
 			elsif ($lhs eq ':lexeme')
 			{
 				$self -> process_rhs($start, \%node, \@field, $field[2]);
+
+				next;
+			}
+			elsif ($lhs =~ /^event/)
+			{
+				push @event, join(' ', @field);
 
 				next;
 			}
@@ -404,9 +431,10 @@ sub run
 
 	# Process the things we stockpiled, since by now $start is defined.
 
-	$self -> add_lexeme($start, \%node, \@default)     if ($#default >= 0);
-	$self -> add_lexeme($start, \%node, \@discard)     if ($#discard >= 0);
+	$self -> add_lexeme($start, \%node, \@default)              if ($#default >= 0);
+	$self -> add_lexeme($start, \%node, \@discard)              if ($#discard >= 0);
 	$self -> add_adverb_record($node{$start}, \@lexeme_default) if ($#lexeme_default >= 0);
+	$self -> add_event_record($node{$start}, \@event)           if ($#event >= 0);
 
 	$self -> log(info => 'Building tree');
 

@@ -1,5 +1,11 @@
 :default				::= action => [values]
 
+event subtext			= completed subtext
+
+event 'A[]'				= nulled A
+
+event '^a'				= predicted A
+
 # Overall stuff.
 
 :start 					::= graph_grammar
