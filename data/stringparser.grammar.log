@@ -37,6 +37,12 @@ graph_grammar
    |---:default
    |   |---action = [values]
    |---:discard
-       |---whitespace
-           |---[\\s]+
-
+   |   |---whitespace
+   |       |---[\\s]+
+   |---lexeme default
+       |---action
+           |---=>
+               |---[start,length,value]
+                   |---bless
+                       |---=>
+                           |---::name

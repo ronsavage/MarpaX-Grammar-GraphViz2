@@ -21,6 +21,7 @@ if ($option_parser -> getoptions
 	'format=s',
 	'help',
 	'input_file=s',
+	'logger=s',
 	'maxlevel=s',
 	'minlevel=s',
 	'output_file=s',
@@ -54,6 +55,7 @@ g2g.pl [options]
 	-format imageFormat
 	-help
 	-input_file aMarpaGrammarName
+	-logger aLog::HandlerObject
 	-maxlevel logOption1
 	-minlevel logOption2
 	-output_file aTextFileName
@@ -65,33 +67,41 @@ Exit value: 0 for success, 1 for failure. Die upon error.
 
 =over 4
 
-=item -format imageFormat
+=item o -format imageFormat
 
 Specify the type of image to be created.
 
 Default: 'svg'.
 
-=item -help
+=item o -help
 
 Print help and exit.
 
-=item -input_file aMarpaGrammarFileName
+=item o -input_file aMarpaGrammarFileName
 
 Specify the name of the file containing the Marpa::R2-style grammar.
 
 See data/stringparser.grammar.bnf for a sample.
 
-Default: ''.
+Default: 'grammar.bnf'.
 
-=item -maxlevel logOption1
+=item o -logger aLog::HandlerObject
+
+By default, an object is created which prints to STDOUT.
+
+Set this to '' to stop logging.
+
+Default: undef.
+
+=item o -maxlevel logOption1
 
 This option affects Log::Handler.
 
 See the Log::handler docs.
 
-Default: 'notice'.
+Default: 'info'.
 
-=item -minlevel logOption2
+=item o -minlevel logOption2
 
 This option affects Log::Handler.
 
@@ -101,15 +111,15 @@ Default: 'error'.
 
 No lower levels are used.
 
-=item -output_file aTextFileName
+=item o -output_file aTextFileName
 
 Specify the name of a file for the renderer to write.
 
 If '', the file is not written.
 
-Default: ''.
+Default: 'grammar.svg'.
 
-=item -tree_file aTextFileName
+=item o -tree_file aTextFileName
 
 The name of the text file to write containing the grammar as a tree.
 

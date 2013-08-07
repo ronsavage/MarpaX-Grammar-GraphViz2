@@ -77,6 +77,14 @@ has output_file =>
 	required => 0,
 );
 
+has tree_file =>
+(
+	default  => sub{return ''},
+	is       => 'rw',
+	#isa     => 'Str',
+	required => 0,
+);
+
 our $VERSION = '1.00';
 
 # ------------------------------------------------
@@ -155,6 +163,19 @@ sub log
 sub process_rhs
 {
 	my($self, $start, $node, $field, $lhs) = @_;
+	my(%adverbs) =
+	(
+		action    => 1,
+		assoc     => 1,
+		bless     => 1,
+		event     => 1,
+		pause     => 1,
+		priority  => 1,
+		proper    => 1,
+		rank      => 1,
+		separator => 1,
+	);
+	my($adverbs) = join('|', sort keys %adverbs);
 
 	my($parent);
 
@@ -172,7 +193,7 @@ sub process_rhs
 	});
 
 	$parent    = $$node{$start} if (! $parent);
-	my($index) = first_index{$_ =~ /^action|event|pause$/} @$field;
+	my($index) = first_index{$_ =~ /^$adverbs$/} @$field;
 
 	my($first);
 	my($kid);
@@ -197,12 +218,14 @@ sub process_rhs
 			$parent = $kid;
 		}
 
-		my(@index) = indexes{$_ =~ /^(?:action|event|pause)/} @$field;
+		my(@index) = indexes{$_ =~ /^(?:$adverbs)/} @$field;
 
 		if ($#index >= 0)
 		{
 			$label = [map{"$$field[$_] = $$field[$_ + 2]"} sort{$$field[$a] cmp $$field[$b]} @index];
 			$label = '{' . join('|', @$label) . '}';
+
+			$self -> log(info => "Found $label");
 
 			$parent -> add_daughter
 			(
@@ -247,10 +270,12 @@ sub run
 	my($self)    = @_;
 	my(@grammar) = slurp($self -> input_file, {chomp => 1});
 
+	$self -> log(info => 'Entered run()');
+
 	my(@default, @discard);
 	my(@field);
 	my($g_index);
-	my($line, $lhs);
+	my($line, $lhs, @lexeme_default);
 	my(%node);
 	my($rhs);
 	my($start, %seen);
@@ -261,14 +286,19 @@ sub run
 
 		next if ($line =~ /^(\s*\#|\s*$)/);
 
-		# Convert things like [\s] to [\\s].
-
-		$line    =~ s/\\/\\\\/g;
-		@field   = split(/\s+/, $line);
-		$g_index = first_index{$_ =~ /(?:~|::=)/} @field;
-
+		# Clean up input line:
+		# o Squash multiple spaces into 1 and tabs into 1 space.
+		# o Convert things like [\s] to [\\s].
+		#
 		# TODO:
 		# o Handle in-line comments, '... # ...'.
+
+		$line    =~ tr/ 	/  /s;
+		$line    =~ s/\\/\\\\/g;
+		@field   = split(/\s+/, $line);
+		$g_index = first_index{$_ =~ /(?:~|::=|=)/} @field;
+
+		$self -> log(info => "\t<$line>");
 
 		if ($g_index > 0)
 		{
@@ -289,6 +319,12 @@ sub run
 			elsif ($lhs eq ':lexeme')
 			{
 				$self -> process_rhs($start, \%node, \@field, $field[2]);
+
+				next;
+			}
+			elsif ($lhs eq 'lexeme default')
+			{
+				push @lexeme_default, $lhs, @field[3 .. $#field];
 
 				next;
 			}
@@ -319,10 +355,11 @@ sub run
 		}
 	}
 
-	$self -> add_lexeme($start, \%node, \@default) if ($#default >= 0);
-	$self -> add_lexeme($start, \%node, \@discard) if ($#discard >= 0);
+	$self -> add_lexeme($start, \%node, \@default)        if ($#default >= 0);
+	$self -> add_lexeme($start, \%node, \@discard)        if ($#discard >= 0);
+	$self -> add_lexeme($start, \%node, \@lexeme_default) if ($#lexeme_default >= 0);
 
-	#say map{"$_\n"} @{$node{$start} -> tree2string({no_attributes => 1})};
+	$self -> log(info => 'Building tree');
 
 	$node{$start} -> walk_down
 	({
@@ -345,9 +382,22 @@ sub run
 		_depth => 0,
 	});
 
+	$self -> log(info => 'Rendering graph');
+
 	my($output_file) = $self -> output_file;
 
 	$self -> graph -> run(format => $self -> format, output_file => $output_file);
+
+	my($tree_file) = $self -> tree_file;
+
+	if ($tree_file)
+	{
+		$self -> log(info => 'Printing tree');
+
+		open(OUT, '>', $tree_file) || die "Can't open(> $tree_file): $!\n";
+		print OUT map{"$_\n"} @{$node{$start} -> tree2string({no_attributes => 1})};
+		close OUT;
+	}
 
 } # End of run.
 
