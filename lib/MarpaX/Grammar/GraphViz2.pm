@@ -269,6 +269,10 @@ sub process_rhs
 
 	my($parent);
 
+	print '-' x 50, "\n";
+	print map{"$_\n"} @{$$node{$start} -> tree2string({no_attributes => 1})};
+	print '-' x 50, "\n";
+
 	$$node{$start} -> walk_down
 	({
 		callback => sub
