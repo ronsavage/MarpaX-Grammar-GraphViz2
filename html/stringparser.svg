@@ -198,8 +198,8 @@
 </g>
 <!-- attribute_statement -->
 <g id="node13" class="node"><title>attribute_statement</title>
-<polygon fill="none" stroke="black" points="467.25,-227 346.75,-227 346.75,-191 467.25,-191 467.25,-227"/>
-<text text-anchor="middle" x="407" y="-205.3" font-family="Times,serif" font-size="14.00">attribute_statement</text>
+<polygon fill="none" stroke="black" points="471,-227 343,-227 343,-191 471,-191 471,-227"/>
+<text text-anchor="middle" x="407" y="-205.3" font-family="Times,serif" font-size="14.00">attribute_statement*</text>
 </g>
 <!-- attribute_definition&#45;&gt;attribute_statement -->
 <g id="edge13" class="edge"><title>attribute_definition&#45;&gt;attribute_statement</title>

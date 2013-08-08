@@ -269,9 +269,9 @@ sub process_rhs
 
 	my($parent);
 
-	print '-' x 50, "\n";
-	print map{"$_\n"} @{$$node{$start} -> tree2string({no_attributes => 1})};
-	print '-' x 50, "\n";
+#	print '-' x 50, "\n";
+#	print map{"$_\n"} @{$$node{$start} -> tree2string({no_attributes => 1})};
+#	print '-' x 50, "\n";
 
 	$$node{$start} -> walk_down
 	({
@@ -315,16 +315,18 @@ sub process_rhs
 	}
 	else
 	{
+		my($label);
+
 		for (@$field[2 .. $#$field])
 		{
-			$rhs                = $_;
+			$label = $rhs       = $_;
 			substr($rhs, -1, 1) = '' if (substr($rhs, -1, 1) =~ /[?*+]/);
 
 			if ($parent -> name ne $rhs)
 			{
 				$$node{$rhs} = $kid = Tree::DAG_Node -> new
 					({
-						attributes => {fillcolor => 'white', label => $rhs, shape => 'rectangle', style => ''},
+						attributes => {fillcolor => 'white', label => $label, shape => 'rectangle', style => ''},
 						name       => $rhs,
 					});
 
