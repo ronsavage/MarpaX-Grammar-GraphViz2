@@ -1,8 +1,8 @@
 :default				::= action => [values]
 
-event subtext			= completed subtext
+event subtext			= completed <sub text>
 
-event 'A[]'				= nulled A
+event 'A[]'				= nulled <A>
 
 event '^a'				= predicted A
 
@@ -10,11 +10,11 @@ event '^a'				= predicted A
 
 :start 					::= graph_grammar
 
-graph_grammar			::= graph_definition	action => graph
+graph_grammar			::= <graph definition>	action => graph
 
 # Graph stuff.
 
-graph_definition		::= node_definition
+<graph definition>		::= node_definition
 							| edge_definition
 # Node stuff
 
@@ -42,8 +42,8 @@ edge_statement			::= edge_name
 							| edge_name attribute_definition
 							| edge_statement (',') edge_statement
 
-edge_name				::= directed_edge
-							| undirected_edge
+edge_name				::= directed_edge		priority => 1
+							| undirected_edge	priority => 2
 
 :lexeme					~ directed_edge		pause => before		event => directed_edge
 directed_edge			~ '->'

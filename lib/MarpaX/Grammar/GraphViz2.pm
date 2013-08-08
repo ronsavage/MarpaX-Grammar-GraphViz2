@@ -7,6 +7,7 @@ use warnings  qw(FATAL utf8);    # Fatalize encoding glitches.
 use open      qw(:std :utf8);    # Undeclared streams in UTF-8.
 use charnames qw(:full :short);  # Unneeded in v5.16.
 
+use File::Basename; # For basename().
 use File::Spec;
 
 use GraphViz2;
@@ -101,10 +102,11 @@ sub add_lexeme
 {
 	my($self, $start, $node, $field) = @_;
 	my($parent) = $$node{$start};
+	my($name)   = join(' ', shift @$field);
 	my($kid)    = Tree::DAG_Node -> new
 	({
-		attributes => {fillcolor => 'lightblue', shape => 'rectangle', style => 'filled'},
-		name       => join(' ', shift @$field),
+		attributes => {fillcolor => 'lightblue', label => $name, shape => 'rectangle', style => 'filled'},
+		name       => $name,
 	});
 
 	$parent -> add_daughter($kid);
@@ -114,8 +116,8 @@ sub add_lexeme
 		$parent = $kid;
 		$kid    = Tree::DAG_Node -> new
 		({
-			attributes => {fillcolor => 'lightblue', shape => 'rectangle', style => 'filled'},
-			name       => join(' ', $item),
+			attributes => {fillcolor => 'lightblue', label => $item, shape => 'rectangle', style => 'filled'},
+			name       => $item,
 		});
 
 		$parent -> add_daughter($kid);
@@ -141,7 +143,7 @@ sub add_adverb_record
 			Tree::DAG_Node -> new
 			({
 				attributes => {fillcolor => 'lightblue', label => $label, shape => 'record', style => 'filled'},
-				name       => join('/', map{$$field[$_ + 2]} @index),
+				name       => $label,
 			})
 		);
 	}
@@ -160,7 +162,7 @@ sub add_event_record
 		Tree::DAG_Node -> new
 		({
 			attributes => {fillcolor => 'lightblue', label => $label, shape => 'record', style => 'filled'},
-			name       => join('/', @$field),
+			name       => $label,
 		})
 	);
 
@@ -190,7 +192,7 @@ sub BUILD
 		(
 			edge   => {color => 'grey'},
 			global => {directed => 1},
-			graph  => {rankdir => 'TB'},
+			graph  => {label => basename($self -> input_file), rankdir => 'TB'},
 			logger => $self -> logger,
 			node   => {shape => 'oval'},
 		);
@@ -213,6 +215,40 @@ sub BUILD
 	$self -> adverbs(join('|', sort keys %adverbs) );
 
 } # End of BUILD.
+
+# --------------------------------------------------
+
+sub clean_up_angle_brackets
+{
+	my($self, $field) = @_;
+	my($index) = first_index{$_ =~ /^</} @$field;
+
+	while ($index >= 0)
+	{
+		# Steps:
+		# o Replace '<' and '>' with chevrons.
+		# o Combine '<x' 'y>' into '<x_y>' (but with '_' replaced by a superscript '_').
+		#	Note: This takes place even for '<A>'. Hence $i = $index and not $i = $index + 1.
+
+		for (my $i = $index; $i <= $#$field; $i++)
+		{
+			if ($$field[$i] =~ />$/)
+			{
+				splice(@$field, $index, ($i - $index + 1), join("\x{00AF}", @$field[$index .. $i]) );
+
+				substr($$field[$index], 0,   1) = "\x{00AB}"; # <<.
+				substr($$field[$index], - 1, 1) = "\x{00BB}"; # >>.
+
+				# Keep searching for '<x' 'y>'.
+
+				$index = first_index{$_ =~ /^</ && $_ !~ />$/} @$field;
+
+				last;
+			}
+		}
+	}
+
+} # End of clean_up_angle_brackets.
 
 # --------------------------------------------------
 
@@ -261,7 +297,7 @@ sub process_rhs
 		{
 			$$node{$rhs} = $kid = Tree::DAG_Node -> new
 			({
-				attributes => {shape => 'rectangle'},
+				attributes => {fillcolor => 'white', label => $rhs, shape => 'rectangle', style => ''},
 				name       => $rhs,
 			});
 
@@ -283,7 +319,7 @@ sub process_rhs
 			{
 				$$node{$rhs} = $kid = Tree::DAG_Node -> new
 					({
-						attributes => {shape => 'rectangle'},
+						attributes => {fillcolor => 'white', label => $rhs, shape => 'rectangle', style => ''},
 						name       => $rhs,
 					});
 
@@ -326,17 +362,22 @@ sub run
 		# o Squash multiple spaces into 1 and tabs into 1 space.
 		# o Convert things like [\s] to [\\s].
 		# o Remove leading spaces.
+		# o Replace '<a' 'b>' with '<<a b>>'
 		#
 		# TODO:
 		# o Handle in-line comments, '... # ...'.
 
 		$line     =~ tr/ 	/  /s;
 		$line     =~ s/\\/\\\\/g;
-		@field    = split(/\s/, $line);
-		$field[0] =~ s/^\s+//;
-		$g_index  = first_index{$_ =~ /^(?:~|::=|=$)/} @field;
 
 		$self -> log(debug => "\t<$line>");
+
+		@field    = split(/\s/, $line);
+		$field[0] =~ s/^\s+//;
+
+		$self -> clean_up_angle_brackets(\@field);
+
+		$g_index  = first_index{$_ =~ /^(?:~|::=|=$)/} @field;
 
 		if ($g_index > 0)
 		{
@@ -403,7 +444,7 @@ sub run
 				$start        = $field[2];
 				$node{$start} = Tree::DAG_Node -> new
 					({
-						attributes => {fillcolor => 'lightgreen', shape => 'rectangle', style => 'filled'},
+						attributes => {fillcolor => 'lightgreen', label => $start, shape => 'rectangle', style => 'filled'},
 						name       => $start,
 					});
 
@@ -438,19 +479,39 @@ sub run
 
 	$self -> log(info => 'Building tree');
 
+	my($attributes);
+	my($mother);
+	my($name);
+
 	$node{$start} -> walk_down
 	({
 		callback => sub
 		{
 			my($n, $options) = @_;
 
-			# $n -> attributues returns a hashref:
+			# $n -> attributues() returns a hashref, and values may be undef:
 			# o fillcolor => $c.
 			# o label     => $l.
 			# o shape     => $s.
+			#
+			# Fix any '<x_y>' label issues we rigged in clean_up_angle_brackets():
+			# o Replace superscript '_' with real '_'.
+			# o Do not replace chevrons with '<>', because dot chokes.
 
-			$self -> graph -> add_node(name => $n -> name, %{$n -> attributes});
-			$self -> graph -> add_edge(from => $n -> mother -> name, to => $n -> name) if ($n -> mother);
+			$attributes         = $n -> attributes;
+			$$attributes{label} =~ s/\x{00AF}/ /g if ($$attributes{label});
+			$name               = $n -> name;
+			$name               =~ s/\x{00AF}/ /g;
+
+			$self -> graph -> add_node(name => $name, %$attributes);
+
+			if ($n -> mother)
+			{
+				$mother = $n -> mother -> name;
+				$mother =~ s/\x{00AF}/ /g;
+
+				$self -> graph -> add_edge(from => $mother, to => $name) if ($n -> mother);
+			}
 
 			# 1 => Keep walking.
 

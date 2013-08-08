@@ -1,11 +1,11 @@
 graph_grammar
-   |---graph_definition
-   |   |---graph
+   |---«graph¯definition»
+   |   |---{action = graph}
    |   |---node_definition
    |   |   |---node_statement
    |   |   |   |---node_name
    |   |   |   |   |---start_node
-   |   |   |   |   |   |---before/start_node
+   |   |   |   |   |   |---{event = start_node|pause = before}
    |   |   |   |   |   |---'['
    |   |   |   |   |---end_node
    |   |   |   |       |---']'
@@ -13,7 +13,7 @@ graph_grammar
    |   |   |   |---attribute_definition
    |   |   |   |   |---attribute_statement
    |   |   |   |       |---start_attributes
-   |   |   |   |       |   |---before/start_attributes
+   |   |   |   |       |   |---{event = start_attributes|pause = before}
    |   |   |   |       |   |---'{'
    |   |   |   |       |---end_attributes
    |   |   |   |           |---'}'
@@ -24,10 +24,12 @@ graph_grammar
    |       |---edge_statement
    |       |   |---edge_name
    |       |   |   |---directed_edge
-   |       |   |   |   |---before/directed_edge
+   |       |   |   |   |---{priority = 1}
+   |       |   |   |   |---{event = directed_edge|pause = before}
    |       |   |   |   |---'->'
    |       |   |   |---undirected_edge
-   |       |   |       |---before/undirected_edge
+   |       |   |       |---{priority = 2}
+   |       |   |       |---{event = undirected_edge|pause = before}
    |       |   |       |---'--'
    |       |   |---edge_name
    |       |   |---attribute_definition
@@ -39,4 +41,4 @@ graph_grammar
    |---:discard
    |   |---whitespace
    |       |---[\\s]+
-   |---event subtext = completed subtext/event 'A[]' = nulled A/event '^a' = predicted A
+   |---{event subtext = completed «sub¯text»|event 'A[]' = nulled «A»|event '^a' = predicted A}
