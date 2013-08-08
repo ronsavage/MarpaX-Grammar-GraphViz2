@@ -58,7 +58,7 @@ quote				~ ["]
 <string char>		~ [^"\\] | '\' <any char>
 <any char>			~ [\d\D]
 
-comma				~ ','
+<comma>				~ ','
 
 :discard			~ whitespace
 whitespace			~ [\s]+

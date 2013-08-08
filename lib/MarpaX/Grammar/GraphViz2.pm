@@ -174,7 +174,7 @@ sub add_event_record
 sub add_token_node
 {
 	my($self, $node, $parent, $chain, $name) = @_;
-
+	$name                =~ s/"/\\"/g;
 	my($label)           = $name;
 	substr($name, -1, 1) = '' if (substr($name, -1, 1) =~ /[?*+]/);
 
@@ -248,6 +248,9 @@ sub clean_up_angle_brackets
 	my($self, $field) = @_;
 	my($index) = first_index{$_ =~ /^</} @$field;
 
+	my($quantifier);
+	my($width);
+
 	while ($index >= 0)
 	{
 		# Steps:
@@ -257,16 +260,20 @@ sub clean_up_angle_brackets
 
 		for (my $i = $index; $i <= $#$field; $i++)
 		{
-			if ($$field[$i] =~ />$/)
+			if ($$field[$i] =~ />([*+])?$/)
 			{
+				$quantifier = $1 || '';
+				$width      = $quantifier ? 2 : 1;
+
 				splice(@$field, $index, ($i - $index + 1), join("\x{00AF}", @$field[$index .. $i]) );
 
-				substr($$field[$index], 0,   1) = "\x{00AB}"; # <<.
-				substr($$field[$index], - 1, 1) = "\x{00BB}"; # >>.
+				substr($$field[$index], 0,  1)           = "\x{00AB}"; # <<.
+				substr($$field[$index], -$width, $width) = "\x{00BB}"; # >>.
+				$$field[$index]                          .= $quantifier;
 
 				# Keep searching for '<x' 'y>'.
 
-				$index = first_index{$_ =~ /^</ && $_ !~ />$/} @$field;
+				$index = first_index{$_ =~ /^</ && $_ !~ />[*+]?$/} @$field;
 
 				last;
 			}
@@ -483,11 +490,7 @@ sub run
 			{
 				# Otherwise, it's a 'normal' line.
 
-				$self -> log(info => "Tree before <$line>:");
-				$self -> log_tree($start, \%node);
 				$self -> process_rhs($start, \%node, \@field, $lhs);
-				$self -> log(info => 'Tree after:');
-				$self -> log_tree($start, \%node);
 			}
 		}
 		elsif ($field[1] =~ /^\|\|?$/)
@@ -500,7 +503,7 @@ sub run
 
 	# Process the things we stockpiled, since by now $start is defined.
 
-	my(@discard) = map{"$_ = $discard{$_}"} sort keys %discard;
+	my(@discard) = map{$_ eq ':discard' ? $_ : "$_ = $discard{$_}"} sort keys %discard;
 
 	$self -> add_lexeme($start, \%node, \@default)              if ($#default >= 0);
 	$self -> add_lexeme($start, \%node, \@discard)              if ($#discard >= 0);

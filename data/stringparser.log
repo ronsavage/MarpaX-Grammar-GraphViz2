@@ -25,10 +25,12 @@ graph_grammar
    |       |---edge_statement
    |       |   |---edge_name
    |       |   |---edge_name
+   |       |   |   |---('%1')
    |       |   |   |---directed_edge
    |       |   |   |   |---{event = directed_edge|pause = before}
    |       |   |   |   |---{priority = 1}
    |       |   |   |   |---'->'
+   |       |   |   |---('%2')
    |       |   |   |---undirected_edge
    |       |   |       |---{event = undirected_edge|pause = before}
    |       |   |       |---{priority = 2}
