@@ -102,7 +102,7 @@ sub add_lexeme
 {
 	my($self, $start, $node, $field) = @_;
 	my($parent) = $$node{$start};
-	my($name)   = join(' ', shift @$field);
+	my($name)   = shift @$field;
 	my($kid)    = Tree::DAG_Node -> new
 	({
 		attributes => {fillcolor => 'lightblue', label => $name, shape => 'rectangle', style => 'filled'},
@@ -168,6 +168,30 @@ sub add_event_record
 	);
 
 } # End of add_adverb_record.
+
+# ------------------------------------------------
+
+sub add_token_node
+{
+	my($self, $node, $parent, $chain, $name) = @_;
+
+	my($label)           = $name;
+	substr($name, -1, 1) = '' if (substr($name, -1, 1) =~ /[?*+]/);
+
+	if ($parent -> name ne $name)
+	{
+		$$node{$name} = my($kid) = Tree::DAG_Node -> new
+			({
+				attributes => {fillcolor => 'white', label => $label, shape => 'rectangle', style => ''},
+				name       => $name,
+			});
+
+		$parent -> add_daughter($kid);
+
+		$parent = $kid if ($chain);
+	}
+
+} # End of add_token_node.
 
 # ------------------------------------------------
 
@@ -261,6 +285,19 @@ sub log
 
 } # End of log.
 
+# --------------------------------------------------
+
+sub log_tree
+{
+	my($self, $start, $node, $level) = @_;
+	$level ||= $self -> maxlevel;
+
+	$self -> log($level => '-' x 50);
+	$self -> log($level => $_) for @{$$node{$start} -> tree2string({no_attributes => 1})};
+	$self -> log($level => '-' x 50);
+
+} # End of log_tree.
+
 # ------------------------------------------------
 
 sub process_rhs
@@ -269,19 +306,19 @@ sub process_rhs
 
 	my($parent);
 
-#	print '-' x 50, "\n";
-#	print map{"$_\n"} @{$$node{$start} -> tree2string({no_attributes => 1})};
-#	print '-' x 50, "\n";
-
 	$$node{$start} -> walk_down
 	({
 		callback => sub
 		{
 			my($n, $options) = @_;
 
-			$parent = $n if (! $parent && ($n -> name eq $lhs) );
+			$parent = $n if ($n -> name eq $lhs);
 
-			return 1;
+			# Return:
+			# o 0 to stop walk if parent found.
+			# o 1 to keep walking otherwise.
+
+			return $parent ? 0 : 1;
 		},
 		_depth => 0,
 	});
@@ -295,49 +332,13 @@ sub process_rhs
 
 	if ($index >= 0)
 	{
-		$rhs                = join(' ', @$field[2 .. $index - 1]);
-		substr($rhs, -1, 1) = '' if (substr($rhs, -1, 1) =~ /[?*+]/);
-
-		if ($parent -> name ne $rhs)
-		{
-			$$node{$rhs} = $kid = Tree::DAG_Node -> new
-			({
-				attributes => {fillcolor => 'white', label => $rhs, shape => 'rectangle', style => ''},
-				name       => $rhs,
-			});
-
-			$parent -> add_daughter($kid);
-
-			$parent = $kid;
-		}
-
 		$self -> add_adverb_record($parent, $field);
+		$self -> add_token_node($node, $parent, 1, $_) for @$field[2 .. $index - 1];
 	}
 	else
 	{
-		my($label);
-
-		for (@$field[2 .. $#$field])
-		{
-			$label = $rhs       = $_;
-			substr($rhs, -1, 1) = '' if (substr($rhs, -1, 1) =~ /[?*+]/);
-
-			if ($parent -> name ne $rhs)
-			{
-				$$node{$rhs} = $kid = Tree::DAG_Node -> new
-					({
-						attributes => {fillcolor => 'white', label => $label, shape => 'rectangle', style => ''},
-						name       => $rhs,
-					});
-
-				$parent -> add_daughter($kid);
-			}
-		}
+		$self -> add_token_node($node, $parent, 0, $_) for @$field[2 .. $#$field];
 	}
-
-	#say '-' x 50;
-	#say map{"$_\n"} @{$$node{$start} -> tree2string({no_attributes => 1})};
-	#say '-' x 50;
 
 } # End of process_rhs.
 
@@ -350,7 +351,7 @@ sub run
 
 	$self -> log(info => 'Entered run()');
 
-	my(@default, @discard);
+	my(@default, %discard);
 	my(@event);
 	my(@field);
 	my($g_index);
@@ -380,7 +381,7 @@ sub run
 		$self -> log(debug => "\t<$line>");
 
 		@field    = split(/\s/, $line);
-		$field[0] =~ s/^\s+//; # For /^event/ below.
+		$field[0] =~ s/^\s+//;
 
 		$self -> clean_up_angle_brackets(\@field);
 
@@ -408,9 +409,8 @@ sub run
 			}
 			elsif ($lhs eq ':discard')
 			{
-				# Discard ':discard' and '~'.
-
-				push @discard, $lhs, $field[2];
+				$discard{':discard'} = $lhs;
+				$discard{$field[2]}  = '';
 
 				next;
 			}
@@ -472,17 +472,22 @@ sub run
 				next;
 			}
 
-			if ( ($#discard >= 0) && ($field[0] eq $discard[$#discard]) )
+			if (defined $discard{$field[0]})
 			{
-				# Grab the thing previously mentioned in a ':discard'.
+				# Grab the thing previously mentioned in a ':discard',
+				# hoping they are declared in the expected order :-(.
 
-				push @discard, $field[2];
+				$discard{$field[0]} = $field[2];
 			}
 			else
 			{
 				# Otherwise, it's a 'normal' line.
 
+				$self -> log(info => "Tree before <$line>:");
+				$self -> log_tree($start, \%node);
 				$self -> process_rhs($start, \%node, \@field, $lhs);
+				$self -> log(info => 'Tree after:');
+				$self -> log_tree($start, \%node);
 			}
 		}
 		elsif ($field[1] =~ /^\|\|?$/)
@@ -491,7 +496,11 @@ sub run
 		}
 	}
 
+	die ":start token not found\n" if (! $start);
+
 	# Process the things we stockpiled, since by now $start is defined.
+
+	my(@discard) = map{"$_ = $discard{$_}"} sort keys %discard;
 
 	$self -> add_lexeme($start, \%node, \@default)              if ($#default >= 0);
 	$self -> add_lexeme($start, \%node, \@discard)              if ($#discard >= 0);

@@ -12,404 +12,402 @@
 <text text-anchor="middle" x="577" y="-7.8" font-family="Times,serif" font-size="14.00">stringparser.bnf</text>
 <!-- graph_grammar -->
 <g id="node1" class="node"><title>graph_grammar</title>
-<polygon fill="lightgreen" stroke="black" points="734,-633 630,-633 630,-597 734,-597 734,-633"/>
-<text text-anchor="middle" x="682" y="-611.3" font-family="Times,serif" font-size="14.00">graph_grammar</text>
+<polygon fill="lightgreen" stroke="black" points="644,-633 540,-633 540,-597 644,-597 644,-633"/>
+<text text-anchor="middle" x="592" y="-611.3" font-family="Times,serif" font-size="14.00">graph_grammar</text>
+</g>
+<!-- {action = graph} -->
+<g id="node2" class="node"><title>{action = graph}</title>
+<polygon fill="lightblue" stroke="black" points="305,-508 305,-544 401,-544 401,-508 305,-508"/>
+<text text-anchor="middle" x="353" y="-522.3" font-family="Times,serif" font-size="14.00">action = graph</text>
+</g>
+<!-- graph_grammar&#45;&gt;{action = graph} -->
+<g id="edge1" class="edge"><title>graph_grammar&#45;&gt;{action = graph}</title>
+<path fill="none" stroke="grey" d="M539.718,-602.309C502.914,-593.215 452.936,-579.104 411,-561 403.39,-557.715 395.539,-553.636 388.166,-549.456"/>
+<polygon fill="grey" stroke="grey" points="389.533,-546.201 379.137,-544.16 385.992,-552.239 389.533,-546.201"/>
 </g>
 <!-- «graph¯definition» -->
-<g id="node2" class="node"><title>«graph¯definition»</title>
-<polygon fill="none" stroke="black" points="519.25,-544 402.75,-544 402.75,-508 519.25,-508 519.25,-544"/>
-<text text-anchor="middle" x="461" y="-522.3" font-family="Times,serif" font-size="14.00">«graph definition»</text>
+<g id="node3" class="node"><title>«graph¯definition»</title>
+<polygon fill="none" stroke="black" points="536.25,-544 419.75,-544 419.75,-508 536.25,-508 536.25,-544"/>
+<text text-anchor="middle" x="478" y="-522.3" font-family="Times,serif" font-size="14.00">«graph definition»</text>
 </g>
 <!-- graph_grammar&#45;&gt;«graph¯definition» -->
-<g id="edge1" class="edge"><title>graph_grammar&#45;&gt;«graph¯definition»</title>
-<path fill="none" stroke="grey" d="M638.601,-596.915C602.793,-582.819 551.854,-562.766 513.706,-547.748"/>
-<polygon fill="grey" stroke="grey" points="514.887,-544.452 504.3,-544.046 512.322,-550.965 514.887,-544.452"/>
+<g id="edge2" class="edge"><title>graph_grammar&#45;&gt;«graph¯definition»</title>
+<path fill="none" stroke="grey" d="M569.477,-596.812C552.068,-583.525 527.785,-564.994 508.613,-550.362"/>
+<polygon fill="grey" stroke="grey" points="510.549,-547.437 500.476,-544.153 506.302,-553.002 510.549,-547.437"/>
 </g>
 <!-- :default -->
 <g id="node31" class="node"><title>:default</title>
-<polygon fill="lightblue" stroke="black" points="672.5,-544 615.5,-544 615.5,-508 672.5,-508 672.5,-544"/>
-<text text-anchor="middle" x="644" y="-522.3" font-family="Times,serif" font-size="14.00">:default</text>
+<polygon fill="lightblue" stroke="black" points="620.5,-544 563.5,-544 563.5,-508 620.5,-508 620.5,-544"/>
+<text text-anchor="middle" x="592" y="-522.3" font-family="Times,serif" font-size="14.00">:default</text>
 </g>
 <!-- graph_grammar&#45;&gt;:default -->
 <g id="edge38" class="edge"><title>graph_grammar&#45;&gt;:default</title>
-<path fill="none" stroke="grey" d="M674.492,-596.812C669.08,-584.419 661.674,-567.463 655.516,-553.365"/>
-<polygon fill="grey" stroke="grey" points="658.702,-551.916 651.492,-544.153 652.287,-554.718 658.702,-551.916"/>
+<path fill="none" stroke="grey" d="M592,-596.812C592,-584.657 592,-568.114 592,-554.182"/>
+<polygon fill="grey" stroke="grey" points="595.5,-554.153 592,-544.153 588.5,-554.153 595.5,-554.153"/>
 </g>
-<!-- :discard -->
-<g id="node33" class="node"><title>:discard</title>
-<polygon fill="lightblue" stroke="black" points="750.25,-544 691.75,-544 691.75,-508 750.25,-508 750.25,-544"/>
-<text text-anchor="middle" x="721" y="-522.3" font-family="Times,serif" font-size="14.00">:discard</text>
+<!-- :discard = :discard -->
+<g id="node33" class="node"><title>:discard = :discard</title>
+<polygon fill="lightblue" stroke="black" points="757,-544 639,-544 639,-508 757,-508 757,-544"/>
+<text text-anchor="middle" x="698" y="-522.3" font-family="Times,serif" font-size="14.00">:discard = :discard</text>
 </g>
-<!-- graph_grammar&#45;&gt;:discard -->
-<g id="edge40" class="edge"><title>graph_grammar&#45;&gt;:discard</title>
-<path fill="none" stroke="grey" d="M689.705,-596.812C695.26,-584.419 702.861,-567.463 709.181,-553.365"/>
-<polygon fill="grey" stroke="grey" points="712.414,-554.71 713.311,-544.153 706.026,-551.846 712.414,-554.71"/>
+<!-- graph_grammar&#45;&gt;:discard = :discard -->
+<g id="edge40" class="edge"><title>graph_grammar&#45;&gt;:discard = :discard</title>
+<path fill="none" stroke="grey" d="M612.942,-596.812C629.057,-583.585 651.506,-565.16 669.295,-550.559"/>
+<polygon fill="grey" stroke="grey" points="671.592,-553.202 677.101,-544.153 667.151,-547.792 671.592,-553.202"/>
 </g>
 <!-- {event subtext = completed «sub¯text»|event &#39;A[]&#39; = nulled «A»|event &#39;^a&#39; = predicted A} -->
 <g id="node35" class="node"><title>{event subtext = completed «sub¯text»|event &#39;A[]&#39; = nulled «A»|event &#39;^a&#39; = predicted A}</title>
-<polygon fill="lightblue" stroke="black" points="768.5,-491.5 768.5,-560.5 989.5,-560.5 989.5,-491.5 768.5,-491.5"/>
-<text text-anchor="middle" x="879" y="-545.3" font-family="Times,serif" font-size="14.00">event subtext = completed «sub text»</text>
-<polyline fill="none" stroke="black" points="768.5,-537.5 989.5,-537.5 "/>
-<text text-anchor="middle" x="879" y="-522.3" font-family="Times,serif" font-size="14.00">event &#39;A[]&#39; = nulled «A»</text>
-<polyline fill="none" stroke="black" points="768.5,-514.5 989.5,-514.5 "/>
-<text text-anchor="middle" x="879" y="-499.3" font-family="Times,serif" font-size="14.00">event &#39;^a&#39; = predicted A</text>
+<polygon fill="lightblue" stroke="black" points="775.5,-491.5 775.5,-560.5 996.5,-560.5 996.5,-491.5 775.5,-491.5"/>
+<text text-anchor="middle" x="886" y="-545.3" font-family="Times,serif" font-size="14.00">event subtext = completed «sub text»</text>
+<polyline fill="none" stroke="black" points="775.5,-537.5 996.5,-537.5 "/>
+<text text-anchor="middle" x="886" y="-522.3" font-family="Times,serif" font-size="14.00">event &#39;A[]&#39; = nulled «A»</text>
+<polyline fill="none" stroke="black" points="775.5,-514.5 996.5,-514.5 "/>
+<text text-anchor="middle" x="886" y="-499.3" font-family="Times,serif" font-size="14.00">event &#39;^a&#39; = predicted A</text>
 </g>
 <!-- graph_grammar&#45;&gt;{event subtext = completed «sub¯text»|event &#39;A[]&#39; = nulled «A»|event &#39;^a&#39; = predicted A} -->
 <g id="edge42" class="edge"><title>graph_grammar&#45;&gt;{event subtext = completed «sub¯text»|event &#39;A[]&#39; = nulled «A»|event &#39;^a&#39; = predicted A}</title>
-<path fill="none" stroke="grey" d="M720.921,-596.812C741.793,-587.594 768.383,-575.851 793.774,-564.638"/>
-<polygon fill="grey" stroke="grey" points="795.328,-567.778 803.061,-560.536 792.5,-561.375 795.328,-567.778"/>
-</g>
-<!-- {action = graph} -->
-<g id="node3" class="node"><title>{action = graph}</title>
-<polygon fill="lightblue" stroke="black" points="236,-413 236,-449 332,-449 332,-413 236,-413"/>
-<text text-anchor="middle" x="284" y="-427.3" font-family="Times,serif" font-size="14.00">action = graph</text>
-</g>
-<!-- «graph¯definition»&#45;&gt;{action = graph} -->
-<g id="edge2" class="edge"><title>«graph¯definition»&#45;&gt;{action = graph}</title>
-<path fill="none" stroke="grey" d="M428.535,-507.942C399.559,-492.717 356.968,-470.339 325.521,-453.816"/>
-<polygon fill="grey" stroke="grey" points="327.038,-450.66 316.558,-449.107 323.782,-456.856 327.038,-450.66"/>
+<path fill="none" stroke="grey" d="M644.223,-598.546C677.901,-588.58 723.149,-575.19 765.392,-562.69"/>
+<polygon fill="grey" stroke="grey" points="766.606,-565.981 775.201,-559.787 764.619,-559.269 766.606,-565.981"/>
 </g>
 <!-- node_definition -->
 <g id="node4" class="node"><title>node_definition</title>
-<polygon fill="none" stroke="black" points="451.5,-449 350.5,-449 350.5,-413 451.5,-413 451.5,-449"/>
-<text text-anchor="middle" x="401" y="-427.3" font-family="Times,serif" font-size="14.00">node_definition</text>
+<polygon fill="none" stroke="black" points="408.5,-449 307.5,-449 307.5,-413 408.5,-413 408.5,-449"/>
+<text text-anchor="middle" x="358" y="-427.3" font-family="Times,serif" font-size="14.00">node_definition</text>
 </g>
 <!-- «graph¯definition»&#45;&gt;node_definition -->
 <g id="edge3" class="edge"><title>«graph¯definition»&#45;&gt;node_definition</title>
-<path fill="none" stroke="grey" d="M444.631,-507.942C434.099,-494.003 420.98,-474.067 411.713,-458.118"/>
-<polygon fill="grey" stroke="grey" points="414.694,-456.277 406.752,-449.264 408.587,-459.699 414.694,-456.277"/>
+<path fill="none" stroke="grey" d="M450.626,-507.942C430.098,-493.286 402.431,-472.001 382.601,-455.692"/>
+<polygon fill="grey" stroke="grey" points="384.812,-452.979 374.89,-449.264 380.33,-458.356 384.812,-452.979"/>
 </g>
 <!-- edge_definition -->
 <g id="node20" class="node"><title>edge_definition</title>
-<polygon fill="none" stroke="black" points="571.25,-449 470.75,-449 470.75,-413 571.25,-413 571.25,-449"/>
-<text text-anchor="middle" x="521" y="-427.3" font-family="Times,serif" font-size="14.00">edge_definition</text>
+<polygon fill="none" stroke="black" points="528.25,-449 427.75,-449 427.75,-413 528.25,-413 528.25,-449"/>
+<text text-anchor="middle" x="478" y="-427.3" font-family="Times,serif" font-size="14.00">edge_definition</text>
 </g>
 <!-- «graph¯definition»&#45;&gt;edge_definition -->
 <g id="edge22" class="edge"><title>«graph¯definition»&#45;&gt;edge_definition</title>
-<path fill="none" stroke="grey" d="M466.641,-507.942C474.165,-493.873 486.936,-473.694 498.329,-457.672"/>
-<polygon fill="grey" stroke="grey" points="501.399,-459.403 504.475,-449.264 495.748,-455.272 501.399,-459.403"/>
+<path fill="none" stroke="grey" d="M472.636,-507.942C471.141,-494.394 470.855,-475.18 471.78,-459.469"/>
+<polygon fill="grey" stroke="grey" points="475.288,-459.516 472.613,-449.264 468.311,-458.946 475.288,-459.516"/>
 </g>
 <!-- node_statement -->
 <g id="node5" class="node"><title>node_statement</title>
-<polygon fill="none" stroke="black" points="451.5,-371 350.5,-371 350.5,-335 451.5,-335 451.5,-371"/>
-<text text-anchor="middle" x="401" y="-349.3" font-family="Times,serif" font-size="14.00">node_statement</text>
+<polygon fill="none" stroke="black" points="408.5,-371 307.5,-371 307.5,-335 408.5,-335 408.5,-371"/>
+<text text-anchor="middle" x="358" y="-349.3" font-family="Times,serif" font-size="14.00">node_statement</text>
 </g>
 <!-- node_definition&#45;&gt;node_statement -->
 <g id="edge4" class="edge"><title>node_definition&#45;&gt;node_statement</title>
-<path fill="none" stroke="grey" d="M395.239,-412.754C394.248,-403.426 394.002,-391.691 394.5,-381.165"/>
-<polygon fill="grey" stroke="grey" points="397.991,-381.41 395.246,-371.177 391.011,-380.889 397.991,-381.41"/>
+<path fill="none" stroke="grey" d="M352.239,-412.754C351.248,-403.426 351.002,-391.691 351.5,-381.165"/>
+<polygon fill="grey" stroke="grey" points="354.991,-381.41 352.246,-371.177 348.011,-380.889 354.991,-381.41"/>
 </g>
 <!-- node_definition&#45;&gt;node_statement -->
-<g id="edge20" class="edge"><title>node_definition&#45;&gt;node_statement</title>
-<path fill="none" stroke="grey" d="M406.761,-412.754C407.752,-403.426 407.998,-391.691 407.5,-381.165"/>
-<polygon fill="grey" stroke="grey" points="410.989,-380.889 406.754,-371.177 404.009,-381.41 410.989,-380.889"/>
+<g id="edge5" class="edge"><title>node_definition&#45;&gt;node_statement</title>
+<path fill="none" stroke="grey" d="M363.761,-412.754C364.752,-403.426 364.998,-391.691 364.5,-381.165"/>
+<polygon fill="grey" stroke="grey" points="367.989,-380.889 363.754,-371.177 361.009,-381.41 367.989,-380.889"/>
 </g>
 <!-- node_definition&#45;&gt;«graph¯definition» -->
 <g id="edge21" class="edge"><title>node_definition&#45;&gt;«graph¯definition»</title>
-<path fill="none" stroke="grey" d="M417.525,-449.264C428.082,-463.263 441.195,-483.209 450.423,-499.118"/>
-<polygon fill="grey" stroke="grey" points="447.423,-500.923 455.359,-507.942 453.532,-497.506 447.423,-500.923"/>
+<path fill="none" stroke="grey" d="M385.663,-449.264C406.167,-463.917 433.675,-485.086 453.414,-501.32"/>
+<polygon fill="grey" stroke="grey" points="451.433,-504.226 461.354,-507.942 455.916,-498.85 451.433,-504.226"/>
 </g>
 <!-- node_name -->
 <g id="node6" class="node"><title>node_name</title>
-<polygon fill="none" stroke="black" points="322,-299 242,-299 242,-263 322,-263 322,-299"/>
-<text text-anchor="middle" x="282" y="-277.3" font-family="Times,serif" font-size="14.00">node_name</text>
+<polygon fill="none" stroke="black" points="275,-299 195,-299 195,-263 275,-263 275,-299"/>
+<text text-anchor="middle" x="235" y="-277.3" font-family="Times,serif" font-size="14.00">node_name</text>
 </g>
 <!-- node_statement&#45;&gt;node_name -->
-<g id="edge5" class="edge"><title>node_statement&#45;&gt;node_name</title>
-<path fill="none" stroke="grey" d="M365.992,-334.876C349.475,-325.724 329.975,-314.342 313.874,-304.485"/>
-<polygon fill="grey" stroke="grey" points="315.664,-301.477 305.319,-299.19 311.98,-307.429 315.664,-301.477"/>
+<g id="edge6" class="edge"><title>node_statement&#45;&gt;node_name</title>
+<path fill="none" stroke="grey" d="M322.014,-334.876C304.974,-325.724 284.823,-314.342 268.158,-304.485"/>
+<polygon fill="grey" stroke="grey" points="269.68,-301.317 259.301,-299.19 266.088,-307.325 269.68,-301.317"/>
 </g>
 <!-- node_statement&#45;&gt;node_name -->
-<g id="edge11" class="edge"><title>node_statement&#45;&gt;node_name</title>
-<path fill="none" stroke="grey" d="M377.786,-334.876C363.05,-325.639 343.631,-314.131 326.092,-304.212"/>
-<polygon fill="grey" stroke="grey" points="327.562,-301.023 317.127,-299.19 324.141,-307.13 327.562,-301.023"/>
+<g id="edge7" class="edge"><title>node_statement&#45;&gt;node_name</title>
+<path fill="none" stroke="grey" d="M333.808,-334.876C318.543,-325.639 298.467,-314.131 280.361,-304.212"/>
+<polygon fill="grey" stroke="grey" points="281.567,-300.884 271.109,-299.19 278.228,-307.036 281.567,-300.884"/>
 </g>
 <!-- attribute_definition -->
 <g id="node12" class="node"><title>attribute_definition</title>
-<polygon fill="none" stroke="black" points="467.25,-299 346.75,-299 346.75,-263 467.25,-263 467.25,-299"/>
-<text text-anchor="middle" x="407" y="-277.3" font-family="Times,serif" font-size="14.00">attribute_definition</text>
+<polygon fill="none" stroke="black" points="422.25,-299 301.75,-299 301.75,-263 422.25,-263 422.25,-299"/>
+<text text-anchor="middle" x="362" y="-277.3" font-family="Times,serif" font-size="14.00">attribute_definition</text>
 </g>
 <!-- node_statement&#45;&gt;attribute_definition -->
-<g id="edge12" class="edge"><title>node_statement&#45;&gt;attribute_definition</title>
-<path fill="none" stroke="grey" d="M402.483,-334.697C403.144,-326.983 403.939,-317.712 404.676,-309.112"/>
-<polygon fill="grey" stroke="grey" points="408.167,-309.367 405.534,-299.104 401.193,-308.769 408.167,-309.367"/>
+<g id="edge13" class="edge"><title>node_statement&#45;&gt;attribute_definition</title>
+<path fill="none" stroke="grey" d="M358.989,-334.697C359.43,-326.983 359.959,-317.712 360.451,-309.112"/>
+<polygon fill="grey" stroke="grey" points="363.946,-309.288 361.023,-299.104 356.958,-308.888 363.946,-309.288"/>
 </g>
 <!-- (&#39;,&#39;) -->
 <g id="node19" class="node"><title>(&#39;,&#39;)</title>
-<polygon fill="none" stroke="black" points="543,-299 489,-299 489,-263 543,-263 543,-299"/>
-<text text-anchor="middle" x="516" y="-277.3" font-family="Times,serif" font-size="14.00">(&#39;,&#39;)</text>
+<polygon fill="none" stroke="black" points="498,-299 444,-299 444,-263 498,-263 498,-299"/>
+<text text-anchor="middle" x="471" y="-277.3" font-family="Times,serif" font-size="14.00">(&#39;,&#39;)</text>
 </g>
 <!-- node_statement&#45;&gt;(&#39;,&#39;) -->
-<g id="edge19" class="edge"><title>node_statement&#45;&gt;(&#39;,&#39;)</title>
-<path fill="none" stroke="grey" d="M429.132,-334.876C444.505,-325.519 463.706,-313.831 480.144,-303.825"/>
-<polygon fill="grey" stroke="grey" points="482.228,-306.654 488.95,-298.465 478.588,-300.675 482.228,-306.654"/>
+<g id="edge20" class="edge"><title>node_statement&#45;&gt;(&#39;,&#39;)</title>
+<path fill="none" stroke="grey" d="M385.643,-334.876C400.528,-325.655 419.066,-314.172 435.059,-304.265"/>
+<polygon fill="grey" stroke="grey" points="436.985,-307.189 443.642,-298.947 433.298,-301.238 436.985,-307.189"/>
 </g>
 <!-- start_node -->
 <g id="node7" class="node"><title>start_node</title>
-<polygon fill="none" stroke="black" points="199.25,-227 126.75,-227 126.75,-191 199.25,-191 199.25,-227"/>
-<text text-anchor="middle" x="163" y="-205.3" font-family="Times,serif" font-size="14.00">start_node</text>
+<polygon fill="none" stroke="black" points="271.25,-227 198.75,-227 198.75,-191 271.25,-191 271.25,-227"/>
+<text text-anchor="middle" x="235" y="-205.3" font-family="Times,serif" font-size="14.00">start_node</text>
 </g>
 <!-- node_name&#45;&gt;start_node -->
-<g id="edge6" class="edge"><title>node_name&#45;&gt;start_node</title>
-<path fill="none" stroke="grey" d="M252.889,-262.876C237.33,-253.724 217.981,-242.342 201.224,-232.485"/>
-<polygon fill="grey" stroke="grey" points="202.617,-229.243 192.223,-227.19 199.067,-235.277 202.617,-229.243"/>
+<g id="edge8" class="edge"><title>node_name&#45;&gt;start_node</title>
+<path fill="none" stroke="grey" d="M235,-262.697C235,-254.983 235,-245.712 235,-237.112"/>
+<polygon fill="grey" stroke="grey" points="238.5,-237.104 235,-227.104 231.5,-237.104 238.5,-237.104"/>
 </g>
 <!-- end_node -->
 <g id="node10" class="node"><title>end_node</title>
-<polygon fill="none" stroke="black" points="287.25,-227 218.75,-227 218.75,-191 287.25,-191 287.25,-227"/>
-<text text-anchor="middle" x="253" y="-205.3" font-family="Times,serif" font-size="14.00">end_node</text>
+<polygon fill="none" stroke="black" points="121.25,-227 52.75,-227 52.75,-191 121.25,-191 121.25,-227"/>
+<text text-anchor="middle" x="87" y="-205.3" font-family="Times,serif" font-size="14.00">end_node</text>
 </g>
 <!-- node_name&#45;&gt;end_node -->
-<g id="edge9" class="edge"><title>node_name&#45;&gt;end_node</title>
-<path fill="none" stroke="grey" d="M274.831,-262.697C271.565,-254.813 267.626,-245.304 263.998,-236.546"/>
-<polygon fill="grey" stroke="grey" points="267.147,-235.003 260.086,-227.104 260.68,-237.683 267.147,-235.003"/>
+<g id="edge11" class="edge"><title>node_name&#45;&gt;end_node</title>
+<path fill="none" stroke="grey" d="M198.795,-262.876C178.221,-253.145 152.318,-240.894 130.627,-230.635"/>
+<polygon fill="grey" stroke="grey" points="131.842,-227.337 121.306,-226.226 128.849,-233.665 131.842,-227.337"/>
 </g>
 <!-- {event = start_node|pause = before} -->
 <g id="node8" class="node"><title>{event = start_node|pause = before}</title>
-<polygon fill="lightblue" stroke="black" points="0,-108 0,-154 118,-154 118,-108 0,-108"/>
-<text text-anchor="middle" x="59" y="-138.8" font-family="Times,serif" font-size="14.00">event = start_node</text>
-<polyline fill="none" stroke="black" points="0,-131 118,-131 "/>
-<text text-anchor="middle" x="59" y="-115.8" font-family="Times,serif" font-size="14.00">pause = before</text>
+<polygon fill="lightblue" stroke="black" points="72,-108 72,-154 190,-154 190,-108 72,-108"/>
+<text text-anchor="middle" x="131" y="-138.8" font-family="Times,serif" font-size="14.00">event = start_node</text>
+<polyline fill="none" stroke="black" points="72,-131 190,-131 "/>
+<text text-anchor="middle" x="131" y="-115.8" font-family="Times,serif" font-size="14.00">pause = before</text>
 </g>
 <!-- start_node&#45;&gt;{event = start_node|pause = before} -->
-<g id="edge7" class="edge"><title>start_node&#45;&gt;{event = start_node|pause = before}</title>
-<path fill="none" stroke="grey" d="M139.66,-190.944C127.245,-181.871 111.659,-170.482 97.5065,-160.139"/>
-<polygon fill="grey" stroke="grey" points="99.5128,-157.271 89.3738,-154.196 95.3827,-162.922 99.5128,-157.271"/>
+<g id="edge9" class="edge"><title>start_node&#45;&gt;{event = start_node|pause = before}</title>
+<path fill="none" stroke="grey" d="M211.66,-190.944C199.245,-181.871 183.659,-170.482 169.506,-160.139"/>
+<polygon fill="grey" stroke="grey" points="171.513,-157.271 161.374,-154.196 167.383,-162.922 171.513,-157.271"/>
 </g>
 <!-- &#39;[&#39; -->
 <g id="node9" class="node"><title>&#39;[&#39;</title>
-<polygon fill="none" stroke="black" points="190,-149 136,-149 136,-113 190,-113 190,-149"/>
-<text text-anchor="middle" x="163" y="-127.3" font-family="Times,serif" font-size="14.00">&#39;[&#39;</text>
+<polygon fill="none" stroke="black" points="262,-149 208,-149 208,-113 262,-113 262,-149"/>
+<text text-anchor="middle" x="235" y="-127.3" font-family="Times,serif" font-size="14.00">&#39;[&#39;</text>
 </g>
 <!-- start_node&#45;&gt;&#39;[&#39; -->
-<g id="edge8" class="edge"><title>start_node&#45;&gt;&#39;[&#39;</title>
-<path fill="none" stroke="grey" d="M163,-190.754C163,-181.523 163,-169.935 163,-159.495"/>
-<polygon fill="grey" stroke="grey" points="166.5,-159.177 163,-149.177 159.5,-159.177 166.5,-159.177"/>
+<g id="edge10" class="edge"><title>start_node&#45;&gt;&#39;[&#39;</title>
+<path fill="none" stroke="grey" d="M235,-190.754C235,-181.523 235,-169.935 235,-159.495"/>
+<polygon fill="grey" stroke="grey" points="238.5,-159.177 235,-149.177 231.5,-159.177 238.5,-159.177"/>
 </g>
 <!-- &#39;]&#39; -->
 <g id="node11" class="node"><title>&#39;]&#39;</title>
-<polygon fill="none" stroke="black" points="262,-149 208,-149 208,-113 262,-113 262,-149"/>
-<text text-anchor="middle" x="235" y="-127.3" font-family="Times,serif" font-size="14.00">&#39;]&#39;</text>
+<polygon fill="none" stroke="black" points="54,-149 0,-149 0,-113 54,-113 54,-149"/>
+<text text-anchor="middle" x="27" y="-127.3" font-family="Times,serif" font-size="14.00">&#39;]&#39;</text>
 </g>
 <!-- end_node&#45;&gt;&#39;]&#39; -->
-<g id="edge10" class="edge"><title>end_node&#45;&gt;&#39;]&#39;</title>
-<path fill="none" stroke="grey" d="M248.916,-190.754C246.706,-181.426 243.927,-169.691 241.434,-159.165"/>
-<polygon fill="grey" stroke="grey" points="244.779,-158.101 239.068,-149.177 237.967,-159.715 244.779,-158.101"/>
+<g id="edge12" class="edge"><title>end_node&#45;&gt;&#39;]&#39;</title>
+<path fill="none" stroke="grey" d="M73.3851,-190.754C65.5603,-180.843 55.5902,-168.214 46.9001,-157.207"/>
+<polygon fill="grey" stroke="grey" points="49.5046,-154.857 40.561,-149.177 44.0104,-159.195 49.5046,-154.857"/>
 </g>
 <!-- attribute_statement -->
 <g id="node13" class="node"><title>attribute_statement</title>
-<polygon fill="none" stroke="black" points="471,-227 343,-227 343,-191 471,-191 471,-227"/>
-<text text-anchor="middle" x="407" y="-205.3" font-family="Times,serif" font-size="14.00">attribute_statement*</text>
+<polygon fill="none" stroke="black" points="426,-227 298,-227 298,-191 426,-191 426,-227"/>
+<text text-anchor="middle" x="362" y="-205.3" font-family="Times,serif" font-size="14.00">attribute_statement*</text>
 </g>
 <!-- attribute_definition&#45;&gt;attribute_statement -->
-<g id="edge13" class="edge"><title>attribute_definition&#45;&gt;attribute_statement</title>
-<path fill="none" stroke="grey" d="M407,-262.697C407,-254.983 407,-245.712 407,-237.112"/>
-<polygon fill="grey" stroke="grey" points="410.5,-237.104 407,-227.104 403.5,-237.104 410.5,-237.104"/>
+<g id="edge14" class="edge"><title>attribute_definition&#45;&gt;attribute_statement</title>
+<path fill="none" stroke="grey" d="M362,-262.697C362,-254.983 362,-245.712 362,-237.112"/>
+<polygon fill="grey" stroke="grey" points="365.5,-237.104 362,-227.104 358.5,-237.104 365.5,-237.104"/>
 </g>
 <!-- start_attributes -->
 <g id="node14" class="node"><title>start_attributes</title>
-<polygon fill="none" stroke="black" points="377.25,-149 280.75,-149 280.75,-113 377.25,-113 377.25,-149"/>
-<text text-anchor="middle" x="329" y="-127.3" font-family="Times,serif" font-size="14.00">start_attributes</text>
+<polygon fill="none" stroke="black" points="488.25,-149 391.75,-149 391.75,-113 488.25,-113 488.25,-149"/>
+<text text-anchor="middle" x="440" y="-127.3" font-family="Times,serif" font-size="14.00">start_attributes</text>
 </g>
 <!-- attribute_statement&#45;&gt;start_attributes -->
-<g id="edge14" class="edge"><title>attribute_statement&#45;&gt;start_attributes</title>
-<path fill="none" stroke="grey" d="M389.301,-190.754C378.829,-180.551 365.402,-167.469 353.878,-156.24"/>
-<polygon fill="grey" stroke="grey" points="356.234,-153.649 346.629,-149.177 351.349,-158.663 356.234,-153.649"/>
+<g id="edge15" class="edge"><title>attribute_statement&#45;&gt;start_attributes</title>
+<path fill="none" stroke="grey" d="M379.699,-190.754C390.171,-180.551 403.598,-167.469 415.122,-156.24"/>
+<polygon fill="grey" stroke="grey" points="417.651,-158.663 422.371,-149.177 412.766,-153.649 417.651,-158.663"/>
 </g>
 <!-- end_attributes -->
 <g id="node17" class="node"><title>end_attributes</title>
-<polygon fill="none" stroke="black" points="488.25,-149 395.75,-149 395.75,-113 488.25,-113 488.25,-149"/>
-<text text-anchor="middle" x="442" y="-127.3" font-family="Times,serif" font-size="14.00">end_attributes</text>
+<polygon fill="none" stroke="black" points="373.25,-149 280.75,-149 280.75,-113 373.25,-113 373.25,-149"/>
+<text text-anchor="middle" x="327" y="-127.3" font-family="Times,serif" font-size="14.00">end_attributes</text>
 </g>
 <!-- attribute_statement&#45;&gt;end_attributes -->
-<g id="edge17" class="edge"><title>attribute_statement&#45;&gt;end_attributes</title>
-<path fill="none" stroke="grey" d="M414.942,-190.754C419.328,-181.232 424.868,-169.201 429.792,-158.509"/>
-<polygon fill="grey" stroke="grey" points="433.085,-159.724 434.089,-149.177 426.727,-156.796 433.085,-159.724"/>
+<g id="edge18" class="edge"><title>attribute_statement&#45;&gt;end_attributes</title>
+<path fill="none" stroke="grey" d="M354.058,-190.754C349.672,-181.232 344.132,-169.201 339.208,-158.509"/>
+<polygon fill="grey" stroke="grey" points="342.273,-156.796 334.911,-149.177 335.915,-159.724 342.273,-156.796"/>
 </g>
 <!-- {event = start_attributes|pause = before} -->
 <g id="node15" class="node"><title>{event = start_attributes|pause = before}</title>
-<polygon fill="lightblue" stroke="black" points="163,-24 163,-70 305,-70 305,-24 163,-24"/>
-<text text-anchor="middle" x="234" y="-54.8" font-family="Times,serif" font-size="14.00">event = start_attributes</text>
-<polyline fill="none" stroke="black" points="163,-47 305,-47 "/>
-<text text-anchor="middle" x="234" y="-31.8" font-family="Times,serif" font-size="14.00">pause = before</text>
+<polygon fill="lightblue" stroke="black" points="369,-24 369,-70 511,-70 511,-24 369,-24"/>
+<text text-anchor="middle" x="440" y="-54.8" font-family="Times,serif" font-size="14.00">event = start_attributes</text>
+<polyline fill="none" stroke="black" points="369,-47 511,-47 "/>
+<text text-anchor="middle" x="440" y="-31.8" font-family="Times,serif" font-size="14.00">pause = before</text>
 </g>
 <!-- start_attributes&#45;&gt;{event = start_attributes|pause = before} -->
-<g id="edge15" class="edge"><title>start_attributes&#45;&gt;{event = start_attributes|pause = before}</title>
-<path fill="none" stroke="grey" d="M308.853,-112.61C296.833,-102.235 281.268,-88.8 267.448,-76.8707"/>
-<polygon fill="grey" stroke="grey" points="269.409,-73.94 259.552,-70.0554 264.835,-79.2391 269.409,-73.94"/>
+<g id="edge16" class="edge"><title>start_attributes&#45;&gt;{event = start_attributes|pause = before}</title>
+<path fill="none" stroke="grey" d="M440,-112.61C440,-103.204 440,-91.2845 440,-80.2511"/>
+<polygon fill="grey" stroke="grey" points="443.5,-80.0553 440,-70.0554 436.5,-80.0554 443.5,-80.0553"/>
 </g>
 <!-- &#39;{&#39; -->
 <g id="node16" class="node"><title>&#39;{&#39;</title>
-<polygon fill="none" stroke="black" points="377,-65 323,-65 323,-29 377,-29 377,-65"/>
-<text text-anchor="middle" x="350" y="-43.3" font-family="Times,serif" font-size="14.00">&#39;{&#39;</text>
+<polygon fill="none" stroke="black" points="583,-65 529,-65 529,-29 583,-29 583,-65"/>
+<text text-anchor="middle" x="556" y="-43.3" font-family="Times,serif" font-size="14.00">&#39;{&#39;</text>
 </g>
 <!-- start_attributes&#45;&gt;&#39;{&#39; -->
-<g id="edge16" class="edge"><title>start_attributes&#45;&gt;&#39;{&#39;</title>
-<path fill="none" stroke="grey" d="M333.454,-112.61C336.257,-101.665 339.932,-87.3145 343.106,-74.9188"/>
-<polygon fill="grey" stroke="grey" points="346.534,-75.6396 345.625,-65.0838 339.753,-73.9029 346.534,-75.6396"/>
+<g id="edge17" class="edge"><title>start_attributes&#45;&gt;&#39;{&#39;</title>
+<path fill="none" stroke="grey" d="M464.317,-112.81C481.486,-100.674 504.68,-84.2781 523.443,-71.0144"/>
+<polygon fill="grey" stroke="grey" points="525.569,-73.7977 531.715,-65.1673 521.528,-68.0816 525.569,-73.7977"/>
 </g>
 <!-- &#39;}&#39; -->
 <g id="node18" class="node"><title>&#39;}&#39;</title>
-<polygon fill="none" stroke="black" points="469,-65 415,-65 415,-29 469,-29 469,-65"/>
-<text text-anchor="middle" x="442" y="-43.3" font-family="Times,serif" font-size="14.00">&#39;}&#39;</text>
+<polygon fill="none" stroke="black" points="351,-65 297,-65 297,-29 351,-29 351,-65"/>
+<text text-anchor="middle" x="324" y="-43.3" font-family="Times,serif" font-size="14.00">&#39;}&#39;</text>
 </g>
 <!-- end_attributes&#45;&gt;&#39;}&#39; -->
-<g id="edge18" class="edge"><title>end_attributes&#45;&gt;&#39;}&#39;</title>
-<path fill="none" stroke="grey" d="M442,-112.61C442,-101.774 442,-87.6012 442,-75.2913"/>
-<polygon fill="grey" stroke="grey" points="445.5,-75.0838 442,-65.0838 438.5,-75.0839 445.5,-75.0838"/>
+<g id="edge19" class="edge"><title>end_attributes&#45;&gt;&#39;}&#39;</title>
+<path fill="none" stroke="grey" d="M326.364,-112.61C325.967,-101.774 325.449,-87.6012 324.998,-75.2913"/>
+<polygon fill="grey" stroke="grey" points="328.488,-74.9492 324.625,-65.0838 321.493,-75.2052 328.488,-74.9492"/>
 </g>
 <!-- edge_statement -->
 <g id="node21" class="node"><title>edge_statement</title>
-<polygon fill="none" stroke="black" points="571.25,-371 470.75,-371 470.75,-335 571.25,-335 571.25,-371"/>
-<text text-anchor="middle" x="521" y="-349.3" font-family="Times,serif" font-size="14.00">edge_statement</text>
+<polygon fill="none" stroke="black" points="528.25,-371 427.75,-371 427.75,-335 528.25,-335 528.25,-371"/>
+<text text-anchor="middle" x="478" y="-349.3" font-family="Times,serif" font-size="14.00">edge_statement</text>
 </g>
 <!-- edge_definition&#45;&gt;edge_statement -->
 <g id="edge23" class="edge"><title>edge_definition&#45;&gt;edge_statement</title>
-<path fill="none" stroke="grey" d="M515.239,-412.754C514.248,-403.426 514.002,-391.691 514.5,-381.165"/>
-<polygon fill="grey" stroke="grey" points="517.991,-381.41 515.246,-371.177 511.011,-380.889 517.991,-381.41"/>
+<path fill="none" stroke="grey" d="M472.239,-412.754C471.248,-403.426 471.002,-391.691 471.5,-381.165"/>
+<polygon fill="grey" stroke="grey" points="474.991,-381.41 472.246,-371.177 468.011,-380.889 474.991,-381.41"/>
 </g>
 <!-- edge_definition&#45;&gt;edge_statement -->
-<g id="edge36" class="edge"><title>edge_definition&#45;&gt;edge_statement</title>
-<path fill="none" stroke="grey" d="M526.761,-412.754C527.752,-403.426 527.998,-391.691 527.5,-381.165"/>
-<polygon fill="grey" stroke="grey" points="530.989,-380.889 526.754,-371.177 524.009,-381.41 530.989,-380.889"/>
+<g id="edge24" class="edge"><title>edge_definition&#45;&gt;edge_statement</title>
+<path fill="none" stroke="grey" d="M483.761,-412.754C484.752,-403.426 484.998,-391.691 484.5,-381.165"/>
+<polygon fill="grey" stroke="grey" points="487.989,-380.889 483.754,-371.177 481.009,-381.41 487.989,-380.889"/>
 </g>
 <!-- edge_definition&#45;&gt;«graph¯definition» -->
 <g id="edge37" class="edge"><title>edge_definition&#45;&gt;«graph¯definition»</title>
-<path fill="none" stroke="grey" d="M515.248,-449.264C507.673,-463.394 494.883,-483.582 483.504,-499.562"/>
-<polygon fill="grey" stroke="grey" points="480.452,-497.806 477.369,-507.942 486.1,-501.941 480.452,-497.806"/>
+<path fill="none" stroke="grey" d="M483.387,-449.264C484.87,-462.87 485.143,-482.095 484.206,-497.77"/>
+<polygon fill="grey" stroke="grey" points="480.701,-497.688 483.364,-507.942 487.677,-498.265 480.701,-497.688"/>
 </g>
 <!-- edge_name -->
 <g id="node22" class="node"><title>edge_name</title>
-<polygon fill="none" stroke="black" points="642.25,-299 563.75,-299 563.75,-263 642.25,-263 642.25,-299"/>
-<text text-anchor="middle" x="603" y="-277.3" font-family="Times,serif" font-size="14.00">edge_name</text>
+<polygon fill="none" stroke="black" points="612.25,-299 533.75,-299 533.75,-263 612.25,-263 612.25,-299"/>
+<text text-anchor="middle" x="573" y="-277.3" font-family="Times,serif" font-size="14.00">edge_name</text>
 </g>
 <!-- edge_statement&#45;&gt;edge_name -->
-<g id="edge24" class="edge"><title>edge_statement&#45;&gt;edge_name</title>
-<path fill="none" stroke="grey" d="M535.354,-334.697C544.772,-325.881 557.314,-315.032 569.088,-305.474"/>
-<polygon fill="grey" stroke="grey" points="571.436,-308.078 577.068,-299.104 567.069,-302.607 571.436,-308.078"/>
+<g id="edge25" class="edge"><title>edge_statement&#45;&gt;edge_name</title>
+<path fill="none" stroke="grey" d="M495.567,-334.697C506.835,-325.711 521.741,-314.614 535.509,-304.924"/>
+<polygon fill="grey" stroke="grey" points="537.674,-307.682 543.892,-299.104 533.681,-301.932 537.674,-307.682"/>
 </g>
 <!-- edge_statement&#45;&gt;edge_name -->
-<g id="edge33" class="edge"><title>edge_statement&#45;&gt;edge_name</title>
-<path fill="none" stroke="grey" d="M547.185,-334.697C558.206,-326.05 570.802,-315.449 581.3,-306.027"/>
-<polygon fill="grey" stroke="grey" points="583.848,-308.44 588.859,-299.104 579.12,-303.277 583.848,-308.44"/>
+<g id="edge26" class="edge"><title>edge_statement&#45;&gt;edge_name</title>
+<path fill="none" stroke="grey" d="M507.137,-334.876C520.02,-326.063 534.961,-315.182 547.41,-305.586"/>
+<polygon fill="grey" stroke="grey" points="549.862,-308.112 555.575,-299.19 545.545,-302.602 549.862,-308.112"/>
 </g>
 <!-- edge_statement&#45;&gt;attribute_definition -->
-<g id="edge34" class="edge"><title>edge_statement&#45;&gt;attribute_definition</title>
-<path fill="none" stroke="grey" d="M493.112,-334.876C478.207,-325.724 459.671,-314.342 443.618,-304.485"/>
-<polygon fill="grey" stroke="grey" points="445.348,-301.44 434.995,-299.19 441.685,-307.405 445.348,-301.44"/>
+<g id="edge35" class="edge"><title>edge_statement&#45;&gt;attribute_definition</title>
+<path fill="none" stroke="grey" d="M449.623,-334.876C434.456,-325.724 415.595,-314.342 399.261,-304.485"/>
+<polygon fill="grey" stroke="grey" points="400.856,-301.36 390.486,-299.19 397.239,-307.353 400.856,-301.36"/>
 </g>
 <!-- edge_statement&#45;&gt;(&#39;,&#39;) -->
-<g id="edge35" class="edge"><title>edge_statement&#45;&gt;(&#39;,&#39;)</title>
-<path fill="none" stroke="grey" d="M519.764,-334.697C519.213,-326.983 518.551,-317.712 517.937,-309.112"/>
-<polygon fill="grey" stroke="grey" points="521.425,-308.83 517.222,-299.104 514.443,-309.328 521.425,-308.83"/>
+<g id="edge36" class="edge"><title>edge_statement&#45;&gt;(&#39;,&#39;)</title>
+<path fill="none" stroke="grey" d="M476.27,-334.697C475.498,-326.983 474.571,-317.712 473.711,-309.112"/>
+<polygon fill="grey" stroke="grey" points="477.188,-308.706 472.71,-299.104 470.223,-309.403 477.188,-308.706"/>
 </g>
 <!-- directed_edge -->
 <g id="node23" class="node"><title>directed_edge</title>
-<polygon fill="none" stroke="black" points="678,-227 586,-227 586,-191 678,-191 678,-227"/>
-<text text-anchor="middle" x="632" y="-205.3" font-family="Times,serif" font-size="14.00">directed_edge</text>
+<polygon fill="none" stroke="black" points="1024,-227 932,-227 932,-191 1024,-191 1024,-227"/>
+<text text-anchor="middle" x="978" y="-205.3" font-family="Times,serif" font-size="14.00">directed_edge</text>
 </g>
 <!-- edge_name&#45;&gt;directed_edge -->
-<g id="edge25" class="edge"><title>edge_name&#45;&gt;directed_edge</title>
-<path fill="none" stroke="grey" d="M610.169,-262.697C613.435,-254.813 617.374,-245.304 621.002,-236.546"/>
-<polygon fill="grey" stroke="grey" points="624.32,-237.683 624.914,-227.104 617.853,-235.003 624.32,-237.683"/>
+<g id="edge27" class="edge"><title>edge_name&#45;&gt;directed_edge</title>
+<path fill="none" stroke="grey" d="M612.571,-273.161C684.891,-260.661 838.602,-234.094 921.762,-219.72"/>
+<polygon fill="grey" stroke="grey" points="922.531,-223.139 931.789,-217.987 921.339,-216.241 922.531,-223.139"/>
 </g>
 <!-- undirected_edge -->
 <g id="node27" class="node"><title>undirected_edge</title>
-<polygon fill="none" stroke="black" points="1020.5,-227 915.5,-227 915.5,-191 1020.5,-191 1020.5,-227"/>
-<text text-anchor="middle" x="968" y="-205.3" font-family="Times,serif" font-size="14.00">undirected_edge</text>
+<polygon fill="none" stroke="black" points="701.5,-227 596.5,-227 596.5,-191 701.5,-191 701.5,-227"/>
+<text text-anchor="middle" x="649" y="-205.3" font-family="Times,serif" font-size="14.00">undirected_edge</text>
 </g>
 <!-- edge_name&#45;&gt;undirected_edge -->
-<g id="edge29" class="edge"><title>edge_name&#45;&gt;undirected_edge</title>
-<path fill="none" stroke="grey" d="M642.408,-272.442C705.566,-260.33 829.994,-236.467 905.411,-222.003"/>
-<polygon fill="grey" stroke="grey" points="906.101,-225.435 915.262,-220.114 904.782,-218.56 906.101,-225.435"/>
-</g>
-<!-- {priority = 1} -->
-<g id="node24" class="node"><title>{priority = 1}</title>
-<polygon fill="lightblue" stroke="black" points="734,-113 734,-149 814,-149 814,-113 734,-113"/>
-<text text-anchor="middle" x="774" y="-127.3" font-family="Times,serif" font-size="14.00">priority = 1</text>
-</g>
-<!-- directed_edge&#45;&gt;{priority = 1} -->
-<g id="edge26" class="edge"><title>directed_edge&#45;&gt;{priority = 1}</title>
-<path fill="none" stroke="grey" d="M663.868,-190.944C684.187,-180.069 710.726,-165.865 732.661,-154.125"/>
-<polygon fill="grey" stroke="grey" points="734.582,-157.067 741.747,-149.262 731.279,-150.895 734.582,-157.067"/>
+<g id="edge31" class="edge"><title>edge_name&#45;&gt;undirected_edge</title>
+<path fill="none" stroke="grey" d="M591.787,-262.697C601.174,-254.05 612.684,-243.449 622.913,-234.027"/>
+<polygon fill="grey" stroke="grey" points="625.445,-236.454 630.43,-227.104 620.703,-231.305 625.445,-236.454"/>
 </g>
 <!-- {event = directed_edge|pause = before} -->
-<g id="node25" class="node"><title>{event = directed_edge|pause = before}</title>
-<polygon fill="lightblue" stroke="black" points="506.5,-108 506.5,-154 643.5,-154 643.5,-108 506.5,-108"/>
-<text text-anchor="middle" x="575" y="-138.8" font-family="Times,serif" font-size="14.00">event = directed_edge</text>
-<polyline fill="none" stroke="black" points="506.5,-131 643.5,-131 "/>
-<text text-anchor="middle" x="575" y="-115.8" font-family="Times,serif" font-size="14.00">pause = before</text>
+<g id="node24" class="node"><title>{event = directed_edge|pause = before}</title>
+<polygon fill="lightblue" stroke="black" points="846.5,-108 846.5,-154 983.5,-154 983.5,-108 846.5,-108"/>
+<text text-anchor="middle" x="915" y="-138.8" font-family="Times,serif" font-size="14.00">event = directed_edge</text>
+<polyline fill="none" stroke="black" points="846.5,-131 983.5,-131 "/>
+<text text-anchor="middle" x="915" y="-115.8" font-family="Times,serif" font-size="14.00">pause = before</text>
 </g>
 <!-- directed_edge&#45;&gt;{event = directed_edge|pause = before} -->
-<g id="edge27" class="edge"><title>directed_edge&#45;&gt;{event = directed_edge|pause = before}</title>
-<path fill="none" stroke="grey" d="M619.066,-190.754C612.765,-182.354 605.001,-172.001 597.754,-162.339"/>
-<polygon fill="grey" stroke="grey" points="600.368,-159.991 591.568,-154.091 594.768,-164.191 600.368,-159.991"/>
+<g id="edge28" class="edge"><title>directed_edge&#45;&gt;{event = directed_edge|pause = before}</title>
+<path fill="none" stroke="grey" d="M963.704,-190.754C956.67,-182.269 947.986,-171.792 939.907,-162.046"/>
+<polygon fill="grey" stroke="grey" points="942.389,-159.556 933.312,-154.091 936.999,-164.023 942.389,-159.556"/>
+</g>
+<!-- {priority = 1} -->
+<g id="node25" class="node"><title>{priority = 1}</title>
+<polygon fill="lightblue" stroke="black" points="1002,-113 1002,-149 1082,-149 1082,-113 1002,-113"/>
+<text text-anchor="middle" x="1042" y="-127.3" font-family="Times,serif" font-size="14.00">priority = 1</text>
+</g>
+<!-- directed_edge&#45;&gt;{priority = 1} -->
+<g id="edge29" class="edge"><title>directed_edge&#45;&gt;{priority = 1}</title>
+<path fill="none" stroke="grey" d="M992.523,-190.754C1000.95,-180.746 1011.71,-167.966 1021.05,-156.884"/>
+<polygon fill="grey" stroke="grey" points="1023.77,-159.081 1027.53,-149.177 1018.42,-154.572 1023.77,-159.081"/>
 </g>
 <!-- &#39;&#45;&gt;&#39; -->
 <g id="node26" class="node"><title>&#39;&#45;&gt;&#39;</title>
-<polygon fill="none" stroke="black" points="716,-149 662,-149 662,-113 716,-113 716,-149"/>
-<text text-anchor="middle" x="689" y="-127.3" font-family="Times,serif" font-size="14.00">&#39;&#45;&gt;&#39;</text>
+<polygon fill="none" stroke="black" points="1154,-149 1100,-149 1100,-113 1154,-113 1154,-149"/>
+<text text-anchor="middle" x="1127" y="-127.3" font-family="Times,serif" font-size="14.00">&#39;&#45;&gt;&#39;</text>
 </g>
 <!-- directed_edge&#45;&gt;&#39;&#45;&gt;&#39; -->
-<g id="edge28" class="edge"><title>directed_edge&#45;&gt;&#39;&#45;&gt;&#39;</title>
-<path fill="none" stroke="grey" d="M644.934,-190.754C652.368,-180.843 661.839,-168.214 670.095,-157.207"/>
-<polygon fill="grey" stroke="grey" points="672.917,-159.277 676.117,-149.177 667.317,-155.077 672.917,-159.277"/>
-</g>
-<!-- {priority = 2} -->
-<g id="node28" class="node"><title>{priority = 2}</title>
-<polygon fill="lightblue" stroke="black" points="1074,-113 1074,-149 1154,-149 1154,-113 1074,-113"/>
-<text text-anchor="middle" x="1114" y="-127.3" font-family="Times,serif" font-size="14.00">priority = 2</text>
-</g>
-<!-- undirected_edge&#45;&gt;{priority = 2} -->
-<g id="edge30" class="edge"><title>undirected_edge&#45;&gt;{priority = 2}</title>
-<path fill="none" stroke="grey" d="M1000.77,-190.944C1021.82,-179.982 1049.38,-165.637 1072.04,-153.844"/>
-<polygon fill="grey" stroke="grey" points="1073.84,-156.852 1081.09,-149.13 1070.61,-150.643 1073.84,-156.852"/>
+<g id="edge30" class="edge"><title>directed_edge&#45;&gt;&#39;&#45;&gt;&#39;</title>
+<path fill="none" stroke="grey" d="M1017.59,-190.954C1039.56,-181.116 1067.18,-168.122 1091,-155 1091.41,-154.776 1091.81,-154.55 1092.22,-154.321"/>
+<polygon fill="grey" stroke="grey" points="1094.04,-157.313 1100.89,-149.235 1090.5,-151.276 1094.04,-157.313"/>
 </g>
 <!-- {event = undirected_edge|pause = before} -->
-<g id="node29" class="node"><title>{event = undirected_edge|pause = before}</title>
-<polygon fill="lightblue" stroke="black" points="832.5,-108 832.5,-154 983.5,-154 983.5,-108 832.5,-108"/>
-<text text-anchor="middle" x="908" y="-138.8" font-family="Times,serif" font-size="14.00">event = undirected_edge</text>
-<polyline fill="none" stroke="black" points="832.5,-131 983.5,-131 "/>
-<text text-anchor="middle" x="908" y="-115.8" font-family="Times,serif" font-size="14.00">pause = before</text>
+<g id="node28" class="node"><title>{event = undirected_edge|pause = before}</title>
+<polygon fill="lightblue" stroke="black" points="506.5,-108 506.5,-154 657.5,-154 657.5,-108 506.5,-108"/>
+<text text-anchor="middle" x="582" y="-138.8" font-family="Times,serif" font-size="14.00">event = undirected_edge</text>
+<polyline fill="none" stroke="black" points="506.5,-131 657.5,-131 "/>
+<text text-anchor="middle" x="582" y="-115.8" font-family="Times,serif" font-size="14.00">pause = before</text>
 </g>
 <!-- undirected_edge&#45;&gt;{event = undirected_edge|pause = before} -->
-<g id="edge31" class="edge"><title>undirected_edge&#45;&gt;{event = undirected_edge|pause = before}</title>
-<path fill="none" stroke="grey" d="M954.385,-190.754C947.686,-182.269 939.415,-171.792 931.72,-162.046"/>
-<polygon fill="grey" stroke="grey" points="934.384,-159.771 925.44,-154.091 928.89,-164.108 934.384,-159.771"/>
+<g id="edge32" class="edge"><title>undirected_edge&#45;&gt;{event = undirected_edge|pause = before}</title>
+<path fill="none" stroke="grey" d="M633.797,-190.754C626.241,-182.184 616.895,-171.582 608.23,-161.754"/>
+<polygon fill="grey" stroke="grey" points="610.713,-159.278 601.475,-154.091 605.462,-163.907 610.713,-159.278"/>
+</g>
+<!-- {priority = 2} -->
+<g id="node29" class="node"><title>{priority = 2}</title>
+<polygon fill="lightblue" stroke="black" points="676,-113 676,-149 756,-149 756,-113 676,-113"/>
+<text text-anchor="middle" x="716" y="-127.3" font-family="Times,serif" font-size="14.00">priority = 2</text>
+</g>
+<!-- undirected_edge&#45;&gt;{priority = 2} -->
+<g id="edge33" class="edge"><title>undirected_edge&#45;&gt;{priority = 2}</title>
+<path fill="none" stroke="grey" d="M664.203,-190.754C673.027,-180.746 684.293,-167.966 694.063,-156.884"/>
+<polygon fill="grey" stroke="grey" points="696.869,-158.993 700.857,-149.177 691.618,-154.364 696.869,-158.993"/>
 </g>
 <!-- &#39;&#45;&#45;&#39; -->
 <g id="node30" class="node"><title>&#39;&#45;&#45;&#39;</title>
-<polygon fill="none" stroke="black" points="1056,-149 1002,-149 1002,-113 1056,-113 1056,-149"/>
-<text text-anchor="middle" x="1029" y="-127.3" font-family="Times,serif" font-size="14.00">&#39;&#45;&#45;&#39;</text>
+<polygon fill="none" stroke="black" points="828,-149 774,-149 774,-113 828,-113 828,-149"/>
+<text text-anchor="middle" x="801" y="-127.3" font-family="Times,serif" font-size="14.00">&#39;&#45;&#45;&#39;</text>
 </g>
 <!-- undirected_edge&#45;&gt;&#39;&#45;&#45;&#39; -->
-<g id="edge32" class="edge"><title>undirected_edge&#45;&gt;&#39;&#45;&#45;&#39;</title>
-<path fill="none" stroke="grey" d="M981.842,-190.754C989.797,-180.843 999.933,-168.214 1008.77,-157.207"/>
-<polygon fill="grey" stroke="grey" points="1011.68,-159.167 1015.21,-149.177 1006.22,-154.785 1011.68,-159.167"/>
+<g id="edge34" class="edge"><title>undirected_edge&#45;&gt;&#39;&#45;&#45;&#39;</title>
+<path fill="none" stroke="grey" d="M689.943,-190.964C712.466,-181.18 740.692,-168.234 765,-155 765.529,-154.712 766.061,-154.419 766.595,-154.122"/>
+<polygon fill="grey" stroke="grey" points="768.441,-157.096 775.305,-149.026 764.907,-151.054 768.441,-157.096"/>
 </g>
 <!-- {action = [values]|bless = ::lhs} -->
 <g id="node32" class="node"><title>{action = [values]|bless = ::lhs}</title>
-<polygon fill="lightblue" stroke="black" points="589.5,-408 589.5,-454 698.5,-454 698.5,-408 589.5,-408"/>
-<text text-anchor="middle" x="644" y="-438.8" font-family="Times,serif" font-size="14.00">action = [values]</text>
-<polyline fill="none" stroke="black" points="589.5,-431 698.5,-431 "/>
-<text text-anchor="middle" x="644" y="-415.8" font-family="Times,serif" font-size="14.00">bless = ::lhs</text>
+<polygon fill="lightblue" stroke="black" points="546.5,-408 546.5,-454 655.5,-454 655.5,-408 546.5,-408"/>
+<text text-anchor="middle" x="601" y="-438.8" font-family="Times,serif" font-size="14.00">action = [values]</text>
+<polyline fill="none" stroke="black" points="546.5,-431 655.5,-431 "/>
+<text text-anchor="middle" x="601" y="-415.8" font-family="Times,serif" font-size="14.00">bless = ::lhs</text>
 </g>
 <!-- :default&#45;&gt;{action = [values]|bless = ::lhs} -->
 <g id="edge39" class="edge"><title>:default&#45;&gt;{action = [values]|bless = ::lhs}</title>
-<path fill="none" stroke="grey" d="M644,-507.942C644,-495.79 644,-479.08 644,-464.427"/>
-<polygon fill="grey" stroke="grey" points="647.5,-464.217 644,-454.217 640.5,-464.217 647.5,-464.217"/>
+<path fill="none" stroke="grey" d="M593.651,-507.942C594.827,-495.79 596.444,-479.08 597.862,-464.427"/>
+<polygon fill="grey" stroke="grey" points="601.37,-464.507 598.85,-454.217 594.403,-463.833 601.37,-464.507"/>
 </g>
-<!-- {whitespace|[\\s]+} -->
-<g id="node34" class="node"><title>{whitespace|[\\s]+}</title>
-<polygon fill="lightblue" stroke="black" points="716.5,-408 716.5,-454 793.5,-454 793.5,-408 716.5,-408"/>
-<text text-anchor="middle" x="755" y="-438.8" font-family="Times,serif" font-size="14.00">whitespace</text>
-<polyline fill="none" stroke="black" points="716.5,-431 793.5,-431 "/>
-<text text-anchor="middle" x="755" y="-415.8" font-family="Times,serif" font-size="14.00">[\s]+</text>
+<!-- {whitespace = [\\s]+} -->
+<g id="node34" class="node"><title>{whitespace = [\\s]+}</title>
+<polygon fill="lightblue" stroke="black" points="673.5,-413 673.5,-449 792.5,-449 792.5,-413 673.5,-413"/>
+<text text-anchor="middle" x="733" y="-427.3" font-family="Times,serif" font-size="14.00">whitespace = [\s]+</text>
 </g>
-<!-- :discard&#45;&gt;{whitespace|[\\s]+} -->
-<g id="edge41" class="edge"><title>:discard&#45;&gt;{whitespace|[\\s]+}</title>
-<path fill="none" stroke="grey" d="M727.236,-507.942C731.722,-495.672 737.907,-478.755 743.301,-464.001"/>
-<polygon fill="grey" stroke="grey" points="746.731,-464.811 746.878,-454.217 740.157,-462.407 746.731,-464.811"/>
+<!-- :discard = :discard&#45;&gt;{whitespace = [\\s]+} -->
+<g id="edge41" class="edge"><title>:discard = :discard&#45;&gt;{whitespace = [\\s]+}</title>
+<path fill="none" stroke="grey" d="M704.42,-507.942C709.568,-494.263 716.889,-474.81 722.832,-459.017"/>
+<polygon fill="grey" stroke="grey" points="726.256,-459.856 726.503,-449.264 719.705,-457.391 726.256,-459.856"/>
 </g>
 </g>
 </svg>
