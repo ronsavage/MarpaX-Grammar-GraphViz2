@@ -19,7 +19,7 @@ graph_grammar
    |   |   |   |           |---'}'
    |   |   |   |---(',')
    |   |   |---node_statement
-   |   |   |---graph_definition
+   |   |   |---«graph¯definition»
    |   |---edge_definition
    |       |---edge_statement
    |       |   |---edge_name
@@ -35,10 +35,9 @@ graph_grammar
    |       |   |---attribute_definition
    |       |   |---(',')
    |       |---edge_statement
-   |       |---graph_definition
+   |       |---«graph¯definition»
    |---:default
-   |   |---action = [values]
+   |   |---{action = [values]|bless = ::lhs}
    |---:discard
-   |   |---whitespace
-   |       |---[\\s]+
+   |   |---{whitespace|[\\s]+}
    |---{event subtext = completed «sub¯text»|event 'A[]' = nulled «A»|event '^a' = predicted A}

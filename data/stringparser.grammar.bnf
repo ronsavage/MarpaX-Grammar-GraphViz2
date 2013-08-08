@@ -1,4 +1,4 @@
-:default				::= action => [values]
+:default				::= action => [values] bless => ::lhs
 
 event subtext			= completed <sub text>
 
@@ -19,7 +19,7 @@ graph_grammar			::= <graph definition>	action => graph
 # Node stuff
 
 node_definition			::= node_statement
-							| node_statement graph_definition
+							| node_statement <graph definition>
 
 node_statement			::= node_name
 							| node_name attribute_definition
@@ -36,7 +36,7 @@ end_node				~ ']'
 # Edge stuff
 
 edge_definition			::= edge_statement
-							| edge_statement graph_definition
+							| edge_statement <graph definition>
 
 edge_statement			::= edge_name
 							| edge_name attribute_definition

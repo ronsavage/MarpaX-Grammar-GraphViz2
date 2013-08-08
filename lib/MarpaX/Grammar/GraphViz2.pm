@@ -111,17 +111,17 @@ sub add_lexeme
 
 	$parent -> add_daughter($kid);
 
-	while (my $item = shift @$field)
-	{
-		$parent = $kid;
-		$kid    = Tree::DAG_Node -> new
-		({
-			attributes => {fillcolor => 'lightblue', label => $item, shape => 'rectangle', style => 'filled'},
-			name       => $item,
-		});
+	my($label)              = [map{ {text => $_} } @$field];
+	$$label[0]{text}        = "{$$label[0]{text}";
+	$$label[$#$label]{text} = "$$label[$#$label]{text}\}";
+	$parent                 = $kid;
+	$kid                    = Tree::DAG_Node -> new
+	({
+		attributes => {fillcolor => 'lightblue', label => $label, shape => 'record', style => 'filled'},
+		name       => join('|', map{$$_{text} } @$label),
+	});
 
-		$parent -> add_daughter($kid);
-	}
+	$parent -> add_daughter($kid);
 
 } # End of add_lexeme.
 
@@ -135,15 +135,16 @@ sub add_adverb_record
 
 	if ($#index >= 0)
 	{
-		my($label) = [map{"$$field[$_] = $$field[$_ + 2]"} sort{$$field[$a] cmp $$field[$b]} @index];
-		$label     = '{' . join('|', @$label) . '}';
+		my($label)              = [map{ {text => "$$field[$_] = $$field[$_ + 2]"} } sort{$$field[$a] cmp $$field[$b]} @index];
+		$$label[0]{text}        = "{$$label[0]{text}";
+		$$label[$#$label]{text} = "$$label[$#$label]{text}}";
 
 		$parent -> add_daughter
 		(
 			Tree::DAG_Node -> new
 			({
 				attributes => {fillcolor => 'lightblue', label => $label, shape => 'record', style => 'filled'},
-				name       => $label,
+				name       => join('|', map{$$_{text} } @$label),
 			})
 		);
 	}
@@ -373,7 +374,7 @@ sub run
 		$self -> log(debug => "\t<$line>");
 
 		@field    = split(/\s/, $line);
-		$field[0] =~ s/^\s+//;
+		$field[0] =~ s/^\s+//; # For /^event/ below.
 
 		$self -> clean_up_angle_brackets(\@field);
 
@@ -387,18 +388,30 @@ sub run
 
 			if ($lhs eq ':default')
 			{
-				push @default, $lhs, "$field[2] = $field[4]";
+				# Discard ':default' and '='.
+
+				shift @field;
+				shift @field;
+
+				my(@indexes) = indexes{$_ =~ /^=>$/} @field;
+				@field       = map{"$field[$_ - 1] = $field[$_ + 1]"} sort{$field[$a] cmp $field[$b]} @indexes;
+
+				push @default, $lhs, @field;
 
 				next;
 			}
 			elsif ($lhs eq ':discard')
 			{
+				# Discard ':discard' and '~'.
+
 				push @discard, $lhs, $field[2];
 
 				next;
 			}
 			elsif ($lhs eq ':lexeme')
 			{
+				# Discard ':lexeme' and '~'.
+
 				$self -> process_rhs($start, \%node, \@field, $field[2]);
 
 				next;
@@ -441,6 +454,8 @@ sub run
 			}
 			elsif ($lhs eq ':start')
 			{
+				# Discard ':start' and '::='.
+
 				$start        = $field[2];
 				$node{$start} = Tree::DAG_Node -> new
 					({
@@ -480,7 +495,6 @@ sub run
 	$self -> log(info => 'Building tree');
 
 	my($attributes);
-	my($mother);
 	my($name);
 
 	$node{$start} -> walk_down
@@ -489,28 +503,29 @@ sub run
 		{
 			my($n, $options) = @_;
 
-			# $n -> attributues() returns a hashref, and values may be undef:
-			# o fillcolor => $c.
-			# o label     => $l.
-			# o shape     => $s.
+			# $n -> attributues() returns a hashref, and values are never undef:
+			# o fillcolor => $fillcolor.
+			# o label     => $label.
+			# o shape     => $shape.
+			# o style     => $style.
 			#
 			# Fix any '<x_y>' label issues we rigged in clean_up_angle_brackets():
 			# o Replace superscript '_' with real '_'.
 			# o Do not replace chevrons with '<>', because dot chokes.
+			#
+			# There is no need to fix these things in names, because every
+			# node has a defined value for both label name name, but it's
+			# some labels which dot chokes on (by hiding the text of the label).
 
 			$attributes         = $n -> attributes;
 			$$attributes{label} =~ s/\x{00AF}/ /g if ($$attributes{label});
 			$name               = $n -> name;
-			$name               =~ s/\x{00AF}/ /g;
 
 			$self -> graph -> add_node(name => $name, %$attributes);
 
 			if ($n -> mother)
 			{
-				$mother = $n -> mother -> name;
-				$mother =~ s/\x{00AF}/ /g;
-
-				$self -> graph -> add_edge(from => $mother, to => $name) if ($n -> mother);
+				$self -> graph -> add_edge(from => $n -> mother -> name, to => $name);
 			}
 
 			# 1 => Keep walking.
