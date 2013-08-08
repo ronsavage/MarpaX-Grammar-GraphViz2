@@ -9,7 +9,7 @@
 <g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 637)">
 <title>Perl</title>
 <polygon fill="white" stroke="white" points="-4,5 -4,-637 1159,-637 1159,5 -4,5"/>
-<text text-anchor="middle" x="577" y="-7.8" font-family="Times,serif" font-size="14.00">stringparser.grammar.bnf</text>
+<text text-anchor="middle" x="577" y="-7.8" font-family="Times,serif" font-size="14.00">stringparser.bnf</text>
 <!-- graph_grammar -->
 <g id="node1" class="node"><title>graph_grammar</title>
 <polygon fill="lightgreen" stroke="black" points="734,-633 630,-633 630,-597 734,-597 734,-633"/>
