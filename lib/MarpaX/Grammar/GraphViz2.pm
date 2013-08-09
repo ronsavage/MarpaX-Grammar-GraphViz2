@@ -167,7 +167,7 @@ sub add_event_record
 		})
 	);
 
-} # End of add_adverb_record.
+} # End of add_event_record.
 
 # ------------------------------------------------
 
@@ -505,10 +505,10 @@ sub run
 
 	my(@discard) = map{$_ eq ':discard' ? $_ : "$_ = $discard{$_}"} sort keys %discard;
 
-	$self -> add_lexeme($start, \%node, \@default)              if ($#default >= 0);
-	$self -> add_lexeme($start, \%node, \@discard)              if ($#discard >= 0);
 	$self -> add_adverb_record($node{$start}, \@lexeme_default) if ($#lexeme_default >= 0);
 	$self -> add_event_record($node{$start}, \@event)           if ($#event >= 0);
+	$self -> add_lexeme($start, \%node, \@default)              if ($#default >= 0);
+	$self -> add_lexeme($start, \%node, \@discard)              if ($#discard >= 0);
 
 	$self -> log(info => 'Building tree');
 
