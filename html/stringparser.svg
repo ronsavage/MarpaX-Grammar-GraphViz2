@@ -26,9 +26,9 @@
 <polygon fill="grey" stroke="grey" points="327.983,-546.291 317.612,-544.126 324.369,-552.286 327.983,-546.291"/>
 </g>
 <!-- «graph¯definition» -->
-<g id="node3" class="node"><title>«graph¯definition»</title>
+<g id="node3" class="node"><title>graph_definition</title>
 <polygon fill="none" stroke="black" points="476.25,-544 359.75,-544 359.75,-508 476.25,-508 476.25,-544"/>
-<text text-anchor="middle" x="418" y="-522.3" font-family="Times,serif" font-size="14.00">«graph definition»</text>
+<text text-anchor="middle" x="418" y="-522.3" font-family="Times,serif" font-size="14.00">graph_definition</text>
 </g>
 <!-- graph_grammar&#45;&gt;«graph¯definition» -->
 <g id="edge2" class="edge"><title>graph_grammar&#45;&gt;«graph¯definition»</title>

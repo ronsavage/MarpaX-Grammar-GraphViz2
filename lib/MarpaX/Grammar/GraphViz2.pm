@@ -7,28 +7,15 @@ use warnings  qw(FATAL utf8);    # Fatalize encoding glitches.
 use open      qw(:std :utf8);    # Undeclared streams in UTF-8.
 use charnames qw(:full :short);  # Unneeded in v5.16.
 
-use File::Basename; # For basename().
 use File::Spec;
 
 use GraphViz2;
 
-use List::AllUtils qw/first_index indexes/;
-
 use Log::Handler;
 
+use MarpaX::Grammar::Parser;
+
 use Moo;
-
-use Perl6::Slurp; # For slurp().
-
-use Tree::DAG_Node;
-
-has adverbs =>
-(
-	default  => sub{return ''},
-	is       => 'rw',
-	#isa     => 'Str',
-	required => 0,
-);
 
 has format =>
 (
@@ -78,6 +65,22 @@ has minlevel =>
 	required => 0,
 );
 
+has no_attributes =>
+(
+	default  => sub{return 0},
+	is       => 'rw',
+	#isa     => 'Bool',
+	required => 0,
+);
+
+has parser =>
+(
+	default  => sub{return ''},
+	is       => 'rw',
+	#isa     => 'MarpaX::Grammar::Parser',
+	required => 0,
+);
+
 has output_file =>
 (
 	default  => sub{return 'grammar.svg'},
@@ -95,103 +98,6 @@ has tree_file =>
 );
 
 our $VERSION = '1.00';
-
-# ------------------------------------------------
-
-sub add_lexeme
-{
-	my($self, $start, $node, $field) = @_;
-	my($parent) = $$node{$start};
-	my($name)   = shift @$field;
-	my($kid)    = Tree::DAG_Node -> new
-	({
-		attributes => {fillcolor => 'lightblue', label => $name, shape => 'rectangle', style => 'filled'},
-		name       => $name,
-	});
-
-	$parent -> add_daughter($kid);
-
-	my($label)              = [map{ {text => $_} } @$field];
-	$$label[0]{text}        = "{$$label[0]{text}";
-	$$label[$#$label]{text} = "$$label[$#$label]{text}\}";
-	$parent                 = $kid;
-	$kid                    = Tree::DAG_Node -> new
-	({
-		attributes => {fillcolor => 'lightblue', label => $label, shape => 'record', style => 'filled'},
-		name       => join('|', map{$$_{text} } @$label),
-	});
-
-	$parent -> add_daughter($kid);
-
-} # End of add_lexeme.
-
-# ------------------------------------------------
-
-sub add_adverb_record
-{
-	my($self, $parent, $field) = @_;
-	my($adverbs) = $self -> adverbs;
-	my(@index)   = indexes{$_ =~ /^(?:$adverbs)/} @$field;
-
-	if ($#index >= 0)
-	{
-		my($label)              = [map{ {text => "$$field[$_] = $$field[$_ + 2]"} } sort{$$field[$a] cmp $$field[$b]} @index];
-		$$label[0]{text}        = "{$$label[0]{text}";
-		$$label[$#$label]{text} = "$$label[$#$label]{text}}";
-
-		$parent -> add_daughter
-		(
-			Tree::DAG_Node -> new
-			({
-				attributes => {fillcolor => 'lightblue', label => $label, shape => 'record', style => 'filled'},
-				name       => join('|', map{$$_{text} } @$label),
-			})
-		);
-	}
-
-} # End of add_adverb_record.
-
-# ------------------------------------------------
-
-sub add_event_record
-{
-	my($self, $parent, $field) = @_;
-	my($label) = '{' . join('|', @$field) . '}';
-
-	$parent -> add_daughter
-	(
-		Tree::DAG_Node -> new
-		({
-			attributes => {fillcolor => 'lightblue', label => $label, shape => 'record', style => 'filled'},
-			name       => $label,
-		})
-	);
-
-} # End of add_event_record.
-
-# ------------------------------------------------
-
-sub add_token_node
-{
-	my($self, $node, $parent, $chain, $name) = @_;
-	$name                =~ s/"/\\"/g;
-	my($label)           = $name;
-	substr($name, -1, 1) = '' if (substr($name, -1, 1) =~ /[?*+]/);
-
-	if ($parent -> name ne $name)
-	{
-		$$node{$name} = my($kid) = Tree::DAG_Node -> new
-			({
-				attributes => {fillcolor => 'white', label => $label, shape => 'rectangle', style => ''},
-				name       => $name,
-			});
-
-		$parent -> add_daughter($kid);
-
-		$parent = $kid if ($chain);
-	}
-
-} # End of add_token_node.
 
 # ------------------------------------------------
 
@@ -224,63 +130,18 @@ sub BUILD
 
 	$self -> graph($graph);
 
-	my(%adverbs) =
+	$self -> parser
 	(
-		action    => 1,
-		assoc     => 1,
-		bless     => 1,
-		event     => 1,
-		pause     => 1,
-		priority  => 1,
-		proper    => 1,
-		rank      => 1,
-		separator => 1,
+		MarpaX::Grammar::Parser -> new
+		(
+			input_file    => $self -> input_file,
+			logger        => $self -> logger,
+			no_attributes => $self -> no_attributes,
+			tree_file     => $self -> tree_file,
+		)
 	);
 
-	$self -> adverbs(join('|', sort keys %adverbs) );
-
 } # End of BUILD.
-
-# --------------------------------------------------
-
-sub clean_up_angle_brackets
-{
-	my($self, $field) = @_;
-	my($index) = first_index{$_ =~ /^</} @$field;
-
-	my($quantifier);
-	my($width);
-
-	while ($index >= 0)
-	{
-		# Steps:
-		# o Replace '<' and '>' with chevrons.
-		# o Combine '<x' 'y>' into '<x_y>' (but with '_' replaced by a superscript '_').
-		#	Note: This takes place even for '<A>'. Hence $i = $index and not $i = $index + 1.
-
-		for (my $i = $index; $i <= $#$field; $i++)
-		{
-			if ($$field[$i] =~ />([*+])?$/)
-			{
-				$quantifier = $1 || '';
-				$width      = $quantifier ? 2 : 1;
-
-				splice(@$field, $index, ($i - $index + 1), join("\x{00AF}", @$field[$index .. $i]) );
-
-				substr($$field[$index], 0,  1)           = "\x{00AB}"; # <<.
-				substr($$field[$index], -$width, $width) = "\x{00BB}"; # >>.
-				$$field[$index]                          .= $quantifier;
-
-				# Keep searching for '<x' 'y>'.
-
-				$index = first_index{$_ =~ /^</ && $_ !~ />[*+]?$/} @$field;
-
-				last;
-			}
-		}
-	}
-
-} # End of clean_up_angle_brackets.
 
 # --------------------------------------------------
 
@@ -292,225 +153,11 @@ sub log
 
 } # End of log.
 
-# --------------------------------------------------
-
-sub log_tree
-{
-	my($self, $start, $node, $level) = @_;
-	$level ||= $self -> maxlevel;
-
-	$self -> log($level => '-' x 50);
-	$self -> log($level => $_) for @{$$node{$start} -> tree2string({no_attributes => 1})};
-	$self -> log($level => '-' x 50);
-
-} # End of log_tree.
-
-# ------------------------------------------------
-
-sub process_rhs
-{
-	my($self, $start, $node, $field, $lhs) = @_;
-
-	my($parent);
-
-	$$node{$start} -> walk_down
-	({
-		callback => sub
-		{
-			my($n, $options) = @_;
-
-			$parent = $n if ($n -> name eq $lhs);
-
-			# Return:
-			# o 0 to stop walk if parent found.
-			# o 1 to keep walking otherwise.
-
-			return $parent ? 0 : 1;
-		},
-		_depth => 0,
-	});
-
-	$parent      = $$node{$start} if (! $parent);
-	my($adverbs) = $self -> adverbs;
-	my($index)   = first_index{$_ =~ /^$adverbs$/} @$field;
-
-	my($kid);
-	my($rhs);
-
-	if ($index >= 0)
-	{
-		$self -> add_adverb_record($parent, $field);
-		$self -> add_token_node($node, $parent, 1, $_) for @$field[2 .. $index - 1];
-	}
-	else
-	{
-		$self -> add_token_node($node, $parent, 0, $_) for @$field[2 .. $#$field];
-	}
-
-} # End of process_rhs.
-
 # ------------------------------------------------
 
 sub run
 {
-	my($self)    = @_;
-	my(@grammar) = slurp($self -> input_file, {chomp => 1});
-
-	$self -> log(info => 'Entered run()');
-
-	my(@default, %discard);
-	my(@event);
-	my(@field);
-	my($g_index);
-	my($line, $lhs, @lexeme_default);
-	my(%node);
-	my($rhs);
-	my($start, %seen);
-
-	for (my $i = 0; $i <= $#grammar; $i++)
-	{
-		$line = $grammar[$i];
-
-		next if ($line =~ /^(\s*\#|\s*$)/);
-
-		# Clean up input line:
-		# o Squash multiple spaces into 1 and tabs into 1 space.
-		# o Convert things like [\s] to [\\s].
-		# o Remove leading spaces.
-		# o Replace '<a' 'b>' with '<<a b>>'
-		#
-		# TODO:
-		# o Handle in-line comments, '... # ...'.
-
-		$line     =~ tr/ 	/  /s;
-		$line     =~ s/\\/\\\\/g;
-
-		$self -> log(debug => "\t<$line>");
-
-		@field    = split(/\s/, $line);
-		$field[0] =~ s/^\s+//;
-
-		$self -> clean_up_angle_brackets(\@field);
-
-		$g_index  = first_index{$_ =~ /^(?:~|::=|=$)/} @field;
-
-		if ($g_index > 0)
-		{
-			$lhs = join(' ', @field[0 .. $g_index - 1]);
-
-			$self -> log(info => "lhs => <$lhs>");
-
-			if ($lhs eq ':default')
-			{
-				# Discard ':default' and '='.
-
-				shift @field;
-				shift @field;
-
-				my(@indexes) = indexes{$_ =~ /^=>$/} @field;
-				@field       = map{"$field[$_ - 1] = $field[$_ + 1]"} sort{$field[$a] cmp $field[$b]} @indexes;
-
-				push @default, $lhs, @field;
-
-				next;
-			}
-			elsif ($lhs eq ':discard')
-			{
-				$discard{':discard'} = $lhs;
-				$discard{$field[2]}  = '';
-
-				next;
-			}
-			elsif ($lhs eq ':lexeme')
-			{
-				# Discard ':lexeme' and '~'.
-
-				$self -> process_rhs($start, \%node, \@field, $field[2]);
-
-				next;
-			}
-			elsif ($lhs =~ /^event/)
-			{
-				push @event, join(' ', @field);
-
-				next;
-			}
-			elsif ($lhs eq 'lexeme default')
-			{
-				# Clean up the 'lexeme default' line, which may look like one of:
-				# o lexeme default = action => [start,length,value]
-				# o lexeme default = action => [start,length,value] bless => ::name
-				# Steps:
-				# o Check for spaces in '[start, length, value]'.
-				# o Combine these 2 or 3 fields into 1.
-
-				@field       = @field[3 .. $#field];
-				my(@indexes) = indexes{$_ =~ /[[\]]/} @field;
-
-				# If the '[' and ']' are at different indexes, then spaces were found.
-
-				if ($#indexes > 0)
-				{
-					splice
-					(
-						@field,
-						$indexes[0],
-						$indexes[$#indexes],
-						join('', @field[$indexes[0] .. $indexes[$#indexes] ]),
-						@field[$indexes[$#indexes] + 1 .. $#field]
-					);
-				}
-
-				push @lexeme_default, $lhs, @field;
-
-				next;
-			}
-			elsif ($lhs eq ':start')
-			{
-				# Discard ':start' and '::='.
-
-				$start        = $field[2];
-				$node{$start} = Tree::DAG_Node -> new
-					({
-						attributes => {fillcolor => 'lightgreen', label => $start, shape => 'rectangle', style => 'filled'},
-						name       => $start,
-					});
-
-				next;
-			}
-
-			if (defined $discard{$field[0]})
-			{
-				# Grab the thing previously mentioned in a ':discard',
-				# hoping they are declared in the expected order :-(.
-
-				$discard{$field[0]} = $field[2];
-			}
-			else
-			{
-				# Otherwise, it's a 'normal' line.
-
-				$self -> process_rhs($start, \%node, \@field, $lhs);
-			}
-		}
-		elsif ($field[1] =~ /^\|\|?$/)
-		{
-			$self -> process_rhs($start, \%node, \@field, $lhs);
-		}
-	}
-
-	die ":start token not found\n" if (! $start);
-
-	# Process the things we stockpiled, since by now $start is defined.
-
-	my(@discard) = map{$_ eq ':discard' ? $_ : "$_ = $discard{$_}"} sort keys %discard;
-
-	$self -> add_adverb_record($node{$start}, \@lexeme_default) if ($#lexeme_default >= 0);
-	$self -> add_event_record($node{$start}, \@event)           if ($#event >= 0);
-	$self -> add_lexeme($start, \%node, \@default)              if ($#default >= 0);
-	$self -> add_lexeme($start, \%node, \@discard)              if ($#discard >= 0);
-
-	$self -> log(info => 'Building tree');
+	my($self) = @_;
 
 	my($attributes);
 	my($name);
@@ -527,16 +174,9 @@ sub run
 			# o shape     => $shape.
 			# o style     => $style.
 			#
-			# Fix any '<x_y>' label issues we rigged in clean_up_angle_brackets():
-			# o Replace superscript '_' with real '_'.
 			# o Do not replace chevrons with '<>', because dot chokes.
-			#
-			# There is no need to fix these things in names, because every
-			# node has a defined value for both label name name, but it's
-			# some labels which dot chokes on (by hiding the text of the label).
 
 			$attributes         = $n -> attributes;
-			$$attributes{label} =~ s/\x{00AF}/ /g if ($$attributes{label});
 			$name               = $n -> name;
 
 			$self -> graph -> add_node(name => $name, %$attributes);
@@ -553,22 +193,9 @@ sub run
 		_depth => 0,
 	});
 
-	$self -> log(info => 'Rendering graph');
-
 	my($output_file) = $self -> output_file;
 
 	$self -> graph -> run(format => $self -> format, output_file => $output_file);
-
-	my($tree_file) = $self -> tree_file;
-
-	if ($tree_file)
-	{
-		$self -> log(info => 'Printing tree');
-
-		open(OUT, '>', $tree_file) || die "Can't open(> $tree_file): $!\n";
-		print OUT map{"$_\n"} @{$node{$start} -> tree2string({no_attributes => 1})};
-		close OUT;
-	}
 
 } # End of run.
 
