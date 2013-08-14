@@ -7,7 +7,9 @@ use warnings  qw(FATAL utf8);    # Fatalize encoding glitches.
 use open      qw(:std :utf8);    # Undeclared streams in UTF-8.
 use charnames qw(:full :short);  # Unneeded in v5.16.
 
-use File::Spec;
+use Data::Dumper::Concise; # For Dumper().
+
+use File::Basename; # For basename().
 
 use GraphViz2;
 
@@ -159,10 +161,15 @@ sub run
 {
 	my($self) = @_;
 
+	$self -> parser -> run;
+
+	$self -> log(info => $_) for @{$self -> parser -> root -> tree2string({no_attributes => $self -> no_attributes})};
+
 	my($attributes);
 	my($name);
+	my(%seen);
 
-	$node{$start} -> walk_down
+	$self -> parser -> root -> walk_down
 	({
 		callback => sub
 		{
@@ -176,14 +183,31 @@ sub run
 			#
 			# o Do not replace chevrons with '<>', because dot chokes.
 
-			$attributes         = $n -> attributes;
-			$name               = $n -> name;
+			$attributes        = $n -> attributes;
+			$name              = $n -> name;
+
+			# Delete non-Graphviz attributes used by MarpaX::Grammar::Parser.
+
+			delete $$attributes{$_} for (qw/angled quantifier type/);
+
+			my($d) = Dumper($$attributes{label});
+			$d     =~ s/\n$//;
+
+			$self -> log(info => "Add node <$name>. Label: <" . join('>, <', $d) . '>');
+			$self -> log(info => 'Seen: ' . ($seen{$name} ? 'Yes' : 'No') );
 
 			$self -> graph -> add_node(name => $name, %$attributes);
 
+			$seen{$name} = 1;
+
 			if ($n -> mother)
 			{
+				$self -> log(info => 'Add edge <' . $n -> mother -> name . "> => <$name>");
+				$self -> log(info => 'Seen: ' . ($seen{$n -> mother -> name} ? 'Yes' : 'No') . ' => ' . ($seen{$name} ? 'Yes' : 'No') );
+
 				$self -> graph -> add_edge(from => $n -> mother -> name, to => $name);
+
+				$seen{$n -> mother -> name} = 1;
 			}
 
 			# 1 => Keep walking.
@@ -345,6 +369,32 @@ If '', the file is not written.
 Default: ''.
 
 =back
+
+=head1 Installing the module
+
+Install L<MarpaX::Grammar::GraphViz2> as you would for any C<Perl> module:
+
+Run:
+
+	cpanm MarpaX::Grammar::GraphViz2
+
+or run:
+
+	sudo cpan MarpaX::Grammar::GraphViz2
+
+or unpack the distro, and then either:
+
+	perl Build.PL
+	./Build
+	./Build test
+	sudo ./Build install
+
+or:
+
+	perl Makefile.PL
+	make (or dmake)
+	make test
+	make install
 
 =head1 Methods
 
