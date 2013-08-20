@@ -3,7 +3,8 @@ abstract: 'Convert a Marpa grammar into an image'
 author:
   - 'Ron Savage <ron@savage.net.au>'
 build_requires:
-  Test::More: 0.94
+  ExtUtils::MakeMaker: 6.59
+  Test::More: 0.98
 configure_requires:
   Module::Build: 0.38
 dynamic_config: 0
@@ -18,16 +19,20 @@ provides:
     file: lib/MarpaX/Grammar/GraphViz2.pm
     version: 1.00
 requires:
-  File::Spec: 3.33
-  GraphViz2: 2.17
-  List::AllUtils: 0.03
+  File::Basename: 2.82
+  File::ShareDir: 1.03
+  File::Temp: 0.2301
+  File::Which: 1.09
+  Getopt::Long: 2.41
+  GraphViz2: 2.19
+  Log::Handler: 0.78
+  MarpaX::Grammar::Parser: 1.02
   Moo: 1.002
+  Path::Tiny: 0.025
   Perl6::Slurp: 0.03
   Pod::Usage: 1.36
-  Text::Xslate: 1.4001
-  Tree::DAG_Node: 1.12
-  charnames: 0
   open: 0
+  perl: 5.014
   strict: 0
   utf8: 0
   warnings: 0
