@@ -26,7 +26,7 @@ requires:
   Getopt::Long: 2.41
   GraphViz2: 2.19
   Log::Handler: 0.78
-  MarpaX::Grammar::Parser: 1.02
+  MarpaX::Grammar::Parser: 1.01
   Moo: 1.002
   Path::Tiny: 0.025
   Perl6::Slurp: 0.03
