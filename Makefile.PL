@@ -15,8 +15,11 @@ all_from 'lib/MarpaX/Grammar/GraphViz2.pm';
 install_share;
 
 requires 'Getopt::Long'            => 2.41;
+requires 'File::Basename'          => 2.82;
 requires 'File::ShareDir'          => 1.03;
 requires 'File::Temp'              => 0.2301;
+requires 'File::Which'             => 1.09;
+requires 'GraphViz2'               => 2.19;
 requires 'Log::Handler'            => 0.78;
 requires 'MarpaX::Grammar::Parser' => 1.02;
 requires 'Moo'                     => 1.002000;
