@@ -7,9 +7,8 @@ use warnings  qw(FATAL utf8);    # Fatalize encoding glitches.
 use open      qw(:std :utf8);    # Undeclared streams in UTF-8.
 use charnames qw(:full :short);  # Unneeded in v5.16.
 
-use Data::Dumper::Concise; # For Dumper().
-
 use File::Basename; # For basename().
+use File::Which; # For which().
 
 use GraphViz2;
 
@@ -19,9 +18,17 @@ use MarpaX::Grammar::Parser;
 
 use Moo;
 
+has driver =>
+(
+	default  => sub{return ''},
+	is       => 'rw',
+	#isa     => 'Str',
+	required => 0,
+);
+
 has format =>
 (
-	default  => sub{return 'svg'},
+	default  => sub{return ''},
 	is       => 'rw',
 	#isa     => 'Str',
 	required => 0,
@@ -35,19 +42,19 @@ has graph =>
 	required => 0,
 );
 
-has input_file =>
-(
-	default  => sub{return 'grammar.bnf'},
-	is       => 'rw',
-	#isa     => 'Str',
-	required => 0,
-);
-
 has logger =>
 (
 	default  => sub{return undef},
 	is       => 'rw',
 #	isa      => 'Str',
+	required => 0,
+);
+
+has marpa_bnf_file =>
+(
+	default  => sub{return ''},
+	is       => 'rw',
+	#isa     => 'Str',
 	required => 0,
 );
 
@@ -67,14 +74,6 @@ has minlevel =>
 	required => 0,
 );
 
-has no_attributes =>
-(
-	default  => sub{return 0},
-	is       => 'rw',
-	#isa     => 'Bool',
-	required => 0,
-);
-
 has parser =>
 (
 	default  => sub{return ''},
@@ -85,13 +84,13 @@ has parser =>
 
 has output_file =>
 (
-	default  => sub{return 'grammar.svg'},
+	default  => sub{return ''},
 	is       => 'rw',
 	#isa     => 'Str',
 	required => 0,
 );
 
-has tree_file =>
+has user_bnf_file =>
 (
 	default  => sub{return ''},
 	is       => 'rw',
@@ -106,6 +105,9 @@ our $VERSION = '1.00';
 sub BUILD
 {
 	my($self)  = @_;
+
+	$self -> driver($self -> driver || which('dot') );
+	$self -> format($self -> format || 'svg');
 
 	if (! defined $self -> logger)
 	{
@@ -124,8 +126,8 @@ sub BUILD
 	my($graph) ||= GraphViz2 -> new
 		(
 			edge   => {color => 'grey'},
-			global => {directed => 1},
-			graph  => {label => basename($self -> input_file), rankdir => 'TB'},
+			global => {directed => 1, driver => $self -> driver, format => $self -> format},
+			graph  => {label => basename($self -> user_bnf_file), rankdir => 'TB'},
 			logger => $self -> logger,
 			node   => {shape => 'oval'},
 		);
@@ -136,10 +138,9 @@ sub BUILD
 	(
 		MarpaX::Grammar::Parser -> new
 		(
-			input_file    => $self -> input_file,
-			logger        => $self -> logger,
-			no_attributes => $self -> no_attributes,
-			tree_file     => $self -> tree_file,
+			marpa_bnf_file => $self -> marpa_bnf_file,
+			logger         => $self -> logger,
+			user_bnf_file  => $self -> user_bnf_file,
 		)
 	);
 
