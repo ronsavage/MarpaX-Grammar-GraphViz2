@@ -19,13 +19,14 @@ if ($option_parser -> getoptions
 (
 	\%option,
 	'format=s',
+	'driver=s',
 	'help',
-	'input_file=s',
 	'logger=s',
+	'marpa_bnf_file=s',
 	'maxlevel=s',
 	'minlevel=s',
 	'output_file=s',
-	'tree_file=s',
+	'user_bnf_file=s',
 ) )
 {
 	pod2usage(1) if ($option{'help'});
@@ -45,21 +46,22 @@ __END__
 
 =head1 NAME
 
-g2g.pl - Run MarpaX::Grammar::GraphViz2 on a Marpa::R2 grammar.
+bnf2image.pl - Convert a Marpa grammar into a image using GraphViz2.
 
 =head1 SYNOPSIS
 
-g2g.pl [options]
+bnf2image.pl [options]
 
 	Options:
 	-format imageFormat
+	-driver aGraphvizDriverName
 	-help
-	-input_file aMarpaGrammarName
 	-logger aLog::HandlerObject
+	-marpa_bnf_file aMarpaSLIF-DSLFileName
 	-maxlevel logOption1
 	-minlevel logOption2
-	-output_file aTextFileName
-	-tree_file aTextFileName
+	-output_file anImageFileName
+	-user_bnf_file aUserSLIF-DSLFileName
 
 Exit value: 0 for success, 1 for failure. Die upon error.
 
@@ -73,17 +75,15 @@ Specify the type of image to be created.
 
 Default: 'svg'.
 
+=item o -driver aGraphvizDriverName
+
+The name of the Graphviz program to provide to L<GraphViz2>.
+
+Default: 'dot'.
+
 =item o -help
 
 Print help and exit.
-
-=item o -input_file aMarpaGrammarFileName
-
-Specify the name of the file containing the Marpa::R2-style grammar.
-
-See data/stringparser.grammar.bnf for a sample.
-
-Default: 'grammar.bnf'.
 
 =item o -logger aLog::HandlerObject
 
@@ -92,6 +92,20 @@ By default, an object is created which prints to STDOUT.
 Set this to '' to stop logging.
 
 Default: undef.
+
+=item o -marpa_bnf_file aMarpaSLIF-DSLFileName
+
+Specify the name of Marpa's own SLIF-DSL file.
+
+This file ships with L<Marpa::R2>, in the meta/ directory. It's name is metag.bnf.
+
+A copy, as of Marpa::R2 V 2.066000, ships with L<MarpaX::Grammar::Parser>.
+
+See share/metag.bnf.
+
+This option is mandatory.
+
+Default: ''.
 
 =item o -maxlevel logOption1
 
@@ -111,19 +125,21 @@ Default: 'error'.
 
 No lower levels are used.
 
-=item o -output_file aTextFileName
+=item o -output_file anImageFileName
 
-Specify the name of a file for the renderer to write.
-
-If '', the file is not written.
-
-Default: 'grammar.svg'.
-
-=item o -tree_file aTextFileName
-
-The name of the text file to write containing the grammar as a tree.
+Specify the name of a file for the driver to write.
 
 If '', the file is not written.
+
+Default: ''.
+
+=item o -user_bnf_file aUserSLIF-DSLFileName
+
+Specify the name of the file containing your Marpa::R2-style grammar.
+
+See share/stringparser.bnf for a sample.
+
+This option is mandatory.
 
 Default: ''.
 

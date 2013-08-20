@@ -164,38 +164,18 @@ sub run
 
 	$self -> parser -> run;
 
-	$self -> log(info => $_) for @{$self -> parser -> root -> tree2string({no_attributes => $self -> no_attributes})};
-
 	my($attributes);
 	my($name);
 	my(%seen);
 
-	$self -> parser -> root -> walk_down
+	$self -> parser -> cooked_tree -> walk_down
 	({
 		callback => sub
 		{
 			my($n, $options) = @_;
 
-			# $n -> attributues() returns a hashref, and values are never undef:
-			# o fillcolor => $fillcolor.
-			# o label     => $label.
-			# o shape     => $shape.
-			# o style     => $style.
-			#
-			# o Do not replace chevrons with '<>', because dot chokes.
-
-			$attributes        = $n -> attributes;
-			$name              = $n -> name;
-
-			# Delete non-Graphviz attributes used by MarpaX::Grammar::Parser.
-
-			delete $$attributes{$_} for (qw/angled quantifier type/);
-
-			my($d) = Dumper($$attributes{label});
-			$d     =~ s/\n$//;
-
-			$self -> log(info => "Add node <$name>. Label: <" . join('>, <', $d) . '>');
-			$self -> log(info => 'Seen: ' . ($seen{$name} ? 'Yes' : 'No') );
+			$attributes = $n -> attributes;
+			$name       = $n -> name;
 
 			$self -> graph -> add_node(name => $name, %$attributes);
 
@@ -203,9 +183,6 @@ sub run
 
 			if ($n -> mother)
 			{
-				$self -> log(info => 'Add edge <' . $n -> mother -> name . "> => <$name>");
-				$self -> log(info => 'Seen: ' . ($seen{$n -> mother -> name} ? 'Yes' : 'No') . ' => ' . ($seen{$name} ? 'Yes' : 'No') );
-
 				$self -> graph -> add_edge(from => $n -> mother -> name, to => $name);
 
 				$seen{$n -> mother -> name} = 1;
@@ -220,7 +197,7 @@ sub run
 
 	my($output_file) = $self -> output_file;
 
-	$self -> graph -> run(format => $self -> format, output_file => $output_file);
+	$self -> graph -> run(output_file => $output_file);
 
 } # End of run.
 
