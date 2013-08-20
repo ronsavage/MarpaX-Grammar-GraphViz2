@@ -46,11 +46,11 @@ __END__
 
 =head1 NAME
 
-bnf2image.pl - Convert a Marpa grammar into a image using GraphViz2.
+bnf2graph.pl - Convert a Marpa grammar into a image using GraphViz2.
 
 =head1 SYNOPSIS
 
-bnf2image.pl [options]
+bnf2graph.pl [options]
 
 	Options:
 	-format imageFormat
