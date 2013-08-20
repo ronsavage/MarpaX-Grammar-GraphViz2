@@ -1,65 +1,37 @@
-use strict;
-use warnings;
-
 use ExtUtils::MakeMaker;
 
-# See lib/ExtUtils/MakeMaker.pm for details of how to influence
-# the contents of the Makefile that is written.
+use inc::Module::Install;
 
-my(%params) =
-(
-	AUTHOR   => 'Ron Savage (ron@savage.net.au)',
-	ABSTRACT => 'Convert a Marpa grammar into an image',
-	clean =>
-	{
-		FILES => 'blib/* Makefile MANIFEST MarpaX-Grammar-GraphViz2-*'
-	},
-	dist =>
-	{
-		COMPRESS => 'gzip',
-		SUFFIX   => 'gz'
-	},
-	DISTNAME  => 'MarpaX-Grammar-GraphViz2',
-	NAME      => 'MarpaX::Grammar::GraphViz2',
-	PL_FILES  => {},
-	PREREQ_PM =>
-	{
-		'charnames'      => 0,
-		'File::Spec'     => 3.33,
-		'GraphViz2'      => 2.17,
-		'List::AllUtils' => 0.03,
-		'Log::Handler'   => 0.78,
-		'Moo'            => 1.002000,
-		'open'           => 0,
-		'perl'           => '5.8.1', # For the utf8 stuff.
-		'Perl6::Slurp'   => 0.03,
-		'Pod::Usage'     => 1.36,
-		'Tree::DAG_Node' => 1.12,
-		'strict'         => 0,
-		'Test::More'     => 0.94,
-#		'Test::Pod'      => 1.45, # Make it optional. See xt/author/pod.t
-		'Text::Xslate'   => 1.4001,
-		'utf8'           => 0,
-		'warnings'       => 0,
-	},
-	VERSION_FROM => 'lib/MarpaX/Grammar/GraphViz2.pm',
-);
+# -----------------------------------------------
 
-if ( ($ExtUtils::MakeMaker::VERSION =~ /^\d\.\d\d$/) && ($ExtUtils::MakeMaker::VERSION > 6.30) )
-{
-	$params{LICENSE} = 'artistic_2';
-}
+name 'MarpaX-Grammar-GraphViz2';
 
-if ($ExtUtils::MakeMaker::VERSION ge '6.46')
-{
-	$params{META_MERGE} =
-	{
-		resources =>
-		{
-			bugtracker => 'https://rt.cpan.org/Public/Dist/Display.html?Name=MarpaX-Grammar-GraphViz2',
-			license    => 'http://www.perlfoundation.org/artistic_license_2_0',
-		},
-	};
-}
+license 'artistic_2';
 
-WriteMakefile(%params);
+perl_version '5.014000';
+
+all_from 'lib/MarpaX/Grammar/GraphViz2.pm';
+
+install_share;
+
+requires 'Getopt::Long'            => 2.41;
+requires 'File::ShareDir'          => 1.03;
+requires 'File::Temp'              => 0.2301;
+requires 'Log::Handler'            => 0.78;
+requires 'MarpaX::Grammar::Parser' => 1.02;
+requires 'Moo'                     => 1.002000;
+requires 'open'                    => 0;
+requires 'Path::Tiny'              => 0.025;
+requires 'perl'                    => '5.14.2'; # For the utf8 stuff.
+requires 'Perl6::Slurp'            => 0.03;
+requires 'Pod::Usage'              => 1.36;
+requires 'strict'                  => 0;
+requires 'utf8'                    => 0;
+requires 'warnings'                => 0;
+
+test_requires 'Test::More' => 0.98;
+#test_requires 'Test::Pod'  => 1.45; # Make it optional. See t/pod.t
+
+recursive_author_tests('xt');
+
+WriteAll;
