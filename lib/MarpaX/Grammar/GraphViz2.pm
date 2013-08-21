@@ -221,6 +221,41 @@ sub clean_name
 
 # --------------------------------------------------
 
+sub clean_tree
+{
+	my($self) = @_;
+
+	my($attributes);
+	my($name);
+
+	$self -> parser -> cooked_tree -> walk_down
+	({
+		callback => sub
+		{
+			my($node, $options)     = @_;
+			$name                   = $node -> name;
+			$attributes             = $node -> attributes;
+			$$attributes{real_name} = $node;
+
+			$node -> name($self -> clean_name($name) );
+
+			return 1; # Keep walking.
+		},
+		_depth => 0,
+	});
+
+	$name =~ s/\\/\\\\/g;
+	$name =~ s/</\\</g;
+	$name =~ s/>/\\>/g;
+	$name =~ s/:/\x{a789}/g;
+	$name =~ s/\"/\x{a78c}\x{a78c}/g;
+
+	return $name;
+
+} # End of clean_tree.
+
+# --------------------------------------------------
+
 sub log
 {
 	my($self, $level, $s) = @_;
@@ -248,7 +283,7 @@ sub process_default_rule
 	if ($default_count == 1)
 	{
 		$self -> add_node(name => $default_name, %$attributes);
-		$self -> graph -> add_edge(from => $self -> clean_name($self -> root_node -> name), to => $default_name);
+		$self -> graph -> add_edge(from => $self -> root_node -> name, to => $default_name);
 	}
 
 	my(@daughters) = $a_node -> daughters;
@@ -293,13 +328,13 @@ sub process_discard_rule
 	if ($discard_count == 1)
 	{
 		$self -> add_node(name => $discard_name, %$attributes);
-		$self -> graph -> add_edge(from => $self -> clean_name($self -> root_node -> name), to => $discard_name);
+		$self -> graph -> add_edge(from => $self -> root_node -> name, to => $discard_name);
 	}
 
 	# Ignore the first daughter, which is '=>'.
 
 	my(@daughters)      = $a_node -> daughters;
-	my($name)           = $self -> clean_name($daughters[1] -> name);
+	my($name)           = $daughters[1] -> name;
 	$$attributes{label} = $name;
 
 	$self -> add_node(name => $name, %$attributes);
@@ -333,14 +368,12 @@ sub process_lexeme_default_rule
 	for (my $i = 1; $i < $#daughters; $i += 3)
 	{
 		push @label, {text => join(' ', map{$daughters[$_] -> name} $i .. $i + 2)};
-
-		$label[$#label]{text} = $self -> clean_name($label[$#label]{text});
 	}
 
 	if ($#label >= 0)
 	{
 		$self -> add_node(name => $lexeme_name, %$attributes);
-		$self -> graph -> add_edge(from => $self -> clean_name($self -> root_node -> name), to => $lexeme_name);
+		$self -> graph -> add_edge(from => $self -> root_node -> name, to => $lexeme_name);
 
 		$label[0]{text}       = "\{$label[0]{text}";
 		$label[$#label]{text} .= '}';
@@ -371,7 +404,7 @@ sub process_lexeme_rule
 	# Ignore the first daughter, which is '~'.
 
 	my(@daughters)      = $a_node -> daughters;
-	my($name)           = $self -> clean_name($daughters[1] -> name);
+	my($name)           = $daughters[1] -> name;
 	$$attributes{label} = $name;
 
 	$self -> add_node(name => $name, %$attributes);
@@ -383,8 +416,6 @@ sub process_lexeme_rule
 	for (my $i = 2; $i < $#daughters; $i += 3)
 	{
 		push @label, {text => join(' ', map{$daughters[$_] -> name} $i .. $i + 2)};
-
-		$label[$#label]{text} = $self -> clean_name($label[$#label]{text});
 	}
 
 	if ($#label >= 0)
@@ -462,8 +493,8 @@ sub process_normal_adverbs
 sub process_normal_rule
 {
 	my($self, $index, $a_node) = @_;
-	my($name)    = $self -> clean_name($a_node -> name);
-	my($is_root) = $self -> clean_name($self -> root_node -> name) eq $name;
+	my($name)    = $a_node -> name;
+	my($is_root) = $self -> root_node -> name eq $name;
 
 	my($attributes);
 
@@ -480,7 +511,7 @@ sub process_normal_rule
 		$attributes =
 		{
 			fillcolor => 'white',
-			label     => $self -> clean_name($name),
+			label     => $name,
 		};
 	};
 
@@ -498,8 +529,8 @@ sub process_normal_rule
 
 		if ($token -> name eq '|')
 		{
-			# The sort puts end before start, and Graphviz then plots start first.
-			# I ignore directed 'v' undirected.
+			# The sort puts 'end' before 'start'. Then Graphviz plots 'start' on the left of 'end'!
+			# But I ignore cases like 'directed' and 'undirected', etc.
 
 			$self -> process_normal_tokens($index, $a_node, $_) for sort{$a -> name cmp $b -> name} @tokens;
 
@@ -511,8 +542,8 @@ sub process_normal_rule
 		}
 	}
 
-	# The sort puts end before start, and Graphviz then plots start first.
-	# I ignore directed 'v' undirected.
+	# The sort puts 'end' before 'start'. Then Graphviz plots 'start' on the left of 'end'!
+	# But I ignore cases like 'directed' and 'undirected', etc.
 
 	$self -> process_normal_tokens($index, $a_node, $_) for sort{$a -> name cmp $b -> name} @tokens;
 
@@ -523,15 +554,13 @@ sub process_normal_rule
 sub process_normal_tokens
 {
 	my($self, $index, $a_node, $token) = @_;
-	my($name)       = $self -> clean_name($a_node -> name);
-	my($token_name) = $self -> clean_name($token -> name);
+	my($name)       = $a_node -> name;
+	my($token_name) = $token -> name;
 	my($attributes) =
 	{
 		fillcolor => 'white',
 		label     => $token_name,
 	};
-
-	$self -> log(debug => "2222222222 $name => $token_name");
 
 	$self -> add_node(name => $token_name, %$attributes);
 	$self -> graph -> add_edge(from => $name, to => $token_name);
@@ -558,6 +587,8 @@ sub run
 
 	if ($result == 0)
 	{
+		$self -> clean_tree;
+
 		my(@rule)        = $self -> parser -> cooked_tree -> daughters;
 		my($start_index) = first_index{$_ -> name eq ':start'} @rule;
 
