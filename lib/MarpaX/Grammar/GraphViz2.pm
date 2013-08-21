@@ -238,6 +238,7 @@ sub process_default_rule
 		$label[$#label]{text} =~ s/>/\\>/;
 	}
 
+	$label[0]{text}       = "\{$label[0]{text}";
 	$label[$#label]{text} .= '}';
 	$$attributes{label}   = [@label],
 
@@ -380,12 +381,14 @@ sub process_lexeme_rule
 
 # --------------------------------------------------
 
-sub process_normal_rule
+sub process_normal_adverbs
 {
 	my($self, $index, $a_node) = @_;
 	my($name)      = $a_node -> name;
 	my(@daughters) = $a_node -> daughters;
 	my($end)       = $#daughters;
+
+	# Pick adverbs off the end if the list.
 
 	my(@adverbs);
 
@@ -407,6 +410,37 @@ sub process_normal_rule
 		}
 	}
 
+	# Construct the label as an arrayref of hashrefs.
+
+	if ($#adverbs >= 0)
+	{
+		$self -> log(debug => "Node: $name. Adverbs before: " . join(', ', map{"$$_{adverb} => $$_{name}"} @adverbs) );
+
+		@adverbs            = map{"$$_{adverb} =\\> $$_{name}"} @adverbs;
+		$adverbs[0]         = "\{$adverbs[0]";
+		$adverbs[$#adverbs] .= '}';
+		@adverbs            = map{ {text => $_} } @adverbs;
+
+		$self -> log(debug => "Node: $name. Adverbs after:  " . join(', ', map{"$$_{text}"} @adverbs) );
+	}
+	else
+	{
+		# If the are no adverbs, default the label to the node's name.
+
+		$adverbs[0] = $name;
+	}
+
+	return [@adverbs];
+
+} # End of process_normal_adverbs.
+
+# --------------------------------------------------
+
+sub process_normal_rule
+{
+	my($self, $index, $a_node) = @_;
+	my($name) = $a_node -> name;
+
 	my($attributes);
 
 	if ($self -> root_node -> name eq $name)
@@ -427,7 +461,21 @@ sub process_normal_rule
 	};
 
 	$self -> graph -> add_node(name => $name, %$attributes);
-#	$self -> graph -> add_edge(from => $self -> root_node -> name, to => $lexeme_name);
+
+	my($adverbs) = $self -> process_normal_adverbs($index, $a_node);
+
+	if ($#$adverbs >= 0)
+	{
+		my($adverb_name) = "${name}_attributes";
+		$attributes      =
+		{
+			fillcolor => 'lightblue',
+			label     => $adverbs,
+		};
+
+		$self -> graph -> add_node(name => $adverb_name, %$attributes);
+		$self -> graph -> add_edge(from => $name, to => $adverb_name);
+	}
 
 } # End of process_normal_rule.
 
