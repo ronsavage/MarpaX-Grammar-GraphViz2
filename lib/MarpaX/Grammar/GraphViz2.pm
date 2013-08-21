@@ -12,11 +12,29 @@ use File::Which; # For which().
 
 use GraphViz2;
 
+use List::AllUtils qw/first_index indexes/;
+
 use Log::Handler;
 
 use MarpaX::Grammar::Parser;
 
 use Moo;
+
+has default_count =>
+(
+	default  => sub{return 0},
+	is       => 'rw',
+	#isa     => 'int',
+	required => 0,
+);
+
+has discard_count =>
+(
+	default  => sub{return 0},
+	is       => 'rw',
+	#isa     => 'int',
+	required => 0,
+);
 
 has driver =>
 (
@@ -98,6 +116,14 @@ has user_bnf_file =>
 	required => 0,
 );
 
+has root_node =>
+(
+	default  => sub{return ''},
+	is       => 'rw',
+	#isa     => 'Tree::DAG_Node',
+	required => 0,
+);
+
 our $VERSION = '1.00';
 
 # ------------------------------------------------
@@ -129,7 +155,7 @@ sub BUILD
 			global => {directed => 1, driver => $self -> driver, format => $self -> format},
 			graph  => {label => basename($self -> user_bnf_file), rankdir => 'TB'},
 			logger => $self -> logger,
-			node   => {shape => 'oval'},
+			node   => {shape => 'rectangle', style => 'filled'},
 		);
 
 	$self -> graph($graph);
@@ -156,48 +182,167 @@ sub log
 
 } # End of log.
 
+# --------------------------------------------------
+
+sub process_default_rule
+{
+	my($self, $index, $a_node) = @_;
+
+	$self -> default_count($self -> default_count + 1);
+
+	my($default_count) = $self -> default_count;
+	my($default_name)  = ':default';
+	my($attributes)    =
+	{
+		fillcolor => 'lightblue',
+		label     => $default_name,
+	};
+
+	if ($default_count == 1)
+	{
+		$self -> graph -> add_node(name => $default_name, %$attributes);
+		$self -> graph -> add_edge(from => $self -> root_node -> name, to => $default_name);
+	}
+
+	my(@daughters) = $a_node -> daughters;
+	my($name)      = "${default_name}_$default_count";
+
+	my(@label);
+
+	# Ignore the first daughter, which is '::='.
+
+	for (my $i = 1; $i < $#daughters; $i += 3)
+	{
+		push @label, {text => join(' ', map{$daughters[$_] -> name} $i .. $i + 2)};
+
+		$label[$#label]{text} =~ s/>/\\>/;
+	}
+
+	$label[$#label]{text} .= '}';
+	$$attributes{label}   = [@label],
+
+	$self -> graph -> add_node(name => $name, %$attributes);
+	$self -> graph -> add_edge(from => $default_name, to => $name);
+
+} # End of process_default_rule.
+
+# --------------------------------------------------
+
+sub process_discard_rule
+{
+	my($self, $index, $a_node) = @_;
+
+	$self -> discard_count($self -> discard_count + 1);
+
+	my($discard_count) = $self -> discard_count;
+	my($discard_name)  = ':discard';
+	my($attributes)    =
+	{
+		fillcolor => 'lightblue',
+		label     => $discard_name,
+	};
+
+	if ($discard_count == 1)
+	{
+		$self -> graph -> add_node(name => $discard_name, %$attributes);
+		$self -> graph -> add_edge(from => $self -> root_node -> name, to => $discard_name);
+	}
+
+	# Ignore the first daughter, which is '=>'.
+
+	my(@daughters)      = $a_node -> daughters;
+	my($name)           = $daughters[1] -> name;
+	$name               =~ s/>/\\>/;
+	$$attributes{label} = $name;
+
+	$self -> graph -> add_node(name => $name, %$attributes);
+	$self -> graph -> add_edge(from => $discard_name, to => $name);
+
+} # End of process_discard_rule.
+
+# --------------------------------------------------
+
+sub process_rule
+{
+	my($self, $index, $a_node) = @_;
+	my($name)       = $a_node -> name;
+	my($attributes) =
+	{
+		fillcolor => 'white',
+		label     => $name,
+	};
+
+	$self -> graph -> add_node(name => $name, %$attributes);
+
+} # End of process_rule.
+
+# --------------------------------------------------
+
+sub process_start_rule
+{
+	my($self, $index, $a_node) = @_;
+	my($start_name) = $a_node -> name;
+	my(@daughters)   = $a_node -> daughters;
+	my($name)        = $daughters[1] -> name;
+	my($attributes)  =
+	{
+		fillcolor => 'lightgreen',
+		label     => [{text => "{$start_name"}, {text => "$name}"}],
+	};
+
+	$self -> graph -> add_node(name => $name, %$attributes);
+	$self -> root_node($daughters[1]);
+
+} # End of process_start_rule.
+
 # ------------------------------------------------
 
 sub run
 {
-	my($self) = @_;
+	my($self)   = @_;
+	my($result) = $self -> parser -> run;
 
-	$self -> parser -> run;
+	if ($result == 0)
+	{
+		my(@rule) = $self -> parser -> cooked_tree -> daughters;
 
-	my($attributes);
-	my($name);
-	my(%seen);
+		# Phase 1: Process the :start rule.
 
-	$self -> parser -> cooked_tree -> walk_down
-	({
-		callback => sub
+		my($start_index) = first_index{$_ -> name eq ':start'} @rule;
+
+		$self -> process_start_rule($start_index + 1, $rule[$start_index]);
+
+		# Phase 2: Process the :default rules.
+
+		for my $index (indexes {$_ -> name eq ':default'} @rule)
 		{
-			my($n, $options) = @_;
+			$self -> process_default_rule($index + 1, $rule[$index]);
+		}
 
-			$attributes = $n -> attributes;
-			$name       = $n -> name;
+		# Phase 3: Process the :discard rules.
 
-			$self -> graph -> add_node(name => $name, %$attributes);
+		for my $index (indexes {$_ -> name eq ':discard'} @rule)
+		{
+			$self -> process_discard_rule($index + 1, $rule[$index]);
+		}
 
-			$seen{$name} = 1;
+		# Phase 8: Process the other rules.
 
-			if ($n -> mother)
-			{
-				$self -> graph -> add_edge(from => $n -> mother -> name, to => $name);
+		for my $index (0 .. $#rule)
+		{
+#			next if ($index == $start_index);
 
-				$seen{$n -> mother -> name} = 1;
-			}
+#			$self -> process_rule($index + 1, $rule[$index]);
+		}
 
-			# 1 => Keep walking.
+		my($output_file) = $self -> output_file;
 
-			return 1;
-		},
-		_depth => 0,
-	});
+		$self -> graph -> run(output_file => $output_file);
+	}
 
-	my($output_file) = $self -> output_file;
+	# Return 0 for success and 1 for failure.
 
-	$self -> graph -> run(output_file => $output_file);
+	return $result;
 
 } # End of run.
 
