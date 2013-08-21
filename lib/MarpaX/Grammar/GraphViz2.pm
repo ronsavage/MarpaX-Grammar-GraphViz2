@@ -212,6 +212,14 @@ sub clean_name
 	$name =~ s/\\/\\\\/g;
 	$name =~ s/</\\</g;
 	$name =~ s/>/\\>/g;
+	$name =~ s/\[/\\\[/g;
+	$name =~ s/]/\\]/g;
+	$name =~ s/:/\x{a789}/g;
+	$name =~ s/\"/\x{a78b}/g;
+
+	# Deal with [0-9a-z]. Graphviz has a problem with 9a.
+
+	$name =~ s/9a/\\9\\a/g;
 
 	return $name;
 
@@ -529,6 +537,8 @@ sub process_normal_tokens
 		label     => $token_name,
 	};
 
+	$self -> log(debug => "2222222222 $name => $token_name");
+
 	$self -> add_node(name => $token_name, %$attributes);
 	$self -> graph -> add_edge(from => $name, to => $token_name);
 
@@ -575,6 +585,11 @@ sub run
 
 		$self -> process_lexeme_default_rule($lexeme_default_index + 1, $rule[$lexeme_default_index]) if (defined $lexeme_default_index);
 
+		for my $index (indexes {$_ -> name eq ':lexeme'} @rule)
+		{
+			$self -> process_lexeme_rule($index + 1, $rule[$index]);
+		}
+
 		my(%seen) =
 		(
 			':default'       => 1,
@@ -589,11 +604,6 @@ sub run
 			next if ($seen{$rule[$index] -> name});
 
 			$self -> process_normal_rule($index + 1, $rule[$index]);
-		}
-
-		for my $index (indexes {$_ -> name eq ':lexeme'} @rule)
-		{
-			$self -> process_lexeme_rule($index + 1, $rule[$index]);
 		}
 
 		my($output_file) = $self -> output_file;
