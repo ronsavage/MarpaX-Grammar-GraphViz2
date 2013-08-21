@@ -182,6 +182,18 @@ sub BUILD
 
 # --------------------------------------------------
 
+sub clean
+{
+	my($self, $name) = @_;
+	$name =~ s/</\\</g;
+	$name =~ s/>/\\>/g;
+
+	return $name;
+
+} # End of clean.
+
+# --------------------------------------------------
+
 sub log
 {
 	my($self, $level, $s) = @_;
@@ -259,14 +271,58 @@ sub process_discard_rule
 	# Ignore the first daughter, which is '=>'.
 
 	my(@daughters)      = $a_node -> daughters;
-	my($name)           = $daughters[1] -> name;
-	$name               =~ s/>/\\>/;
+	my($name)           = $self -> clean($daughters[1] -> name);
 	$$attributes{label} = $name;
 
 	$self -> graph -> add_node(name => $name, %$attributes);
 	$self -> graph -> add_edge(from => $discard_name, to => $name);
 
 } # End of process_discard_rule.
+
+# --------------------------------------------------
+
+sub process_lexeme_default_rule
+{
+	my($self, $index, $a_node) = @_;
+
+	$self -> lexeme_count($self -> lexeme_count + 1);
+
+	my($lexeme_count) = $self -> lexeme_count;
+	my($lexeme_name)  = 'lexeme default';
+	my($attributes)   =
+	{
+		fillcolor => 'lightblue',
+		label     => $lexeme_name,
+	};
+
+	# Ignore the first daughter, which is '='.
+
+	my(@daughters) = $a_node -> daughters;
+	my($node_name) = "${lexeme_name}_1";
+
+	my(@label);
+
+	for (my $i = 1; $i < $#daughters; $i += 3)
+	{
+		push @label, {text => join(' ', map{$daughters[$_] -> name} $i .. $i + 2)};
+
+		$label[$#label]{text} = $self -> clean($label[$#label]{text});
+	}
+
+	if ($#label >= 0)
+	{
+		$self -> graph -> add_node(name => $lexeme_name, %$attributes);
+		$self -> graph -> add_edge(from => $self -> root_node -> name, to => $lexeme_name);
+
+		$label[0]{text}       = "\{$label[0]{text}";
+		$label[$#label]{text} .= '}';
+		$$attributes{label}   = [@label],
+
+		$self -> graph -> add_node(name => $node_name, %$attributes);
+		$self -> graph -> add_edge(from => $lexeme_name, to => $node_name);
+	}
+
+} # End of process_lexeme_default_rule.
 
 # --------------------------------------------------
 
@@ -293,7 +349,7 @@ sub process_lexeme_rule
 	# Ignore the first daughter, which is '~'.
 
 	my(@daughters)      = $a_node -> daughters;
-	my($name)           = $daughters[1] -> name;
+	my($name)           = $self -> clean($daughters[1] -> name);
 	$$attributes{label} = $name;
 
 	$self -> graph -> add_node(name => $name, %$attributes);
@@ -307,7 +363,7 @@ sub process_lexeme_rule
 	{
 		push @label, {text => join(' ', map{$daughters[$_] -> name} $i .. $i + 2)};
 
-		$label[$#label]{text} =~ s/>/\\>/;
+		$label[$#label]{text} = $self -> clean($label[$#label]{text});
 	}
 
 	if ($#label >= 0)
@@ -369,6 +425,8 @@ sub run
 		my(@rule)        = $self -> parser -> cooked_tree -> daughters;
 		my($start_index) = first_index{$_ -> name eq ':start'} @rule;
 
+		# Warning: This must be first because it sets $self -> root_node().
+
 		$self -> process_start_rule($start_index + 1, $rule[$start_index]);
 
 		for my $index (indexes {$_ -> name eq ':default'} @rule)
@@ -385,6 +443,10 @@ sub run
 		{
 			$self -> process_lexeme_rule($index + 1, $rule[$index]);
 		}
+
+		my($lexeme_default_index) = first_index{$_ -> name eq ':lexeme default'} @rule;
+
+		$self -> process_lexeme_default_rule($lexeme_default_index + 1, $rule[$lexeme_default_index]) if (defined $lexeme_default_index);
 
 		for my $index (0 .. $#rule)
 		{

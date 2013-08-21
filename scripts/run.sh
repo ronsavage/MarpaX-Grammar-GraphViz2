@@ -1,5 +1,5 @@
 #!/bin/bash
 
-rm $DR/Perl-modules/html/marpax.grammar.graphviz2/*.svg
+rm -rf $DR/Perl-modules/html/marpax.grammar.graphviz2/$1.svg
 
-scripts/bnf2graph.sh stringparser -max debug; cp html/*.svg $DR/Perl-modules/html/marpax.grammar.graphviz2/
+scripts/bnf2graph.sh $1 -max debug; cp html/$1.svg $DR/Perl-modules/html/marpax.grammar.graphviz2/
