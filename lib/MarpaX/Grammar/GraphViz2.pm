@@ -212,14 +212,8 @@ sub clean_name
 	$name =~ s/\\/\\\\/g;
 	$name =~ s/</\\</g;
 	$name =~ s/>/\\>/g;
-	$name =~ s/\[/\\\[/g;
-	$name =~ s/]/\\]/g;
 	$name =~ s/:/\x{a789}/g;
-	$name =~ s/\"/\x{a78b}/g;
-
-	# Deal with [0-9a-z]. Graphviz has a problem with 9a.
-
-	$name =~ s/9a/\\9\\a/g;
+	$name =~ s/\"/\x{a78c}\x{a78c}/g;
 
 	return $name;
 
@@ -623,6 +617,8 @@ sub run
 
 =pod
 
+=encoding utf8
+
 =head1 NAME
 
 L<MarpaX::Grammar::GraphViz2> - Convert a Marpa grammar into an image
@@ -894,6 +890,27 @@ If no output file is supplied, nothing is written.
 Note: C<tree_file> is a parameter to new().
 
 =head1 FAQ
+
+=head2 Why are some characters replaced by Unicode versions?
+
+Firstly, the Perl module L<GraphViz2> escapes some characters. Currently, these are:
+
+	[ ] " (in various circumstances)
+
+We let L<GraphViz2> handle these.
+
+Secondly, L<Graphviz|http://graphviz.org> itself treats some characters specially. Currently, these appear to be:
+
+	< > : "
+
+We use this code to handle these:
+
+	$name =~ s/\\/\\\\/g;             # Escape \.
+	$name =~ s/</\\</g;               # Escape <.
+	$name =~ s/>/\\>/g;               # Escape >.
+	$name =~ s/:/\x{a789}/g;          # Replace : with a Unicode :
+	$name =~ s/\"/\x{a78c}\x{a78c}/g; # Replace " with 2 copies of a Unicode ' ...
+	                                  # ... because we could not find a Unicode ".
 
 =head1 Machine-Readable Change Log
 
