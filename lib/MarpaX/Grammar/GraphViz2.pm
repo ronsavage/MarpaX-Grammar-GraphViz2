@@ -100,11 +100,11 @@ has minlevel =>
 	required => 0,
 );
 
-has parser =>
+has nodes_seen =>
 (
-	default  => sub{return ''},
+	default  => sub{return {}},
 	is       => 'rw',
-	#isa     => 'MarpaX::Grammar::Parser',
+	#isa     => 'HashRef',
 	required => 0,
 );
 
@@ -113,6 +113,14 @@ has output_file =>
 	default  => sub{return ''},
 	is       => 'rw',
 	#isa     => 'Str',
+	required => 0,
+);
+
+has parser =>
+(
+	default  => sub{return ''},
+	is       => 'rw',
+	#isa     => 'MarpaX::Grammar::Parser',
 	required => 0,
 );
 
@@ -133,6 +141,22 @@ has root_node =>
 );
 
 our $VERSION = '1.00';
+
+# ------------------------------------------------
+
+sub add_node
+{
+	my($self, %attributes) = @_;
+	my($name) = delete $attributes{name};
+ 	my($seen) = $self -> nodes_seen;
+
+	$self -> graph -> add_node(name => $name, %attributes) if (! $$seen{$name});
+
+	$$seen{$name} = 1;
+
+	$self -> nodes_seen($seen);
+
+} # End of add_node.
 
 # ------------------------------------------------
 
@@ -182,15 +206,16 @@ sub BUILD
 
 # --------------------------------------------------
 
-sub clean
+sub clean_name
 {
 	my($self, $name) = @_;
+	$name =~ s/\\/\\\\/g;
 	$name =~ s/</\\</g;
 	$name =~ s/>/\\>/g;
 
 	return $name;
 
-} # End of clean.
+} # End of clean_name.
 
 # --------------------------------------------------
 
@@ -220,8 +245,8 @@ sub process_default_rule
 
 	if ($default_count == 1)
 	{
-		$self -> graph -> add_node(name => $default_name, %$attributes);
-		$self -> graph -> add_edge(from => $self -> root_node -> name, to => $default_name);
+		$self -> add_node(name => $default_name, %$attributes);
+		$self -> graph -> add_edge(from => $self -> clean_name($self -> root_node -> name), to => $default_name);
 	}
 
 	my(@daughters) = $a_node -> daughters;
@@ -242,7 +267,7 @@ sub process_default_rule
 	$label[$#label]{text} .= '}';
 	$$attributes{label}   = [@label],
 
-	$self -> graph -> add_node(name => $name, %$attributes);
+	$self -> add_node(name => $name, %$attributes);
 	$self -> graph -> add_edge(from => $default_name, to => $name);
 
 } # End of process_default_rule.
@@ -265,17 +290,17 @@ sub process_discard_rule
 
 	if ($discard_count == 1)
 	{
-		$self -> graph -> add_node(name => $discard_name, %$attributes);
-		$self -> graph -> add_edge(from => $self -> root_node -> name, to => $discard_name);
+		$self -> add_node(name => $discard_name, %$attributes);
+		$self -> graph -> add_edge(from => $self -> clean_name($self -> root_node -> name), to => $discard_name);
 	}
 
 	# Ignore the first daughter, which is '=>'.
 
 	my(@daughters)      = $a_node -> daughters;
-	my($name)           = $self -> clean($daughters[1] -> name);
+	my($name)           = $self -> clean_name($daughters[1] -> name);
 	$$attributes{label} = $name;
 
-	$self -> graph -> add_node(name => $name, %$attributes);
+	$self -> add_node(name => $name, %$attributes);
 	$self -> graph -> add_edge(from => $discard_name, to => $name);
 
 } # End of process_discard_rule.
@@ -307,19 +332,19 @@ sub process_lexeme_default_rule
 	{
 		push @label, {text => join(' ', map{$daughters[$_] -> name} $i .. $i + 2)};
 
-		$label[$#label]{text} = $self -> clean($label[$#label]{text});
+		$label[$#label]{text} = $self -> clean_name($label[$#label]{text});
 	}
 
 	if ($#label >= 0)
 	{
-		$self -> graph -> add_node(name => $lexeme_name, %$attributes);
-		$self -> graph -> add_edge(from => $self -> root_node -> name, to => $lexeme_name);
+		$self -> add_node(name => $lexeme_name, %$attributes);
+		$self -> graph -> add_edge(from => $self -> clean_name($self -> root_node -> name), to => $lexeme_name);
 
 		$label[0]{text}       = "\{$label[0]{text}";
 		$label[$#label]{text} .= '}';
 		$$attributes{label}   = [@label],
 
-		$self -> graph -> add_node(name => $node_name, %$attributes);
+		$self -> add_node(name => $node_name, %$attributes);
 		$self -> graph -> add_edge(from => $lexeme_name, to => $node_name);
 	}
 
@@ -341,20 +366,13 @@ sub process_lexeme_rule
 		label     => $lexeme_name,
 	};
 
-	if ($lexeme_count == 1)
-	{
-		$self -> graph -> add_node(name => $lexeme_name, %$attributes);
-		$self -> graph -> add_edge(from => $self -> root_node -> name, to => $lexeme_name);
-	}
-
 	# Ignore the first daughter, which is '~'.
 
 	my(@daughters)      = $a_node -> daughters;
-	my($name)           = $self -> clean($daughters[1] -> name);
+	my($name)           = $self -> clean_name($daughters[1] -> name);
 	$$attributes{label} = $name;
 
-	$self -> graph -> add_node(name => $name, %$attributes);
-	$self -> graph -> add_edge(from => $lexeme_name, to => $name);
+	$self -> add_node(name => $name, %$attributes);
 
 	my($node_name) = "${lexeme_name}_$lexeme_count";
 
@@ -364,16 +382,18 @@ sub process_lexeme_rule
 	{
 		push @label, {text => join(' ', map{$daughters[$_] -> name} $i .. $i + 2)};
 
-		$label[$#label]{text} = $self -> clean($label[$#label]{text});
+		$label[$#label]{text} = $self -> clean_name($label[$#label]{text});
 	}
 
 	if ($#label >= 0)
 	{
+		unshift @label, {text => ':lexeme'};
+
 		$label[0]{text}       = "\{$label[0]{text}";
 		$label[$#label]{text} .= '}';
 		$$attributes{label}   = [@label],
 
-		$self -> graph -> add_node(name => $node_name, %$attributes);
+		$self -> add_node(name => $node_name, %$attributes);
 		$self -> graph -> add_edge(from => $name, to => $node_name);
 	}
 
@@ -392,17 +412,22 @@ sub process_normal_adverbs
 
 	my(@adverbs);
 
-	while ($end - 2 >= 0)
+	while ($end > 0)
 	{
 		if ($daughters[$end - 1] -> name eq '=>')
 		{
+			my($adverb) = $daughters[$end - 2] -> name;
+			my($token)  = $daughters[$end] -> name;
+
+			pop @daughters for 1 .. 3;
+
+			$end = $#daughters;
+
 			push @adverbs,
 			{
-				adverb => $daughters[$end - 2] -> name,
-				name   => $daughters[$end] -> name,
+				adverb => $adverb,
+				name   => $token,
 			};
-
-			$end -= 3;
 		}
 		else
 		{
@@ -414,14 +439,10 @@ sub process_normal_adverbs
 
 	if ($#adverbs >= 0)
 	{
-		$self -> log(debug => "Node: $name. Adverbs before: " . join(', ', map{"$$_{adverb} => $$_{name}"} @adverbs) );
-
 		@adverbs            = map{"$$_{adverb} =\\> $$_{name}"} @adverbs;
 		$adverbs[0]         = "\{$adverbs[0]";
 		$adverbs[$#adverbs] .= '}';
 		@adverbs            = map{ {text => $_} } @adverbs;
-
-		$self -> log(debug => "Node: $name. Adverbs after:  " . join(', ', map{"$$_{text}"} @adverbs) );
 	}
 	else
 	{
@@ -430,7 +451,7 @@ sub process_normal_adverbs
 		$adverbs[0] = $name;
 	}
 
-	return [@adverbs];
+	return ([@daughters], [@adverbs]);
 
 } # End of process_normal_adverbs.
 
@@ -439,11 +460,12 @@ sub process_normal_adverbs
 sub process_normal_rule
 {
 	my($self, $index, $a_node) = @_;
-	my($name) = $a_node -> name;
+	my($name)    = $self -> clean_name($a_node -> name);
+	my($is_root) = $self -> clean_name($self -> root_node -> name) eq $name;
 
 	my($attributes);
 
-	if ($self -> root_node -> name eq $name)
+	if ($is_root)
 	{
 		$attributes =
 		{
@@ -456,28 +478,61 @@ sub process_normal_rule
 		$attributes =
 		{
 			fillcolor => 'white',
-			label     => $name,
+			label     => $self -> clean_name($name),
 		};
 	};
 
-	$self -> graph -> add_node(name => $name, %$attributes);
+	$self -> add_node(name => $name, %$attributes);
 
-	my($adverbs) = $self -> process_normal_adverbs($index, $a_node);
+	my($daughters, $adverbs) = $self -> process_normal_adverbs($index, $a_node);
 
-	if ($#$adverbs >= 0)
+	my($token, @tokens);
+
+	# Ignore $$daughter[0] because it is '::=' or '~'.
+
+	for my $i (1 .. $#$daughters)
 	{
-		my($adverb_name) = "${name}_attributes";
-		$attributes      =
-		{
-			fillcolor => 'lightblue',
-			label     => $adverbs,
-		};
+		$token = $$daughters[$i];
 
-		$self -> graph -> add_node(name => $adverb_name, %$attributes);
-		$self -> graph -> add_edge(from => $name, to => $adverb_name);
+		if ($token -> name eq '|')
+		{
+			# The sort puts end before start, and Graphviz then plots start first.
+			# I ignore directed 'v' undirected.
+
+			$self -> process_normal_tokens($index, $a_node, $_) for sort{$a -> name cmp $b -> name} @tokens;
+
+			$#tokens = - 1;
+		}
+		else
+		{
+			push @tokens, $token;
+		}
 	}
 
+	# The sort puts end before start, and Graphviz then plots start first.
+	# I ignore directed 'v' undirected.
+
+	$self -> process_normal_tokens($index, $a_node, $_) for sort{$a -> name cmp $b -> name} @tokens;
+
 } # End of process_normal_rule.
+
+# --------------------------------------------------
+
+sub process_normal_tokens
+{
+	my($self, $index, $a_node, $token) = @_;
+	my($name)       = $self -> clean_name($a_node -> name);
+	my($token_name) = $self -> clean_name($token -> name);
+	my($attributes) =
+	{
+		fillcolor => 'white',
+		label     => $token_name,
+	};
+
+	$self -> add_node(name => $token_name, %$attributes);
+	$self -> graph -> add_edge(from => $name, to => $token_name);
+
+} # End of process_normal_tokens.
 
 # --------------------------------------------------
 
@@ -516,11 +571,6 @@ sub run
 			$self -> process_discard_rule($index + 1, $rule[$index]);
 		}
 
-		for my $index (indexes {$_ -> name eq ':lexeme'} @rule)
-		{
-			$self -> process_lexeme_rule($index + 1, $rule[$index]);
-		}
-
 		my($lexeme_default_index) = first_index{$_ -> name eq ':lexeme default'} @rule;
 
 		$self -> process_lexeme_default_rule($lexeme_default_index + 1, $rule[$lexeme_default_index]) if (defined $lexeme_default_index);
@@ -539,6 +589,11 @@ sub run
 			next if ($seen{$rule[$index] -> name});
 
 			$self -> process_normal_rule($index + 1, $rule[$index]);
+		}
+
+		for my $index (indexes {$_ -> name eq ':lexeme'} @rule)
+		{
+			$self -> process_lexeme_rule($index + 1, $rule[$index]);
 		}
 
 		my($output_file) = $self -> output_file;
