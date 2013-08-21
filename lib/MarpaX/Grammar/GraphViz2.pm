@@ -380,35 +380,64 @@ sub process_lexeme_rule
 
 # --------------------------------------------------
 
-sub process_rule
+sub process_normal_rule
 {
 	my($self, $index, $a_node) = @_;
-	my($name)       = $a_node -> name;
-	my($attributes) =
+	my($name)      = $a_node -> name;
+	my(@daughters) = $a_node -> daughters;
+	my($end)       = $#daughters;
+
+	my(@adverbs);
+
+	while ($end - 2 >= 0)
 	{
-		fillcolor => 'white',
-		label     => $name,
+		if ($daughters[$end - 1] -> name eq '=>')
+		{
+			push @adverbs,
+			{
+				adverb => $daughters[$end - 2] -> name,
+				name   => $daughters[$end] -> name,
+			};
+
+			$end -= 3;
+		}
+		else
+		{
+			$end = 0;
+		}
+	}
+
+	my($attributes);
+
+	if ($self -> root_node -> name eq $name)
+	{
+		$attributes =
+		{
+			fillcolor => 'lightgreen',
+			label     => [{text => '{:start'}, {text => "$name}"}],
+		};
+	}
+	else
+	{
+		$attributes =
+		{
+			fillcolor => 'white',
+			label     => $name,
+		};
 	};
 
 	$self -> graph -> add_node(name => $name, %$attributes);
+#	$self -> graph -> add_edge(from => $self -> root_node -> name, to => $lexeme_name);
 
-} # End of process_rule.
+} # End of process_normal_rule.
 
 # --------------------------------------------------
 
 sub process_start_rule
 {
 	my($self, $index, $a_node) = @_;
-	my($start_name) = $a_node -> name;
-	my(@daughters)   = $a_node -> daughters;
-	my($name)        = $daughters[1] -> name;
-	my($attributes)  =
-	{
-		fillcolor => 'lightgreen',
-		label     => [{text => "{$start_name"}, {text => "$name}"}],
-	};
+	my(@daughters) = $a_node -> daughters;
 
-	$self -> graph -> add_node(name => $name, %$attributes);
 	$self -> root_node($daughters[1]);
 
 } # End of process_start_rule.
@@ -448,11 +477,20 @@ sub run
 
 		$self -> process_lexeme_default_rule($lexeme_default_index + 1, $rule[$lexeme_default_index]) if (defined $lexeme_default_index);
 
+		my(%seen) =
+		(
+			':default'       => 1,
+			':discard'       => 1,
+			':lexeme'        => 1,
+			'lexeme default' => 1,
+			':start'         => 1,
+		);
+
 		for my $index (0 .. $#rule)
 		{
-#			next if ($index == $start_index);
+			next if ($seen{$rule[$index] -> name});
 
-#			$self -> process_rule($index + 1, $rule[$index]);
+			$self -> process_normal_rule($index + 1, $rule[$index]);
 		}
 
 		my($output_file) = $self -> output_file;
