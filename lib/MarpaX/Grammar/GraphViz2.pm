@@ -60,6 +60,14 @@ has graph =>
 	required => 0,
 );
 
+has lexeme_count =>
+(
+	default  => sub{return 0},
+	is       => 'rw',
+	#isa     => 'int',
+	required => 0,
+);
+
 has logger =>
 (
 	default  => sub{return undef},
@@ -262,6 +270,60 @@ sub process_discard_rule
 
 # --------------------------------------------------
 
+sub process_lexeme_rule
+{
+	my($self, $index, $a_node) = @_;
+
+	$self -> lexeme_count($self -> lexeme_count + 1);
+
+	my($lexeme_count) = $self -> lexeme_count;
+	my($lexeme_name)  = ':lexeme';
+	my($attributes)   =
+	{
+		fillcolor => 'lightblue',
+		label     => $lexeme_name,
+	};
+
+	if ($lexeme_count == 1)
+	{
+		$self -> graph -> add_node(name => $lexeme_name, %$attributes);
+		$self -> graph -> add_edge(from => $self -> root_node -> name, to => $lexeme_name);
+	}
+
+	# Ignore the first daughter, which is '~'.
+
+	my(@daughters)      = $a_node -> daughters;
+	my($name)           = $daughters[1] -> name;
+	$$attributes{label} = $name;
+
+	$self -> graph -> add_node(name => $name, %$attributes);
+	$self -> graph -> add_edge(from => $lexeme_name, to => $name);
+
+	my($node_name) = "${lexeme_name}_$lexeme_count";
+
+	my(@label);
+
+	for (my $i = 2; $i < $#daughters; $i += 3)
+	{
+		push @label, {text => join(' ', map{$daughters[$_] -> name} $i .. $i + 2)};
+
+		$label[$#label]{text} =~ s/>/\\>/;
+	}
+
+	if ($#label >= 0)
+	{
+		$label[0]{text}       = "\{$label[0]{text}";
+		$label[$#label]{text} .= '}';
+		$$attributes{label}   = [@label],
+
+		$self -> graph -> add_node(name => $node_name, %$attributes);
+		$self -> graph -> add_edge(from => $name, to => $node_name);
+	}
+
+} # End of process_lexeme_rule.
+
+# --------------------------------------------------
+
 sub process_rule
 {
 	my($self, $index, $a_node) = @_;
@@ -304,29 +366,25 @@ sub run
 
 	if ($result == 0)
 	{
-		my(@rule) = $self -> parser -> cooked_tree -> daughters;
-
-		# Phase 1: Process the :start rule.
-
+		my(@rule)        = $self -> parser -> cooked_tree -> daughters;
 		my($start_index) = first_index{$_ -> name eq ':start'} @rule;
 
 		$self -> process_start_rule($start_index + 1, $rule[$start_index]);
-
-		# Phase 2: Process the :default rules.
 
 		for my $index (indexes {$_ -> name eq ':default'} @rule)
 		{
 			$self -> process_default_rule($index + 1, $rule[$index]);
 		}
 
-		# Phase 3: Process the :discard rules.
-
 		for my $index (indexes {$_ -> name eq ':discard'} @rule)
 		{
 			$self -> process_discard_rule($index + 1, $rule[$index]);
 		}
 
-		# Phase 8: Process the other rules.
+		for my $index (indexes {$_ -> name eq ':lexeme'} @rule)
+		{
+			$self -> process_lexeme_rule($index + 1, $rule[$index]);
+		}
 
 		for my $index (0 .. $#rule)
 		{
