@@ -488,10 +488,7 @@ sub process_normal_rule
 
 		if ($token -> name eq '|')
 		{
-			# The sort puts 'end' before 'start'. Then Graphviz plots 'start' on the left of 'end'!
-			# But I ignore cases like 'directed' and 'undirected', etc.
-
-			$self -> process_normal_tokens($index, $a_node, $_) for sort{$a -> name cmp $b -> name} @tokens;
+			$self -> process_normal_tokens($index, $a_node, $_) for @tokens;
 
 			$#tokens = - 1;
 		}
@@ -501,10 +498,7 @@ sub process_normal_rule
 		}
 	}
 
-	# The sort puts 'end' before 'start'. Then Graphviz plots 'start' on the left of 'end'!
-	# But I ignore cases like 'directed' and 'undirected', etc.
-
-	$self -> process_normal_tokens($index, $a_node, $_) for sort{$a -> name cmp $b -> name} @tokens;
+	$self -> process_normal_tokens($index, $a_node, $_) for @tokens;
 
 } # End of process_normal_rule.
 
@@ -585,7 +579,7 @@ sub run
 		$self -> process_lexeme_rule($index + 1, $rule[$index]);
 	}
 
-	$self -> graph -> add_edge(from => $self -> root_node -> name, to => "\x{a789}lexeme", label => $self -> lexeme_count);
+	$self -> graph -> add_edge(from => $self -> root_node -> name, to => "\x{a789}lexeme", label => $self -> lexeme_count) if ($self -> lexeme_count > 0);
 
 	my(%seen) =
 	(
@@ -596,18 +590,12 @@ sub run
 		"\x{a789}start"   => 1,
 	);
 
-=pod
-
 	for my $index (0 .. $#rule)
 	{
 		next if ($seen{$rule[$index] -> name});
 
 		$self -> process_normal_rule($index + 1, $rule[$index]);
 	}
-
-=cut
-
-#	print map{"$_\n"} @{$self -> parser -> cooked_tree -> tree2string({no_attributes => 0})};
 
 	my($output_file) = $self -> output_file;
 
