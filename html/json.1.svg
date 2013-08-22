@@ -17,13 +17,13 @@
 <polyline fill="none" stroke="black" points="11,-191 65,-191 "/>
 <text text-anchor="middle" x="38" y="-175.8" font-family="Times,serif" font-size="14.00">json</text>
 </g>
-<!-- :discard -->
-<g id="node2" class="node"><title>:discard</title>
+<!-- ꞉discard -->
+<g id="node2" class="node"><title>꞉discard</title>
 <polygon fill="lightblue" stroke="black" points="67.25,-131 8.75,-131 8.75,-95 67.25,-95 67.25,-131"/>
-<text text-anchor="middle" x="38" y="-109.3" font-family="Times,serif" font-size="14.00">:discard</text>
+<text text-anchor="middle" x="38" y="-109.3" font-family="Times,serif" font-size="14.00">꞉discard</text>
 </g>
-<!-- json&#45;&gt;:discard -->
-<g id="edge1" class="edge"><title>json&#45;&gt;:discard</title>
+<!-- json&#45;&gt;꞉discard -->
+<g id="edge1" class="edge"><title>json&#45;&gt;꞉discard</title>
 <path fill="none" stroke="grey" d="M38,-167.609C38,-159.481 38,-150.2 38,-141.671"/>
 <polygon fill="grey" stroke="grey" points="41.5001,-141.412 38,-131.412 34.5001,-141.412 41.5001,-141.412"/>
 </g>
@@ -32,8 +32,8 @@
 <polygon fill="lightblue" stroke="black" points="76.25,-59 -0.25,-59 -0.25,-23 76.25,-23 76.25,-59"/>
 <text text-anchor="middle" x="38" y="-37.3" font-family="Times,serif" font-size="14.00">whitespace</text>
 </g>
-<!-- :discard&#45;&gt;whitespace -->
-<g id="edge2" class="edge"><title>:discard&#45;&gt;whitespace</title>
+<!-- ꞉discard&#45;&gt;whitespace -->
+<g id="edge2" class="edge"><title>꞉discard&#45;&gt;whitespace</title>
 <path fill="none" stroke="grey" d="M38,-94.6966C38,-86.9827 38,-77.7125 38,-69.1124"/>
 <polygon fill="grey" stroke="grey" points="41.5001,-69.1043 38,-59.1043 34.5001,-69.1044 41.5001,-69.1043"/>
 </g>

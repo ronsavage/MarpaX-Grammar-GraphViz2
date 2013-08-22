@@ -215,7 +215,7 @@ sub clean_name
 	$name =~ s/\\/\\\\/g;             # Escape \.
 	$name =~ s/</\\</g;               # Escape <.
 	$name =~ s/>/\\>/g;               # Escape >.
-	$name =~ s/(.)(:)/$1\x{a789}/g;   # Preserve leading ':'. Escape others.
+	$name =~ s/:/\x{a789}/g;          # Escape :.
 	$name =~ s/\"/\x{a78c}\x{a78c}/g; # Convert " into Unicode ' x 2.
 
 	return $name;
@@ -305,12 +305,6 @@ sub process_adverbs
 		$adverbs[$#adverbs] .= '}';
 		@adverbs            = map{ {text => $_} } @adverbs;
 	}
-	else
-	{
-		# If the are no adverbs, default the label to the node's name.
-
-		$adverbs[0] = $name;
-	}
 
 	return ([@daughters], [@adverbs]);
 
@@ -325,7 +319,7 @@ sub process_default_rule
 	$self -> default_count($self -> default_count + 1);
 
 	my($default_count) = $self -> default_count;
-	my($default_name)  = ':default';
+	my($default_name)  = "\x{a789}default";
 	my($attributes)    =
 	{
 		fillcolor => 'lightblue',
@@ -370,7 +364,7 @@ sub process_discard_rule
 	$self -> discard_count($self -> discard_count + 1);
 
 	my($discard_count) = $self -> discard_count;
-	my($discard_name)  = ':discard';
+	my($discard_name)  = "\x{a789}discard";
 	my($attributes)    =
 	{
 		fillcolor => 'lightblue',
@@ -410,11 +404,14 @@ sub process_lexeme_default_rule
 	$self -> add_node(name => $lexeme_name, %$attributes);
 	$self -> graph -> add_edge(from => $self -> root_node -> name, to => $lexeme_name);
 
-	$$attributes{label} = $adverbs;
-	my($name)           = "${lexeme_name}_1";
+	if ($#$adverbs >= 0)
+	{
+		$$attributes{label} = $adverbs;
+		my($adverb_name)    = "${lexeme_name}_1";
 
-	$self -> add_node(name => $name, %$attributes);
-	$self -> graph -> add_edge(from => $lexeme_name, to => $name);
+		$self -> add_node(name => $adverb_name, %$attributes);
+		$self -> graph -> add_edge(from => $lexeme_name, to => $adverb_name);
+	}
 
 } # End of process_lexeme_default_rule.
 
@@ -427,40 +424,33 @@ sub process_lexeme_rule
 	$self -> lexeme_count($self -> lexeme_count + 1);
 
 	my($lexeme_count) = $self -> lexeme_count;
-	my($lexeme_name)  = ':lexeme';
+	my($lexeme_name)  = "\x{a789}lexeme";
 	my($attributes)   =
 	{
 		fillcolor => 'lightblue',
 		label     => $lexeme_name,
 	};
 
+	$self -> add_node(name => $lexeme_name, %$attributes);
+
 	# Ignore the first daughter, which is '~'.
 
-	my(@daughters)      = $a_node -> daughters;
-	my($name)           = $daughters[1] -> name;
-	$$attributes{label} = $name;
+	my($daughters, $adverbs) = $self -> process_adverbs($index, $a_node);
+	my($name)                = $$daughters[1] -> name;
+	$$attributes{label}      = $name;
 
 	$self -> add_node(name => $name, %$attributes);
+	$self -> graph -> add_edge(from => $lexeme_name, to => $name);
 
-	my($node_name) = "${lexeme_name}_$lexeme_count";
-
-	my(@label);
-
-	for (my $i = 2; $i < $#daughters; $i += 3)
+	if ($#$adverbs >= 0)
 	{
-		push @label, {text => join(' ', map{$daughters[$_] -> name} $i .. $i + 2)};
-	}
+		$$attributes{label} = $adverbs;
+		my($adverb_name)    = "${lexeme_name}_$lexeme_count";
 
-	if ($#label >= 0)
-	{
-		unshift @label, {text => ':lexeme'};
+		$self -> log(debug => "Lexeme rule. Add node: $adverb_name and edge from $name to it");
 
-		$label[0]{text}       = "\{$label[0]{text}";
-		$label[$#label]{text} .= '}';
-		$$attributes{label}   = [@label],
-
-		$self -> add_node(name => $node_name, %$attributes);
-		$self -> graph -> add_edge(from => $name, to => $node_name);
+		$self -> add_node(name => $adverb_name, %$attributes);
+		$self -> graph -> add_edge(from => $name, to => $adverb_name);
 	}
 
 } # End of process_lexeme_rule.
@@ -570,18 +560,18 @@ sub run
 	$self -> clean_tree;
 
 	my(@rule)        = $self -> parser -> cooked_tree -> daughters;
-	my($start_index) = first_index{$_ -> name eq ':start'} @rule;
+	my($start_index) = first_index{$_ -> name eq "\x{a789}start"} @rule;
 
 	# Warning: This must be first because it sets $self -> root_node().
 
 	$self -> process_start_rule($start_index + 1, $rule[$start_index]);
 
-	for my $index (indexes {$_ -> name eq ':default'} @rule)
+	for my $index (indexes {$_ -> name eq "\x{a789}default"} @rule)
 	{
 		$self -> process_default_rule($index + 1, $rule[$index]);
 	}
 
-	for my $index (indexes {$_ -> name eq ':discard'} @rule)
+	for my $index (indexes {$_ -> name eq "\x{a789}discard"} @rule)
 	{
 		$self -> process_discard_rule($index + 1, $rule[$index]);
 	}
@@ -590,21 +580,23 @@ sub run
 
 	$self -> process_lexeme_default_rule($lexeme_default_index + 1, $rule[$lexeme_default_index]) if ($lexeme_default_index >= 0);
 
-=pod
-
-	for my $index (indexes {$_ -> name eq ':lexeme'} @rule)
+	for my $index (indexes {$_ -> name eq "\x{a789}lexeme"} @rule)
 	{
 		$self -> process_lexeme_rule($index + 1, $rule[$index]);
 	}
 
+	$self -> graph -> add_edge(from => $self -> root_node -> name, to => "\x{a789}lexeme", label => $self -> lexeme_count);
+
 	my(%seen) =
 	(
-		':default'       => 1,
-		':discard'       => 1,
-		':lexeme'        => 1,
-		'lexeme default' => 1,
-		':start'         => 1,
+		"\x{a789}default" => 1,
+		"\x{a789}discard" => 1,
+		"\x{a789}lexeme"  => 1,
+		'lexeme default'  => 1,
+		"\x{a789}start"   => 1,
 	);
+
+=pod
 
 	for my $index (0 .. $#rule)
 	{
