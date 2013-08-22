@@ -209,11 +209,14 @@ sub BUILD
 sub clean_name
 {
 	my($self, $name) = @_;
-	$name =~ s/\\/\\\\/g;
-	$name =~ s/</\\</g;
-	$name =~ s/>/\\>/g;
-	$name =~ s/:/\x{a789}/g;
-	$name =~ s/\"/\x{a78c}\x{a78c}/g;
+
+	return $name if ($name =~ /(?::=|=>|=)/);
+
+	$name =~ s/\\/\\\\/g;             # Escape \.
+	$name =~ s/</\\</g;               # Escape <.
+	$name =~ s/>/\\>/g;               # Escape >.
+	$name =~ s/(.)(:)/$1\x{a789}/g;   # Preserve leading ':'. Escape others.
+	$name =~ s/\"/\x{a78c}\x{a78c}/g; # Convert " into Unicode ' x 2.
 
 	return $name;
 
@@ -235,22 +238,15 @@ sub clean_tree
 			my($node, $options)     = @_;
 			$name                   = $node -> name;
 			$attributes             = $node -> attributes;
-			$$attributes{real_name} = $node;
+			$$attributes{real_name} = $name;
 
+			$node -> attributes($attributes);
 			$node -> name($self -> clean_name($name) );
 
 			return 1; # Keep walking.
 		},
 		_depth => 0,
 	});
-
-	$name =~ s/\\/\\\\/g;
-	$name =~ s/</\\</g;
-	$name =~ s/>/\\>/g;
-	$name =~ s/:/\x{a789}/g;
-	$name =~ s/\"/\x{a78c}\x{a78c}/g;
-
-	return $name;
 
 } # End of clean_tree.
 
@@ -263,6 +259,62 @@ sub log
 	$self -> logger -> log($level => $s) if ($self -> logger);
 
 } # End of log.
+
+# --------------------------------------------------
+
+sub process_adverbs
+{
+	my($self, $index, $a_node) = @_;
+	my($name)      = $a_node -> name;
+	my(@daughters) = $a_node -> daughters;
+	my($end)       = $#daughters;
+
+	# Pick adverbs off the end of the list.
+
+	my(@adverbs);
+
+	while ($end > 0)
+	{
+		if ($daughters[$end - 1] -> name eq '=>')
+		{
+			my($adverb) = $daughters[$end - 2] -> name;
+			my($token)  = $daughters[$end] -> name;
+
+			pop @daughters for 1 .. 3;
+
+			$end = $#daughters;
+
+			push @adverbs,
+			{
+				adverb => $adverb,
+				name   => $token,
+			};
+		}
+		else
+		{
+			$end = 0;
+		}
+	}
+
+	# Construct the label as an arrayref of hashrefs.
+
+	if ($#adverbs >= 0)
+	{
+		@adverbs            = map{"$$_{adverb} =\\> $$_{name}"} @adverbs;
+		$adverbs[0]         = "\{$adverbs[0]";
+		$adverbs[$#adverbs] .= '}';
+		@adverbs            = map{ {text => $_} } @adverbs;
+	}
+	else
+	{
+		# If the are no adverbs, default the label to the node's name.
+
+		$adverbs[0] = $name;
+	}
+
+	return ([@daughters], [@adverbs]);
+
+} # End of process_adverbs.
 
 # --------------------------------------------------
 
@@ -347,41 +399,22 @@ sub process_discard_rule
 sub process_lexeme_default_rule
 {
 	my($self, $index, $a_node) = @_;
-
-	$self -> lexeme_count($self -> lexeme_count + 1);
-
-	my($lexeme_count) = $self -> lexeme_count;
-	my($lexeme_name)  = 'lexeme default';
-	my($attributes)   =
+	my($daughters, $adverbs)   = $self -> process_adverbs($index, $a_node);
+	my($lexeme_name)           = 'lexeme default';
+	my($attributes)            =
 	{
 		fillcolor => 'lightblue',
 		label     => $lexeme_name,
 	};
 
-	# Ignore the first daughter, which is '='.
+	$self -> add_node(name => $lexeme_name, %$attributes);
+	$self -> graph -> add_edge(from => $self -> root_node -> name, to => $lexeme_name);
 
-	my(@daughters) = $a_node -> daughters;
-	my($node_name) = "${lexeme_name}_1";
+	$$attributes{label} = $adverbs;
+	my($name)           = "${lexeme_name}_1";
 
-	my(@label);
-
-	for (my $i = 1; $i < $#daughters; $i += 3)
-	{
-		push @label, {text => join(' ', map{$daughters[$_] -> name} $i .. $i + 2)};
-	}
-
-	if ($#label >= 0)
-	{
-		$self -> add_node(name => $lexeme_name, %$attributes);
-		$self -> graph -> add_edge(from => $self -> root_node -> name, to => $lexeme_name);
-
-		$label[0]{text}       = "\{$label[0]{text}";
-		$label[$#label]{text} .= '}';
-		$$attributes{label}   = [@label],
-
-		$self -> add_node(name => $node_name, %$attributes);
-		$self -> graph -> add_edge(from => $lexeme_name, to => $node_name);
-	}
+	$self -> add_node(name => $name, %$attributes);
+	$self -> graph -> add_edge(from => $lexeme_name, to => $name);
 
 } # End of process_lexeme_default_rule.
 
@@ -434,62 +467,6 @@ sub process_lexeme_rule
 
 # --------------------------------------------------
 
-sub process_normal_adverbs
-{
-	my($self, $index, $a_node) = @_;
-	my($name)      = $a_node -> name;
-	my(@daughters) = $a_node -> daughters;
-	my($end)       = $#daughters;
-
-	# Pick adverbs off the end if the list.
-
-	my(@adverbs);
-
-	while ($end > 0)
-	{
-		if ($daughters[$end - 1] -> name eq '=>')
-		{
-			my($adverb) = $daughters[$end - 2] -> name;
-			my($token)  = $daughters[$end] -> name;
-
-			pop @daughters for 1 .. 3;
-
-			$end = $#daughters;
-
-			push @adverbs,
-			{
-				adverb => $adverb,
-				name   => $token,
-			};
-		}
-		else
-		{
-			$end = 0;
-		}
-	}
-
-	# Construct the label as an arrayref of hashrefs.
-
-	if ($#adverbs >= 0)
-	{
-		@adverbs            = map{"$$_{adverb} =\\> $$_{name}"} @adverbs;
-		$adverbs[0]         = "\{$adverbs[0]";
-		$adverbs[$#adverbs] .= '}';
-		@adverbs            = map{ {text => $_} } @adverbs;
-	}
-	else
-	{
-		# If the are no adverbs, default the label to the node's name.
-
-		$adverbs[0] = $name;
-	}
-
-	return ([@daughters], [@adverbs]);
-
-} # End of process_normal_adverbs.
-
-# --------------------------------------------------
-
 sub process_normal_rule
 {
 	my($self, $index, $a_node) = @_;
@@ -498,26 +475,18 @@ sub process_normal_rule
 
 	my($attributes);
 
-	if ($is_root)
-	{
-		$attributes =
-		{
-			fillcolor => 'lightgreen',
-			label     => [{text => '{:start'}, {text => "$name}"}],
-		};
-	}
-	else
+	if (! $is_root)
 	{
 		$attributes =
 		{
 			fillcolor => 'white',
 			label     => $name,
 		};
-	};
 
-	$self -> add_node(name => $name, %$attributes);
+		$self -> add_node(name => $name, %$attributes);
+	}
 
-	my($daughters, $adverbs) = $self -> process_normal_adverbs($index, $a_node);
+	my($daughters, $adverbs) = $self -> process_adverbs($index, $a_node);
 
 	my($token, @tokens);
 
@@ -573,8 +542,17 @@ sub process_start_rule
 {
 	my($self, $index, $a_node) = @_;
 	my(@daughters) = $a_node -> daughters;
+	my($name)      = $daughters[1] -> name;
 
 	$self -> root_node($daughters[1]);
+
+	my($attributes) =
+	{
+		fillcolor => 'lightgreen',
+		label     => [{text => '{:start'}, {text => "$name}"}],
+	};
+
+	$self -> add_node(name => $name, %$attributes);
 
 } # End of process_start_rule.
 
@@ -585,56 +563,63 @@ sub run
 	my($self)   = @_;
 	my($result) = $self -> parser -> run;
 
-	if ($result == 0)
+	# Return 0 for success and 1 for failure.
+
+	return $result if ($result == 1);
+
+	$self -> clean_tree;
+
+	my(@rule)        = $self -> parser -> cooked_tree -> daughters;
+	my($start_index) = first_index{$_ -> name eq ':start'} @rule;
+
+	# Warning: This must be first because it sets $self -> root_node().
+
+	$self -> process_start_rule($start_index + 1, $rule[$start_index]);
+
+	for my $index (indexes {$_ -> name eq ':default'} @rule)
 	{
-		$self -> clean_tree;
-
-		my(@rule)        = $self -> parser -> cooked_tree -> daughters;
-		my($start_index) = first_index{$_ -> name eq ':start'} @rule;
-
-		# Warning: This must be first because it sets $self -> root_node().
-
-		$self -> process_start_rule($start_index + 1, $rule[$start_index]);
-
-		for my $index (indexes {$_ -> name eq ':default'} @rule)
-		{
-			$self -> process_default_rule($index + 1, $rule[$index]);
-		}
-
-		for my $index (indexes {$_ -> name eq ':discard'} @rule)
-		{
-			$self -> process_discard_rule($index + 1, $rule[$index]);
-		}
-
-		my($lexeme_default_index) = first_index{$_ -> name eq ':lexeme default'} @rule;
-
-		$self -> process_lexeme_default_rule($lexeme_default_index + 1, $rule[$lexeme_default_index]) if (defined $lexeme_default_index);
-
-		for my $index (indexes {$_ -> name eq ':lexeme'} @rule)
-		{
-			$self -> process_lexeme_rule($index + 1, $rule[$index]);
-		}
-
-		my(%seen) =
-		(
-			':default'       => 1,
-			':discard'       => 1,
-			':lexeme'        => 1,
-			'lexeme default' => 1,
-			':start'         => 1,
-		);
-
-		for my $index (0 .. $#rule)
-		{
-			next if ($seen{$rule[$index] -> name});
-
-			$self -> process_normal_rule($index + 1, $rule[$index]);
-		}
-
-		my($output_file) = $self -> output_file;
-
-		$self -> graph -> run(output_file => $output_file);
+		$self -> process_default_rule($index + 1, $rule[$index]);
 	}
+
+	for my $index (indexes {$_ -> name eq ':discard'} @rule)
+	{
+		$self -> process_discard_rule($index + 1, $rule[$index]);
+	}
+
+	my($lexeme_default_index) = first_index{$_ -> name eq 'lexeme default'} @rule;
+
+	$self -> process_lexeme_default_rule($lexeme_default_index + 1, $rule[$lexeme_default_index]) if ($lexeme_default_index >= 0);
+
+=pod
+
+	for my $index (indexes {$_ -> name eq ':lexeme'} @rule)
+	{
+		$self -> process_lexeme_rule($index + 1, $rule[$index]);
+	}
+
+	my(%seen) =
+	(
+		':default'       => 1,
+		':discard'       => 1,
+		':lexeme'        => 1,
+		'lexeme default' => 1,
+		':start'         => 1,
+	);
+
+	for my $index (0 .. $#rule)
+	{
+		next if ($seen{$rule[$index] -> name});
+
+		$self -> process_normal_rule($index + 1, $rule[$index]);
+	}
+
+=cut
+
+#	print map{"$_\n"} @{$self -> parser -> cooked_tree -> tree2string({no_attributes => 0})};
+
+	my($output_file) = $self -> output_file;
+
+	$self -> graph -> run(output_file => $output_file);
 
 	# Return 0 for success and 1 for failure.
 
