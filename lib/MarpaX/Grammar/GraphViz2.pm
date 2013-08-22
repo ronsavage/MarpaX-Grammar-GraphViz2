@@ -235,10 +235,9 @@ sub clean_tree
 	({
 		callback => sub
 		{
-			my($node, $options)     = @_;
-			$name                   = $node -> name;
-			$attributes             = $node -> attributes;
-			$$attributes{real_name} = $name;
+			my($node, $options) = @_;
+			$name               = $node -> name;
+			$attributes         = $node -> attributes;
 
 			$node -> attributes($attributes);
 			$node -> name($self -> clean_name($name) );
@@ -264,10 +263,8 @@ sub log
 
 sub process_adverbs
 {
-	my($self, $index, $a_node) = @_;
-	my($name)      = $a_node -> name;
-	my(@daughters) = $a_node -> daughters;
-	my($end)       = $#daughters;
+	my($self, $daughters) = @_;
+	my($end) = $#$daughters;
 
 	# Pick adverbs off the end of the list.
 
@@ -275,14 +272,14 @@ sub process_adverbs
 
 	while ($end > 0)
 	{
-		if ($daughters[$end - 1] -> name eq '=>')
+		if ($$daughters[$end - 1] -> name eq '=>')
 		{
-			my($adverb) = $daughters[$end - 2] -> name;
-			my($token)  = $daughters[$end] -> name;
+			my($adverb) = $$daughters[$end - 2] -> name;
+			my($token)  = $$daughters[$end] -> name;
 
-			pop @daughters for 1 .. 3;
+			pop @$daughters for 1 .. 3;
 
-			$end = $#daughters;
+			$end = $#$daughters;
 
 			push @adverbs,
 			{
@@ -304,11 +301,55 @@ sub process_adverbs
 		$adverbs[0]         = "\{$adverbs[0]";
 		$adverbs[$#adverbs] .= '}';
 		@adverbs            = map{ {text => $_} } @adverbs;
+
+		$self -> log(debug => "========> Adverbs: " . join(', ', map{$$_{text} } @adverbs) );
 	}
 
-	return ([@daughters], [@adverbs]);
+	return ([@$daughters], [@adverbs]);
 
 } # End of process_adverbs.
+
+# --------------------------------------------------
+# This handles prioritized rules and quantized rules.
+
+sub process_complex_adverbs
+{
+	my($self, $index, $a_node) = @_;
+	my($finished)  = 0;
+	my($daughters) = [$a_node -> daughters];
+
+	my($adverbs, @adverb_stack);
+	my(@daughter_stack);
+
+	while (! $finished)
+	{
+		($daughters, $adverbs) = $self -> process_adverbs($daughters);
+
+		$self -> log(debug => '========> Token: ' . $$daughters[$#$daughters] -> name);
+
+		unshift @adverb_stack, $adverbs; # {%$adverbs}?
+		unshift @daughter_stack, pop @$daughters;
+
+		$finished = 1 if ($#$daughters <= 0);
+	}
+
+	return ([@daughter_stack], [@adverb_stack]);
+
+} # End of process_complex_adverbs.
+
+# --------------------------------------------------
+# This handles ':default', ':lexeme' and 'lexeme default'.
+
+sub process_simple_adverbs
+{
+	my($self, $index, $a_node) = @_;
+	my($name)      = $a_node -> name;
+
+	my($daughters, $adverbs) = $self -> process_adverbs([$a_node -> daughters]);
+
+	return ($daughters, $adverbs);
+
+} # End of process_simple_adverbs.
 
 # --------------------------------------------------
 
@@ -332,26 +373,16 @@ sub process_default_rule
 		$self -> graph -> add_edge(from => $self -> root_node -> name, to => $default_name);
 	}
 
-	my(@daughters) = $a_node -> daughters;
-	my($name)      = "${default_name}_$default_count";
+	my($daughters, $adverbs) = $self -> process_simple_adverbs($index, $a_node);
 
-	my(@label);
-
-	# Ignore the first daughter, which is '::='.
-
-	for (my $i = 1; $i < $#daughters; $i += 3)
+	if ($#$adverbs >= 0)
 	{
-		push @label, {text => join(' ', map{$daughters[$_] -> name} $i .. $i + 2)};
+		$$attributes{label} = $adverbs;
+		my($adverb_name)    = "${default_name}_$default_count";
 
-		$label[$#label]{text} =~ s/>/\\>/;
+		$self -> add_node(name => $adverb_name, %$attributes);
+		$self -> graph -> add_edge(from => $default_name, to => $adverb_name);
 	}
-
-	$label[0]{text}       = "\{$label[0]{text}";
-	$label[$#label]{text} .= '}';
-	$$attributes{label}   = [@label],
-
-	$self -> add_node(name => $name, %$attributes);
-	$self -> graph -> add_edge(from => $default_name, to => $name);
 
 } # End of process_default_rule.
 
@@ -393,9 +424,8 @@ sub process_discard_rule
 sub process_lexeme_default_rule
 {
 	my($self, $index, $a_node) = @_;
-	my($daughters, $adverbs)   = $self -> process_adverbs($index, $a_node);
-	my($lexeme_name)           = 'lexeme default';
-	my($attributes)            =
+	my($lexeme_name) = 'lexeme default';
+	my($attributes)  =
 	{
 		fillcolor => 'lightblue',
 		label     => $lexeme_name,
@@ -403,6 +433,8 @@ sub process_lexeme_default_rule
 
 	$self -> add_node(name => $lexeme_name, %$attributes);
 	$self -> graph -> add_edge(from => $self -> root_node -> name, to => $lexeme_name);
+
+	my($daughters, $adverbs) = $self -> process_simple_adverbs($index, $a_node);
 
 	if ($#$adverbs >= 0)
 	{
@@ -435,7 +467,7 @@ sub process_lexeme_rule
 
 	# Ignore the first daughter, which is '~'.
 
-	my($daughters, $adverbs) = $self -> process_adverbs($index, $a_node);
+	my($daughters, $adverbs) = $self -> process_simple_adverbs($index, $a_node);
 	my($name)                = $$daughters[1] -> name;
 	$$attributes{label}      = $name;
 
@@ -476,7 +508,9 @@ sub process_normal_rule
 		$self -> add_node(name => $name, %$attributes);
 	}
 
-	my($daughters, $adverbs) = $self -> process_adverbs($index, $a_node);
+	my($daughters, $adverbs) = $self -> process_complex_adverbs($index, $a_node);
+
+	return;
 
 	my($token, @tokens);
 
@@ -552,6 +586,8 @@ sub run
 	return $result if ($result == 1);
 
 	$self -> clean_tree;
+
+	print map{"$_\n"} @{$self -> parser -> cooked_tree -> tree2string({no_attributes => 0})};
 
 	my(@rule)        = $self -> parser -> cooked_tree -> daughters;
 	my($start_index) = first_index{$_ -> name eq "\x{a789}start"} @rule;
