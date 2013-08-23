@@ -301,8 +301,6 @@ sub process_adverbs
 		$adverbs[0]         = "\{$adverbs[0]";
 		$adverbs[$#adverbs] .= '}';
 		@adverbs            = map{ {text => $_} } @adverbs;
-
-		$self -> log(debug => "========> Adverbs: " . join(', ', map{$$_{text} } @adverbs) );
 	}
 
 	return ([@$daughters], [@adverbs]);
@@ -318,20 +316,88 @@ sub process_complex_adverbs
 	my($finished)  = 0;
 	my($daughters) = [$a_node -> daughters];
 
+	# Sample inputs:
+	# o 1 token, no adverbs:
+	#   |---number
+	#   |   |---~
+	#   |   |---int
+	# o 2 tokens, no adverbs:
+	#   |---json
+	#   |   |---::=
+	#   |   |---object
+	#   |   |---|
+	#   |   |---array
+	# o 5 tokens, various adverbs:
+	#   |---object
+	#   |   |---::=
+	#   |   |---'{'
+	#   |   |---'}'
+	#   |   |---action
+	#   |   |---=>
+	#   |   |---do_empty_object
+	#   |   |---|
+	#   |   |---'{'
+	#   |   |---members
+	#   |   |---'}'
+	#   |   |---action
+	#   |   |---=>
+	#   |   |---do_object
+
 	my($adverbs, @adverb_stack);
 	my(@daughter_stack);
+	my(@token_stack);
 
 	while (! $finished)
 	{
+		# Chew adverbs, if any, off the end of the list of daughters.
+
 		($daughters, $adverbs) = $self -> process_adverbs($daughters);
 
-		$self -> log(debug => '========> Token: ' . $$daughters[$#$daughters] -> name);
+		# Stack the adverbs owned by the token(s) at the end of the daughters.
 
 		unshift @adverb_stack, $adverbs; # {%$adverbs}?
-		unshift @daughter_stack, pop @$daughters;
 
-		$finished = 1 if ($#$daughters <= 0);
+		# Chew the tokens owning adverbs off the end of the list of daughters.
+		# The backward processing stops with a '|' or $daughter[0].
+
+		@token_stack = ();
+
+		my($i) = $#$daughters;
+
+		while ( ($i > 0) && ($$daughters[$i] -> name ne '|') )
+		{
+			unshift @token_stack, pop @$daughters;
+
+			$i--;
+		}
+
+		unshift @daughter_stack, [@token_stack];
+
+		# Discard the '|' separating alternatives in the BNF.
+
+		pop @$daughters if ($$daughters[$i] -> name eq '|');
+
+		$finished = 1 if ($#$daughters == 0);
 	}
+
+	$self -> log(debug => '-' x 50);
+	$self -> log(debug => 'Node:           ' . $a_node -> name);
+	$self -> log(debug => 'Daughter count: ' . scalar @$daughters . ' ' . join(', ', map{$_ -> name} @$daughters) );
+	$self -> log(debug => 'Daughter stack: ' . scalar @daughter_stack);
+
+	for my $i (0 .. $#daughter_stack)
+	{
+		$self -> log(debug => "\t" . join(', ', map{$_ -> name} @{$daughter_stack[$i]}) );
+	}
+
+	$self -> log(debug => 'Adverb stack:   ' . scalar @adverb_stack);
+
+	for my $i (0 .. $#adverb_stack)
+	{
+		$self -> log(debug => "\t" . join(', ', map{$$_{text} } @{$adverb_stack[$i]}) );
+	}
+
+	$self -> log(debug => '-' x 50);
 
 	return ([@daughter_stack], [@adverb_stack]);
 
@@ -492,14 +558,12 @@ sub process_lexeme_rule
 sub process_normal_rule
 {
 	my($self, $index, $a_node) = @_;
-	my($name)    = $a_node -> name;
-	my($is_root) = $self -> root_node -> name eq $name;
+	my($daughters, $adverbs)   = $self -> process_complex_adverbs($index, $a_node);
+	my($name)                  = $a_node -> name;
 
-	my($attributes);
-
-	if (! $is_root)
+	if ($self -> root_node -> name ne $name)
 	{
-		$attributes =
+		my($attributes) =
 		{
 			fillcolor => 'white',
 			label     => $name,
@@ -508,31 +572,10 @@ sub process_normal_rule
 		$self -> add_node(name => $name, %$attributes);
 	}
 
-	my($daughters, $adverbs) = $self -> process_complex_adverbs($index, $a_node);
-
-	return;
-
-	my($token, @tokens);
-
-	# Ignore $$daughter[0] because it is '::=' or '~'.
-
-	for my $i (1 .. $#$daughters)
+	for my $i (0 .. $#$daughters)
 	{
-		$token = $$daughters[$i];
-
-		if ($token -> name eq '|')
-		{
-			$self -> process_normal_tokens($index, $a_node, $_) for @tokens;
-
-			$#tokens = - 1;
-		}
-		else
-		{
-			push @tokens, $token;
-		}
+		$self -> process_normal_tokens($index, $a_node, $$daughters[$i], $$adverbs[$i]);
 	}
-
-	$self -> process_normal_tokens($index, $a_node, $_) for @tokens;
 
 } # End of process_normal_rule.
 
@@ -540,17 +583,16 @@ sub process_normal_rule
 
 sub process_normal_tokens
 {
-	my($self, $index, $a_node, $token) = @_;
-	my($name)       = $a_node -> name;
-	my($token_name) = $token -> name;
+	my($self, $index, $a_node, $daughters, $adverbs) = @_;
+	my($name)       = join(' ', map{$_ -> name} @$daughters);
 	my($attributes) =
 	{
 		fillcolor => 'white',
-		label     => $token_name,
+		label     => $name,
 	};
 
-	$self -> add_node(name => $token_name, %$attributes);
-	$self -> graph -> add_edge(from => $name, to => $token_name);
+	$self -> add_node(name => $name, %$attributes);
+	$self -> graph -> add_edge(from => $a_node -> name, to => $name);
 
 } # End of process_normal_tokens.
 

@@ -5,7 +5,7 @@ Default global: label => ->
 Default global: name => Perl
 Default global: record_shape => Mrecord
 Default global: strict => 0
-Default global: subgraph => HASH(0x292b128)
+Default global: subgraph => HASH(0x1cfe000)
 Default global: timeout => 10
 Default graph: label => fake.1.bnf, rankdir => TB
 Default node: shape => rectangle, style => filled
@@ -55,12 +55,6 @@ statements. Attributes: {}
    |   |---object. Attributes: {bracketed_name => "0", quantifier => "", real_name => "object"}
    |   |---|. Attributes: {bracketed_name => "0", quantifier => "", real_name => "|"}
    |   |---number. Attributes: {bracketed_name => "0", quantifier => "", real_name => "number"}
-   |   |---separator. Attributes: {bracketed_name => "0", quantifier => "", real_name => "separator"}
-   |   |---=>. Attributes: {bracketed_name => "0", quantifier => "", real_name => "=>"}
-   |   |---comma3. Attributes: {bracketed_name => "1", quantifier => "", real_name => "<comma3>"}
-   |   |---action. Attributes: {bracketed_name => "0", quantifier => "", real_name => "action"}
-   |   |---=>. Attributes: {bracketed_name => "0", quantifier => "", real_name => "=>"}
-   |   |---do_number_list. Attributes: {bracketed_name => "0", quantifier => "", real_name => "do_number_list"}
    |   |---|. Attributes: {bracketed_name => "0", quantifier => "", real_name => "|"}
    |   |---array. Attributes: {bracketed_name => "0", quantifier => "", real_name => "array"}
    |---array. Attributes: {bracketed_name => "0", quantifier => "", real_name => "array"}
@@ -80,12 +74,6 @@ statements. Attributes: {}
    |---elements. Attributes: {bracketed_name => "0", quantifier => "", real_name => "elements"}
    |   |---::=. Attributes: {bracketed_name => "0", quantifier => "", real_name => "::="}
    |   |---value. Attributes: {bracketed_name => "0", quantifier => "+", real_name => "value"}
-   |   |---separator. Attributes: {bracketed_name => "0", quantifier => "", real_name => "separator"}
-   |   |---=>. Attributes: {bracketed_name => "0", quantifier => "", real_name => "=>"}
-   |   |---comma4. Attributes: {bracketed_name => "1", quantifier => "", real_name => "<comma4>"}
-   |   |---action. Attributes: {bracketed_name => "0", quantifier => "", real_name => "action"}
-   |   |---=>. Attributes: {bracketed_name => "0", quantifier => "", real_name => "=>"}
-   |   |---do_list. Attributes: {bracketed_name => "0", quantifier => "", real_name => "do_list"}
    |---number. Attributes: {bracketed_name => "0", quantifier => "", real_name => "number"}
    |   |---~. Attributes: {bracketed_name => "0", quantifier => "", real_name => "~"}
    |   |---int. Attributes: {bracketed_name => "0", quantifier => "", real_name => "int"}
@@ -101,12 +89,6 @@ statements. Attributes: {}
    |---comma2. Attributes: {bracketed_name => "0", quantifier => "", real_name => "comma2"}
    |   |---~. Attributes: {bracketed_name => "0", quantifier => "", real_name => "~"}
    |   |---','. Attributes: {bracketed_name => "0", quantifier => "", real_name => "','"}
-   |---comma3. Attributes: {bracketed_name => "0", quantifier => "", real_name => "comma3"}
-   |   |---~. Attributes: {bracketed_name => "0", quantifier => "", real_name => "~"}
-   |   |---','. Attributes: {bracketed_name => "0", quantifier => "", real_name => "','"}
-   |---comma4. Attributes: {bracketed_name => "0", quantifier => "", real_name => "comma4"}
-   |   |---~. Attributes: {bracketed_name => "0", quantifier => "", real_name => "~"}
-   |   |---','. Attributes: {bracketed_name => "0", quantifier => "", real_name => "','"}
    |---꞉discard. Attributes: {bracketed_name => "0", quantifier => "", real_name => ":discard"}
    |   |---=>. Attributes: {bracketed_name => "0", quantifier => "", real_name => "=>"}
    |   |---whitespace. Attributes: {bracketed_name => "0", quantifier => "", real_name => "whitespace"}
@@ -118,58 +100,167 @@ Added node: "꞉discard" [ fillcolor="lightblue" label="꞉discard" ]
 Added edge: "json" -> "꞉discard" [ label="" ]
 Added node: "whitespace" [ fillcolor="lightblue" label="whitespace" ]
 Added edge: "꞉discard" -> "whitespace" [ label="" ]
-========> Token: array
-========> Token: |
-========> Token: object
+--------------------------------------------------
+Node:           json
+Daughter count: 1 ::=
+Daughter stack: 2
+	object
+	array
+Adverb stack:   2
+	
+	
+--------------------------------------------------
+Added edge: "json" -> "json" [ label="" ]
 Added node: "object" [ fillcolor="white" label="object" ]
-========> Adverbs: {action =\> do_object}
-========> Token: '}'
-========> Token: members
-========> Token: '{'
-========> Token: |
-========> Adverbs: {action =\> do_empty_object}
-========> Token: '}'
-========> Token: '{'
-Added node: "members" [ fillcolor="white" label="members" ]
-========> Adverbs: {action =\> do_list, separator =\> comma1}
-========> Token: value
-Added node: "value" [ fillcolor="white" label="value" ]
-========> Token: array
-========> Token: |
-========> Adverbs: {action =\> do_number_list, separator =\> comma3}
-========> Token: number
-========> Token: |
-========> Token: object
-========> Token: |
-========> Adverbs: {action =\> do_int_list, separator =\> comma2}
-========> Token: int
+Added edge: "json" -> "object" [ label="" ]
+Added edge: "json" -> "json" [ label="" ]
 Added node: "array" [ fillcolor="white" label="array" ]
-========> Adverbs: {action =\> do_array}
-========> Token: ']'
-========> Token: elements
-========> Token: '['
-========> Token: |
-========> Adverbs: {action =\> do_empty_array}
-========> Token: ']'
-========> Token: '['
-Added node: "elements" [ fillcolor="white" label="elements" ]
-========> Adverbs: {action =\> do_list, separator =\> comma4}
-========> Token: value
-Added node: "number" [ fillcolor="white" label="number" ]
-========> Token: int
+Added edge: "json" -> "array" [ label="" ]
+--------------------------------------------------
+Node:           object
+Daughter count: 1 ::=
+Daughter stack: 2
+	'{', '}'
+	'{', members, '}'
+Adverb stack:   2
+	{action =\> do_empty_object}
+	{action =\> do_object}
+--------------------------------------------------
+Added edge: "json" -> "object" [ label="" ]
+Added node: "'{' '}'" [ fillcolor="white" label="'{' '}'" ]
+Added edge: "object" -> "'{' '}'" [ label="" ]
+Added edge: "json" -> "object" [ label="" ]
+Added node: "'{' members '}'" [ fillcolor="white" label="'{' members '}'" ]
+Added edge: "object" -> "'{' members '}'" [ label="" ]
+--------------------------------------------------
+Node:           members
+Daughter count: 1 ::=
+Daughter stack: 1
+	value
+Adverb stack:   1
+	{action =\> do_list, separator =\> comma1}
+--------------------------------------------------
+Added node: "members" [ fillcolor="white" label="members" ]
+Added edge: "json" -> "members" [ label="" ]
+Added node: "value" [ fillcolor="white" label="value" ]
+Added edge: "members" -> "value" [ label="" ]
+--------------------------------------------------
+Node:           value
+Daughter count: 1 ::=
+Daughter stack: 4
+	int
+	object
+	number
+	array
+Adverb stack:   4
+	{action =\> do_int_list, separator =\> comma2}
+	
+	
+	
+--------------------------------------------------
+Added edge: "json" -> "value" [ label="" ]
 Added node: "int" [ fillcolor="white" label="int" ]
-========> Token: digits
+Added edge: "value" -> "int" [ label="" ]
+Added edge: "json" -> "value" [ label="" ]
+Added edge: "value" -> "object" [ label="" ]
+Added edge: "json" -> "value" [ label="" ]
+Added node: "number" [ fillcolor="white" label="number" ]
+Added edge: "value" -> "number" [ label="" ]
+Added edge: "json" -> "value" [ label="" ]
+Added edge: "value" -> "array" [ label="" ]
+--------------------------------------------------
+Node:           array
+Daughter count: 1 ::=
+Daughter stack: 2
+	'[', ']'
+	'[', elements, ']'
+Adverb stack:   2
+	{action =\> do_empty_array}
+	{action =\> do_array}
+--------------------------------------------------
+Added edge: "json" -> "array" [ label="" ]
+Added node: "'[' ']'" [ fillcolor="white" label="'\[' '\]'" ]
+Added edge: "array" -> "'[' ']'" [ label="" ]
+Added edge: "json" -> "array" [ label="" ]
+Added node: "'[' elements ']'" [ fillcolor="white" label="'\[' elements '\]'" ]
+Added edge: "array" -> "'[' elements ']'" [ label="" ]
+--------------------------------------------------
+Node:           elements
+Daughter count: 1 ::=
+Daughter stack: 1
+	value
+Adverb stack:   1
+	
+--------------------------------------------------
+Added node: "elements" [ fillcolor="white" label="elements" ]
+Added edge: "json" -> "elements" [ label="" ]
+Added edge: "elements" -> "value" [ label="" ]
+--------------------------------------------------
+Node:           number
+Daughter count: 1 ~
+Daughter stack: 1
+	int
+Adverb stack:   1
+	
+--------------------------------------------------
+Added edge: "json" -> "number" [ label="" ]
+Added edge: "number" -> "int" [ label="" ]
+--------------------------------------------------
+Node:           int
+Daughter count: 1 ~
+Daughter stack: 1
+	digits
+Adverb stack:   1
+	
+--------------------------------------------------
+Added edge: "json" -> "int" [ label="" ]
 Added node: "digits" [ fillcolor="white" label="digits" ]
-========> Token: [\\d]
+Added edge: "int" -> "digits" [ label="" ]
+--------------------------------------------------
+Node:           digits
+Daughter count: 1 ~
+Daughter stack: 1
+	[\\d]
+Adverb stack:   1
+	
+--------------------------------------------------
+Added edge: "json" -> "digits" [ label="" ]
+Added node: "[\\d]" [ fillcolor="white" label="\[\\d\]" ]
+Added edge: "digits" -> "[\\d]" [ label="" ]
+--------------------------------------------------
+Node:           comma1
+Daughter count: 1 ~
+Daughter stack: 1
+	','
+Adverb stack:   1
+	
+--------------------------------------------------
 Added node: "comma1" [ fillcolor="white" label="comma1" ]
-========> Token: ','
+Added edge: "json" -> "comma1" [ label="" ]
+Added node: "','" [ fillcolor="white" label="','" ]
+Added edge: "comma1" -> "','" [ label="" ]
+--------------------------------------------------
+Node:           comma2
+Daughter count: 1 ~
+Daughter stack: 1
+	','
+Adverb stack:   1
+	
+--------------------------------------------------
 Added node: "comma2" [ fillcolor="white" label="comma2" ]
-========> Token: ','
-Added node: "comma3" [ fillcolor="white" label="comma3" ]
-========> Token: ','
-Added node: "comma4" [ fillcolor="white" label="comma4" ]
-========> Token: ','
-========> Token: [\\s]
+Added edge: "json" -> "comma2" [ label="" ]
+Added edge: "comma2" -> "','" [ label="" ]
+--------------------------------------------------
+Node:           whitespace
+Daughter count: 1 ~
+Daughter stack: 1
+	[\\s]
+Adverb stack:   1
+	
+--------------------------------------------------
+Added edge: "json" -> "whitespace" [ label="" ]
+Added node: "[\\s]" [ fillcolor="white" label="\[\\s\]" ]
+Added edge: "whitespace" -> "[\\s]" [ label="" ]
 Driver: /usr/local/bin/dot. Output file: html/fake.1.svg. Format: svg. Timeout: 10 second(s)
 
 digraph Perl
@@ -182,17 +273,58 @@ edge [ color="grey" ]
 "json" -> "꞉discard" [ label="" ]
 "whitespace" [ fillcolor="lightblue" label="whitespace" ]
 "꞉discard" -> "whitespace" [ label="" ]
+"json" -> "json" [ label="" ]
 "object" [ fillcolor="white" label="object" ]
-"members" [ fillcolor="white" label="members" ]
-"value" [ fillcolor="white" label="value" ]
+"json" -> "object" [ label="" ]
+"json" -> "json" [ label="" ]
 "array" [ fillcolor="white" label="array" ]
-"elements" [ fillcolor="white" label="elements" ]
-"number" [ fillcolor="white" label="number" ]
+"json" -> "array" [ label="" ]
+"json" -> "object" [ label="" ]
+"'{' '}'" [ fillcolor="white" label="'{' '}'" ]
+"object" -> "'{' '}'" [ label="" ]
+"json" -> "object" [ label="" ]
+"'{' members '}'" [ fillcolor="white" label="'{' members '}'" ]
+"object" -> "'{' members '}'" [ label="" ]
+"members" [ fillcolor="white" label="members" ]
+"json" -> "members" [ label="" ]
+"value" [ fillcolor="white" label="value" ]
+"members" -> "value" [ label="" ]
+"json" -> "value" [ label="" ]
 "int" [ fillcolor="white" label="int" ]
+"value" -> "int" [ label="" ]
+"json" -> "value" [ label="" ]
+"value" -> "object" [ label="" ]
+"json" -> "value" [ label="" ]
+"number" [ fillcolor="white" label="number" ]
+"value" -> "number" [ label="" ]
+"json" -> "value" [ label="" ]
+"value" -> "array" [ label="" ]
+"json" -> "array" [ label="" ]
+"'[' ']'" [ fillcolor="white" label="'\[' '\]'" ]
+"array" -> "'[' ']'" [ label="" ]
+"json" -> "array" [ label="" ]
+"'[' elements ']'" [ fillcolor="white" label="'\[' elements '\]'" ]
+"array" -> "'[' elements ']'" [ label="" ]
+"elements" [ fillcolor="white" label="elements" ]
+"json" -> "elements" [ label="" ]
+"elements" -> "value" [ label="" ]
+"json" -> "number" [ label="" ]
+"number" -> "int" [ label="" ]
+"json" -> "int" [ label="" ]
 "digits" [ fillcolor="white" label="digits" ]
+"int" -> "digits" [ label="" ]
+"json" -> "digits" [ label="" ]
+"[\\d]" [ fillcolor="white" label="\[\\d\]" ]
+"digits" -> "[\\d]" [ label="" ]
 "comma1" [ fillcolor="white" label="comma1" ]
+"json" -> "comma1" [ label="" ]
+"','" [ fillcolor="white" label="','" ]
+"comma1" -> "','" [ label="" ]
 "comma2" [ fillcolor="white" label="comma2" ]
-"comma3" [ fillcolor="white" label="comma3" ]
-"comma4" [ fillcolor="white" label="comma4" ]
+"json" -> "comma2" [ label="" ]
+"comma2" -> "','" [ label="" ]
+"json" -> "whitespace" [ label="" ]
+"[\\s]" [ fillcolor="white" label="\[\\s\]" ]
+"whitespace" -> "[\\s]" [ label="" ]
 }
-Wrote html/fake.1.svg. Size: 5759 bytes
+Wrote html/fake.1.svg. Size: 19665 bytes
