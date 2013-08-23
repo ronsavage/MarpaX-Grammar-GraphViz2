@@ -1,0 +1,621 @@
+Default global: directed => digraph
+Default global: driver => /usr/local/bin/dot
+Default global: format => svg
+Default global: label => ->
+Default global: name => Perl
+Default global: record_shape => Mrecord
+Default global: strict => 0
+Default global: subgraph => HASH(0x2b7f340)
+Default global: timeout => 10
+Default graph: label => json.1.bnf, rankdir => TB
+Default node: shape => rectangle, style => filled
+Default edge: color => grey
+Added node: "json" [ fillcolor="lightgreen" label="{:start|json}" shape="Mrecord" ]
+Added node: "꞉discard" [ fillcolor="lightblue" label="꞉discard" ]
+Added edge: "json" -> "꞉discard" [ label="" ]
+Added node: "whitespace" [ fillcolor="lightblue" label="whitespace" ]
+Added edge: "꞉discard" -> "whitespace" [ label="" ]
+--------------------------------------------------
+Node:           json
+Daughter count: 1 ::=
+Daughter stack: 2
+	object
+	array
+Adverb stack:   2
+	
+	
+--------------------------------------------------
+Added node: "object" [ fillcolor="white" label="object" ]
+Added edge: "json" -> "object" [ label="" ]
+Added node: "array" [ fillcolor="white" label="array" ]
+Added edge: "json" -> "array" [ label="" ]
+--------------------------------------------------
+Node:           object
+Daughter count: 1 ::=
+Daughter stack: 2
+	'{', '}'
+	'{', members, '}'
+Adverb stack:   2
+	{action =\> do_empty_object}
+	{action =\> do_object}
+--------------------------------------------------
+Added node: "'{' '}'" [ fillcolor="white" label="'{' '}'" ]
+Added edge: "object" -> "'{' '}'" [ label="" ]
+Added node: "'{'" [ fillcolor="white" label="'{'" ]
+Added edge: "'{' '}'" -> "'{'" [ label="" ]
+Added node: "'{'_0" [ fillcolor="white" label="HASH(0x30a26a0)" ]
+Added edge: "'{'" -> "'{'_0" [ label="" ]
+Added node: "'}'" [ fillcolor="white" label="'}'" ]
+Added edge: "'{' '}'" -> "'}'" [ label="" ]
+Added node: "'{' members '}'" [ fillcolor="white" label="'{' members '}'" ]
+Added edge: "object" -> "'{' members '}'" [ label="" ]
+Added edge: "'{' members '}'" -> "'{'" [ label="" ]
+Added edge: "'{'" -> "'{'_0" [ label="" ]
+Added node: "members" [ fillcolor="white" label="members" ]
+Added edge: "'{' members '}'" -> "members" [ label="" ]
+Added edge: "'{' members '}'" -> "'}'" [ label="" ]
+--------------------------------------------------
+Node:           members
+Daughter count: 1 ::=
+Daughter stack: 1
+	pair
+Adverb stack:   1
+	{action =\> do_list, separator =\> comma}
+--------------------------------------------------
+Added node: "pair" [ fillcolor="white" label="pair" ]
+Added edge: "members" -> "pair" [ label="" ]
+--------------------------------------------------
+Node:           pair
+Daughter count: 1 ::=
+Daughter stack: 1
+	string, '꞉', value
+Adverb stack:   1
+	{action =\> do_pair}
+--------------------------------------------------
+Added node: "string '꞉' value" [ fillcolor="white" label="string '꞉' value" ]
+Added edge: "pair" -> "string '꞉' value" [ label="" ]
+Added node: "string" [ fillcolor="white" label="string" ]
+Added edge: "string '꞉' value" -> "string" [ label="" ]
+Added node: "string_0" [ fillcolor="white" label="HASH(0x2deb2b8)" ]
+Added edge: "string" -> "string_0" [ label="" ]
+Added node: "'꞉'" [ fillcolor="white" label="'꞉'" ]
+Added edge: "string '꞉' value" -> "'꞉'" [ label="" ]
+Added node: "value" [ fillcolor="white" label="value" ]
+Added edge: "string '꞉' value" -> "value" [ label="" ]
+--------------------------------------------------
+Node:           value
+Daughter count: 1 ::=
+Daughter stack: 7
+	string
+	object
+	number
+	array
+	'true'
+	'false'
+	'null'
+Adverb stack:   7
+	
+	
+	
+	
+	{action =\> do_true}
+	{action =\> do_true}
+	{action =\> do_null}
+--------------------------------------------------
+Added edge: "value" -> "string" [ label="" ]
+Added edge: "value" -> "object" [ label="" ]
+Added node: "number" [ fillcolor="white" label="number" ]
+Added edge: "value" -> "number" [ label="" ]
+Added edge: "value" -> "array" [ label="" ]
+Added node: "'true'" [ fillcolor="white" label="'true'" ]
+Added edge: "value" -> "'true'" [ label="" ]
+Added node: "'false'" [ fillcolor="white" label="'false'" ]
+Added edge: "value" -> "'false'" [ label="" ]
+Added node: "'null'" [ fillcolor="white" label="'null'" ]
+Added edge: "value" -> "'null'" [ label="" ]
+--------------------------------------------------
+Node:           array
+Daughter count: 1 ::=
+Daughter stack: 2
+	'[', ']'
+	'[', elements, ']'
+Adverb stack:   2
+	{action =\> do_empty_array}
+	{action =\> do_array}
+--------------------------------------------------
+Added node: "'[' ']'" [ fillcolor="white" label="'\[' '\]'" ]
+Added edge: "array" -> "'[' ']'" [ label="" ]
+Added node: "'['" [ fillcolor="white" label="'\['" ]
+Added edge: "'[' ']'" -> "'['" [ label="" ]
+Added node: "'['_0" [ fillcolor="white" label="HASH(0x307c1d8)" ]
+Added edge: "'['" -> "'['_0" [ label="" ]
+Added node: "']'" [ fillcolor="white" label="'\]'" ]
+Added edge: "'[' ']'" -> "']'" [ label="" ]
+Added node: "'[' elements ']'" [ fillcolor="white" label="'\[' elements '\]'" ]
+Added edge: "array" -> "'[' elements ']'" [ label="" ]
+Added edge: "'[' elements ']'" -> "'['" [ label="" ]
+Added edge: "'['" -> "'['_0" [ label="" ]
+Added node: "elements" [ fillcolor="white" label="elements" ]
+Added edge: "'[' elements ']'" -> "elements" [ label="" ]
+Added edge: "'[' elements ']'" -> "']'" [ label="" ]
+--------------------------------------------------
+Node:           elements
+Daughter count: 1 ::=
+Daughter stack: 1
+	value
+Adverb stack:   1
+	{action =\> do_list, separator =\> comma}
+--------------------------------------------------
+Added edge: "elements" -> "value" [ label="" ]
+--------------------------------------------------
+Node:           number
+Daughter count: 1 ~
+Daughter stack: 4
+	int
+	int, frac
+	int, exp
+	int, frac, exp
+Adverb stack:   4
+	
+	
+	
+	
+--------------------------------------------------
+Added node: "int" [ fillcolor="white" label="int" ]
+Added edge: "number" -> "int" [ label="" ]
+Added node: "int frac" [ fillcolor="white" label="int frac" ]
+Added edge: "number" -> "int frac" [ label="" ]
+Added edge: "int frac" -> "int" [ label="" ]
+Added node: "frac" [ fillcolor="white" label="frac" ]
+Added edge: "int frac" -> "frac" [ label="" ]
+Added node: "int exp" [ fillcolor="white" label="int exp" ]
+Added edge: "number" -> "int exp" [ label="" ]
+Added edge: "int exp" -> "int" [ label="" ]
+Added node: "exp" [ fillcolor="white" label="exp" ]
+Added edge: "int exp" -> "exp" [ label="" ]
+Added node: "int frac exp" [ fillcolor="white" label="int frac exp" ]
+Added edge: "number" -> "int frac exp" [ label="" ]
+Added edge: "int frac exp" -> "int" [ label="" ]
+Added edge: "int frac exp" -> "frac" [ label="" ]
+Added edge: "int frac exp" -> "exp" [ label="" ]
+--------------------------------------------------
+Node:           int
+Daughter count: 1 ~
+Daughter stack: 2
+	digits
+	'-', digits
+Adverb stack:   2
+	
+	
+--------------------------------------------------
+Added node: "digits" [ fillcolor="white" label="digits" ]
+Added edge: "int" -> "digits" [ label="" ]
+Added node: "'-' digits" [ fillcolor="white" label="'-' digits" ]
+Added edge: "int" -> "'-' digits" [ label="" ]
+Added node: "'-'" [ fillcolor="white" label="'-'" ]
+Added edge: "'-' digits" -> "'-'" [ label="" ]
+Added edge: "'-' digits" -> "digits" [ label="" ]
+--------------------------------------------------
+Node:           digits
+Daughter count: 1 ~
+Daughter stack: 1
+	[\\d]
+Adverb stack:   1
+	
+--------------------------------------------------
+Added node: "[\\d]" [ fillcolor="white" label="\[\\d\]" ]
+Added edge: "digits" -> "[\\d]" [ label="" ]
+--------------------------------------------------
+Node:           frac
+Daughter count: 1 ~
+Daughter stack: 1
+	'.', digits
+Adverb stack:   1
+	
+--------------------------------------------------
+Added node: "'.' digits" [ fillcolor="white" label="'.' digits" ]
+Added edge: "frac" -> "'.' digits" [ label="" ]
+Added node: "'.'" [ fillcolor="white" label="'.'" ]
+Added edge: "'.' digits" -> "'.'" [ label="" ]
+Added edge: "'.' digits" -> "digits" [ label="" ]
+--------------------------------------------------
+Node:           exp
+Daughter count: 1 ~
+Daughter stack: 1
+	e, digits
+Adverb stack:   1
+	
+--------------------------------------------------
+Added node: "e digits" [ fillcolor="white" label="e digits" ]
+Added edge: "exp" -> "e digits" [ label="" ]
+Added node: "e" [ fillcolor="white" label="e" ]
+Added edge: "e digits" -> "e" [ label="" ]
+Added edge: "e digits" -> "digits" [ label="" ]
+--------------------------------------------------
+Node:           e
+Daughter count: 1 ~
+Daughter stack: 6
+	'e'
+	'e+'
+	'e-'
+	'E'
+	'E+'
+	'E-'
+Adverb stack:   6
+	
+	
+	
+	
+	
+	
+--------------------------------------------------
+Added node: "'e'" [ fillcolor="white" label="'e'" ]
+Added edge: "e" -> "'e'" [ label="" ]
+Added node: "'e+'" [ fillcolor="white" label="'e+'" ]
+Added edge: "e" -> "'e+'" [ label="" ]
+Added node: "'e-'" [ fillcolor="white" label="'e-'" ]
+Added edge: "e" -> "'e-'" [ label="" ]
+Added node: "'E'" [ fillcolor="white" label="'E'" ]
+Added edge: "e" -> "'E'" [ label="" ]
+Added node: "'E+'" [ fillcolor="white" label="'E+'" ]
+Added edge: "e" -> "'E+'" [ label="" ]
+Added node: "'E-'" [ fillcolor="white" label="'E-'" ]
+Added edge: "e" -> "'E-'" [ label="" ]
+--------------------------------------------------
+Node:           string
+Daughter count: 1 ::=
+Daughter stack: 1
+	lstring
+Adverb stack:   1
+	{action =\> do_string}
+--------------------------------------------------
+Added node: "lstring" [ fillcolor="white" label="lstring" ]
+Added edge: "string" -> "lstring" [ label="" ]
+--------------------------------------------------
+Node:           lstring
+Daughter count: 1 ~
+Daughter stack: 1
+	quote, in_string, quote
+Adverb stack:   1
+	
+--------------------------------------------------
+Added node: "quote in_string quote" [ fillcolor="white" label="quote in_string quote" ]
+Added edge: "lstring" -> "quote in_string quote" [ label="" ]
+Added node: "quote" [ fillcolor="white" label="quote" ]
+Added edge: "quote in_string quote" -> "quote" [ label="" ]
+Added node: "in_string" [ fillcolor="white" label="in_string" ]
+Added edge: "quote in_string quote" -> "in_string" [ label="" ]
+Added edge: "quote in_string quote" -> "quote" [ label="" ]
+--------------------------------------------------
+Node:           quote
+Daughter count: 1 ~
+Daughter stack: 1
+	[\\ꞌꞌ]
+Adverb stack:   1
+	
+--------------------------------------------------
+Added node: "[\\ꞌꞌ]" [ fillcolor="white" label="\[\\ꞌꞌ\]" ]
+Added edge: "quote" -> "[\\ꞌꞌ]" [ label="" ]
+--------------------------------------------------
+Node:           in_string
+Daughter count: 1 ~
+Daughter stack: 1
+	in_string_char
+Adverb stack:   1
+	
+--------------------------------------------------
+Added node: "in_string_char" [ fillcolor="white" label="in_string_char" ]
+Added edge: "in_string" -> "in_string_char" [ label="" ]
+--------------------------------------------------
+Node:           in_string_char
+Daughter count: 1 ~
+Daughter stack: 10
+	[^ꞌꞌ\\\\]
+	'\\', 'ꞌꞌ'
+	'\\', 'b'
+	'\\', 'f'
+	'\\', 't'
+	'\\', 'n'
+	'\\', 'r'
+	'\\', 'u', four_hex_digits
+	'\\', '/'
+	'\\\\'
+Adverb stack:   10
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+--------------------------------------------------
+Added node: "[^ꞌꞌ\\\\]" [ fillcolor="white" label="\[^ꞌꞌ\\\\]" ]
+Added edge: "in_string_char" -> "[^ꞌꞌ\\\\]" [ label="" ]
+Added node: "'\\' 'ꞌꞌ'" [ fillcolor="white" label="'\\' 'ꞌꞌ'" ]
+Added edge: "in_string_char" -> "'\\' 'ꞌꞌ'" [ label="" ]
+Added node: "'\\'" [ fillcolor="white" label="'\\'" ]
+Added edge: "'\\' 'ꞌꞌ'" -> "'\\'" [ label="" ]
+Added node: "'ꞌꞌ'" [ fillcolor="white" label="'ꞌꞌ'" ]
+Added edge: "'\\' 'ꞌꞌ'" -> "'ꞌꞌ'" [ label="" ]
+Added node: "'\\' 'b'" [ fillcolor="white" label="'\\' 'b'" ]
+Added edge: "in_string_char" -> "'\\' 'b'" [ label="" ]
+Added edge: "'\\' 'b'" -> "'\\'" [ label="" ]
+Added node: "'b'" [ fillcolor="white" label="'b'" ]
+Added edge: "'\\' 'b'" -> "'b'" [ label="" ]
+Added node: "'\\' 'f'" [ fillcolor="white" label="'\\' 'f'" ]
+Added edge: "in_string_char" -> "'\\' 'f'" [ label="" ]
+Added edge: "'\\' 'f'" -> "'\\'" [ label="" ]
+Added node: "'f'" [ fillcolor="white" label="'f'" ]
+Added edge: "'\\' 'f'" -> "'f'" [ label="" ]
+Added node: "'\\' 't'" [ fillcolor="white" label="'\\' 't'" ]
+Added edge: "in_string_char" -> "'\\' 't'" [ label="" ]
+Added edge: "'\\' 't'" -> "'\\'" [ label="" ]
+Added node: "'t'" [ fillcolor="white" label="'t'" ]
+Added edge: "'\\' 't'" -> "'t'" [ label="" ]
+Added node: "'\\' 'n'" [ fillcolor="white" label="'\\' 'n'" ]
+Added edge: "in_string_char" -> "'\\' 'n'" [ label="" ]
+Added edge: "'\\' 'n'" -> "'\\'" [ label="" ]
+Added node: "'n'" [ fillcolor="white" label="'n'" ]
+Added edge: "'\\' 'n'" -> "'n'" [ label="" ]
+Added node: "'\\' 'r'" [ fillcolor="white" label="'\\' 'r'" ]
+Added edge: "in_string_char" -> "'\\' 'r'" [ label="" ]
+Added edge: "'\\' 'r'" -> "'\\'" [ label="" ]
+Added node: "'r'" [ fillcolor="white" label="'r'" ]
+Added edge: "'\\' 'r'" -> "'r'" [ label="" ]
+Added node: "'\\' 'u' four_hex_digits" [ fillcolor="white" label="'\\' 'u' four_hex_digits" ]
+Added edge: "in_string_char" -> "'\\' 'u' four_hex_digits" [ label="" ]
+Added edge: "'\\' 'u' four_hex_digits" -> "'\\'" [ label="" ]
+Added node: "'u'" [ fillcolor="white" label="'u'" ]
+Added edge: "'\\' 'u' four_hex_digits" -> "'u'" [ label="" ]
+Added node: "four_hex_digits" [ fillcolor="white" label="four_hex_digits" ]
+Added edge: "'\\' 'u' four_hex_digits" -> "four_hex_digits" [ label="" ]
+Added node: "'\\' '/'" [ fillcolor="white" label="'\\' '/'" ]
+Added edge: "in_string_char" -> "'\\' '/'" [ label="" ]
+Added edge: "'\\' '/'" -> "'\\'" [ label="" ]
+Added node: "'/'" [ fillcolor="white" label="'/'" ]
+Added edge: "'\\' '/'" -> "'/'" [ label="" ]
+Added node: "'\\\\'" [ fillcolor="white" label="'\\\\'" ]
+Added edge: "in_string_char" -> "'\\\\'" [ label="" ]
+--------------------------------------------------
+Node:           four_hex_digits
+Daughter count: 1 ~
+Daughter stack: 1
+	hex_digit, hex_digit, hex_digit, hex_digit
+Adverb stack:   1
+	
+--------------------------------------------------
+Added node: "hex_digit hex_digit hex_digit hex_digit" [ fillcolor="white" label="hex_digit hex_digit hex_digit hex_digit" ]
+Added edge: "four_hex_digits" -> "hex_digit hex_digit hex_digit hex_digit" [ label="" ]
+Added node: "hex_digit" [ fillcolor="white" label="hex_digit" ]
+Added edge: "hex_digit hex_digit hex_digit hex_digit" -> "hex_digit" [ label="" ]
+Added edge: "hex_digit hex_digit hex_digit hex_digit" -> "hex_digit" [ label="" ]
+Added edge: "hex_digit hex_digit hex_digit hex_digit" -> "hex_digit" [ label="" ]
+Added edge: "hex_digit hex_digit hex_digit hex_digit" -> "hex_digit" [ label="" ]
+--------------------------------------------------
+Node:           hex_digit
+Daughter count: 1 ~
+Daughter stack: 1
+	[0-9a-fA-F]
+Adverb stack:   1
+	
+--------------------------------------------------
+Added node: "[0-9a-fA-F]" [ fillcolor="white" label="\[0-9a-fA-F\]" ]
+Added edge: "hex_digit" -> "[0-9a-fA-F]" [ label="" ]
+--------------------------------------------------
+Node:           comma
+Daughter count: 1 ~
+Daughter stack: 1
+	','
+Adverb stack:   1
+	
+--------------------------------------------------
+Added node: "','" [ fillcolor="white" label="','" ]
+Added node: "comma"
+Added edge: "comma" -> "','" [ label="" ]
+--------------------------------------------------
+Node:           whitespace
+Daughter count: 1 ~
+Daughter stack: 1
+	[\\s]
+Adverb stack:   1
+	
+--------------------------------------------------
+Added node: "[\\s]" [ fillcolor="white" label="\[\\s\]" ]
+Added edge: "whitespace" -> "[\\s]" [ label="" ]
+Driver: /usr/local/bin/dot. Output file: html/json.1.svg. Format: svg. Timeout: 10 second(s)
+
+digraph Perl
+{
+graph [ label="json.1.bnf" rankdir="TB" ]
+node [ shape="rectangle" style="filled" ]
+edge [ color="grey" ]
+"json" [ fillcolor="lightgreen" label="{:start|json}" shape="Mrecord" ]
+"꞉discard" [ fillcolor="lightblue" label="꞉discard" ]
+"json" -> "꞉discard" [ label="" ]
+"whitespace" [ fillcolor="lightblue" label="whitespace" ]
+"꞉discard" -> "whitespace" [ label="" ]
+"object" [ fillcolor="white" label="object" ]
+"json" -> "object" [ label="" ]
+"array" [ fillcolor="white" label="array" ]
+"json" -> "array" [ label="" ]
+"'{' '}'" [ fillcolor="white" label="'{' '}'" ]
+"object" -> "'{' '}'" [ label="" ]
+"'{'" [ fillcolor="white" label="'{'" ]
+"'{' '}'" -> "'{'" [ label="" ]
+"'{'_0" [ fillcolor="white" label="HASH(0x30a26a0)" ]
+"'{'" -> "'{'_0" [ label="" ]
+"'}'" [ fillcolor="white" label="'}'" ]
+"'{' '}'" -> "'}'" [ label="" ]
+"'{' members '}'" [ fillcolor="white" label="'{' members '}'" ]
+"object" -> "'{' members '}'" [ label="" ]
+"'{' members '}'" -> "'{'" [ label="" ]
+"'{'" -> "'{'_0" [ label="" ]
+"members" [ fillcolor="white" label="members" ]
+"'{' members '}'" -> "members" [ label="" ]
+"'{' members '}'" -> "'}'" [ label="" ]
+"pair" [ fillcolor="white" label="pair" ]
+"members" -> "pair" [ label="" ]
+"string '꞉' value" [ fillcolor="white" label="string '꞉' value" ]
+"pair" -> "string '꞉' value" [ label="" ]
+"string" [ fillcolor="white" label="string" ]
+"string '꞉' value" -> "string" [ label="" ]
+"string_0" [ fillcolor="white" label="HASH(0x2deb2b8)" ]
+"string" -> "string_0" [ label="" ]
+"'꞉'" [ fillcolor="white" label="'꞉'" ]
+"string '꞉' value" -> "'꞉'" [ label="" ]
+"value" [ fillcolor="white" label="value" ]
+"string '꞉' value" -> "value" [ label="" ]
+"value" -> "string" [ label="" ]
+"value" -> "object" [ label="" ]
+"number" [ fillcolor="white" label="number" ]
+"value" -> "number" [ label="" ]
+"value" -> "array" [ label="" ]
+"'true'" [ fillcolor="white" label="'true'" ]
+"value" -> "'true'" [ label="" ]
+"'false'" [ fillcolor="white" label="'false'" ]
+"value" -> "'false'" [ label="" ]
+"'null'" [ fillcolor="white" label="'null'" ]
+"value" -> "'null'" [ label="" ]
+"'[' ']'" [ fillcolor="white" label="'\[' '\]'" ]
+"array" -> "'[' ']'" [ label="" ]
+"'['" [ fillcolor="white" label="'\['" ]
+"'[' ']'" -> "'['" [ label="" ]
+"'['_0" [ fillcolor="white" label="HASH(0x307c1d8)" ]
+"'['" -> "'['_0" [ label="" ]
+"']'" [ fillcolor="white" label="'\]'" ]
+"'[' ']'" -> "']'" [ label="" ]
+"'[' elements ']'" [ fillcolor="white" label="'\[' elements '\]'" ]
+"array" -> "'[' elements ']'" [ label="" ]
+"'[' elements ']'" -> "'['" [ label="" ]
+"'['" -> "'['_0" [ label="" ]
+"elements" [ fillcolor="white" label="elements" ]
+"'[' elements ']'" -> "elements" [ label="" ]
+"'[' elements ']'" -> "']'" [ label="" ]
+"elements" -> "value" [ label="" ]
+"int" [ fillcolor="white" label="int" ]
+"number" -> "int" [ label="" ]
+"int frac" [ fillcolor="white" label="int frac" ]
+"number" -> "int frac" [ label="" ]
+"int frac" -> "int" [ label="" ]
+"frac" [ fillcolor="white" label="frac" ]
+"int frac" -> "frac" [ label="" ]
+"int exp" [ fillcolor="white" label="int exp" ]
+"number" -> "int exp" [ label="" ]
+"int exp" -> "int" [ label="" ]
+"exp" [ fillcolor="white" label="exp" ]
+"int exp" -> "exp" [ label="" ]
+"int frac exp" [ fillcolor="white" label="int frac exp" ]
+"number" -> "int frac exp" [ label="" ]
+"int frac exp" -> "int" [ label="" ]
+"int frac exp" -> "frac" [ label="" ]
+"int frac exp" -> "exp" [ label="" ]
+"digits" [ fillcolor="white" label="digits" ]
+"int" -> "digits" [ label="" ]
+"'-' digits" [ fillcolor="white" label="'-' digits" ]
+"int" -> "'-' digits" [ label="" ]
+"'-'" [ fillcolor="white" label="'-'" ]
+"'-' digits" -> "'-'" [ label="" ]
+"'-' digits" -> "digits" [ label="" ]
+"[\\d]" [ fillcolor="white" label="\[\\d\]" ]
+"digits" -> "[\\d]" [ label="" ]
+"'.' digits" [ fillcolor="white" label="'.' digits" ]
+"frac" -> "'.' digits" [ label="" ]
+"'.'" [ fillcolor="white" label="'.'" ]
+"'.' digits" -> "'.'" [ label="" ]
+"'.' digits" -> "digits" [ label="" ]
+"e digits" [ fillcolor="white" label="e digits" ]
+"exp" -> "e digits" [ label="" ]
+"e" [ fillcolor="white" label="e" ]
+"e digits" -> "e" [ label="" ]
+"e digits" -> "digits" [ label="" ]
+"'e'" [ fillcolor="white" label="'e'" ]
+"e" -> "'e'" [ label="" ]
+"'e+'" [ fillcolor="white" label="'e+'" ]
+"e" -> "'e+'" [ label="" ]
+"'e-'" [ fillcolor="white" label="'e-'" ]
+"e" -> "'e-'" [ label="" ]
+"'E'" [ fillcolor="white" label="'E'" ]
+"e" -> "'E'" [ label="" ]
+"'E+'" [ fillcolor="white" label="'E+'" ]
+"e" -> "'E+'" [ label="" ]
+"'E-'" [ fillcolor="white" label="'E-'" ]
+"e" -> "'E-'" [ label="" ]
+"lstring" [ fillcolor="white" label="lstring" ]
+"string" -> "lstring" [ label="" ]
+"quote in_string quote" [ fillcolor="white" label="quote in_string quote" ]
+"lstring" -> "quote in_string quote" [ label="" ]
+"quote" [ fillcolor="white" label="quote" ]
+"quote in_string quote" -> "quote" [ label="" ]
+"in_string" [ fillcolor="white" label="in_string" ]
+"quote in_string quote" -> "in_string" [ label="" ]
+"quote in_string quote" -> "quote" [ label="" ]
+"[\\ꞌꞌ]" [ fillcolor="white" label="\[\\ꞌꞌ\]" ]
+"quote" -> "[\\ꞌꞌ]" [ label="" ]
+"in_string_char" [ fillcolor="white" label="in_string_char" ]
+"in_string" -> "in_string_char" [ label="" ]
+"[^ꞌꞌ\\\\]" [ fillcolor="white" label="\[^ꞌꞌ\\\\]" ]
+"in_string_char" -> "[^ꞌꞌ\\\\]" [ label="" ]
+"'\\' 'ꞌꞌ'" [ fillcolor="white" label="'\\' 'ꞌꞌ'" ]
+"in_string_char" -> "'\\' 'ꞌꞌ'" [ label="" ]
+"'\\'" [ fillcolor="white" label="'\\'" ]
+"'\\' 'ꞌꞌ'" -> "'\\'" [ label="" ]
+"'ꞌꞌ'" [ fillcolor="white" label="'ꞌꞌ'" ]
+"'\\' 'ꞌꞌ'" -> "'ꞌꞌ'" [ label="" ]
+"'\\' 'b'" [ fillcolor="white" label="'\\' 'b'" ]
+"in_string_char" -> "'\\' 'b'" [ label="" ]
+"'\\' 'b'" -> "'\\'" [ label="" ]
+"'b'" [ fillcolor="white" label="'b'" ]
+"'\\' 'b'" -> "'b'" [ label="" ]
+"'\\' 'f'" [ fillcolor="white" label="'\\' 'f'" ]
+"in_string_char" -> "'\\' 'f'" [ label="" ]
+"'\\' 'f'" -> "'\\'" [ label="" ]
+"'f'" [ fillcolor="white" label="'f'" ]
+"'\\' 'f'" -> "'f'" [ label="" ]
+"'\\' 't'" [ fillcolor="white" label="'\\' 't'" ]
+"in_string_char" -> "'\\' 't'" [ label="" ]
+"'\\' 't'" -> "'\\'" [ label="" ]
+"'t'" [ fillcolor="white" label="'t'" ]
+"'\\' 't'" -> "'t'" [ label="" ]
+"'\\' 'n'" [ fillcolor="white" label="'\\' 'n'" ]
+"in_string_char" -> "'\\' 'n'" [ label="" ]
+"'\\' 'n'" -> "'\\'" [ label="" ]
+"'n'" [ fillcolor="white" label="'n'" ]
+"'\\' 'n'" -> "'n'" [ label="" ]
+"'\\' 'r'" [ fillcolor="white" label="'\\' 'r'" ]
+"in_string_char" -> "'\\' 'r'" [ label="" ]
+"'\\' 'r'" -> "'\\'" [ label="" ]
+"'r'" [ fillcolor="white" label="'r'" ]
+"'\\' 'r'" -> "'r'" [ label="" ]
+"'\\' 'u' four_hex_digits" [ fillcolor="white" label="'\\' 'u' four_hex_digits" ]
+"in_string_char" -> "'\\' 'u' four_hex_digits" [ label="" ]
+"'\\' 'u' four_hex_digits" -> "'\\'" [ label="" ]
+"'u'" [ fillcolor="white" label="'u'" ]
+"'\\' 'u' four_hex_digits" -> "'u'" [ label="" ]
+"four_hex_digits" [ fillcolor="white" label="four_hex_digits" ]
+"'\\' 'u' four_hex_digits" -> "four_hex_digits" [ label="" ]
+"'\\' '/'" [ fillcolor="white" label="'\\' '/'" ]
+"in_string_char" -> "'\\' '/'" [ label="" ]
+"'\\' '/'" -> "'\\'" [ label="" ]
+"'/'" [ fillcolor="white" label="'/'" ]
+"'\\' '/'" -> "'/'" [ label="" ]
+"'\\\\'" [ fillcolor="white" label="'\\\\'" ]
+"in_string_char" -> "'\\\\'" [ label="" ]
+"hex_digit hex_digit hex_digit hex_digit" [ fillcolor="white" label="hex_digit hex_digit hex_digit hex_digit" ]
+"four_hex_digits" -> "hex_digit hex_digit hex_digit hex_digit" [ label="" ]
+"hex_digit" [ fillcolor="white" label="hex_digit" ]
+"hex_digit hex_digit hex_digit hex_digit" -> "hex_digit" [ label="" ]
+"hex_digit hex_digit hex_digit hex_digit" -> "hex_digit" [ label="" ]
+"hex_digit hex_digit hex_digit hex_digit" -> "hex_digit" [ label="" ]
+"hex_digit hex_digit hex_digit hex_digit" -> "hex_digit" [ label="" ]
+"[0-9a-fA-F]" [ fillcolor="white" label="\[0-9a-fA-F\]" ]
+"hex_digit" -> "[0-9a-fA-F]" [ label="" ]
+"','" [ fillcolor="white" label="','" ]
+"comma"
+"comma" -> "','" [ label="" ]
+"[\\s]" [ fillcolor="white" label="\[\\s\]" ]
+"whitespace" -> "[\\s]" [ label="" ]
+}
+Wrote html/json.1.svg. Size: 61490 bytes

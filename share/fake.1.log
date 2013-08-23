@@ -5,7 +5,7 @@ Default global: label => ->
 Default global: name => Perl
 Default global: record_shape => Mrecord
 Default global: strict => 0
-Default global: subgraph => HASH(0x23b8a38)
+Default global: subgraph => HASH(0x317f340)
 Default global: timeout => 10
 Default graph: label => fake.1.bnf, rankdir => TB
 Default node: shape => rectangle, style => filled
@@ -43,8 +43,207 @@ Added node: "'{' '}'" [ fillcolor="white" label="'{' '}'" ]
 Added edge: "object" -> "'{' '}'" [ label="" ]
 Added node: "'{'" [ fillcolor="white" label="'{'" ]
 Added edge: "'{' '}'" -> "'{'" [ label="" ]
-Attr: HASH(0x28cfeb0). Ref: HASH
-Added node: "'{'_0" [ fillcolor="white" label="HASH(0x28cfeb0)" ]
+Added node: "'{'_0" [ fillcolor="white" label="HASH(0x3696838)" ]
 Added edge: "'{'" -> "'{'_0" [ label="" ]
 Added node: "'}'" [ fillcolor="white" label="'}'" ]
 Added edge: "'{' '}'" -> "'}'" [ label="" ]
+Added node: "'{' members '}'" [ fillcolor="white" label="'{' members '}'" ]
+Added edge: "object" -> "'{' members '}'" [ label="" ]
+Added edge: "'{' members '}'" -> "'{'" [ label="" ]
+Added edge: "'{'" -> "'{'_0" [ label="" ]
+Added node: "members" [ fillcolor="white" label="members" ]
+Added edge: "'{' members '}'" -> "members" [ label="" ]
+Added edge: "'{' members '}'" -> "'}'" [ label="" ]
+--------------------------------------------------
+Node:           members
+Daughter count: 1 ::=
+Daughter stack: 1
+	value
+Adverb stack:   1
+	{action =\> do_list, separator =\> comma1}
+--------------------------------------------------
+Added node: "value" [ fillcolor="white" label="value" ]
+Added edge: "members" -> "value" [ label="" ]
+--------------------------------------------------
+Node:           value
+Daughter count: 1 ::=
+Daughter stack: 4
+	int
+	object
+	number
+	array
+Adverb stack:   4
+	{action =\> do_int_list, separator =\> comma2}
+	
+	
+	
+--------------------------------------------------
+Added node: "int" [ fillcolor="white" label="int" ]
+Added edge: "value" -> "int" [ label="" ]
+Added edge: "value" -> "object" [ label="" ]
+Added node: "number" [ fillcolor="white" label="number" ]
+Added edge: "value" -> "number" [ label="" ]
+Added edge: "value" -> "array" [ label="" ]
+--------------------------------------------------
+Node:           array
+Daughter count: 1 ::=
+Daughter stack: 2
+	'[', ']'
+	'[', elements, ']'
+Adverb stack:   2
+	{action =\> do_empty_array}
+	{action =\> do_array}
+--------------------------------------------------
+Added node: "'[' ']'" [ fillcolor="white" label="'\[' '\]'" ]
+Added edge: "array" -> "'[' ']'" [ label="" ]
+Added node: "'['" [ fillcolor="white" label="'\['" ]
+Added edge: "'[' ']'" -> "'['" [ label="" ]
+Added node: "'['_0" [ fillcolor="white" label="HASH(0x33eb258)" ]
+Added edge: "'['" -> "'['_0" [ label="" ]
+Added node: "']'" [ fillcolor="white" label="'\]'" ]
+Added edge: "'[' ']'" -> "']'" [ label="" ]
+Added node: "'[' elements ']'" [ fillcolor="white" label="'\[' elements '\]'" ]
+Added edge: "array" -> "'[' elements ']'" [ label="" ]
+Added edge: "'[' elements ']'" -> "'['" [ label="" ]
+Added edge: "'['" -> "'['_0" [ label="" ]
+Added node: "elements" [ fillcolor="white" label="elements" ]
+Added edge: "'[' elements ']'" -> "elements" [ label="" ]
+Added edge: "'[' elements ']'" -> "']'" [ label="" ]
+--------------------------------------------------
+Node:           elements
+Daughter count: 1 ::=
+Daughter stack: 1
+	value
+Adverb stack:   1
+	
+--------------------------------------------------
+Added edge: "elements" -> "value" [ label="" ]
+--------------------------------------------------
+Node:           number
+Daughter count: 1 ~
+Daughter stack: 1
+	int
+Adverb stack:   1
+	
+--------------------------------------------------
+Added edge: "number" -> "int" [ label="" ]
+--------------------------------------------------
+Node:           int
+Daughter count: 1 ~
+Daughter stack: 1
+	digits
+Adverb stack:   1
+	
+--------------------------------------------------
+Added node: "digits" [ fillcolor="white" label="digits" ]
+Added edge: "int" -> "digits" [ label="" ]
+--------------------------------------------------
+Node:           digits
+Daughter count: 1 ~
+Daughter stack: 1
+	[\\d]
+Adverb stack:   1
+	
+--------------------------------------------------
+Added node: "[\\d]" [ fillcolor="white" label="\[\\d\]" ]
+Added edge: "digits" -> "[\\d]" [ label="" ]
+--------------------------------------------------
+Node:           comma1
+Daughter count: 1 ~
+Daughter stack: 1
+	','
+Adverb stack:   1
+	
+--------------------------------------------------
+Added node: "','" [ fillcolor="white" label="','" ]
+Added node: "comma1"
+Added edge: "comma1" -> "','" [ label="" ]
+--------------------------------------------------
+Node:           comma2
+Daughter count: 1 ~
+Daughter stack: 1
+	','
+Adverb stack:   1
+	
+--------------------------------------------------
+Added node: "comma2"
+Added edge: "comma2" -> "','" [ label="" ]
+--------------------------------------------------
+Node:           whitespace
+Daughter count: 1 ~
+Daughter stack: 1
+	[\\s]
+Adverb stack:   1
+	
+--------------------------------------------------
+Added node: "[\\s]" [ fillcolor="white" label="\[\\s\]" ]
+Added edge: "whitespace" -> "[\\s]" [ label="" ]
+Driver: /usr/local/bin/dot. Output file: html/fake.1.svg. Format: svg. Timeout: 10 second(s)
+
+digraph Perl
+{
+graph [ label="fake.1.bnf" rankdir="TB" ]
+node [ shape="rectangle" style="filled" ]
+edge [ color="grey" ]
+"json" [ fillcolor="lightgreen" label="{:start|json}" shape="Mrecord" ]
+"꞉discard" [ fillcolor="lightblue" label="꞉discard" ]
+"json" -> "꞉discard" [ label="" ]
+"whitespace" [ fillcolor="lightblue" label="whitespace" ]
+"꞉discard" -> "whitespace" [ label="" ]
+"object" [ fillcolor="white" label="object" ]
+"json" -> "object" [ label="" ]
+"array" [ fillcolor="white" label="array" ]
+"json" -> "array" [ label="" ]
+"'{' '}'" [ fillcolor="white" label="'{' '}'" ]
+"object" -> "'{' '}'" [ label="" ]
+"'{'" [ fillcolor="white" label="'{'" ]
+"'{' '}'" -> "'{'" [ label="" ]
+"'{'_0" [ fillcolor="white" label="HASH(0x3696838)" ]
+"'{'" -> "'{'_0" [ label="" ]
+"'}'" [ fillcolor="white" label="'}'" ]
+"'{' '}'" -> "'}'" [ label="" ]
+"'{' members '}'" [ fillcolor="white" label="'{' members '}'" ]
+"object" -> "'{' members '}'" [ label="" ]
+"'{' members '}'" -> "'{'" [ label="" ]
+"'{'" -> "'{'_0" [ label="" ]
+"members" [ fillcolor="white" label="members" ]
+"'{' members '}'" -> "members" [ label="" ]
+"'{' members '}'" -> "'}'" [ label="" ]
+"value" [ fillcolor="white" label="value" ]
+"members" -> "value" [ label="" ]
+"int" [ fillcolor="white" label="int" ]
+"value" -> "int" [ label="" ]
+"value" -> "object" [ label="" ]
+"number" [ fillcolor="white" label="number" ]
+"value" -> "number" [ label="" ]
+"value" -> "array" [ label="" ]
+"'[' ']'" [ fillcolor="white" label="'\[' '\]'" ]
+"array" -> "'[' ']'" [ label="" ]
+"'['" [ fillcolor="white" label="'\['" ]
+"'[' ']'" -> "'['" [ label="" ]
+"'['_0" [ fillcolor="white" label="HASH(0x33eb258)" ]
+"'['" -> "'['_0" [ label="" ]
+"']'" [ fillcolor="white" label="'\]'" ]
+"'[' ']'" -> "']'" [ label="" ]
+"'[' elements ']'" [ fillcolor="white" label="'\[' elements '\]'" ]
+"array" -> "'[' elements ']'" [ label="" ]
+"'[' elements ']'" -> "'['" [ label="" ]
+"'['" -> "'['_0" [ label="" ]
+"elements" [ fillcolor="white" label="elements" ]
+"'[' elements ']'" -> "elements" [ label="" ]
+"'[' elements ']'" -> "']'" [ label="" ]
+"elements" -> "value" [ label="" ]
+"number" -> "int" [ label="" ]
+"digits" [ fillcolor="white" label="digits" ]
+"int" -> "digits" [ label="" ]
+"[\\d]" [ fillcolor="white" label="\[\\d\]" ]
+"digits" -> "[\\d]" [ label="" ]
+"','" [ fillcolor="white" label="','" ]
+"comma1"
+"comma1" -> "','" [ label="" ]
+"comma2"
+"comma2" -> "','" [ label="" ]
+"[\\s]" [ fillcolor="white" label="\[\\s\]" ]
+"whitespace" -> "[\\s]" [ label="" ]
+}
+Wrote html/fake.1.svg. Size: 20257 bytes

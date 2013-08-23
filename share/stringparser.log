@@ -5,7 +5,7 @@ Default global: label => ->
 Default global: name => Perl
 Default global: record_shape => Mrecord
 Default global: strict => 0
-Default global: subgraph => HASH(0x30066d0)
+Default global: subgraph => HASH(0x27af340)
 Default global: timeout => 10
 Default graph: label => stringparser.bnf, rankdir => TB
 Default node: shape => rectangle, style => filled

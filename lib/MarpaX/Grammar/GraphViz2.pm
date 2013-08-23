@@ -608,8 +608,6 @@ sub process_normal_tokens
 		$self -> add_node(name => $name, %$attributes);
 		$self -> graph -> add_edge(from => $rule_name, to => $name);
 
-		$self -> log(debug => "Attr: $$adverbs[$i]. Ref: " . ref $$adverbs[$i]);
-
 		if (defined $$lexemes{$name})
 		{
 			if ($$lexemes{$name})
