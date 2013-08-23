@@ -24,7 +24,7 @@ has default_count =>
 (
 	default  => sub{return 0},
 	is       => 'rw',
-	#isa     => 'int',
+	#isa     => 'Int',
 	required => 0,
 );
 
@@ -32,7 +32,7 @@ has discard_count =>
 (
 	default  => sub{return 0},
 	is       => 'rw',
-	#isa     => 'int',
+	#isa     => 'Int',
 	required => 0,
 );
 
@@ -64,7 +64,15 @@ has lexeme_count =>
 (
 	default  => sub{return 0},
 	is       => 'rw',
-	#isa     => 'int',
+	#isa     => 'Int',
+	required => 0,
+);
+
+has lexemes =>
+(
+	default  => sub{return {} },
+	is       => 'rw',
+	#isa     => 'HashRef',
 	required => 0,
 );
 
@@ -380,6 +388,8 @@ sub process_complex_adverbs
 		$finished = 1 if ($#$daughters == 0);
 	}
 
+#=pod
+
 	$self -> log(debug => '-' x 50);
 	$self -> log(debug => 'Node:           ' . $a_node -> name);
 	$self -> log(debug => 'Daughter count: ' . scalar @$daughters . ' ' . join(', ', map{$_ -> name} @$daughters) );
@@ -398,6 +408,8 @@ sub process_complex_adverbs
 	}
 
 	$self -> log(debug => '-' x 50);
+
+#=cut
 
 	return ([@daughter_stack], [@adverb_stack]);
 
@@ -518,63 +530,54 @@ sub process_lexeme_default_rule
 sub process_lexeme_rule
 {
 	my($self, $index, $a_node) = @_;
-
-	$self -> lexeme_count($self -> lexeme_count + 1);
-
-	my($lexeme_count) = $self -> lexeme_count;
-	my($lexeme_name)  = "\x{a789}lexeme";
-	my($attributes)   =
-	{
-		fillcolor => 'lightblue',
-		label     => $lexeme_name,
-	};
-
-	$self -> add_node(name => $lexeme_name, %$attributes);
-
-	# Ignore the first daughter, which is '~'.
-
 	my($daughters, $adverbs) = $self -> process_simple_adverbs($index, $a_node);
 	my($name)                = $$daughters[1] -> name;
-	$$attributes{label}      = $name;
+	my($lexeme)              = $self -> lexemes;
+	$$lexeme{$name}          = $#$adverbs >= 0 ? $adverbs : '';
 
-	$self -> add_node(name => $name, %$attributes);
-	$self -> graph -> add_edge(from => $lexeme_name, to => $name);
-
-	if ($#$adverbs >= 0)
-	{
-		$$attributes{label} = $adverbs;
-		my($adverb_name)    = "${lexeme_name}_$lexeme_count";
-
-		$self -> log(debug => "Lexeme rule. Add node: $adverb_name and edge from $name to it");
-
-		$self -> add_node(name => $adverb_name, %$attributes);
-		$self -> graph -> add_edge(from => $name, to => $adverb_name);
-	}
+	$self -> lexemes($lexeme);
 
 } # End of process_lexeme_rule.
 
 # --------------------------------------------------
 
-sub process_normal_rule
+sub process_lexeme_token
 {
-	my($self, $index, $a_node) = @_;
-	my($daughters, $adverbs)   = $self -> process_complex_adverbs($index, $a_node);
-	my($name)                  = $a_node -> name;
+	my($self, $lexemes, $name) = @_;
 
-	if ($self -> root_node -> name ne $name)
+	my($attributes);
+
+	if ($$lexemes{$name})
 	{
-		my($attributes) =
+		$attributes =
+		{
+			fillcolor => 'lightblue',
+			label     => [{text => "\{\x{a789}lexeme"}, {text => "$name}"}],
+		};
+	}
+	else
+	{
+		$attributes =
 		{
 			fillcolor => 'white',
 			label     => $name,
 		};
-
-		$self -> add_node(name => $name, %$attributes);
 	}
+
+	return $attributes;
+
+} # End of process_lexeme_token.
+
+# --------------------------------------------------
+
+sub process_normal_rule
+{
+	my($self, $index, $a_node, $lexemes) = @_;
+	my($daughters, $adverbs) = $self -> process_complex_adverbs($index, $a_node);
 
 	for my $i (0 .. $#$daughters)
 	{
-		$self -> process_normal_tokens($index, $a_node, $$daughters[$i], $$adverbs[$i]);
+		$self -> process_normal_tokens($index, $a_node, $lexemes, $$daughters[$i], $$adverbs[$i]);
 	}
 
 } # End of process_normal_rule.
@@ -583,16 +586,50 @@ sub process_normal_rule
 
 sub process_normal_tokens
 {
-	my($self, $index, $a_node, $daughters, $adverbs) = @_;
-	my($name)       = join(' ', map{$_ -> name} @$daughters);
-	my($attributes) =
-	{
-		fillcolor => 'white',
-		label     => $name,
-	};
+	my($self, $index, $a_node, $lexemes, $daughters, $adverbs) = @_;
+	my(@name)       = map{$_ -> name} @$daughters;
+	my($rule_name)  = join(' ', @name);
+	my($attributes) = $self -> process_lexeme_token($lexemes, $rule_name);
 
-	$self -> add_node(name => $name, %$attributes);
-	$self -> graph -> add_edge(from => $a_node -> name, to => $name);
+	$self -> add_node(name => $rule_name, %$attributes);
+	$self -> graph -> add_edge(from => $a_node -> name, to => $rule_name);
+
+	my($attr_name);
+	my($name);
+
+	for my $i (0 .. $#name)
+	{
+		$name = $name[$i];
+
+		next if ($name eq $rule_name);
+
+		$attributes = $self -> process_lexeme_token($lexemes, $name);
+
+		$self -> add_node(name => $name, %$attributes);
+		$self -> graph -> add_edge(from => $rule_name, to => $name);
+
+		$self -> log(debug => "Attr: $$adverbs[$i]. Ref: " . ref $$adverbs[$i]);
+
+		if (defined $$lexemes{$name})
+		{
+			if ($$lexemes{$name})
+			{
+				$$attributes{label} = $$lexemes{$name};
+				$attr_name          = "${name}_$i";
+
+				$self -> add_node(name => $attr_name, %$attributes);
+				$self -> graph -> add_edge(from => $name, to => $attr_name);
+			}
+		}
+		elsif ($$adverbs[$i])
+		{
+			$$attributes{label} = $$adverbs[$i];
+			$attr_name          = "${name}_$i";
+
+			$self -> add_node(name => $attr_name, %$attributes);
+			$self -> graph -> add_edge(from => $name, to => $attr_name);
+		}
+	}
 
 } # End of process_normal_tokens.
 
@@ -628,8 +665,6 @@ sub run
 	return $result if ($result == 1);
 
 	$self -> clean_tree;
-
-	print map{"$_\n"} @{$self -> parser -> cooked_tree -> tree2string({no_attributes => 0})};
 
 	my(@rule)        = $self -> parser -> cooked_tree -> daughters;
 	my($start_index) = first_index{$_ -> name eq "\x{a789}start"} @rule;
@@ -668,11 +703,13 @@ sub run
 		"\x{a789}start"   => 1,
 	);
 
+	my($lexemes) = $self -> lexemes;
+
 	for my $index (0 .. $#rule)
 	{
 		next if ($seen{$rule[$index] -> name});
 
-		$self -> process_normal_rule($index + 1, $rule[$index]);
+		$self -> process_normal_rule($index + 1, $rule[$index], $lexemes);
 	}
 
 	my($output_file) = $self -> output_file;

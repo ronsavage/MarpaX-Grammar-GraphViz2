@@ -1,0 +1,347 @@
+Default global: directed => digraph
+Default global: driver => /usr/local/bin/dot
+Default global: format => svg
+Default global: label => ->
+Default global: name => Perl
+Default global: record_shape => Mrecord
+Default global: strict => 0
+Default global: subgraph => HASH(0x30066d0)
+Default global: timeout => 10
+Default graph: label => stringparser.bnf, rankdir => TB
+Default node: shape => rectangle, style => filled
+Default edge: color => grey
+Added node: "graph_grammar" [ fillcolor="lightgreen" label="{:start|graph_grammar}" shape="Mrecord" ]
+Added node: "꞉default" [ fillcolor="lightblue" label="꞉default" ]
+Added edge: "graph_grammar" -> "꞉default" [ label="" ]
+Added node: "꞉default_1" [ fillcolor="lightblue" label="{action =\> \[values\]}" shape="Mrecord" ]
+Added edge: "꞉default" -> "꞉default_1" [ label="" ]
+Added node: "꞉discard" [ fillcolor="lightblue" label="꞉discard" ]
+Added edge: "graph_grammar" -> "꞉discard" [ label="" ]
+Added node: "whitespace" [ fillcolor="lightblue" label="whitespace" ]
+Added edge: "꞉discard" -> "whitespace" [ label="" ]
+--------------------------------------------------
+Node:           graph_grammar
+Daughter count: 1 ::=
+Daughter stack: 1
+	graph_definition
+Adverb stack:   1
+	{action =\> graph}
+--------------------------------------------------
+Added node: "graph_definition" [ fillcolor="white" label="graph_definition" ]
+Added edge: "graph_grammar" -> "graph_definition" [ label="" ]
+--------------------------------------------------
+Node:           graph_definition
+Daughter count: 1 ::=
+Daughter stack: 2
+	node_definition
+	edge_definition
+Adverb stack:   2
+	
+	
+--------------------------------------------------
+Added node: "node_definition" [ fillcolor="white" label="node_definition" ]
+Added edge: "graph_definition" -> "node_definition" [ label="" ]
+Added node: "edge_definition" [ fillcolor="white" label="edge_definition" ]
+Added edge: "graph_definition" -> "edge_definition" [ label="" ]
+--------------------------------------------------
+Node:           node_definition
+Daughter count: 1 ::=
+Daughter stack: 2
+	node_statement
+	node_statement, graph_definition
+Adverb stack:   2
+	
+	
+--------------------------------------------------
+Added node: "node_statement" [ fillcolor="white" label="node_statement" ]
+Added edge: "node_definition" -> "node_statement" [ label="" ]
+Added node: "node_statement graph_definition" [ fillcolor="white" label="node_statement graph_definition" ]
+Added edge: "node_definition" -> "node_statement graph_definition" [ label="" ]
+Added edge: "node_statement graph_definition" -> "node_statement" [ label="" ]
+Added edge: "node_statement graph_definition" -> "graph_definition" [ label="" ]
+--------------------------------------------------
+Node:           node_statement
+Daughter count: 1 ::=
+Daughter stack: 3
+	node_name
+	node_name, attribute_definition
+	node_statement, (','), node_statement
+Adverb stack:   3
+	
+	
+	
+--------------------------------------------------
+Added node: "node_name" [ fillcolor="white" label="node_name" ]
+Added edge: "node_statement" -> "node_name" [ label="" ]
+Added node: "node_name attribute_definition" [ fillcolor="white" label="node_name attribute_definition" ]
+Added edge: "node_statement" -> "node_name attribute_definition" [ label="" ]
+Added edge: "node_name attribute_definition" -> "node_name" [ label="" ]
+Added node: "attribute_definition" [ fillcolor="white" label="attribute_definition" ]
+Added edge: "node_name attribute_definition" -> "attribute_definition" [ label="" ]
+Added node: "node_statement (',') node_statement" [ fillcolor="white" label="node_statement (',') node_statement" ]
+Added edge: "node_statement" -> "node_statement (',') node_statement" [ label="" ]
+Added edge: "node_statement (',') node_statement" -> "node_statement" [ label="" ]
+Added node: "(',')" [ fillcolor="white" label="(',')" ]
+Added edge: "node_statement (',') node_statement" -> "(',')" [ label="" ]
+Added edge: "node_statement (',') node_statement" -> "node_statement" [ label="" ]
+--------------------------------------------------
+Node:           node_name
+Daughter count: 1 ::=
+Daughter stack: 1
+	start_node, end_node
+Adverb stack:   1
+	
+--------------------------------------------------
+Added node: "start_node end_node" [ fillcolor="white" label="start_node end_node" ]
+Added edge: "node_name" -> "start_node end_node" [ label="" ]
+Added node: "start_node" [ fillcolor="lightblue" label="{꞉lexeme|start_node}" shape="Mrecord" ]
+Added edge: "start_node end_node" -> "start_node" [ label="" ]
+Added node: "start_node_0" [ fillcolor="lightblue" label="{event =\> start_node|pause =\> before}" shape="Mrecord" ]
+Added edge: "start_node" -> "start_node_0" [ label="" ]
+Added node: "end_node" [ fillcolor="white" label="end_node" ]
+Added edge: "start_node end_node" -> "end_node" [ label="" ]
+--------------------------------------------------
+Node:           start_node
+Daughter count: 1 ~
+Daughter stack: 1
+	'['
+Adverb stack:   1
+	
+--------------------------------------------------
+Added node: "'['" [ fillcolor="white" label="'\['" ]
+Added edge: "start_node" -> "'['" [ label="" ]
+--------------------------------------------------
+Node:           end_node
+Daughter count: 1 ~
+Daughter stack: 1
+	']'
+Adverb stack:   1
+	
+--------------------------------------------------
+Added node: "']'" [ fillcolor="white" label="'\]'" ]
+Added edge: "end_node" -> "']'" [ label="" ]
+--------------------------------------------------
+Node:           edge_definition
+Daughter count: 1 ::=
+Daughter stack: 2
+	edge_statement
+	edge_statement, graph_definition
+Adverb stack:   2
+	
+	
+--------------------------------------------------
+Added node: "edge_statement" [ fillcolor="white" label="edge_statement" ]
+Added edge: "edge_definition" -> "edge_statement" [ label="" ]
+Added node: "edge_statement graph_definition" [ fillcolor="white" label="edge_statement graph_definition" ]
+Added edge: "edge_definition" -> "edge_statement graph_definition" [ label="" ]
+Added edge: "edge_statement graph_definition" -> "edge_statement" [ label="" ]
+Added edge: "edge_statement graph_definition" -> "graph_definition" [ label="" ]
+--------------------------------------------------
+Node:           edge_statement
+Daughter count: 1 ::=
+Daughter stack: 3
+	edge_name
+	edge_name, attribute_definition
+	edge_statement, (','), edge_statement
+Adverb stack:   3
+	
+	
+	
+--------------------------------------------------
+Added node: "edge_name" [ fillcolor="white" label="edge_name" ]
+Added edge: "edge_statement" -> "edge_name" [ label="" ]
+Added node: "edge_name attribute_definition" [ fillcolor="white" label="edge_name attribute_definition" ]
+Added edge: "edge_statement" -> "edge_name attribute_definition" [ label="" ]
+Added edge: "edge_name attribute_definition" -> "edge_name" [ label="" ]
+Added edge: "edge_name attribute_definition" -> "attribute_definition" [ label="" ]
+Added node: "edge_statement (',') edge_statement" [ fillcolor="white" label="edge_statement (',') edge_statement" ]
+Added edge: "edge_statement" -> "edge_statement (',') edge_statement" [ label="" ]
+Added edge: "edge_statement (',') edge_statement" -> "edge_statement" [ label="" ]
+Added edge: "edge_statement (',') edge_statement" -> "(',')" [ label="" ]
+Added edge: "edge_statement (',') edge_statement" -> "edge_statement" [ label="" ]
+--------------------------------------------------
+Node:           edge_name
+Daughter count: 1 ::=
+Daughter stack: 2
+	directed_edge
+	undirected_edge
+Adverb stack:   2
+	
+	
+--------------------------------------------------
+Added node: "directed_edge" [ fillcolor="lightblue" label="{꞉lexeme|directed_edge}" shape="Mrecord" ]
+Added edge: "edge_name" -> "directed_edge" [ label="" ]
+Added node: "undirected_edge" [ fillcolor="lightblue" label="{꞉lexeme|undirected_edge}" shape="Mrecord" ]
+Added edge: "edge_name" -> "undirected_edge" [ label="" ]
+--------------------------------------------------
+Node:           directed_edge
+Daughter count: 1 ~
+Daughter stack: 1
+	'-\>'
+Adverb stack:   1
+	
+--------------------------------------------------
+Added node: "'-\>'" [ fillcolor="white" label="'-\>'" ]
+Added edge: "directed_edge" -> "'-\>'" [ label="" ]
+--------------------------------------------------
+Node:           undirected_edge
+Daughter count: 1 ~
+Daughter stack: 1
+	'--'
+Adverb stack:   1
+	
+--------------------------------------------------
+Added node: "'--'" [ fillcolor="white" label="'--'" ]
+Added edge: "undirected_edge" -> "'--'" [ label="" ]
+--------------------------------------------------
+Node:           attribute_definition
+Daughter count: 1 ::=
+Daughter stack: 1
+	attribute_statement
+Adverb stack:   1
+	
+--------------------------------------------------
+Added node: "attribute_statement" [ fillcolor="white" label="attribute_statement" ]
+Added edge: "attribute_definition" -> "attribute_statement" [ label="" ]
+--------------------------------------------------
+Node:           attribute_statement
+Daughter count: 1 ::=
+Daughter stack: 1
+	start_attributes, end_attributes
+Adverb stack:   1
+	
+--------------------------------------------------
+Added node: "start_attributes end_attributes" [ fillcolor="white" label="start_attributes end_attributes" ]
+Added edge: "attribute_statement" -> "start_attributes end_attributes" [ label="" ]
+Added node: "start_attributes" [ fillcolor="lightblue" label="{꞉lexeme|start_attributes}" shape="Mrecord" ]
+Added edge: "start_attributes end_attributes" -> "start_attributes" [ label="" ]
+Added node: "start_attributes_0" [ fillcolor="lightblue" label="{event =\> start_attributes|pause =\> before}" shape="Mrecord" ]
+Added edge: "start_attributes" -> "start_attributes_0" [ label="" ]
+Added node: "end_attributes" [ fillcolor="white" label="end_attributes" ]
+Added edge: "start_attributes end_attributes" -> "end_attributes" [ label="" ]
+--------------------------------------------------
+Node:           start_attributes
+Daughter count: 1 ~
+Daughter stack: 1
+	'{'
+Adverb stack:   1
+	
+--------------------------------------------------
+Added node: "'{'" [ fillcolor="white" label="'{'" ]
+Added edge: "start_attributes" -> "'{'" [ label="" ]
+--------------------------------------------------
+Node:           end_attributes
+Daughter count: 1 ~
+Daughter stack: 1
+	'}'
+Adverb stack:   1
+	
+--------------------------------------------------
+Added node: "'}'" [ fillcolor="white" label="'}'" ]
+Added edge: "end_attributes" -> "'}'" [ label="" ]
+--------------------------------------------------
+Node:           whitespace
+Daughter count: 1 ~
+Daughter stack: 1
+	[\\s]
+Adverb stack:   1
+	
+--------------------------------------------------
+Added node: "[\\s]" [ fillcolor="white" label="\[\\s\]" ]
+Added edge: "whitespace" -> "[\\s]" [ label="" ]
+Driver: /usr/local/bin/dot. Output file: html/stringparser.svg. Format: svg. Timeout: 10 second(s)
+
+digraph Perl
+{
+graph [ label="stringparser.bnf" rankdir="TB" ]
+node [ shape="rectangle" style="filled" ]
+edge [ color="grey" ]
+"graph_grammar" [ fillcolor="lightgreen" label="{:start|graph_grammar}" shape="Mrecord" ]
+"꞉default" [ fillcolor="lightblue" label="꞉default" ]
+"graph_grammar" -> "꞉default" [ label="" ]
+"꞉default_1" [ fillcolor="lightblue" label="{action =\> \[values\]}" shape="Mrecord" ]
+"꞉default" -> "꞉default_1" [ label="" ]
+"꞉discard" [ fillcolor="lightblue" label="꞉discard" ]
+"graph_grammar" -> "꞉discard" [ label="" ]
+"whitespace" [ fillcolor="lightblue" label="whitespace" ]
+"꞉discard" -> "whitespace" [ label="" ]
+"graph_definition" [ fillcolor="white" label="graph_definition" ]
+"graph_grammar" -> "graph_definition" [ label="" ]
+"node_definition" [ fillcolor="white" label="node_definition" ]
+"graph_definition" -> "node_definition" [ label="" ]
+"edge_definition" [ fillcolor="white" label="edge_definition" ]
+"graph_definition" -> "edge_definition" [ label="" ]
+"node_statement" [ fillcolor="white" label="node_statement" ]
+"node_definition" -> "node_statement" [ label="" ]
+"node_statement graph_definition" [ fillcolor="white" label="node_statement graph_definition" ]
+"node_definition" -> "node_statement graph_definition" [ label="" ]
+"node_statement graph_definition" -> "node_statement" [ label="" ]
+"node_statement graph_definition" -> "graph_definition" [ label="" ]
+"node_name" [ fillcolor="white" label="node_name" ]
+"node_statement" -> "node_name" [ label="" ]
+"node_name attribute_definition" [ fillcolor="white" label="node_name attribute_definition" ]
+"node_statement" -> "node_name attribute_definition" [ label="" ]
+"node_name attribute_definition" -> "node_name" [ label="" ]
+"attribute_definition" [ fillcolor="white" label="attribute_definition" ]
+"node_name attribute_definition" -> "attribute_definition" [ label="" ]
+"node_statement (',') node_statement" [ fillcolor="white" label="node_statement (',') node_statement" ]
+"node_statement" -> "node_statement (',') node_statement" [ label="" ]
+"node_statement (',') node_statement" -> "node_statement" [ label="" ]
+"(',')" [ fillcolor="white" label="(',')" ]
+"node_statement (',') node_statement" -> "(',')" [ label="" ]
+"node_statement (',') node_statement" -> "node_statement" [ label="" ]
+"start_node end_node" [ fillcolor="white" label="start_node end_node" ]
+"node_name" -> "start_node end_node" [ label="" ]
+"start_node" [ fillcolor="lightblue" label="{꞉lexeme|start_node}" shape="Mrecord" ]
+"start_node end_node" -> "start_node" [ label="" ]
+"start_node_0" [ fillcolor="lightblue" label="{event =\> start_node|pause =\> before}" shape="Mrecord" ]
+"start_node" -> "start_node_0" [ label="" ]
+"end_node" [ fillcolor="white" label="end_node" ]
+"start_node end_node" -> "end_node" [ label="" ]
+"'['" [ fillcolor="white" label="'\['" ]
+"start_node" -> "'['" [ label="" ]
+"']'" [ fillcolor="white" label="'\]'" ]
+"end_node" -> "']'" [ label="" ]
+"edge_statement" [ fillcolor="white" label="edge_statement" ]
+"edge_definition" -> "edge_statement" [ label="" ]
+"edge_statement graph_definition" [ fillcolor="white" label="edge_statement graph_definition" ]
+"edge_definition" -> "edge_statement graph_definition" [ label="" ]
+"edge_statement graph_definition" -> "edge_statement" [ label="" ]
+"edge_statement graph_definition" -> "graph_definition" [ label="" ]
+"edge_name" [ fillcolor="white" label="edge_name" ]
+"edge_statement" -> "edge_name" [ label="" ]
+"edge_name attribute_definition" [ fillcolor="white" label="edge_name attribute_definition" ]
+"edge_statement" -> "edge_name attribute_definition" [ label="" ]
+"edge_name attribute_definition" -> "edge_name" [ label="" ]
+"edge_name attribute_definition" -> "attribute_definition" [ label="" ]
+"edge_statement (',') edge_statement" [ fillcolor="white" label="edge_statement (',') edge_statement" ]
+"edge_statement" -> "edge_statement (',') edge_statement" [ label="" ]
+"edge_statement (',') edge_statement" -> "edge_statement" [ label="" ]
+"edge_statement (',') edge_statement" -> "(',')" [ label="" ]
+"edge_statement (',') edge_statement" -> "edge_statement" [ label="" ]
+"directed_edge" [ fillcolor="lightblue" label="{꞉lexeme|directed_edge}" shape="Mrecord" ]
+"edge_name" -> "directed_edge" [ label="" ]
+"undirected_edge" [ fillcolor="lightblue" label="{꞉lexeme|undirected_edge}" shape="Mrecord" ]
+"edge_name" -> "undirected_edge" [ label="" ]
+"'-\>'" [ fillcolor="white" label="'-\>'" ]
+"directed_edge" -> "'-\>'" [ label="" ]
+"'--'" [ fillcolor="white" label="'--'" ]
+"undirected_edge" -> "'--'" [ label="" ]
+"attribute_statement" [ fillcolor="white" label="attribute_statement" ]
+"attribute_definition" -> "attribute_statement" [ label="" ]
+"start_attributes end_attributes" [ fillcolor="white" label="start_attributes end_attributes" ]
+"attribute_statement" -> "start_attributes end_attributes" [ label="" ]
+"start_attributes" [ fillcolor="lightblue" label="{꞉lexeme|start_attributes}" shape="Mrecord" ]
+"start_attributes end_attributes" -> "start_attributes" [ label="" ]
+"start_attributes_0" [ fillcolor="lightblue" label="{event =\> start_attributes|pause =\> before}" shape="Mrecord" ]
+"start_attributes" -> "start_attributes_0" [ label="" ]
+"end_attributes" [ fillcolor="white" label="end_attributes" ]
+"start_attributes end_attributes" -> "end_attributes" [ label="" ]
+"'{'" [ fillcolor="white" label="'{'" ]
+"start_attributes" -> "'{'" [ label="" ]
+"'}'" [ fillcolor="white" label="'}'" ]
+"end_attributes" -> "'}'" [ label="" ]
+"[\\s]" [ fillcolor="white" label="\[\\s\]" ]
+"whitespace" -> "[\\s]" [ label="" ]
+}
+Wrote html/stringparser.svg. Size: 33264 bytes
