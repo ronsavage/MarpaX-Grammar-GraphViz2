@@ -1,6 +1,10 @@
 Changelog.ini
 Changes
+html/c.ast.svg
+html/json.1.svg
+html/json.2.svg
 html/stringparser.svg
+html/termcap.info.svg
 inc/Module/Install.pm
 inc/Module/Install/AuthorTests.pm
 inc/Module/Install/Base.pm
@@ -20,11 +24,16 @@ README
 scripts/bnf2graph.pl
 scripts/bnf2graph.sh
 scripts/find.grammars.pl
+scripts/run.1.sh
+scripts/run.all.sh
 share/c.ast.bnf
 share/json.1.bnf
+share/json.1.log
 share/json.2.bnf
+share/json.2.log
 share/metag.bnf
 share/stringparser.bnf
 share/stringparser.log
 share/termcap.info.bnf
+share/termcap.info.log
 xt/author/pod.t
