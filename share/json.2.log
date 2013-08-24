@@ -5,7 +5,7 @@ Default global: label => ->
 Default global: name => Perl
 Default global: record_shape => Mrecord
 Default global: strict => 0
-Default global: subgraph => HASH(0x2066230)
+Default global: subgraph => HASH(0x251fec8)
 Default global: timeout => 10
 Default graph: label => json.2.bnf, rankdir => TB
 Default node: shape => rectangle, style => filled
@@ -31,8 +31,12 @@ Adverb stack:   2
 --------------------------------------------------
 Added node: "object" [ fillcolor="white" label="object" ]
 Added edge: "json" -> "object" [ label="" ]
+Added node: "object_0" [ fillcolor="gold" label="{action =\> ꞉꞉first}" shape="Mrecord" ]
+Added edge: "object" -> "object_0" [ label="" ]
 Added node: "array" [ fillcolor="white" label="array" ]
 Added edge: "json" -> "array" [ label="" ]
+Added node: "array_0" [ fillcolor="gold" label="{action =\> ꞉꞉first}" shape="Mrecord" ]
+Added edge: "array" -> "array_0" [ label="" ]
 --------------------------------------------------
 Node:           object
 Daughter count: 1 ::=
@@ -45,7 +49,7 @@ Added node: "('{') members ('}')" [ fillcolor="white" label="('{') members ('}')
 Added edge: "object" -> "('{') members ('}')" [ label="" ]
 Added node: "('{')" [ fillcolor="white" label="('{')" ]
 Added edge: "('{') members ('}')" -> "('{')" [ label="" ]
-Added node: "('{')_0" [ fillcolor="white" label="HASH(0x2572aa8)" ]
+Added node: "('{')_0" [ fillcolor="gold" label="{bless =\> hash}" shape="Mrecord" ]
 Added edge: "('{')" -> "('{')_0" [ label="" ]
 Added node: "members" [ fillcolor="white" label="members" ]
 Added edge: "('{') members ('}')" -> "members" [ label="" ]
@@ -61,6 +65,8 @@ Adverb stack:   1
 --------------------------------------------------
 Added node: "pair" [ fillcolor="white" label="pair" ]
 Added edge: "members" -> "pair" [ label="" ]
+Added node: "pair_0" [ fillcolor="gold" label="{separator =\> comma}" shape="Mrecord" ]
+Added edge: "pair" -> "pair_0" [ label="" ]
 --------------------------------------------------
 Node:           pair
 Daughter count: 1 ::=
@@ -98,16 +104,28 @@ Adverb stack:   7
 	{action =\> ꞉꞉undef}
 --------------------------------------------------
 Added edge: "value" -> "string" [ label="" ]
+Added node: "string_0" [ fillcolor="gold" label="{action =\> ꞉꞉first}" shape="Mrecord" ]
+Added edge: "string" -> "string_0" [ label="" ]
 Added edge: "value" -> "object" [ label="" ]
+Added edge: "object" -> "object_0" [ label="" ]
 Added node: "number" [ fillcolor="white" label="number" ]
 Added edge: "value" -> "number" [ label="" ]
+Added node: "number_0" [ fillcolor="gold" label="{action =\> ꞉꞉first}" shape="Mrecord" ]
+Added edge: "number" -> "number_0" [ label="" ]
 Added edge: "value" -> "array" [ label="" ]
+Added edge: "array" -> "array_0" [ label="" ]
 Added node: "'true'" [ fillcolor="white" label="'true'" ]
 Added edge: "value" -> "'true'" [ label="" ]
+Added node: "'true'_0" [ fillcolor="gold" label="{bless =\> true}" shape="Mrecord" ]
+Added edge: "'true'" -> "'true'_0" [ label="" ]
 Added node: "'false'" [ fillcolor="white" label="'false'" ]
 Added edge: "value" -> "'false'" [ label="" ]
+Added node: "'false'_0" [ fillcolor="gold" label="{bless =\> false}" shape="Mrecord" ]
+Added edge: "'false'" -> "'false'_0" [ label="" ]
 Added node: "'null'" [ fillcolor="white" label="'null'" ]
 Added edge: "value" -> "'null'" [ label="" ]
+Added node: "'null'_0" [ fillcolor="gold" label="{action =\> ꞉꞉undef}" shape="Mrecord" ]
+Added edge: "'null'" -> "'null'_0" [ label="" ]
 --------------------------------------------------
 Node:           array
 Daughter count: 1 ::=
@@ -128,7 +146,7 @@ Added node: "('[') elements (']')" [ fillcolor="white" label="('\[') elements ('
 Added edge: "array" -> "('[') elements (']')" [ label="" ]
 Added node: "('[')" [ fillcolor="white" label="('\[')" ]
 Added edge: "('[') elements (']')" -> "('[')" [ label="" ]
-Added node: "('[')_0" [ fillcolor="white" label="HASH(0x229b020)" ]
+Added node: "('[')_0" [ fillcolor="gold" label="{action =\> ꞉꞉first}" shape="Mrecord" ]
 Added edge: "('[')" -> "('[')_0" [ label="" ]
 Added node: "elements" [ fillcolor="white" label="elements" ]
 Added edge: "('[') elements (']')" -> "elements" [ label="" ]
@@ -143,6 +161,8 @@ Adverb stack:   1
 	{separator =\> comma}
 --------------------------------------------------
 Added edge: "elements" -> "value" [ label="" ]
+Added node: "value_0" [ fillcolor="gold" label="{separator =\> comma}" shape="Mrecord" ]
+Added edge: "value" -> "value_0" [ label="" ]
 --------------------------------------------------
 Node:           number
 Daughter count: 1 ~
@@ -267,6 +287,8 @@ Adverb stack:   1
 --------------------------------------------------
 Added node: "string lexeme" [ fillcolor="white" label="string lexeme" ]
 Added edge: "string" -> "string lexeme" [ label="" ]
+Added node: "string lexeme_0" [ fillcolor="gold" label="{bless =\> string}" shape="Mrecord" ]
+Added edge: "string lexeme" -> "string lexeme_0" [ label="" ]
 --------------------------------------------------
 Node:           string lexeme
 Daughter count: 1 ~
@@ -369,13 +391,17 @@ edge [ color="grey" ]
 "꞉discard" -> "whitespace" [ label="" ]
 "object" [ fillcolor="white" label="object" ]
 "json" -> "object" [ label="" ]
+"object_0" [ fillcolor="gold" label="{action =\> ꞉꞉first}" shape="Mrecord" ]
+"object" -> "object_0" [ label="" ]
 "array" [ fillcolor="white" label="array" ]
 "json" -> "array" [ label="" ]
+"array_0" [ fillcolor="gold" label="{action =\> ꞉꞉first}" shape="Mrecord" ]
+"array" -> "array_0" [ label="" ]
 "('{') members ('}')" [ fillcolor="white" label="('{') members ('}')" ]
 "object" -> "('{') members ('}')" [ label="" ]
 "('{')" [ fillcolor="white" label="('{')" ]
 "('{') members ('}')" -> "('{')" [ label="" ]
-"('{')_0" [ fillcolor="white" label="HASH(0x2572aa8)" ]
+"('{')_0" [ fillcolor="gold" label="{bless =\> hash}" shape="Mrecord" ]
 "('{')" -> "('{')_0" [ label="" ]
 "members" [ fillcolor="white" label="members" ]
 "('{') members ('}')" -> "members" [ label="" ]
@@ -383,6 +409,8 @@ edge [ color="grey" ]
 "('{') members ('}')" -> "('}')" [ label="" ]
 "pair" [ fillcolor="white" label="pair" ]
 "members" -> "pair" [ label="" ]
+"pair_0" [ fillcolor="gold" label="{separator =\> comma}" shape="Mrecord" ]
+"pair" -> "pair_0" [ label="" ]
 "string ('꞉') value" [ fillcolor="white" label="string ('꞉') value" ]
 "pair" -> "string ('꞉') value" [ label="" ]
 "string" [ fillcolor="white" label="string" ]
@@ -392,16 +420,28 @@ edge [ color="grey" ]
 "value" [ fillcolor="white" label="value" ]
 "string ('꞉') value" -> "value" [ label="" ]
 "value" -> "string" [ label="" ]
+"string_0" [ fillcolor="gold" label="{action =\> ꞉꞉first}" shape="Mrecord" ]
+"string" -> "string_0" [ label="" ]
 "value" -> "object" [ label="" ]
+"object" -> "object_0" [ label="" ]
 "number" [ fillcolor="white" label="number" ]
 "value" -> "number" [ label="" ]
+"number_0" [ fillcolor="gold" label="{action =\> ꞉꞉first}" shape="Mrecord" ]
+"number" -> "number_0" [ label="" ]
 "value" -> "array" [ label="" ]
+"array" -> "array_0" [ label="" ]
 "'true'" [ fillcolor="white" label="'true'" ]
 "value" -> "'true'" [ label="" ]
+"'true'_0" [ fillcolor="gold" label="{bless =\> true}" shape="Mrecord" ]
+"'true'" -> "'true'_0" [ label="" ]
 "'false'" [ fillcolor="white" label="'false'" ]
 "value" -> "'false'" [ label="" ]
+"'false'_0" [ fillcolor="gold" label="{bless =\> false}" shape="Mrecord" ]
+"'false'" -> "'false'_0" [ label="" ]
 "'null'" [ fillcolor="white" label="'null'" ]
 "value" -> "'null'" [ label="" ]
+"'null'_0" [ fillcolor="gold" label="{action =\> ꞉꞉undef}" shape="Mrecord" ]
+"'null'" -> "'null'_0" [ label="" ]
 "('[' ']')" [ fillcolor="white" label="('\[' '\]')" ]
 "array" -> "('[' ']')" [ label="" ]
 "('['" [ fillcolor="white" label="('\['" ]
@@ -412,13 +452,15 @@ edge [ color="grey" ]
 "array" -> "('[') elements (']')" [ label="" ]
 "('[')" [ fillcolor="white" label="('\[')" ]
 "('[') elements (']')" -> "('[')" [ label="" ]
-"('[')_0" [ fillcolor="white" label="HASH(0x229b020)" ]
+"('[')_0" [ fillcolor="gold" label="{action =\> ꞉꞉first}" shape="Mrecord" ]
 "('[')" -> "('[')_0" [ label="" ]
 "elements" [ fillcolor="white" label="elements" ]
 "('[') elements (']')" -> "elements" [ label="" ]
 "(']')" [ fillcolor="white" label="('\]')" ]
 "('[') elements (']')" -> "(']')" [ label="" ]
 "elements" -> "value" [ label="" ]
+"value_0" [ fillcolor="gold" label="{separator =\> comma}" shape="Mrecord" ]
+"value" -> "value_0" [ label="" ]
 "int" [ fillcolor="white" label="int" ]
 "number" -> "int" [ label="" ]
 "int frac" [ fillcolor="white" label="int frac" ]
@@ -469,6 +511,8 @@ edge [ color="grey" ]
 "e" -> "'E-'" [ label="" ]
 "string lexeme" [ fillcolor="white" label="string lexeme" ]
 "string" -> "string lexeme" [ label="" ]
+"string lexeme_0" [ fillcolor="gold" label="{bless =\> string}" shape="Mrecord" ]
+"string lexeme" -> "string lexeme_0" [ label="" ]
 "quote string contents quote" [ fillcolor="white" label="quote string contents quote" ]
 "string lexeme" -> "quote string contents quote" [ label="" ]
 "quote" [ fillcolor="white" label="quote" ]
@@ -496,4 +540,4 @@ edge [ color="grey" ]
 "[\\s]" [ fillcolor="white" label="\[\\s\]" ]
 "whitespace" -> "[\\s]" [ label="" ]
 }
-Wrote html/json.2.svg. Size: 44926 bytes
+Wrote html/json.2.svg. Size: 54642 bytes

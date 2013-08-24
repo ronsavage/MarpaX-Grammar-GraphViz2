@@ -7,6 +7,8 @@ use warnings  qw(FATAL utf8);    # Fatalize encoding glitches.
 use open      qw(:std :utf8);    # Undeclared streams in UTF-8.
 use charnames qw(:full :short);  # Unneeded in v5.16.
 
+use Data::Dumper::Concise;
+
 use File::Basename; # For basename().
 use File::Which; # For which().
 
@@ -363,10 +365,10 @@ sub process_complex_adverbs
 
 		# Stack the adverbs owned by the token(s) at the end of the daughters.
 
-		unshift @adverb_stack, $adverbs; # {%$adverbs}?
+		unshift @adverb_stack, $adverbs;
 
-		# Chew the tokens owning adverbs off the end of the list of daughters.
-		# The backward processing stops with a '|' or $daughter[0].
+		# Chew the tokens owning the adverbs off the end of the list of daughters.
+		# This backward processing stops with a '|' or $daughter[0].
 
 		@token_stack = ();
 
@@ -397,14 +399,14 @@ sub process_complex_adverbs
 
 	for my $i (0 .. $#daughter_stack)
 	{
-		$self -> log(debug => "\t" . join(', ', map{$_ -> name} @{$daughter_stack[$i]}) );
+		$self -> log(debug => "\t($daughter_stack[$i])-> " . join(' @ ', map{$_ -> name} @{$daughter_stack[$i]}) );
 	}
 
 	$self -> log(debug => 'Adverb stack:   ' . scalar @adverb_stack);
 
 	for my $i (0 .. $#adverb_stack)
 	{
-		$self -> log(debug => "\t" . join(', ', map{$$_{text} } @{$adverb_stack[$i]}) );
+		$self -> log(debug => "\t($adverb_stack[$i])-> " . join(' @ ', map{$$_{text} } @{$adverb_stack[$i]}) );
 	}
 
 	$self -> log(debug => '-' x 50);
@@ -575,6 +577,21 @@ sub process_normal_rule
 	my($self, $index, $a_node, $lexemes) = @_;
 	my($daughters, $adverbs) = $self -> process_complex_adverbs($index, $a_node);
 
+	$self -> log(debug => '!' x 50);
+	$self -> log(debug => 'Node: ' . $a_node -> name);
+
+	for my $i (0 .. $#$daughters)
+	{
+		$self -> log(debug => "\t<$$daughters[$i]> -> " . join(' @ ', map{$_ -> name} @{$$daughters[$i]}) );
+	}
+
+	for my $i (0 .. $#$adverbs)
+	{
+		$self -> log(debug => "\t<$$adverbs[$i]> -> " . join(' @ ', map{$$_{text} } @{$$adverbs[$i]}) );
+	}
+
+	$self -> log(debug => '!' x 50);
+
 	for my $i (0 .. $#$daughters)
 	{
 		$self -> process_normal_tokens($index, $a_node, $lexemes, $$daughters[$i], $$adverbs[$i]);
@@ -591,6 +608,8 @@ sub process_normal_tokens
 	my($rule_name)  = join(' ', @name);
 	my($attributes) = $self -> process_lexeme_token($lexemes, $rule_name);
 
+	$self -> log(debug => "Deal: $adverbs. Size: $#$adverbs");
+
 	$self -> add_node(name => $rule_name, %$attributes);
 	$self -> graph -> add_edge(from => $a_node -> name, to => $rule_name);
 
@@ -601,12 +620,18 @@ sub process_normal_tokens
 	{
 		$name = $name[$i];
 
-		next if ($name eq $rule_name);
-
 		$attributes = $self -> process_lexeme_token($lexemes, $name);
 
-		$self -> add_node(name => $name, %$attributes);
-		$self -> graph -> add_edge(from => $rule_name, to => $name);
+		# Don't re-add the node added just above.
+		# This happens in cases where there is just 1 daughter,
+		# which mean the join() above only had 1 name to 'join'.
+		# Nevertheless, after this 'if', we still add its attributes.
+
+		if ($name ne $rule_name)
+		{
+			$self -> add_node(name => $name, %$attributes);
+			$self -> graph -> add_edge(from => $rule_name, to => $name);
+		}
 
 		if (defined $$lexemes{$name})
 		{
@@ -619,10 +644,18 @@ sub process_normal_tokens
 				$self -> graph -> add_edge(from => $name, to => $attr_name);
 			}
 		}
-		elsif ($$adverbs[$i])
+		elsif ( ($#$adverbs >= 0) && ($i <= $#$adverbs) )
 		{
-			$$attributes{label} = $$adverbs[$i];
-			$attr_name          = "${name}_$i";
+			$$attributes{fillcolor} = 'gold';
+
+			$self -> log(debug => '=' x 50);
+			$self -> log(debug => "$i: REF: $rule_name => $name => $$adverbs[$i]");
+			$self -> log(debug => '=' x 50);
+			$self -> log(debug => Dumper($$adverbs[$i]) );
+			$self -> log(debug => '=' x 50);
+
+			$$attributes{label}     = [$$adverbs[$i] ];
+			$attr_name              = "${name}_$i";
 
 			$self -> add_node(name => $attr_name, %$attributes);
 			$self -> graph -> add_edge(from => $name, to => $attr_name);

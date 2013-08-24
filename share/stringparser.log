@@ -5,7 +5,7 @@ Default global: label => ->
 Default global: name => Perl
 Default global: record_shape => Mrecord
 Default global: strict => 0
-Default global: subgraph => HASH(0x27af340)
+Default global: subgraph => HASH(0x270fec8)
 Default global: timeout => 10
 Default graph: label => stringparser.bnf, rankdir => TB
 Default node: shape => rectangle, style => filled
@@ -29,6 +29,8 @@ Adverb stack:   1
 --------------------------------------------------
 Added node: "graph_definition" [ fillcolor="white" label="graph_definition" ]
 Added edge: "graph_grammar" -> "graph_definition" [ label="" ]
+Added node: "graph_definition_0" [ fillcolor="gold" label="{action =\> graph}" shape="Mrecord" ]
+Added edge: "graph_definition" -> "graph_definition_0" [ label="" ]
 --------------------------------------------------
 Node:           graph_definition
 Daughter count: 1 ::=
@@ -171,8 +173,12 @@ Adverb stack:   2
 --------------------------------------------------
 Added node: "directed_edge" [ fillcolor="lightblue" label="{꞉lexeme|directed_edge}" shape="Mrecord" ]
 Added edge: "edge_name" -> "directed_edge" [ label="" ]
+Added node: "directed_edge_0" [ fillcolor="lightblue" label="{event =\> directed_edge|pause =\> before}" shape="Mrecord" ]
+Added edge: "directed_edge" -> "directed_edge_0" [ label="" ]
 Added node: "undirected_edge" [ fillcolor="lightblue" label="{꞉lexeme|undirected_edge}" shape="Mrecord" ]
 Added edge: "edge_name" -> "undirected_edge" [ label="" ]
+Added node: "undirected_edge_0" [ fillcolor="lightblue" label="{event =\> undirected_edge|pause =\> before}" shape="Mrecord" ]
+Added edge: "undirected_edge" -> "undirected_edge_0" [ label="" ]
 --------------------------------------------------
 Node:           directed_edge
 Daughter count: 1 ~
@@ -267,6 +273,8 @@ edge [ color="grey" ]
 "꞉discard" -> "whitespace" [ label="" ]
 "graph_definition" [ fillcolor="white" label="graph_definition" ]
 "graph_grammar" -> "graph_definition" [ label="" ]
+"graph_definition_0" [ fillcolor="gold" label="{action =\> graph}" shape="Mrecord" ]
+"graph_definition" -> "graph_definition_0" [ label="" ]
 "node_definition" [ fillcolor="white" label="node_definition" ]
 "graph_definition" -> "node_definition" [ label="" ]
 "edge_definition" [ fillcolor="white" label="edge_definition" ]
@@ -321,8 +329,12 @@ edge [ color="grey" ]
 "edge_statement (',') edge_statement" -> "edge_statement" [ label="" ]
 "directed_edge" [ fillcolor="lightblue" label="{꞉lexeme|directed_edge}" shape="Mrecord" ]
 "edge_name" -> "directed_edge" [ label="" ]
+"directed_edge_0" [ fillcolor="lightblue" label="{event =\> directed_edge|pause =\> before}" shape="Mrecord" ]
+"directed_edge" -> "directed_edge_0" [ label="" ]
 "undirected_edge" [ fillcolor="lightblue" label="{꞉lexeme|undirected_edge}" shape="Mrecord" ]
 "edge_name" -> "undirected_edge" [ label="" ]
+"undirected_edge_0" [ fillcolor="lightblue" label="{event =\> undirected_edge|pause =\> before}" shape="Mrecord" ]
+"undirected_edge" -> "undirected_edge_0" [ label="" ]
 "'-\>'" [ fillcolor="white" label="'-\>'" ]
 "directed_edge" -> "'-\>'" [ label="" ]
 "'--'" [ fillcolor="white" label="'--'" ]
@@ -344,4 +356,4 @@ edge [ color="grey" ]
 "[\\s]" [ fillcolor="white" label="\[\\s\]" ]
 "whitespace" -> "[\\s]" [ label="" ]
 }
-Wrote html/stringparser.svg. Size: 33264 bytes
+Wrote html/stringparser.svg. Size: 36313 bytes

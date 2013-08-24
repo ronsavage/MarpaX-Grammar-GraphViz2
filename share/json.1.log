@@ -5,7 +5,7 @@ Default global: label => ->
 Default global: name => Perl
 Default global: record_shape => Mrecord
 Default global: strict => 0
-Default global: subgraph => HASH(0x2b7f340)
+Default global: subgraph => HASH(0x30666d0)
 Default global: timeout => 10
 Default graph: label => json.1.bnf, rankdir => TB
 Default node: shape => rectangle, style => filled
@@ -19,37 +19,69 @@ Added edge: "꞉discard" -> "whitespace" [ label="" ]
 Node:           json
 Daughter count: 1 ::=
 Daughter stack: 2
-	object
-	array
+	(ARRAY(0x3565a90))-> object
+	(ARRAY(0x3577ff0))-> array
 Adverb stack:   2
-	
-	
+	(ARRAY(0x356d4b0))-> 
+	(ARRAY(0x3562348))-> 
 --------------------------------------------------
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+Node: json
+	<ARRAY(0x3565a90)> -> object
+	<ARRAY(0x3577ff0)> -> array
+	<ARRAY(0x356d4b0)> -> 
+	<ARRAY(0x3562348)> -> 
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+Deal: ARRAY(0x356d4b0). Size: -1
 Added node: "object" [ fillcolor="white" label="object" ]
 Added edge: "json" -> "object" [ label="" ]
+Deal: ARRAY(0x3562348). Size: -1
 Added node: "array" [ fillcolor="white" label="array" ]
 Added edge: "json" -> "array" [ label="" ]
 --------------------------------------------------
 Node:           object
 Daughter count: 1 ::=
 Daughter stack: 2
-	'{', '}'
-	'{', members, '}'
+	(ARRAY(0x3577ff0))-> '{' @ '}'
+	(ARRAY(0x3557718))-> '{' @ members @ '}'
 Adverb stack:   2
-	{action =\> do_empty_object}
-	{action =\> do_object}
+	(ARRAY(0x35658c8))-> {action =\> do_empty_object}
+	(ARRAY(0x3578560))-> {action =\> do_object}
 --------------------------------------------------
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+Node: object
+	<ARRAY(0x3577ff0)> -> '{' @ '}'
+	<ARRAY(0x3557718)> -> '{' @ members @ '}'
+	<ARRAY(0x35658c8)> -> {action =\> do_empty_object}
+	<ARRAY(0x3578560)> -> {action =\> do_object}
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+Deal: ARRAY(0x35658c8). Size: 0
 Added node: "'{' '}'" [ fillcolor="white" label="'{' '}'" ]
 Added edge: "object" -> "'{' '}'" [ label="" ]
 Added node: "'{'" [ fillcolor="white" label="'{'" ]
 Added edge: "'{' '}'" -> "'{'" [ label="" ]
-Added node: "'{'_0" [ fillcolor="white" label="HASH(0x30a26a0)" ]
+==================================================
+0: REF: '{' '}' => '{' => HASH(0x35783c8)
+==================================================
+{
+  text => "{action =\\> do_empty_object}"
+}
+==================================================
+Added node: "'{'_0" [ fillcolor="gold" label="{action =\> do_empty_object}" shape="Mrecord" ]
 Added edge: "'{'" -> "'{'_0" [ label="" ]
 Added node: "'}'" [ fillcolor="white" label="'}'" ]
 Added edge: "'{' '}'" -> "'}'" [ label="" ]
+Deal: ARRAY(0x3578560). Size: 0
 Added node: "'{' members '}'" [ fillcolor="white" label="'{' members '}'" ]
 Added edge: "object" -> "'{' members '}'" [ label="" ]
 Added edge: "'{' members '}'" -> "'{'" [ label="" ]
+==================================================
+0: REF: '{' members '}' => '{' => HASH(0x357c928)
+==================================================
+{
+  text => "{action =\\> do_object}"
+}
+==================================================
 Added edge: "'{'" -> "'{'_0" [ label="" ]
 Added node: "members" [ fillcolor="white" label="members" ]
 Added edge: "'{' members '}'" -> "members" [ label="" ]
@@ -58,25 +90,53 @@ Added edge: "'{' members '}'" -> "'}'" [ label="" ]
 Node:           members
 Daughter count: 1 ::=
 Daughter stack: 1
-	pair
+	(ARRAY(0x35783c8))-> pair
 Adverb stack:   1
-	{action =\> do_list, separator =\> comma}
+	(ARRAY(0x3562348))-> {action =\> do_list @ separator =\> comma}
 --------------------------------------------------
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+Node: members
+	<ARRAY(0x35783c8)> -> pair
+	<ARRAY(0x3562348)> -> {action =\> do_list @ separator =\> comma}
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+Deal: ARRAY(0x3562348). Size: 1
 Added node: "pair" [ fillcolor="white" label="pair" ]
 Added edge: "members" -> "pair" [ label="" ]
+==================================================
+0: REF: pair => pair => HASH(0x3578248)
+==================================================
+{
+  text => "{action =\\> do_list"
+}
+==================================================
+Added node: "pair_0" [ fillcolor="gold" label="{action =\> do_list" shape="Mrecord" ]
+Added edge: "pair" -> "pair_0" [ label="" ]
 --------------------------------------------------
 Node:           pair
 Daughter count: 1 ::=
 Daughter stack: 1
-	string, '꞉', value
+	(ARRAY(0x2cd7488))-> string @ '꞉' @ value
 Adverb stack:   1
-	{action =\> do_pair}
+	(ARRAY(0x3578560))-> {action =\> do_pair}
 --------------------------------------------------
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+Node: pair
+	<ARRAY(0x2cd7488)> -> string @ '꞉' @ value
+	<ARRAY(0x3578560)> -> {action =\> do_pair}
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+Deal: ARRAY(0x3578560). Size: 0
 Added node: "string '꞉' value" [ fillcolor="white" label="string '꞉' value" ]
 Added edge: "pair" -> "string '꞉' value" [ label="" ]
 Added node: "string" [ fillcolor="white" label="string" ]
 Added edge: "string '꞉' value" -> "string" [ label="" ]
-Added node: "string_0" [ fillcolor="white" label="HASH(0x2deb2b8)" ]
+==================================================
+0: REF: string '꞉' value => string => HASH(0x32c1c60)
+==================================================
+{
+  text => "{action =\\> do_pair}"
+}
+==================================================
+Added node: "string_0" [ fillcolor="gold" label="{action =\> do_pair}" shape="Mrecord" ]
 Added edge: "string" -> "string_0" [ label="" ]
 Added node: "'꞉'" [ fillcolor="white" label="'꞉'" ]
 Added edge: "string '꞉' value" -> "'꞉'" [ label="" ]
@@ -86,54 +146,128 @@ Added edge: "string '꞉' value" -> "value" [ label="" ]
 Node:           value
 Daughter count: 1 ::=
 Daughter stack: 7
-	string
-	object
-	number
-	array
-	'true'
-	'false'
-	'null'
+	(ARRAY(0x3543a00))-> string
+	(ARRAY(0x3565958))-> object
+	(ARRAY(0x32c1c00))-> number
+	(ARRAY(0x349bb18))-> array
+	(ARRAY(0x34e6678))-> 'true'
+	(ARRAY(0x3549ba0))-> 'false'
+	(ARRAY(0x3543ee0))-> 'null'
 Adverb stack:   7
-	
-	
-	
-	
-	{action =\> do_true}
-	{action =\> do_true}
-	{action =\> do_null}
+	(ARRAY(0x3543be0))-> 
+	(ARRAY(0x32c1be8))-> 
+	(ARRAY(0x2cd7488))-> 
+	(ARRAY(0x354f0c8))-> 
+	(ARRAY(0x3578560))-> {action =\> do_true}
+	(ARRAY(0x35571a8))-> {action =\> do_true}
+	(ARRAY(0x3553ed0))-> {action =\> do_null}
 --------------------------------------------------
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+Node: value
+	<ARRAY(0x3543a00)> -> string
+	<ARRAY(0x3565958)> -> object
+	<ARRAY(0x32c1c00)> -> number
+	<ARRAY(0x349bb18)> -> array
+	<ARRAY(0x34e6678)> -> 'true'
+	<ARRAY(0x3549ba0)> -> 'false'
+	<ARRAY(0x3543ee0)> -> 'null'
+	<ARRAY(0x3543be0)> -> 
+	<ARRAY(0x32c1be8)> -> 
+	<ARRAY(0x2cd7488)> -> 
+	<ARRAY(0x354f0c8)> -> 
+	<ARRAY(0x3578560)> -> {action =\> do_true}
+	<ARRAY(0x35571a8)> -> {action =\> do_true}
+	<ARRAY(0x3553ed0)> -> {action =\> do_null}
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+Deal: ARRAY(0x3543be0). Size: -1
 Added edge: "value" -> "string" [ label="" ]
+Deal: ARRAY(0x32c1be8). Size: -1
 Added edge: "value" -> "object" [ label="" ]
+Deal: ARRAY(0x2cd7488). Size: -1
 Added node: "number" [ fillcolor="white" label="number" ]
 Added edge: "value" -> "number" [ label="" ]
+Deal: ARRAY(0x354f0c8). Size: -1
 Added edge: "value" -> "array" [ label="" ]
+Deal: ARRAY(0x3578560). Size: 0
 Added node: "'true'" [ fillcolor="white" label="'true'" ]
 Added edge: "value" -> "'true'" [ label="" ]
+==================================================
+0: REF: 'true' => 'true' => HASH(0x3551b68)
+==================================================
+{
+  text => "{action =\\> do_true}"
+}
+==================================================
+Added node: "'true'_0" [ fillcolor="gold" label="{action =\> do_true}" shape="Mrecord" ]
+Added edge: "'true'" -> "'true'_0" [ label="" ]
+Deal: ARRAY(0x35571a8). Size: 0
 Added node: "'false'" [ fillcolor="white" label="'false'" ]
 Added edge: "value" -> "'false'" [ label="" ]
+==================================================
+0: REF: 'false' => 'false' => HASH(0x357c418)
+==================================================
+{
+  text => "{action =\\> do_true}"
+}
+==================================================
+Added node: "'false'_0" [ fillcolor="gold" label="{action =\> do_true}" shape="Mrecord" ]
+Added edge: "'false'" -> "'false'_0" [ label="" ]
+Deal: ARRAY(0x3553ed0). Size: 0
 Added node: "'null'" [ fillcolor="white" label="'null'" ]
 Added edge: "value" -> "'null'" [ label="" ]
+==================================================
+0: REF: 'null' => 'null' => HASH(0x3565868)
+==================================================
+{
+  text => "{action =\\> do_null}"
+}
+==================================================
+Added node: "'null'_0" [ fillcolor="gold" label="{action =\> do_null}" shape="Mrecord" ]
+Added edge: "'null'" -> "'null'_0" [ label="" ]
 --------------------------------------------------
 Node:           array
 Daughter count: 1 ::=
 Daughter stack: 2
-	'[', ']'
-	'[', elements, ']'
+	(ARRAY(0x3565958))-> '[' @ ']'
+	(ARRAY(0x357e5b8))-> '[' @ elements @ ']'
 Adverb stack:   2
-	{action =\> do_empty_array}
-	{action =\> do_array}
+	(ARRAY(0x3549ba0))-> {action =\> do_empty_array}
+	(ARRAY(0x357eba0))-> {action =\> do_array}
 --------------------------------------------------
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+Node: array
+	<ARRAY(0x3565958)> -> '[' @ ']'
+	<ARRAY(0x357e5b8)> -> '[' @ elements @ ']'
+	<ARRAY(0x3549ba0)> -> {action =\> do_empty_array}
+	<ARRAY(0x357eba0)> -> {action =\> do_array}
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+Deal: ARRAY(0x3549ba0). Size: 0
 Added node: "'[' ']'" [ fillcolor="white" label="'\[' '\]'" ]
 Added edge: "array" -> "'[' ']'" [ label="" ]
 Added node: "'['" [ fillcolor="white" label="'\['" ]
 Added edge: "'[' ']'" -> "'['" [ label="" ]
-Added node: "'['_0" [ fillcolor="white" label="HASH(0x307c1d8)" ]
+==================================================
+0: REF: '[' ']' => '[' => HASH(0x3565a00)
+==================================================
+{
+  text => "{action =\\> do_empty_array}"
+}
+==================================================
+Added node: "'['_0" [ fillcolor="gold" label="{action =\> do_empty_array}" shape="Mrecord" ]
 Added edge: "'['" -> "'['_0" [ label="" ]
 Added node: "']'" [ fillcolor="white" label="'\]'" ]
 Added edge: "'[' ']'" -> "']'" [ label="" ]
+Deal: ARRAY(0x357eba0). Size: 0
 Added node: "'[' elements ']'" [ fillcolor="white" label="'\[' elements '\]'" ]
 Added edge: "array" -> "'[' elements ']'" [ label="" ]
 Added edge: "'[' elements ']'" -> "'['" [ label="" ]
+==================================================
+0: REF: '[' elements ']' => '[' => HASH(0x3543be0)
+==================================================
+{
+  text => "{action =\\> do_array}"
+}
+==================================================
 Added edge: "'['" -> "'['_0" [ label="" ]
 Added node: "elements" [ fillcolor="white" label="elements" ]
 Added edge: "'[' elements ']'" -> "elements" [ label="" ]
@@ -142,37 +276,67 @@ Added edge: "'[' elements ']'" -> "']'" [ label="" ]
 Node:           elements
 Daughter count: 1 ::=
 Daughter stack: 1
-	value
+	(ARRAY(0x3565a00))-> value
 Adverb stack:   1
-	{action =\> do_list, separator =\> comma}
+	(ARRAY(0x349bb18))-> {action =\> do_list @ separator =\> comma}
 --------------------------------------------------
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+Node: elements
+	<ARRAY(0x3565a00)> -> value
+	<ARRAY(0x349bb18)> -> {action =\> do_list @ separator =\> comma}
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+Deal: ARRAY(0x349bb18). Size: 1
 Added edge: "elements" -> "value" [ label="" ]
+==================================================
+0: REF: value => value => HASH(0x35659e8)
+==================================================
+{
+  text => "{action =\\> do_list"
+}
+==================================================
+Added node: "value_0" [ fillcolor="gold" label="{action =\> do_list" shape="Mrecord" ]
+Added edge: "value" -> "value_0" [ label="" ]
 --------------------------------------------------
 Node:           number
 Daughter count: 1 ~
 Daughter stack: 4
-	int
-	int, frac
-	int, exp
-	int, frac, exp
+	(ARRAY(0x357bba8))-> int
+	(ARRAY(0x3557028))-> int @ frac
+	(ARRAY(0x35659b8))-> int @ exp
+	(ARRAY(0x3565958))-> int @ frac @ exp
 Adverb stack:   4
-	
-	
-	
-	
+	(ARRAY(0x3565ad8))-> 
+	(ARRAY(0x3565a00))-> 
+	(ARRAY(0x357e738))-> 
+	(ARRAY(0x357c880))-> 
 --------------------------------------------------
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+Node: number
+	<ARRAY(0x357bba8)> -> int
+	<ARRAY(0x3557028)> -> int @ frac
+	<ARRAY(0x35659b8)> -> int @ exp
+	<ARRAY(0x3565958)> -> int @ frac @ exp
+	<ARRAY(0x3565ad8)> -> 
+	<ARRAY(0x3565a00)> -> 
+	<ARRAY(0x357e738)> -> 
+	<ARRAY(0x357c880)> -> 
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+Deal: ARRAY(0x3565ad8). Size: -1
 Added node: "int" [ fillcolor="white" label="int" ]
 Added edge: "number" -> "int" [ label="" ]
+Deal: ARRAY(0x3565a00). Size: -1
 Added node: "int frac" [ fillcolor="white" label="int frac" ]
 Added edge: "number" -> "int frac" [ label="" ]
 Added edge: "int frac" -> "int" [ label="" ]
 Added node: "frac" [ fillcolor="white" label="frac" ]
 Added edge: "int frac" -> "frac" [ label="" ]
+Deal: ARRAY(0x357e738). Size: -1
 Added node: "int exp" [ fillcolor="white" label="int exp" ]
 Added edge: "number" -> "int exp" [ label="" ]
 Added edge: "int exp" -> "int" [ label="" ]
 Added node: "exp" [ fillcolor="white" label="exp" ]
 Added edge: "int exp" -> "exp" [ label="" ]
+Deal: ARRAY(0x357c880). Size: -1
 Added node: "int frac exp" [ fillcolor="white" label="int frac exp" ]
 Added edge: "number" -> "int frac exp" [ label="" ]
 Added edge: "int frac exp" -> "int" [ label="" ]
@@ -182,14 +346,23 @@ Added edge: "int frac exp" -> "exp" [ label="" ]
 Node:           int
 Daughter count: 1 ~
 Daughter stack: 2
-	digits
-	'-', digits
+	(ARRAY(0x3557028))-> digits
+	(ARRAY(0x357bba8))-> '-' @ digits
 Adverb stack:   2
-	
-	
+	(ARRAY(0x3578560))-> 
+	(ARRAY(0x357ec18))-> 
 --------------------------------------------------
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+Node: int
+	<ARRAY(0x3557028)> -> digits
+	<ARRAY(0x357bba8)> -> '-' @ digits
+	<ARRAY(0x3578560)> -> 
+	<ARRAY(0x357ec18)> -> 
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+Deal: ARRAY(0x3578560). Size: -1
 Added node: "digits" [ fillcolor="white" label="digits" ]
 Added edge: "int" -> "digits" [ label="" ]
+Deal: ARRAY(0x357ec18). Size: -1
 Added node: "'-' digits" [ fillcolor="white" label="'-' digits" ]
 Added edge: "int" -> "'-' digits" [ label="" ]
 Added node: "'-'" [ fillcolor="white" label="'-'" ]
@@ -199,20 +372,32 @@ Added edge: "'-' digits" -> "digits" [ label="" ]
 Node:           digits
 Daughter count: 1 ~
 Daughter stack: 1
-	[\\d]
+	(ARRAY(0x349bb18))-> [\\d]
 Adverb stack:   1
-	
+	(ARRAY(0x357bba8))-> 
 --------------------------------------------------
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+Node: digits
+	<ARRAY(0x349bb18)> -> [\\d]
+	<ARRAY(0x357bba8)> -> 
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+Deal: ARRAY(0x357bba8). Size: -1
 Added node: "[\\d]" [ fillcolor="white" label="\[\\d\]" ]
 Added edge: "digits" -> "[\\d]" [ label="" ]
 --------------------------------------------------
 Node:           frac
 Daughter count: 1 ~
 Daughter stack: 1
-	'.', digits
+	(ARRAY(0x357eed0))-> '.' @ digits
 Adverb stack:   1
-	
+	(ARRAY(0x3557028))-> 
 --------------------------------------------------
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+Node: frac
+	<ARRAY(0x357eed0)> -> '.' @ digits
+	<ARRAY(0x3557028)> -> 
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+Deal: ARRAY(0x3557028). Size: -1
 Added node: "'.' digits" [ fillcolor="white" label="'.' digits" ]
 Added edge: "frac" -> "'.' digits" [ label="" ]
 Added node: "'.'" [ fillcolor="white" label="'.'" ]
@@ -222,10 +407,16 @@ Added edge: "'.' digits" -> "digits" [ label="" ]
 Node:           exp
 Daughter count: 1 ~
 Daughter stack: 1
-	e, digits
+	(ARRAY(0x3565a00))-> e @ digits
 Adverb stack:   1
-	
+	(ARRAY(0x3557028))-> 
 --------------------------------------------------
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+Node: exp
+	<ARRAY(0x3565a00)> -> e @ digits
+	<ARRAY(0x3557028)> -> 
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+Deal: ARRAY(0x3557028). Size: -1
 Added node: "e digits" [ fillcolor="white" label="e digits" ]
 Added edge: "exp" -> "e digits" [ label="" ]
 Added node: "e" [ fillcolor="white" label="e" ]
@@ -235,50 +426,92 @@ Added edge: "e digits" -> "digits" [ label="" ]
 Node:           e
 Daughter count: 1 ~
 Daughter stack: 6
-	'e'
-	'e+'
-	'e-'
-	'E'
-	'E+'
-	'E-'
+	(ARRAY(0x3578560))-> 'e'
+	(ARRAY(0x3585d18))-> 'e+'
+	(ARRAY(0x35831e0))-> 'e-'
+	(ARRAY(0x349bb18))-> 'E'
+	(ARRAY(0x35860f0))-> 'E+'
+	(ARRAY(0x35862a0))-> 'E-'
 Adverb stack:   6
-	
-	
-	
-	
-	
-	
+	(ARRAY(0x3586330))-> 
+	(ARRAY(0x357eae0))-> 
+	(ARRAY(0x3585e68))-> 
+	(ARRAY(0x3585b20))-> 
+	(ARRAY(0x35861b0))-> 
+	(ARRAY(0x3585fa0))-> 
 --------------------------------------------------
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+Node: e
+	<ARRAY(0x3578560)> -> 'e'
+	<ARRAY(0x3585d18)> -> 'e+'
+	<ARRAY(0x35831e0)> -> 'e-'
+	<ARRAY(0x349bb18)> -> 'E'
+	<ARRAY(0x35860f0)> -> 'E+'
+	<ARRAY(0x35862a0)> -> 'E-'
+	<ARRAY(0x3586330)> -> 
+	<ARRAY(0x357eae0)> -> 
+	<ARRAY(0x3585e68)> -> 
+	<ARRAY(0x3585b20)> -> 
+	<ARRAY(0x35861b0)> -> 
+	<ARRAY(0x3585fa0)> -> 
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+Deal: ARRAY(0x3586330). Size: -1
 Added node: "'e'" [ fillcolor="white" label="'e'" ]
 Added edge: "e" -> "'e'" [ label="" ]
+Deal: ARRAY(0x357eae0). Size: -1
 Added node: "'e+'" [ fillcolor="white" label="'e+'" ]
 Added edge: "e" -> "'e+'" [ label="" ]
+Deal: ARRAY(0x3585e68). Size: -1
 Added node: "'e-'" [ fillcolor="white" label="'e-'" ]
 Added edge: "e" -> "'e-'" [ label="" ]
+Deal: ARRAY(0x3585b20). Size: -1
 Added node: "'E'" [ fillcolor="white" label="'E'" ]
 Added edge: "e" -> "'E'" [ label="" ]
+Deal: ARRAY(0x35861b0). Size: -1
 Added node: "'E+'" [ fillcolor="white" label="'E+'" ]
 Added edge: "e" -> "'E+'" [ label="" ]
+Deal: ARRAY(0x3585fa0). Size: -1
 Added node: "'E-'" [ fillcolor="white" label="'E-'" ]
 Added edge: "e" -> "'E-'" [ label="" ]
 --------------------------------------------------
 Node:           string
 Daughter count: 1 ::=
 Daughter stack: 1
-	lstring
+	(ARRAY(0x3589050))-> lstring
 Adverb stack:   1
-	{action =\> do_string}
+	(ARRAY(0x3578560))-> {action =\> do_string}
 --------------------------------------------------
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+Node: string
+	<ARRAY(0x3589050)> -> lstring
+	<ARRAY(0x3578560)> -> {action =\> do_string}
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+Deal: ARRAY(0x3578560). Size: 0
 Added node: "lstring" [ fillcolor="white" label="lstring" ]
 Added edge: "string" -> "lstring" [ label="" ]
+==================================================
+0: REF: lstring => lstring => HASH(0x35831e0)
+==================================================
+{
+  text => "{action =\\> do_string}"
+}
+==================================================
+Added node: "lstring_0" [ fillcolor="gold" label="{action =\> do_string}" shape="Mrecord" ]
+Added edge: "lstring" -> "lstring_0" [ label="" ]
 --------------------------------------------------
 Node:           lstring
 Daughter count: 1 ~
 Daughter stack: 1
-	quote, in_string, quote
+	(ARRAY(0x3586348))-> quote @ in_string @ quote
 Adverb stack:   1
-	
+	(ARRAY(0x3586030))-> 
 --------------------------------------------------
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+Node: lstring
+	<ARRAY(0x3586348)> -> quote @ in_string @ quote
+	<ARRAY(0x3586030)> -> 
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+Deal: ARRAY(0x3586030). Size: -1
 Added node: "quote in_string quote" [ fillcolor="white" label="quote in_string quote" ]
 Added edge: "lstring" -> "quote in_string quote" [ label="" ]
 Added node: "quote" [ fillcolor="white" label="quote" ]
@@ -290,81 +523,124 @@ Added edge: "quote in_string quote" -> "quote" [ label="" ]
 Node:           quote
 Daughter count: 1 ~
 Daughter stack: 1
-	[\\ꞌꞌ]
+	(ARRAY(0x3586450))-> [\\ꞌꞌ]
 Adverb stack:   1
-	
+	(ARRAY(0x3589050))-> 
 --------------------------------------------------
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+Node: quote
+	<ARRAY(0x3586450)> -> [\\ꞌꞌ]
+	<ARRAY(0x3589050)> -> 
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+Deal: ARRAY(0x3589050). Size: -1
 Added node: "[\\ꞌꞌ]" [ fillcolor="white" label="\[\\ꞌꞌ\]" ]
 Added edge: "quote" -> "[\\ꞌꞌ]" [ label="" ]
 --------------------------------------------------
 Node:           in_string
 Daughter count: 1 ~
 Daughter stack: 1
-	in_string_char
+	(ARRAY(0x35863c0))-> in_string_char
 Adverb stack:   1
-	
+	(ARRAY(0x35862a0))-> 
 --------------------------------------------------
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+Node: in_string
+	<ARRAY(0x35863c0)> -> in_string_char
+	<ARRAY(0x35862a0)> -> 
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+Deal: ARRAY(0x35862a0). Size: -1
 Added node: "in_string_char" [ fillcolor="white" label="in_string_char" ]
 Added edge: "in_string" -> "in_string_char" [ label="" ]
 --------------------------------------------------
 Node:           in_string_char
 Daughter count: 1 ~
 Daughter stack: 10
-	[^ꞌꞌ\\\\]
-	'\\', 'ꞌꞌ'
-	'\\', 'b'
-	'\\', 'f'
-	'\\', 't'
-	'\\', 'n'
-	'\\', 'r'
-	'\\', 'u', four_hex_digits
-	'\\', '/'
-	'\\\\'
+	(ARRAY(0x3586450))-> [^ꞌꞌ\\\\]
+	(ARRAY(0x32be5b8))-> '\\' @ 'ꞌꞌ'
+	(ARRAY(0x35579b8))-> '\\' @ 'b'
+	(ARRAY(0x35863c0))-> '\\' @ 'f'
+	(ARRAY(0x349c448))-> '\\' @ 't'
+	(ARRAY(0x349bb18))-> '\\' @ 'n'
+	(ARRAY(0x34caa38))-> '\\' @ 'r'
+	(ARRAY(0x35467d8))-> '\\' @ 'u' @ four_hex_digits
+	(ARRAY(0x3551a60))-> '\\' @ '/'
+	(ARRAY(0x34fa8d0))-> '\\\\'
 Adverb stack:   10
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+	(ARRAY(0x34e6228))-> 
+	(ARRAY(0x354a1a0))-> 
+	(ARRAY(0x355ea38))-> 
+	(ARRAY(0x3586408))-> 
+	(ARRAY(0x35538b8))-> 
+	(ARRAY(0x35893e0))-> 
+	(ARRAY(0x349c478))-> 
+	(ARRAY(0x3557a00))-> 
+	(ARRAY(0x32c3b98))-> 
+	(ARRAY(0x34fa528))-> 
 --------------------------------------------------
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+Node: in_string_char
+	<ARRAY(0x3586450)> -> [^ꞌꞌ\\\\]
+	<ARRAY(0x32be5b8)> -> '\\' @ 'ꞌꞌ'
+	<ARRAY(0x35579b8)> -> '\\' @ 'b'
+	<ARRAY(0x35863c0)> -> '\\' @ 'f'
+	<ARRAY(0x349c448)> -> '\\' @ 't'
+	<ARRAY(0x349bb18)> -> '\\' @ 'n'
+	<ARRAY(0x34caa38)> -> '\\' @ 'r'
+	<ARRAY(0x35467d8)> -> '\\' @ 'u' @ four_hex_digits
+	<ARRAY(0x3551a60)> -> '\\' @ '/'
+	<ARRAY(0x34fa8d0)> -> '\\\\'
+	<ARRAY(0x34e6228)> -> 
+	<ARRAY(0x354a1a0)> -> 
+	<ARRAY(0x355ea38)> -> 
+	<ARRAY(0x3586408)> -> 
+	<ARRAY(0x35538b8)> -> 
+	<ARRAY(0x35893e0)> -> 
+	<ARRAY(0x349c478)> -> 
+	<ARRAY(0x3557a00)> -> 
+	<ARRAY(0x32c3b98)> -> 
+	<ARRAY(0x34fa528)> -> 
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+Deal: ARRAY(0x34e6228). Size: -1
 Added node: "[^ꞌꞌ\\\\]" [ fillcolor="white" label="\[^ꞌꞌ\\\\]" ]
 Added edge: "in_string_char" -> "[^ꞌꞌ\\\\]" [ label="" ]
+Deal: ARRAY(0x354a1a0). Size: -1
 Added node: "'\\' 'ꞌꞌ'" [ fillcolor="white" label="'\\' 'ꞌꞌ'" ]
 Added edge: "in_string_char" -> "'\\' 'ꞌꞌ'" [ label="" ]
 Added node: "'\\'" [ fillcolor="white" label="'\\'" ]
 Added edge: "'\\' 'ꞌꞌ'" -> "'\\'" [ label="" ]
 Added node: "'ꞌꞌ'" [ fillcolor="white" label="'ꞌꞌ'" ]
 Added edge: "'\\' 'ꞌꞌ'" -> "'ꞌꞌ'" [ label="" ]
+Deal: ARRAY(0x355ea38). Size: -1
 Added node: "'\\' 'b'" [ fillcolor="white" label="'\\' 'b'" ]
 Added edge: "in_string_char" -> "'\\' 'b'" [ label="" ]
 Added edge: "'\\' 'b'" -> "'\\'" [ label="" ]
 Added node: "'b'" [ fillcolor="white" label="'b'" ]
 Added edge: "'\\' 'b'" -> "'b'" [ label="" ]
+Deal: ARRAY(0x3586408). Size: -1
 Added node: "'\\' 'f'" [ fillcolor="white" label="'\\' 'f'" ]
 Added edge: "in_string_char" -> "'\\' 'f'" [ label="" ]
 Added edge: "'\\' 'f'" -> "'\\'" [ label="" ]
 Added node: "'f'" [ fillcolor="white" label="'f'" ]
 Added edge: "'\\' 'f'" -> "'f'" [ label="" ]
+Deal: ARRAY(0x35538b8). Size: -1
 Added node: "'\\' 't'" [ fillcolor="white" label="'\\' 't'" ]
 Added edge: "in_string_char" -> "'\\' 't'" [ label="" ]
 Added edge: "'\\' 't'" -> "'\\'" [ label="" ]
 Added node: "'t'" [ fillcolor="white" label="'t'" ]
 Added edge: "'\\' 't'" -> "'t'" [ label="" ]
+Deal: ARRAY(0x35893e0). Size: -1
 Added node: "'\\' 'n'" [ fillcolor="white" label="'\\' 'n'" ]
 Added edge: "in_string_char" -> "'\\' 'n'" [ label="" ]
 Added edge: "'\\' 'n'" -> "'\\'" [ label="" ]
 Added node: "'n'" [ fillcolor="white" label="'n'" ]
 Added edge: "'\\' 'n'" -> "'n'" [ label="" ]
+Deal: ARRAY(0x349c478). Size: -1
 Added node: "'\\' 'r'" [ fillcolor="white" label="'\\' 'r'" ]
 Added edge: "in_string_char" -> "'\\' 'r'" [ label="" ]
 Added edge: "'\\' 'r'" -> "'\\'" [ label="" ]
 Added node: "'r'" [ fillcolor="white" label="'r'" ]
 Added edge: "'\\' 'r'" -> "'r'" [ label="" ]
+Deal: ARRAY(0x3557a00). Size: -1
 Added node: "'\\' 'u' four_hex_digits" [ fillcolor="white" label="'\\' 'u' four_hex_digits" ]
 Added edge: "in_string_char" -> "'\\' 'u' four_hex_digits" [ label="" ]
 Added edge: "'\\' 'u' four_hex_digits" -> "'\\'" [ label="" ]
@@ -372,21 +648,29 @@ Added node: "'u'" [ fillcolor="white" label="'u'" ]
 Added edge: "'\\' 'u' four_hex_digits" -> "'u'" [ label="" ]
 Added node: "four_hex_digits" [ fillcolor="white" label="four_hex_digits" ]
 Added edge: "'\\' 'u' four_hex_digits" -> "four_hex_digits" [ label="" ]
+Deal: ARRAY(0x32c3b98). Size: -1
 Added node: "'\\' '/'" [ fillcolor="white" label="'\\' '/'" ]
 Added edge: "in_string_char" -> "'\\' '/'" [ label="" ]
 Added edge: "'\\' '/'" -> "'\\'" [ label="" ]
 Added node: "'/'" [ fillcolor="white" label="'/'" ]
 Added edge: "'\\' '/'" -> "'/'" [ label="" ]
+Deal: ARRAY(0x34fa528). Size: -1
 Added node: "'\\\\'" [ fillcolor="white" label="'\\\\'" ]
 Added edge: "in_string_char" -> "'\\\\'" [ label="" ]
 --------------------------------------------------
 Node:           four_hex_digits
 Daughter count: 1 ~
 Daughter stack: 1
-	hex_digit, hex_digit, hex_digit, hex_digit
+	(ARRAY(0x3578560))-> hex_digit @ hex_digit @ hex_digit @ hex_digit
 Adverb stack:   1
-	
+	(ARRAY(0x355c370))-> 
 --------------------------------------------------
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+Node: four_hex_digits
+	<ARRAY(0x3578560)> -> hex_digit @ hex_digit @ hex_digit @ hex_digit
+	<ARRAY(0x355c370)> -> 
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+Deal: ARRAY(0x355c370). Size: -1
 Added node: "hex_digit hex_digit hex_digit hex_digit" [ fillcolor="white" label="hex_digit hex_digit hex_digit hex_digit" ]
 Added edge: "four_hex_digits" -> "hex_digit hex_digit hex_digit hex_digit" [ label="" ]
 Added node: "hex_digit" [ fillcolor="white" label="hex_digit" ]
@@ -398,20 +682,32 @@ Added edge: "hex_digit hex_digit hex_digit hex_digit" -> "hex_digit" [ label="" 
 Node:           hex_digit
 Daughter count: 1 ~
 Daughter stack: 1
-	[0-9a-fA-F]
+	(ARRAY(0x35863c0))-> [0-9a-fA-F]
 Adverb stack:   1
-	
+	(ARRAY(0x35579d0))-> 
 --------------------------------------------------
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+Node: hex_digit
+	<ARRAY(0x35863c0)> -> [0-9a-fA-F]
+	<ARRAY(0x35579d0)> -> 
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+Deal: ARRAY(0x35579d0). Size: -1
 Added node: "[0-9a-fA-F]" [ fillcolor="white" label="\[0-9a-fA-F\]" ]
 Added edge: "hex_digit" -> "[0-9a-fA-F]" [ label="" ]
 --------------------------------------------------
 Node:           comma
 Daughter count: 1 ~
 Daughter stack: 1
-	','
+	(ARRAY(0x3553930))-> ','
 Adverb stack:   1
-	
+	(ARRAY(0x3551568))-> 
 --------------------------------------------------
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+Node: comma
+	<ARRAY(0x3553930)> -> ','
+	<ARRAY(0x3551568)> -> 
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+Deal: ARRAY(0x3551568). Size: -1
 Added node: "','" [ fillcolor="white" label="','" ]
 Added node: "comma"
 Added edge: "comma" -> "','" [ label="" ]
@@ -419,10 +715,16 @@ Added edge: "comma" -> "','" [ label="" ]
 Node:           whitespace
 Daughter count: 1 ~
 Daughter stack: 1
-	[\\s]
+	(ARRAY(0x3578560))-> [\\s]
 Adverb stack:   1
-	
+	(ARRAY(0x3586348))-> 
 --------------------------------------------------
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+Node: whitespace
+	<ARRAY(0x3578560)> -> [\\s]
+	<ARRAY(0x3586348)> -> 
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+Deal: ARRAY(0x3586348). Size: -1
 Added node: "[\\s]" [ fillcolor="white" label="\[\\s\]" ]
 Added edge: "whitespace" -> "[\\s]" [ label="" ]
 Driver: /usr/local/bin/dot. Output file: html/json.1.svg. Format: svg. Timeout: 10 second(s)
@@ -445,7 +747,7 @@ edge [ color="grey" ]
 "object" -> "'{' '}'" [ label="" ]
 "'{'" [ fillcolor="white" label="'{'" ]
 "'{' '}'" -> "'{'" [ label="" ]
-"'{'_0" [ fillcolor="white" label="HASH(0x30a26a0)" ]
+"'{'_0" [ fillcolor="gold" label="{action =\> do_empty_object}" shape="Mrecord" ]
 "'{'" -> "'{'_0" [ label="" ]
 "'}'" [ fillcolor="white" label="'}'" ]
 "'{' '}'" -> "'}'" [ label="" ]
@@ -458,11 +760,13 @@ edge [ color="grey" ]
 "'{' members '}'" -> "'}'" [ label="" ]
 "pair" [ fillcolor="white" label="pair" ]
 "members" -> "pair" [ label="" ]
+"pair_0" [ fillcolor="gold" label="{action =\> do_list" shape="Mrecord" ]
+"pair" -> "pair_0" [ label="" ]
 "string '꞉' value" [ fillcolor="white" label="string '꞉' value" ]
 "pair" -> "string '꞉' value" [ label="" ]
 "string" [ fillcolor="white" label="string" ]
 "string '꞉' value" -> "string" [ label="" ]
-"string_0" [ fillcolor="white" label="HASH(0x2deb2b8)" ]
+"string_0" [ fillcolor="gold" label="{action =\> do_pair}" shape="Mrecord" ]
 "string" -> "string_0" [ label="" ]
 "'꞉'" [ fillcolor="white" label="'꞉'" ]
 "string '꞉' value" -> "'꞉'" [ label="" ]
@@ -475,15 +779,21 @@ edge [ color="grey" ]
 "value" -> "array" [ label="" ]
 "'true'" [ fillcolor="white" label="'true'" ]
 "value" -> "'true'" [ label="" ]
+"'true'_0" [ fillcolor="gold" label="{action =\> do_true}" shape="Mrecord" ]
+"'true'" -> "'true'_0" [ label="" ]
 "'false'" [ fillcolor="white" label="'false'" ]
 "value" -> "'false'" [ label="" ]
+"'false'_0" [ fillcolor="gold" label="{action =\> do_true}" shape="Mrecord" ]
+"'false'" -> "'false'_0" [ label="" ]
 "'null'" [ fillcolor="white" label="'null'" ]
 "value" -> "'null'" [ label="" ]
+"'null'_0" [ fillcolor="gold" label="{action =\> do_null}" shape="Mrecord" ]
+"'null'" -> "'null'_0" [ label="" ]
 "'[' ']'" [ fillcolor="white" label="'\[' '\]'" ]
 "array" -> "'[' ']'" [ label="" ]
 "'['" [ fillcolor="white" label="'\['" ]
 "'[' ']'" -> "'['" [ label="" ]
-"'['_0" [ fillcolor="white" label="HASH(0x307c1d8)" ]
+"'['_0" [ fillcolor="gold" label="{action =\> do_empty_array}" shape="Mrecord" ]
 "'['" -> "'['_0" [ label="" ]
 "']'" [ fillcolor="white" label="'\]'" ]
 "'[' ']'" -> "']'" [ label="" ]
@@ -495,6 +805,8 @@ edge [ color="grey" ]
 "'[' elements ']'" -> "elements" [ label="" ]
 "'[' elements ']'" -> "']'" [ label="" ]
 "elements" -> "value" [ label="" ]
+"value_0" [ fillcolor="gold" label="{action =\> do_list" shape="Mrecord" ]
+"value" -> "value_0" [ label="" ]
 "int" [ fillcolor="white" label="int" ]
 "number" -> "int" [ label="" ]
 "int frac" [ fillcolor="white" label="int frac" ]
@@ -545,6 +857,8 @@ edge [ color="grey" ]
 "e" -> "'E-'" [ label="" ]
 "lstring" [ fillcolor="white" label="lstring" ]
 "string" -> "lstring" [ label="" ]
+"lstring_0" [ fillcolor="gold" label="{action =\> do_string}" shape="Mrecord" ]
+"lstring" -> "lstring_0" [ label="" ]
 "quote in_string quote" [ fillcolor="white" label="quote in_string quote" ]
 "lstring" -> "quote in_string quote" [ label="" ]
 "quote" [ fillcolor="white" label="quote" ]
@@ -618,4 +932,3 @@ edge [ color="grey" ]
 "[\\s]" [ fillcolor="white" label="\[\\s\]" ]
 "whitespace" -> "[\\s]" [ label="" ]
 }
-Wrote html/json.1.svg. Size: 61490 bytes
