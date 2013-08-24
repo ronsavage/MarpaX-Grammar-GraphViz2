@@ -5,7 +5,7 @@ Default global: label => ->
 Default global: name => Perl
 Default global: record_shape => Mrecord
 Default global: strict => 0
-Default global: subgraph => HASH(0x270fec8)
+Default global: subgraph => HASH(0x2be0400)
 Default global: timeout => 10
 Default graph: label => stringparser.bnf, rankdir => TB
 Default node: shape => rectangle, style => filled
@@ -23,40 +23,73 @@ Added edge: "꞉discard" -> "whitespace" [ label="" ]
 Node:           graph_grammar
 Daughter count: 1 ::=
 Daughter stack: 1
-	graph_definition
+	D: (ARRAY(0x30f8660))-> graph_definition
 Adverb stack:   1
-	{action =\> graph}
+	A: (ARRAY(0x3003868))-> {action =\> graph}
 --------------------------------------------------
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+Node: graph_grammar
+	D: <ARRAY(0x30f8660)> -> graph_definition
+	A: <ARRAY(0x3003868)> -> {action =\> graph}
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+Deal: ARRAY(0x3003868). Size: 0
 Added node: "graph_definition" [ fillcolor="white" label="graph_definition" ]
 Added edge: "graph_grammar" -> "graph_definition" [ label="" ]
-Added node: "graph_definition_0" [ fillcolor="gold" label="{action =\> graph}" shape="Mrecord" ]
-Added edge: "graph_definition" -> "graph_definition_0" [ label="" ]
+==================================================
+REF: graph_definition => graph_definition_attributes
+==================================================
+[
+  {
+    text => "{action =\\> graph}"
+  }
+]
+==================================================
+Added node: "graph_definition_attributes" [ fillcolor="#DAA520" label="{action =\> graph}" shape="Mrecord" ]
+Added edge: "graph_definition" -> "graph_definition_attributes" [ label="" ]
 --------------------------------------------------
 Node:           graph_definition
 Daughter count: 1 ::=
 Daughter stack: 2
-	node_definition
-	edge_definition
+	D: (ARRAY(0x30f8390))-> node_definition
+	D: (ARRAY(0x30f8570))-> edge_definition
 Adverb stack:   2
-	
-	
+	A: (ARRAY(0x30df480))-> 
+	A: (ARRAY(0x30d92c8))-> 
 --------------------------------------------------
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+Node: graph_definition
+	D: <ARRAY(0x30f8390)> -> node_definition
+	D: <ARRAY(0x30f8570)> -> edge_definition
+	A: <ARRAY(0x30df480)> -> 
+	A: <ARRAY(0x30d92c8)> -> 
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+Deal: ARRAY(0x30df480). Size: -1
 Added node: "node_definition" [ fillcolor="white" label="node_definition" ]
 Added edge: "graph_definition" -> "node_definition" [ label="" ]
+Deal: ARRAY(0x30d92c8). Size: -1
 Added node: "edge_definition" [ fillcolor="white" label="edge_definition" ]
 Added edge: "graph_definition" -> "edge_definition" [ label="" ]
 --------------------------------------------------
 Node:           node_definition
 Daughter count: 1 ::=
 Daughter stack: 2
-	node_statement
-	node_statement, graph_definition
+	D: (ARRAY(0x30f8570))-> node_statement
+	D: (ARRAY(0x30f8390))-> node_statement @ graph_definition
 Adverb stack:   2
-	
-	
+	A: (ARRAY(0x30d0cf0))-> 
+	A: (ARRAY(0x30d92c8))-> 
 --------------------------------------------------
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+Node: node_definition
+	D: <ARRAY(0x30f8570)> -> node_statement
+	D: <ARRAY(0x30f8390)> -> node_statement @ graph_definition
+	A: <ARRAY(0x30d0cf0)> -> 
+	A: <ARRAY(0x30d92c8)> -> 
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+Deal: ARRAY(0x30d0cf0). Size: -1
 Added node: "node_statement" [ fillcolor="white" label="node_statement" ]
 Added edge: "node_definition" -> "node_statement" [ label="" ]
+Deal: ARRAY(0x30d92c8). Size: -1
 Added node: "node_statement graph_definition" [ fillcolor="white" label="node_statement graph_definition" ]
 Added edge: "node_definition" -> "node_statement graph_definition" [ label="" ]
 Added edge: "node_statement graph_definition" -> "node_statement" [ label="" ]
@@ -65,21 +98,33 @@ Added edge: "node_statement graph_definition" -> "graph_definition" [ label="" ]
 Node:           node_statement
 Daughter count: 1 ::=
 Daughter stack: 3
-	node_name
-	node_name, attribute_definition
-	node_statement, (','), node_statement
+	D: (ARRAY(0x30f54f8))-> node_name
+	D: (ARRAY(0x30d92c8))-> node_name @ attribute_definition
+	D: (ARRAY(0x30f8390))-> node_statement @ (',') @ node_statement
 Adverb stack:   3
-	
-	
-	
+	A: (ARRAY(0x30f3280))-> 
+	A: (ARRAY(0x2e3b380))-> 
+	A: (ARRAY(0x30d07e0))-> 
 --------------------------------------------------
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+Node: node_statement
+	D: <ARRAY(0x30f54f8)> -> node_name
+	D: <ARRAY(0x30d92c8)> -> node_name @ attribute_definition
+	D: <ARRAY(0x30f8390)> -> node_statement @ (',') @ node_statement
+	A: <ARRAY(0x30f3280)> -> 
+	A: <ARRAY(0x2e3b380)> -> 
+	A: <ARRAY(0x30d07e0)> -> 
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+Deal: ARRAY(0x30f3280). Size: -1
 Added node: "node_name" [ fillcolor="white" label="node_name" ]
 Added edge: "node_statement" -> "node_name" [ label="" ]
+Deal: ARRAY(0x2e3b380). Size: -1
 Added node: "node_name attribute_definition" [ fillcolor="white" label="node_name attribute_definition" ]
 Added edge: "node_statement" -> "node_name attribute_definition" [ label="" ]
 Added edge: "node_name attribute_definition" -> "node_name" [ label="" ]
 Added node: "attribute_definition" [ fillcolor="white" label="attribute_definition" ]
 Added edge: "node_name attribute_definition" -> "attribute_definition" [ label="" ]
+Deal: ARRAY(0x30d07e0). Size: -1
 Added node: "node_statement (',') node_statement" [ fillcolor="white" label="node_statement (',') node_statement" ]
 Added edge: "node_statement" -> "node_statement (',') node_statement" [ label="" ]
 Added edge: "node_statement (',') node_statement" -> "node_statement" [ label="" ]
@@ -90,10 +135,16 @@ Added edge: "node_statement (',') node_statement" -> "node_statement" [ label=""
 Node:           node_name
 Daughter count: 1 ::=
 Daughter stack: 1
-	start_node, end_node
+	D: (ARRAY(0x30cafa0))-> start_node @ end_node
 Adverb stack:   1
-	
+	A: (ARRAY(0x2e3af48))-> 
 --------------------------------------------------
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+Node: node_name
+	D: <ARRAY(0x30cafa0)> -> start_node @ end_node
+	A: <ARRAY(0x2e3af48)> -> 
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+Deal: ARRAY(0x2e3af48). Size: -1
 Added node: "start_node end_node" [ fillcolor="white" label="start_node end_node" ]
 Added edge: "node_name" -> "start_node end_node" [ label="" ]
 Added node: "start_node" [ fillcolor="lightblue" label="{꞉lexeme|start_node}" shape="Mrecord" ]
@@ -102,38 +153,61 @@ Added node: "start_node_0" [ fillcolor="lightblue" label="{event =\> start_node|
 Added edge: "start_node" -> "start_node_0" [ label="" ]
 Added node: "end_node" [ fillcolor="white" label="end_node" ]
 Added edge: "start_node end_node" -> "end_node" [ label="" ]
+Added node: "end_node_1" [ fillcolor="white" label="" ]
+Added edge: "end_node" -> "end_node_1" [ label="" ]
 --------------------------------------------------
 Node:           start_node
 Daughter count: 1 ~
 Daughter stack: 1
-	'['
+	D: (ARRAY(0x30f8390))-> '['
 Adverb stack:   1
-	
+	A: (ARRAY(0x30f5480))-> 
 --------------------------------------------------
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+Node: start_node
+	D: <ARRAY(0x30f8390)> -> '['
+	A: <ARRAY(0x30f5480)> -> 
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+Deal: ARRAY(0x30f5480). Size: -1
 Added node: "'['" [ fillcolor="white" label="'\['" ]
 Added edge: "start_node" -> "'['" [ label="" ]
 --------------------------------------------------
 Node:           end_node
 Daughter count: 1 ~
 Daughter stack: 1
-	']'
+	D: (ARRAY(0x2e3af48))-> ']'
 Adverb stack:   1
-	
+	A: (ARRAY(0x30f8768))-> 
 --------------------------------------------------
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+Node: end_node
+	D: <ARRAY(0x2e3af48)> -> ']'
+	A: <ARRAY(0x30f8768)> -> 
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+Deal: ARRAY(0x30f8768). Size: -1
 Added node: "']'" [ fillcolor="white" label="'\]'" ]
 Added edge: "end_node" -> "']'" [ label="" ]
 --------------------------------------------------
 Node:           edge_definition
 Daughter count: 1 ::=
 Daughter stack: 2
-	edge_statement
-	edge_statement, graph_definition
+	D: (ARRAY(0x30f8840))-> edge_statement
+	D: (ARRAY(0x2e3af48))-> edge_statement @ graph_definition
 Adverb stack:   2
-	
-	
+	A: (ARRAY(0x30f8390))-> 
+	A: (ARRAY(0x30f3538))-> 
 --------------------------------------------------
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+Node: edge_definition
+	D: <ARRAY(0x30f8840)> -> edge_statement
+	D: <ARRAY(0x2e3af48)> -> edge_statement @ graph_definition
+	A: <ARRAY(0x30f8390)> -> 
+	A: <ARRAY(0x30f3538)> -> 
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+Deal: ARRAY(0x30f8390). Size: -1
 Added node: "edge_statement" [ fillcolor="white" label="edge_statement" ]
 Added edge: "edge_definition" -> "edge_statement" [ label="" ]
+Deal: ARRAY(0x30f3538). Size: -1
 Added node: "edge_statement graph_definition" [ fillcolor="white" label="edge_statement graph_definition" ]
 Added edge: "edge_definition" -> "edge_statement graph_definition" [ label="" ]
 Added edge: "edge_statement graph_definition" -> "edge_statement" [ label="" ]
@@ -142,20 +216,32 @@ Added edge: "edge_statement graph_definition" -> "graph_definition" [ label="" ]
 Node:           edge_statement
 Daughter count: 1 ::=
 Daughter stack: 3
-	edge_name
-	edge_name, attribute_definition
-	edge_statement, (','), edge_statement
+	D: (ARRAY(0x30fbfe8))-> edge_name
+	D: (ARRAY(0x30f3538))-> edge_name @ attribute_definition
+	D: (ARRAY(0x2e3af48))-> edge_statement @ (',') @ edge_statement
 Adverb stack:   3
-	
-	
-	
+	A: (ARRAY(0x30fbc88))-> 
+	A: (ARRAY(0x30f8060))-> 
+	A: (ARRAY(0x30fc060))-> 
 --------------------------------------------------
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+Node: edge_statement
+	D: <ARRAY(0x30fbfe8)> -> edge_name
+	D: <ARRAY(0x30f3538)> -> edge_name @ attribute_definition
+	D: <ARRAY(0x2e3af48)> -> edge_statement @ (',') @ edge_statement
+	A: <ARRAY(0x30fbc88)> -> 
+	A: <ARRAY(0x30f8060)> -> 
+	A: <ARRAY(0x30fc060)> -> 
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+Deal: ARRAY(0x30fbc88). Size: -1
 Added node: "edge_name" [ fillcolor="white" label="edge_name" ]
 Added edge: "edge_statement" -> "edge_name" [ label="" ]
+Deal: ARRAY(0x30f8060). Size: -1
 Added node: "edge_name attribute_definition" [ fillcolor="white" label="edge_name attribute_definition" ]
 Added edge: "edge_statement" -> "edge_name attribute_definition" [ label="" ]
 Added edge: "edge_name attribute_definition" -> "edge_name" [ label="" ]
 Added edge: "edge_name attribute_definition" -> "attribute_definition" [ label="" ]
+Deal: ARRAY(0x30fc060). Size: -1
 Added node: "edge_statement (',') edge_statement" [ fillcolor="white" label="edge_statement (',') edge_statement" ]
 Added edge: "edge_statement" -> "edge_statement (',') edge_statement" [ label="" ]
 Added edge: "edge_statement (',') edge_statement" -> "edge_statement" [ label="" ]
@@ -165,16 +251,25 @@ Added edge: "edge_statement (',') edge_statement" -> "edge_statement" [ label=""
 Node:           edge_name
 Daughter count: 1 ::=
 Daughter stack: 2
-	directed_edge
-	undirected_edge
+	D: (ARRAY(0x30f82b8))-> directed_edge
+	D: (ARRAY(0x30f54f8))-> undirected_edge
 Adverb stack:   2
-	
-	
+	A: (ARRAY(0x30f3538))-> 
+	A: (ARRAY(0x2e3af48))-> 
 --------------------------------------------------
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+Node: edge_name
+	D: <ARRAY(0x30f82b8)> -> directed_edge
+	D: <ARRAY(0x30f54f8)> -> undirected_edge
+	A: <ARRAY(0x30f3538)> -> 
+	A: <ARRAY(0x2e3af48)> -> 
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+Deal: ARRAY(0x30f3538). Size: -1
 Added node: "directed_edge" [ fillcolor="lightblue" label="{꞉lexeme|directed_edge}" shape="Mrecord" ]
 Added edge: "edge_name" -> "directed_edge" [ label="" ]
 Added node: "directed_edge_0" [ fillcolor="lightblue" label="{event =\> directed_edge|pause =\> before}" shape="Mrecord" ]
 Added edge: "directed_edge" -> "directed_edge_0" [ label="" ]
+Deal: ARRAY(0x2e3af48). Size: -1
 Added node: "undirected_edge" [ fillcolor="lightblue" label="{꞉lexeme|undirected_edge}" shape="Mrecord" ]
 Added edge: "edge_name" -> "undirected_edge" [ label="" ]
 Added node: "undirected_edge_0" [ fillcolor="lightblue" label="{event =\> undirected_edge|pause =\> before}" shape="Mrecord" ]
@@ -183,40 +278,64 @@ Added edge: "undirected_edge" -> "undirected_edge_0" [ label="" ]
 Node:           directed_edge
 Daughter count: 1 ~
 Daughter stack: 1
-	'-\>'
+	D: (ARRAY(0x30fbf40))-> '-\>'
 Adverb stack:   1
-	
+	A: (ARRAY(0x30f54f8))-> 
 --------------------------------------------------
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+Node: directed_edge
+	D: <ARRAY(0x30fbf40)> -> '-\>'
+	A: <ARRAY(0x30f54f8)> -> 
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+Deal: ARRAY(0x30f54f8). Size: -1
 Added node: "'-\>'" [ fillcolor="white" label="'-\>'" ]
 Added edge: "directed_edge" -> "'-\>'" [ label="" ]
 --------------------------------------------------
 Node:           undirected_edge
 Daughter count: 1 ~
 Daughter stack: 1
-	'--'
+	D: (ARRAY(0x30f89c0))-> '--'
 Adverb stack:   1
-	
+	A: (ARRAY(0x30d9040))-> 
 --------------------------------------------------
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+Node: undirected_edge
+	D: <ARRAY(0x30f89c0)> -> '--'
+	A: <ARRAY(0x30d9040)> -> 
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+Deal: ARRAY(0x30d9040). Size: -1
 Added node: "'--'" [ fillcolor="white" label="'--'" ]
 Added edge: "undirected_edge" -> "'--'" [ label="" ]
 --------------------------------------------------
 Node:           attribute_definition
 Daughter count: 1 ::=
 Daughter stack: 1
-	attribute_statement
+	D: (ARRAY(0x30f82b8))-> attribute_statement
 Adverb stack:   1
-	
+	A: (ARRAY(0x30ffb90))-> 
 --------------------------------------------------
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+Node: attribute_definition
+	D: <ARRAY(0x30f82b8)> -> attribute_statement
+	A: <ARRAY(0x30ffb90)> -> 
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+Deal: ARRAY(0x30ffb90). Size: -1
 Added node: "attribute_statement" [ fillcolor="white" label="attribute_statement" ]
 Added edge: "attribute_definition" -> "attribute_statement" [ label="" ]
 --------------------------------------------------
 Node:           attribute_statement
 Daughter count: 1 ::=
 Daughter stack: 1
-	start_attributes, end_attributes
+	D: (ARRAY(0x30ffe90))-> start_attributes @ end_attributes
 Adverb stack:   1
-	
+	A: (ARRAY(0x30f89c0))-> 
 --------------------------------------------------
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+Node: attribute_statement
+	D: <ARRAY(0x30ffe90)> -> start_attributes @ end_attributes
+	A: <ARRAY(0x30f89c0)> -> 
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+Deal: ARRAY(0x30f89c0). Size: -1
 Added node: "start_attributes end_attributes" [ fillcolor="white" label="start_attributes end_attributes" ]
 Added edge: "attribute_statement" -> "start_attributes end_attributes" [ label="" ]
 Added node: "start_attributes" [ fillcolor="lightblue" label="{꞉lexeme|start_attributes}" shape="Mrecord" ]
@@ -225,34 +344,54 @@ Added node: "start_attributes_0" [ fillcolor="lightblue" label="{event =\> start
 Added edge: "start_attributes" -> "start_attributes_0" [ label="" ]
 Added node: "end_attributes" [ fillcolor="white" label="end_attributes" ]
 Added edge: "start_attributes end_attributes" -> "end_attributes" [ label="" ]
+Added node: "end_attributes_1" [ fillcolor="white" label="" ]
+Added edge: "end_attributes" -> "end_attributes_1" [ label="" ]
 --------------------------------------------------
 Node:           start_attributes
 Daughter count: 1 ~
 Daughter stack: 1
-	'{'
+	D: (ARRAY(0x3100208))-> '{'
 Adverb stack:   1
-	
+	A: (ARRAY(0x31001c0))-> 
 --------------------------------------------------
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+Node: start_attributes
+	D: <ARRAY(0x3100208)> -> '{'
+	A: <ARRAY(0x31001c0)> -> 
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+Deal: ARRAY(0x31001c0). Size: -1
 Added node: "'{'" [ fillcolor="white" label="'{'" ]
 Added edge: "start_attributes" -> "'{'" [ label="" ]
 --------------------------------------------------
 Node:           end_attributes
 Daughter count: 1 ~
 Daughter stack: 1
-	'}'
+	D: (ARRAY(0x30f89c0))-> '}'
 Adverb stack:   1
-	
+	A: (ARRAY(0x31000e8))-> 
 --------------------------------------------------
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+Node: end_attributes
+	D: <ARRAY(0x30f89c0)> -> '}'
+	A: <ARRAY(0x31000e8)> -> 
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+Deal: ARRAY(0x31000e8). Size: -1
 Added node: "'}'" [ fillcolor="white" label="'}'" ]
 Added edge: "end_attributes" -> "'}'" [ label="" ]
 --------------------------------------------------
 Node:           whitespace
 Daughter count: 1 ~
 Daughter stack: 1
-	[\\s]
+	D: (ARRAY(0x30ffe90))-> [\\s]
 Adverb stack:   1
-	
+	A: (ARRAY(0x3103000))-> 
 --------------------------------------------------
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+Node: whitespace
+	D: <ARRAY(0x30ffe90)> -> [\\s]
+	A: <ARRAY(0x3103000)> -> 
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+Deal: ARRAY(0x3103000). Size: -1
 Added node: "[\\s]" [ fillcolor="white" label="\[\\s\]" ]
 Added edge: "whitespace" -> "[\\s]" [ label="" ]
 Driver: /usr/local/bin/dot. Output file: html/stringparser.svg. Format: svg. Timeout: 10 second(s)
@@ -273,8 +412,8 @@ edge [ color="grey" ]
 "꞉discard" -> "whitespace" [ label="" ]
 "graph_definition" [ fillcolor="white" label="graph_definition" ]
 "graph_grammar" -> "graph_definition" [ label="" ]
-"graph_definition_0" [ fillcolor="gold" label="{action =\> graph}" shape="Mrecord" ]
-"graph_definition" -> "graph_definition_0" [ label="" ]
+"graph_definition_attributes" [ fillcolor="#DAA520" label="{action =\> graph}" shape="Mrecord" ]
+"graph_definition" -> "graph_definition_attributes" [ label="" ]
 "node_definition" [ fillcolor="white" label="node_definition" ]
 "graph_definition" -> "node_definition" [ label="" ]
 "edge_definition" [ fillcolor="white" label="edge_definition" ]
@@ -306,6 +445,8 @@ edge [ color="grey" ]
 "start_node" -> "start_node_0" [ label="" ]
 "end_node" [ fillcolor="white" label="end_node" ]
 "start_node end_node" -> "end_node" [ label="" ]
+"end_node_1" [ fillcolor="white" label="" ]
+"end_node" -> "end_node_1" [ label="" ]
 "'['" [ fillcolor="white" label="'\['" ]
 "start_node" -> "'['" [ label="" ]
 "']'" [ fillcolor="white" label="'\]'" ]
@@ -349,6 +490,8 @@ edge [ color="grey" ]
 "start_attributes" -> "start_attributes_0" [ label="" ]
 "end_attributes" [ fillcolor="white" label="end_attributes" ]
 "start_attributes end_attributes" -> "end_attributes" [ label="" ]
+"end_attributes_1" [ fillcolor="white" label="" ]
+"end_attributes" -> "end_attributes_1" [ label="" ]
 "'{'" [ fillcolor="white" label="'{'" ]
 "start_attributes" -> "'{'" [ label="" ]
 "'}'" [ fillcolor="white" label="'}'" ]
@@ -356,4 +499,4 @@ edge [ color="grey" ]
 "[\\s]" [ fillcolor="white" label="\[\\s\]" ]
 "whitespace" -> "[\\s]" [ label="" ]
 }
-Wrote html/stringparser.svg. Size: 36313 bytes
+Wrote html/stringparser.svg. Size: 37456 bytes

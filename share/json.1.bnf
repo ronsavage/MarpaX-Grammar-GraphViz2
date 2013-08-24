@@ -4,7 +4,7 @@ json			::= object
 					| array
 
 object			::= '{' '}'               action => do_empty_object
-					| '{' members '}'       action => do_object
+					| '{' members '}'     action => do_object
 
 members      	::= pair+                 separator => <comma> action => do_list
 
@@ -14,12 +14,12 @@ value			::= string
 					| object
 					| number
 					| array
-					| 'true'                action => do_true
-					| 'false'               action => do_true
-					| 'null'                action => do_null
+					| 'true'              action => do_true
+					| 'false'             action => do_true
+					| 'null'              action => do_null
 
 array			::= '[' ']'               action => do_empty_array
-					| '[' elements ']'      action => do_array
+					| '[' elements ']'    action => do_array
 
 elements		::= value+                separator => <comma> action => do_list
 

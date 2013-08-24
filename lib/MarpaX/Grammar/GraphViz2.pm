@@ -276,7 +276,7 @@ sub process_adverbs
 	my($self, $daughters) = @_;
 	my($end) = $#$daughters;
 
-	# Pick adverbs off the end of the list.
+	# Chop adverbs off the end of the list.
 
 	my(@adverbs);
 
@@ -303,7 +303,7 @@ sub process_adverbs
 		}
 	}
 
-	# Construct the label as an arrayref of hashrefs.
+	# Construct the label as an array of hashrefs.
 
 	if ($#adverbs >= 0)
 	{
@@ -389,29 +389,6 @@ sub process_complex_adverbs
 
 		$finished = 1 if ($#$daughters == 0);
 	}
-
-#=pod
-
-	$self -> log(debug => '-' x 50);
-	$self -> log(debug => 'Node:           ' . $a_node -> name);
-	$self -> log(debug => 'Daughter count: ' . scalar @$daughters . ' ' . join(', ', map{$_ -> name} @$daughters) );
-	$self -> log(debug => 'Daughter stack: ' . scalar @daughter_stack);
-
-	for my $i (0 .. $#daughter_stack)
-	{
-		$self -> log(debug => "\t($daughter_stack[$i])-> " . join(' @ ', map{$_ -> name} @{$daughter_stack[$i]}) );
-	}
-
-	$self -> log(debug => 'Adverb stack:   ' . scalar @adverb_stack);
-
-	for my $i (0 .. $#adverb_stack)
-	{
-		$self -> log(debug => "\t($adverb_stack[$i])-> " . join(' @ ', map{$$_{text} } @{$adverb_stack[$i]}) );
-	}
-
-	$self -> log(debug => '-' x 50);
-
-#=cut
 
 	return ([@daughter_stack], [@adverb_stack]);
 
@@ -577,21 +554,6 @@ sub process_normal_rule
 	my($self, $index, $a_node, $lexemes) = @_;
 	my($daughters, $adverbs) = $self -> process_complex_adverbs($index, $a_node);
 
-	$self -> log(debug => '!' x 50);
-	$self -> log(debug => 'Node: ' . $a_node -> name);
-
-	for my $i (0 .. $#$daughters)
-	{
-		$self -> log(debug => "\t<$$daughters[$i]> -> " . join(' @ ', map{$_ -> name} @{$$daughters[$i]}) );
-	}
-
-	for my $i (0 .. $#$adverbs)
-	{
-		$self -> log(debug => "\t<$$adverbs[$i]> -> " . join(' @ ', map{$$_{text} } @{$$adverbs[$i]}) );
-	}
-
-	$self -> log(debug => '!' x 50);
-
 	for my $i (0 .. $#$daughters)
 	{
 		$self -> process_normal_tokens($index, $a_node, $lexemes, $$daughters[$i], $$adverbs[$i]);
@@ -608,8 +570,6 @@ sub process_normal_tokens
 	my($rule_name)  = join(' ', @name);
 	my($attributes) = $self -> process_lexeme_token($lexemes, $rule_name);
 
-	$self -> log(debug => "Deal: $adverbs. Size: $#$adverbs");
-
 	$self -> add_node(name => $rule_name, %$attributes);
 	$self -> graph -> add_edge(from => $a_node -> name, to => $rule_name);
 
@@ -625,7 +585,7 @@ sub process_normal_tokens
 		# Don't re-add the node added just above.
 		# This happens in cases where there is just 1 daughter,
 		# which mean the join() above only had 1 name to 'join'.
-		# Nevertheless, after this 'if', we still add its attributes.
+		# Nevertheless, after this 'if', we still add its attributes (outside the loop).
 
 		if ($name ne $rule_name)
 		{
@@ -635,31 +595,22 @@ sub process_normal_tokens
 
 		if (defined $$lexemes{$name})
 		{
-			if ($$lexemes{$name})
-			{
-				$$attributes{label} = $$lexemes{$name};
-				$attr_name          = "${name}_$i";
-
-				$self -> add_node(name => $attr_name, %$attributes);
-				$self -> graph -> add_edge(from => $name, to => $attr_name);
-			}
-		}
-		elsif ( ($#$adverbs >= 0) && ($i <= $#$adverbs) )
-		{
-			$$attributes{fillcolor} = 'gold';
-
-			$self -> log(debug => '=' x 50);
-			$self -> log(debug => "$i: REF: $rule_name => $name => $$adverbs[$i]");
-			$self -> log(debug => '=' x 50);
-			$self -> log(debug => Dumper($$adverbs[$i]) );
-			$self -> log(debug => '=' x 50);
-
-			$$attributes{label}     = [$$adverbs[$i] ];
-			$attr_name              = "${name}_$i";
+			$$attributes{label} = $$lexemes{$name};
+			$attr_name          = "${name}_$i";
 
 			$self -> add_node(name => $attr_name, %$attributes);
 			$self -> graph -> add_edge(from => $name, to => $attr_name);
 		}
+	}
+
+	if ($#$adverbs >= 0)
+	{
+		$$attributes{fillcolor} = '#DAA520'; # Goldenrod.
+		$$attributes{label}     = $adverbs;
+		$attr_name              = "${rule_name}_attributes";
+
+		$self -> add_node(name => $attr_name, %$attributes);
+		$self -> graph -> add_edge(from => $rule_name, to => $attr_name);
 	}
 
 } # End of process_normal_tokens.
