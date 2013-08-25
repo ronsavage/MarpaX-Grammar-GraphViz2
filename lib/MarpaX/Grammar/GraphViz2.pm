@@ -578,14 +578,14 @@ sub process_normal_rule
 sub process_normal_tokens
 {
 	my($self, $index, $a_node, $lexemes, $daughters, $adverbs) = @_;
+
+	# rectify_name() returns a set of ($name => $label) pairs.
+
 	my(@name_map)   = map{$self -> rectify_name($_)} @$daughters;
-	$self -> log(debug => 'Labels: ' . join(', ', @name_map) );
 	my(@name)       = map{$name_map[$_]} indexes{$_ % 2 == 0} 0 .. $#name_map;
 	my(@label)      = map{$name_map[$_]} indexes{$_ % 2 != 0} 0 .. $#name_map;
 	my($rule_name)  = join(' ', @name);
 	my($rule_label) = join(' ', @label);
-	$self -> log(debug => "Labels: $rule_name");
-	$self -> log(debug => "Labels: $rule_label");
 	my($attributes) = $self -> process_lexeme_token($lexemes, $rule_name, $rule_label);
 	my(@parent)     = $self -> rectify_name($a_node);
 
@@ -679,6 +679,8 @@ sub run
 	return $result if ($result == 1);
 
 	$self -> clean_tree;
+
+	#$self -> log(debug => $_) for @{$self -> parser -> cooked_tree -> tree2string({no_attributes => 0})};
 
 	my(@rule)        = $self -> parser -> cooked_tree -> daughters;
 	my($start_index) = first_index{$_ -> name eq "\x{a789}start"} @rule;
