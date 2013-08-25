@@ -132,6 +132,14 @@ has parser =>
 	required => 0,
 );
 
+has separators =>
+(
+	default  => sub{return {} },
+	is       => 'rw',
+	#isa     => 'HashRef',
+	required => 0,
+);
+
 has user_bnf_file =>
 (
 	default  => sub{return ''},
@@ -275,28 +283,31 @@ sub log
 sub process_adverbs
 {
 	my($self, $daughters) = @_;
-	my($end) = $#$daughters;
+	my($end)        = $#$daughters;
+	my($separators) = $self -> separators;
 
 	# Chop adverbs off the end of the list.
 
-	my(@adverbs);
+	my($adverb, @adverbs);
+	my(@token);
 
 	while ($end > 0)
 	{
 		if ($$daughters[$end - 1] -> name eq '=>')
 		{
-			my($adverb) = $$daughters[$end - 2] -> name;
-			my($token)  = $$daughters[$end] -> name;
+			$adverb = $$daughters[$end - 2] -> name;
+			@token  = $self -> rectify_name($$daughters[$end]);
 
 			pop @$daughters for 1 .. 3;
-
-			$end = $#$daughters;
 
 			push @adverbs,
 			{
 				adverb => $adverb,
-				name   => $token,
+				name   => $token[0],
 			};
+
+			$end                    = $#$daughters;
+			$$separators{$token[0]} = 1 if ($adverb eq 'separator');
 		}
 		else
 		{
@@ -1011,7 +1022,7 @@ Firstly, the Perl module L<GraphViz2> escapes some characters. Currently, these 
 
 We let L<GraphViz2> handle these.
 
-Secondly, L<Graphviz|http://graphviz.org> itself treats some characters specially. Currently, these appear to be:
+Secondly, L<Graphviz|http://graphviz.org> itself treats some characters specially. Currently, these are:
 
 	< > : "
 
