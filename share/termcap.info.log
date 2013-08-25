@@ -5,7 +5,7 @@ Default global: label => ->
 Default global: name => Perl
 Default global: record_shape => Mrecord
 Default global: strict => 0
-Default global: subgraph => HASH(0x28653a0)
+Default global: subgraph => HASH(0x331cfb8)
 Default global: timeout => 10
 Default graph: label => termcap.info.bnf, rankdir => TB
 Default node: shape => rectangle, style => filled
@@ -15,570 +15,125 @@ Added node: "꞉default" [ fillcolor="lightblue" label="꞉default" ]
 Added edge: "units" -> "꞉default" [ label="" ]
 Added node: "꞉default_1" [ fillcolor="lightblue" label="{action =\> \[values\]}" shape="Mrecord" ]
 Added edge: "꞉default" -> "꞉default_1" [ label="" ]
---------------------------------------------------
-Node:           units
-Daughter count: 1 ::=
-Daughter stack: 1
-	D: (ARRAY(0x2c9a488))-> unit
-Adverb stack:   1
-	A: (ARRAY(0x2d4fee0))-> 
---------------------------------------------------
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-Node: units
-	D: <ARRAY(0x2c9a488)> -> unit
-	A: <ARRAY(0x2d4fee0)> -> 
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-Deal: ARRAY(0x2d4fee0). Size: -1
-Added node: "unit" [ fillcolor="white" label="unit" ]
-Added edge: "units" -> "unit" [ label="" ]
---------------------------------------------------
-Node:           unit
-Daughter count: 1 ::=
-Daughter stack: 33
-	D: (ARRAY(0x2d4fee0))-> ESCAPED_CHARACTER
-	D: (ARRAY(0x2cfcb80))-> INISPRINTEXCEPTCOMMA
-	D: (ARRAY(0x2acb338))-> PERCENT
-	D: (ARRAY(0x2d4def8))-> C
-	D: (ARRAY(0x2a8beb0))-> PRINT
-	D: (ARRAY(0x2c9ad58))-> PUSH
-	D: (ARRAY(0x2d50498))-> DYNPOP
-	D: (ARRAY(0x2abcf00))-> DYNPUSH
-	D: (ARRAY(0x2d42828))-> STATICPOP
-	D: (ARRAY(0x2d52b20))-> STATICPUSH
-	D: (ARRAY(0x2d7ce90))-> L
-	D: (ARRAY(0x2d5ae18))-> PUSHCONST
-	D: (ARRAY(0x2d5e6f0))-> PUSHINT
-	D: (ARRAY(0x2acb4b8))-> PLUS
-	D: (ARRAY(0x2d7acd0))-> MINUS
-	D: (ARRAY(0x2d52598))-> STAR
-	D: (ARRAY(0x2abf320))-> DIV
-	D: (ARRAY(0x2a8c168))-> MOD
-	D: (ARRAY(0x2d44bf0))-> BITAND
-	D: (ARRAY(0x2d4fc88))-> BITOR
-	D: (ARRAY(0x2d7d478))-> BITXOR
-	D: (ARRAY(0x2abf3e0))-> EQUAL
-	D: (ARRAY(0x2d69dc8))-> GREATER
-	D: (ARRAY(0x2abf0e0))-> LOWER
-	D: (ARRAY(0x2d5aa10))-> AND
-	D: (ARRAY(0x29103c0))-> OR
-	D: (ARRAY(0x2d64638))-> NOT
-	D: (ARRAY(0x2abef90))-> COMPLEMENT
-	D: (ARRAY(0x2d5a890))-> ADDONE
-	D: (ARRAY(0x2ca94e8))-> IF @ units @ THEN @ units @ elifUnits @ ELSE @ units @ ENDIF
-	D: (ARRAY(0x2c9ae60))-> IF @ units @ THEN @ units @ elifUnits @ ENDIF
-	D: (ARRAY(0x2cc8e50))-> IF @ ENDIF
-	D: (ARRAY(0x2abd6c8))-> EOF
-Adverb stack:   33
-	A: (ARRAY(0x2d1a228))-> {action =\> addEscapedCharacterToRc}
-	A: (ARRAY(0x2d52610))-> {action =\> addCharacterToRc}
-	A: (ARRAY(0x2a8c090))-> {action =\> addPercentToRc}
-	A: (ARRAY(0x2d6b370))-> {action =\> addPrintPopToRc}
-	A: (ARRAY(0x2d50180))-> {action =\> addPrintToRc}
-	A: (ARRAY(0x2ca95f0))-> {action =\> addPushToRc}
-	A: (ARRAY(0x2d44d58))-> {action =\> addDynPop}
-	A: (ARRAY(0x2abe960))-> {action =\> addDynPush}
-	A: (ARRAY(0x2d4f748))-> {action =\> addStaticPop}
-	A: (ARRAY(0x2d56250))-> {action =\> addStaticPush}
-	A: (ARRAY(0x2d560a0))-> {action =\> addL}
-	A: (ARRAY(0x2d5ae78))-> {action =\> addPushConst}
-	A: (ARRAY(0x2d55e30))-> {action =\> addPushInt}
-	A: (ARRAY(0x2cc9768))-> {action =\> addPlus}
-	A: (ARRAY(0x2d7b168))-> {action =\> addMinus}
-	A: (ARRAY(0x2c88690))-> {action =\> addStar}
-	A: (ARRAY(0x2d78368))-> {action =\> addDiv}
-	A: (ARRAY(0x2acb518))-> {action =\> addMod}
-	A: (ARRAY(0x2d5e3a8))-> {action =\> addBitAnd}
-	A: (ARRAY(0x2d52130))-> {action =\> addBitOr}
-	A: (ARRAY(0x2d55d28))-> {action =\> addBitXor}
-	A: (ARRAY(0x2abf110))-> {action =\> addEqual}
-	A: (ARRAY(0x2d78278))-> {action =\> addGreater}
-	A: (ARRAY(0x2abedf8))-> {action =\> addLower}
-	A: (ARRAY(0x2d77ae0))-> {action =\> addLogicalAnd}
-	A: (ARRAY(0x2c88768))-> {action =\> addLogicalOr}
-	A: (ARRAY(0x2ac03e0))-> {action =\> addNot}
-	A: (ARRAY(0x2d4fd48))-> {action =\> addComplement}
-	A: (ARRAY(0x2d5e5a0))-> {action =\> addOneToParams}
-	A: (ARRAY(0x2cf9478))-> {action =\> addIfThenElse}
-	A: (ARRAY(0x2d5db08))-> {action =\> addIfThen}
-	A: (ARRAY(0x2abf3b0))-> {action =\> ifEndif}
-	A: (ARRAY(0x2d60e18))-> {action =\> eof}
---------------------------------------------------
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-Node: unit
-	D: <ARRAY(0x2d4fee0)> -> ESCAPED_CHARACTER
-	D: <ARRAY(0x2cfcb80)> -> INISPRINTEXCEPTCOMMA
-	D: <ARRAY(0x2acb338)> -> PERCENT
-	D: <ARRAY(0x2d4def8)> -> C
-	D: <ARRAY(0x2a8beb0)> -> PRINT
-	D: <ARRAY(0x2c9ad58)> -> PUSH
-	D: <ARRAY(0x2d50498)> -> DYNPOP
-	D: <ARRAY(0x2abcf00)> -> DYNPUSH
-	D: <ARRAY(0x2d42828)> -> STATICPOP
-	D: <ARRAY(0x2d52b20)> -> STATICPUSH
-	D: <ARRAY(0x2d7ce90)> -> L
-	D: <ARRAY(0x2d5ae18)> -> PUSHCONST
-	D: <ARRAY(0x2d5e6f0)> -> PUSHINT
-	D: <ARRAY(0x2acb4b8)> -> PLUS
-	D: <ARRAY(0x2d7acd0)> -> MINUS
-	D: <ARRAY(0x2d52598)> -> STAR
-	D: <ARRAY(0x2abf320)> -> DIV
-	D: <ARRAY(0x2a8c168)> -> MOD
-	D: <ARRAY(0x2d44bf0)> -> BITAND
-	D: <ARRAY(0x2d4fc88)> -> BITOR
-	D: <ARRAY(0x2d7d478)> -> BITXOR
-	D: <ARRAY(0x2abf3e0)> -> EQUAL
-	D: <ARRAY(0x2d69dc8)> -> GREATER
-	D: <ARRAY(0x2abf0e0)> -> LOWER
-	D: <ARRAY(0x2d5aa10)> -> AND
-	D: <ARRAY(0x29103c0)> -> OR
-	D: <ARRAY(0x2d64638)> -> NOT
-	D: <ARRAY(0x2abef90)> -> COMPLEMENT
-	D: <ARRAY(0x2d5a890)> -> ADDONE
-	D: <ARRAY(0x2ca94e8)> -> IF @ units @ THEN @ units @ elifUnits @ ELSE @ units @ ENDIF
-	D: <ARRAY(0x2c9ae60)> -> IF @ units @ THEN @ units @ elifUnits @ ENDIF
-	D: <ARRAY(0x2cc8e50)> -> IF @ ENDIF
-	D: <ARRAY(0x2abd6c8)> -> EOF
-	A: <ARRAY(0x2d1a228)> -> {action =\> addEscapedCharacterToRc}
-	A: <ARRAY(0x2d52610)> -> {action =\> addCharacterToRc}
-	A: <ARRAY(0x2a8c090)> -> {action =\> addPercentToRc}
-	A: <ARRAY(0x2d6b370)> -> {action =\> addPrintPopToRc}
-	A: <ARRAY(0x2d50180)> -> {action =\> addPrintToRc}
-	A: <ARRAY(0x2ca95f0)> -> {action =\> addPushToRc}
-	A: <ARRAY(0x2d44d58)> -> {action =\> addDynPop}
-	A: <ARRAY(0x2abe960)> -> {action =\> addDynPush}
-	A: <ARRAY(0x2d4f748)> -> {action =\> addStaticPop}
-	A: <ARRAY(0x2d56250)> -> {action =\> addStaticPush}
-	A: <ARRAY(0x2d560a0)> -> {action =\> addL}
-	A: <ARRAY(0x2d5ae78)> -> {action =\> addPushConst}
-	A: <ARRAY(0x2d55e30)> -> {action =\> addPushInt}
-	A: <ARRAY(0x2cc9768)> -> {action =\> addPlus}
-	A: <ARRAY(0x2d7b168)> -> {action =\> addMinus}
-	A: <ARRAY(0x2c88690)> -> {action =\> addStar}
-	A: <ARRAY(0x2d78368)> -> {action =\> addDiv}
-	A: <ARRAY(0x2acb518)> -> {action =\> addMod}
-	A: <ARRAY(0x2d5e3a8)> -> {action =\> addBitAnd}
-	A: <ARRAY(0x2d52130)> -> {action =\> addBitOr}
-	A: <ARRAY(0x2d55d28)> -> {action =\> addBitXor}
-	A: <ARRAY(0x2abf110)> -> {action =\> addEqual}
-	A: <ARRAY(0x2d78278)> -> {action =\> addGreater}
-	A: <ARRAY(0x2abedf8)> -> {action =\> addLower}
-	A: <ARRAY(0x2d77ae0)> -> {action =\> addLogicalAnd}
-	A: <ARRAY(0x2c88768)> -> {action =\> addLogicalOr}
-	A: <ARRAY(0x2ac03e0)> -> {action =\> addNot}
-	A: <ARRAY(0x2d4fd48)> -> {action =\> addComplement}
-	A: <ARRAY(0x2d5e5a0)> -> {action =\> addOneToParams}
-	A: <ARRAY(0x2cf9478)> -> {action =\> addIfThenElse}
-	A: <ARRAY(0x2d5db08)> -> {action =\> addIfThen}
-	A: <ARRAY(0x2abf3b0)> -> {action =\> ifEndif}
-	A: <ARRAY(0x2d60e18)> -> {action =\> eof}
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-Deal: ARRAY(0x2d1a228). Size: 0
+Added node: "unit*" [ fillcolor="white" label="unit*" ]
+Added edge: "units" -> "unit*" [ label="" ]
 Added node: "ESCAPED_CHARACTER" [ fillcolor="white" label="ESCAPED_CHARACTER" ]
+Added node: "unit"
 Added edge: "unit" -> "ESCAPED_CHARACTER" [ label="" ]
-==================================================
-REF: ESCAPED_CHARACTER => ESCAPED_CHARACTER_attributes
-==================================================
-[
-  {
-    text => "{action =\\> addEscapedCharacterToRc}"
-  }
-]
-==================================================
 Added node: "ESCAPED_CHARACTER_attributes" [ fillcolor="#DAA520" label="{action =\> addEscapedCharacterToRc}" shape="Mrecord" ]
 Added edge: "ESCAPED_CHARACTER" -> "ESCAPED_CHARACTER_attributes" [ label="" ]
-Deal: ARRAY(0x2d52610). Size: 0
 Added node: "INISPRINTEXCEPTCOMMA" [ fillcolor="white" label="INISPRINTEXCEPTCOMMA" ]
 Added edge: "unit" -> "INISPRINTEXCEPTCOMMA" [ label="" ]
-==================================================
-REF: INISPRINTEXCEPTCOMMA => INISPRINTEXCEPTCOMMA_attributes
-==================================================
-[
-  {
-    text => "{action =\\> addCharacterToRc}"
-  }
-]
-==================================================
 Added node: "INISPRINTEXCEPTCOMMA_attributes" [ fillcolor="#DAA520" label="{action =\> addCharacterToRc}" shape="Mrecord" ]
 Added edge: "INISPRINTEXCEPTCOMMA" -> "INISPRINTEXCEPTCOMMA_attributes" [ label="" ]
-Deal: ARRAY(0x2a8c090). Size: 0
 Added node: "PERCENT" [ fillcolor="white" label="PERCENT" ]
 Added edge: "unit" -> "PERCENT" [ label="" ]
-==================================================
-REF: PERCENT => PERCENT_attributes
-==================================================
-[
-  {
-    text => "{action =\\> addPercentToRc}"
-  }
-]
-==================================================
 Added node: "PERCENT_attributes" [ fillcolor="#DAA520" label="{action =\> addPercentToRc}" shape="Mrecord" ]
 Added edge: "PERCENT" -> "PERCENT_attributes" [ label="" ]
-Deal: ARRAY(0x2d6b370). Size: 0
 Added node: "C" [ fillcolor="white" label="C" ]
 Added edge: "unit" -> "C" [ label="" ]
-==================================================
-REF: C => C_attributes
-==================================================
-[
-  {
-    text => "{action =\\> addPrintPopToRc}"
-  }
-]
-==================================================
 Added node: "C_attributes" [ fillcolor="#DAA520" label="{action =\> addPrintPopToRc}" shape="Mrecord" ]
 Added edge: "C" -> "C_attributes" [ label="" ]
-Deal: ARRAY(0x2d50180). Size: 0
 Added node: "PRINT" [ fillcolor="white" label="PRINT" ]
 Added edge: "unit" -> "PRINT" [ label="" ]
-==================================================
-REF: PRINT => PRINT_attributes
-==================================================
-[
-  {
-    text => "{action =\\> addPrintToRc}"
-  }
-]
-==================================================
 Added node: "PRINT_attributes" [ fillcolor="#DAA520" label="{action =\> addPrintToRc}" shape="Mrecord" ]
 Added edge: "PRINT" -> "PRINT_attributes" [ label="" ]
-Deal: ARRAY(0x2ca95f0). Size: 0
 Added node: "PUSH" [ fillcolor="white" label="PUSH" ]
 Added edge: "unit" -> "PUSH" [ label="" ]
-==================================================
-REF: PUSH => PUSH_attributes
-==================================================
-[
-  {
-    text => "{action =\\> addPushToRc}"
-  }
-]
-==================================================
 Added node: "PUSH_attributes" [ fillcolor="#DAA520" label="{action =\> addPushToRc}" shape="Mrecord" ]
 Added edge: "PUSH" -> "PUSH_attributes" [ label="" ]
-Deal: ARRAY(0x2d44d58). Size: 0
 Added node: "DYNPOP" [ fillcolor="white" label="DYNPOP" ]
 Added edge: "unit" -> "DYNPOP" [ label="" ]
-==================================================
-REF: DYNPOP => DYNPOP_attributes
-==================================================
-[
-  {
-    text => "{action =\\> addDynPop}"
-  }
-]
-==================================================
 Added node: "DYNPOP_attributes" [ fillcolor="#DAA520" label="{action =\> addDynPop}" shape="Mrecord" ]
 Added edge: "DYNPOP" -> "DYNPOP_attributes" [ label="" ]
-Deal: ARRAY(0x2abe960). Size: 0
 Added node: "DYNPUSH" [ fillcolor="white" label="DYNPUSH" ]
 Added edge: "unit" -> "DYNPUSH" [ label="" ]
-==================================================
-REF: DYNPUSH => DYNPUSH_attributes
-==================================================
-[
-  {
-    text => "{action =\\> addDynPush}"
-  }
-]
-==================================================
 Added node: "DYNPUSH_attributes" [ fillcolor="#DAA520" label="{action =\> addDynPush}" shape="Mrecord" ]
 Added edge: "DYNPUSH" -> "DYNPUSH_attributes" [ label="" ]
-Deal: ARRAY(0x2d4f748). Size: 0
 Added node: "STATICPOP" [ fillcolor="white" label="STATICPOP" ]
 Added edge: "unit" -> "STATICPOP" [ label="" ]
-==================================================
-REF: STATICPOP => STATICPOP_attributes
-==================================================
-[
-  {
-    text => "{action =\\> addStaticPop}"
-  }
-]
-==================================================
 Added node: "STATICPOP_attributes" [ fillcolor="#DAA520" label="{action =\> addStaticPop}" shape="Mrecord" ]
 Added edge: "STATICPOP" -> "STATICPOP_attributes" [ label="" ]
-Deal: ARRAY(0x2d56250). Size: 0
 Added node: "STATICPUSH" [ fillcolor="white" label="STATICPUSH" ]
 Added edge: "unit" -> "STATICPUSH" [ label="" ]
-==================================================
-REF: STATICPUSH => STATICPUSH_attributes
-==================================================
-[
-  {
-    text => "{action =\\> addStaticPush}"
-  }
-]
-==================================================
 Added node: "STATICPUSH_attributes" [ fillcolor="#DAA520" label="{action =\> addStaticPush}" shape="Mrecord" ]
 Added edge: "STATICPUSH" -> "STATICPUSH_attributes" [ label="" ]
-Deal: ARRAY(0x2d560a0). Size: 0
 Added node: "L" [ fillcolor="white" label="L" ]
 Added edge: "unit" -> "L" [ label="" ]
-==================================================
-REF: L => L_attributes
-==================================================
-[
-  {
-    text => "{action =\\> addL}"
-  }
-]
-==================================================
 Added node: "L_attributes" [ fillcolor="#DAA520" label="{action =\> addL}" shape="Mrecord" ]
 Added edge: "L" -> "L_attributes" [ label="" ]
-Deal: ARRAY(0x2d5ae78). Size: 0
 Added node: "PUSHCONST" [ fillcolor="white" label="PUSHCONST" ]
 Added edge: "unit" -> "PUSHCONST" [ label="" ]
-==================================================
-REF: PUSHCONST => PUSHCONST_attributes
-==================================================
-[
-  {
-    text => "{action =\\> addPushConst}"
-  }
-]
-==================================================
 Added node: "PUSHCONST_attributes" [ fillcolor="#DAA520" label="{action =\> addPushConst}" shape="Mrecord" ]
 Added edge: "PUSHCONST" -> "PUSHCONST_attributes" [ label="" ]
-Deal: ARRAY(0x2d55e30). Size: 0
 Added node: "PUSHINT" [ fillcolor="white" label="PUSHINT" ]
 Added edge: "unit" -> "PUSHINT" [ label="" ]
-==================================================
-REF: PUSHINT => PUSHINT_attributes
-==================================================
-[
-  {
-    text => "{action =\\> addPushInt}"
-  }
-]
-==================================================
 Added node: "PUSHINT_attributes" [ fillcolor="#DAA520" label="{action =\> addPushInt}" shape="Mrecord" ]
 Added edge: "PUSHINT" -> "PUSHINT_attributes" [ label="" ]
-Deal: ARRAY(0x2cc9768). Size: 0
 Added node: "PLUS" [ fillcolor="white" label="PLUS" ]
 Added edge: "unit" -> "PLUS" [ label="" ]
-==================================================
-REF: PLUS => PLUS_attributes
-==================================================
-[
-  {
-    text => "{action =\\> addPlus}"
-  }
-]
-==================================================
 Added node: "PLUS_attributes" [ fillcolor="#DAA520" label="{action =\> addPlus}" shape="Mrecord" ]
 Added edge: "PLUS" -> "PLUS_attributes" [ label="" ]
-Deal: ARRAY(0x2d7b168). Size: 0
 Added node: "MINUS" [ fillcolor="white" label="MINUS" ]
 Added edge: "unit" -> "MINUS" [ label="" ]
-==================================================
-REF: MINUS => MINUS_attributes
-==================================================
-[
-  {
-    text => "{action =\\> addMinus}"
-  }
-]
-==================================================
 Added node: "MINUS_attributes" [ fillcolor="#DAA520" label="{action =\> addMinus}" shape="Mrecord" ]
 Added edge: "MINUS" -> "MINUS_attributes" [ label="" ]
-Deal: ARRAY(0x2c88690). Size: 0
 Added node: "STAR" [ fillcolor="white" label="STAR" ]
 Added edge: "unit" -> "STAR" [ label="" ]
-==================================================
-REF: STAR => STAR_attributes
-==================================================
-[
-  {
-    text => "{action =\\> addStar}"
-  }
-]
-==================================================
 Added node: "STAR_attributes" [ fillcolor="#DAA520" label="{action =\> addStar}" shape="Mrecord" ]
 Added edge: "STAR" -> "STAR_attributes" [ label="" ]
-Deal: ARRAY(0x2d78368). Size: 0
 Added node: "DIV" [ fillcolor="white" label="DIV" ]
 Added edge: "unit" -> "DIV" [ label="" ]
-==================================================
-REF: DIV => DIV_attributes
-==================================================
-[
-  {
-    text => "{action =\\> addDiv}"
-  }
-]
-==================================================
 Added node: "DIV_attributes" [ fillcolor="#DAA520" label="{action =\> addDiv}" shape="Mrecord" ]
 Added edge: "DIV" -> "DIV_attributes" [ label="" ]
-Deal: ARRAY(0x2acb518). Size: 0
 Added node: "MOD" [ fillcolor="white" label="MOD" ]
 Added edge: "unit" -> "MOD" [ label="" ]
-==================================================
-REF: MOD => MOD_attributes
-==================================================
-[
-  {
-    text => "{action =\\> addMod}"
-  }
-]
-==================================================
 Added node: "MOD_attributes" [ fillcolor="#DAA520" label="{action =\> addMod}" shape="Mrecord" ]
 Added edge: "MOD" -> "MOD_attributes" [ label="" ]
-Deal: ARRAY(0x2d5e3a8). Size: 0
 Added node: "BITAND" [ fillcolor="white" label="BITAND" ]
 Added edge: "unit" -> "BITAND" [ label="" ]
-==================================================
-REF: BITAND => BITAND_attributes
-==================================================
-[
-  {
-    text => "{action =\\> addBitAnd}"
-  }
-]
-==================================================
 Added node: "BITAND_attributes" [ fillcolor="#DAA520" label="{action =\> addBitAnd}" shape="Mrecord" ]
 Added edge: "BITAND" -> "BITAND_attributes" [ label="" ]
-Deal: ARRAY(0x2d52130). Size: 0
 Added node: "BITOR" [ fillcolor="white" label="BITOR" ]
 Added edge: "unit" -> "BITOR" [ label="" ]
-==================================================
-REF: BITOR => BITOR_attributes
-==================================================
-[
-  {
-    text => "{action =\\> addBitOr}"
-  }
-]
-==================================================
 Added node: "BITOR_attributes" [ fillcolor="#DAA520" label="{action =\> addBitOr}" shape="Mrecord" ]
 Added edge: "BITOR" -> "BITOR_attributes" [ label="" ]
-Deal: ARRAY(0x2d55d28). Size: 0
 Added node: "BITXOR" [ fillcolor="white" label="BITXOR" ]
 Added edge: "unit" -> "BITXOR" [ label="" ]
-==================================================
-REF: BITXOR => BITXOR_attributes
-==================================================
-[
-  {
-    text => "{action =\\> addBitXor}"
-  }
-]
-==================================================
 Added node: "BITXOR_attributes" [ fillcolor="#DAA520" label="{action =\> addBitXor}" shape="Mrecord" ]
 Added edge: "BITXOR" -> "BITXOR_attributes" [ label="" ]
-Deal: ARRAY(0x2abf110). Size: 0
 Added node: "EQUAL" [ fillcolor="white" label="EQUAL" ]
 Added edge: "unit" -> "EQUAL" [ label="" ]
-==================================================
-REF: EQUAL => EQUAL_attributes
-==================================================
-[
-  {
-    text => "{action =\\> addEqual}"
-  }
-]
-==================================================
 Added node: "EQUAL_attributes" [ fillcolor="#DAA520" label="{action =\> addEqual}" shape="Mrecord" ]
 Added edge: "EQUAL" -> "EQUAL_attributes" [ label="" ]
-Deal: ARRAY(0x2d78278). Size: 0
 Added node: "GREATER" [ fillcolor="white" label="GREATER" ]
 Added edge: "unit" -> "GREATER" [ label="" ]
-==================================================
-REF: GREATER => GREATER_attributes
-==================================================
-[
-  {
-    text => "{action =\\> addGreater}"
-  }
-]
-==================================================
 Added node: "GREATER_attributes" [ fillcolor="#DAA520" label="{action =\> addGreater}" shape="Mrecord" ]
 Added edge: "GREATER" -> "GREATER_attributes" [ label="" ]
-Deal: ARRAY(0x2abedf8). Size: 0
 Added node: "LOWER" [ fillcolor="white" label="LOWER" ]
 Added edge: "unit" -> "LOWER" [ label="" ]
-==================================================
-REF: LOWER => LOWER_attributes
-==================================================
-[
-  {
-    text => "{action =\\> addLower}"
-  }
-]
-==================================================
 Added node: "LOWER_attributes" [ fillcolor="#DAA520" label="{action =\> addLower}" shape="Mrecord" ]
 Added edge: "LOWER" -> "LOWER_attributes" [ label="" ]
-Deal: ARRAY(0x2d77ae0). Size: 0
 Added node: "AND" [ fillcolor="white" label="AND" ]
 Added edge: "unit" -> "AND" [ label="" ]
-==================================================
-REF: AND => AND_attributes
-==================================================
-[
-  {
-    text => "{action =\\> addLogicalAnd}"
-  }
-]
-==================================================
 Added node: "AND_attributes" [ fillcolor="#DAA520" label="{action =\> addLogicalAnd}" shape="Mrecord" ]
 Added edge: "AND" -> "AND_attributes" [ label="" ]
-Deal: ARRAY(0x2c88768). Size: 0
 Added node: "OR" [ fillcolor="white" label="OR" ]
 Added edge: "unit" -> "OR" [ label="" ]
-==================================================
-REF: OR => OR_attributes
-==================================================
-[
-  {
-    text => "{action =\\> addLogicalOr}"
-  }
-]
-==================================================
 Added node: "OR_attributes" [ fillcolor="#DAA520" label="{action =\> addLogicalOr}" shape="Mrecord" ]
 Added edge: "OR" -> "OR_attributes" [ label="" ]
-Deal: ARRAY(0x2ac03e0). Size: 0
 Added node: "NOT" [ fillcolor="white" label="NOT" ]
 Added edge: "unit" -> "NOT" [ label="" ]
-==================================================
-REF: NOT => NOT_attributes
-==================================================
-[
-  {
-    text => "{action =\\> addNot}"
-  }
-]
-==================================================
 Added node: "NOT_attributes" [ fillcolor="#DAA520" label="{action =\> addNot}" shape="Mrecord" ]
 Added edge: "NOT" -> "NOT_attributes" [ label="" ]
-Deal: ARRAY(0x2d4fd48). Size: 0
 Added node: "COMPLEMENT" [ fillcolor="white" label="COMPLEMENT" ]
 Added edge: "unit" -> "COMPLEMENT" [ label="" ]
-==================================================
-REF: COMPLEMENT => COMPLEMENT_attributes
-==================================================
-[
-  {
-    text => "{action =\\> addComplement}"
-  }
-]
-==================================================
 Added node: "COMPLEMENT_attributes" [ fillcolor="#DAA520" label="{action =\> addComplement}" shape="Mrecord" ]
 Added edge: "COMPLEMENT" -> "COMPLEMENT_attributes" [ label="" ]
-Deal: ARRAY(0x2d5e5a0). Size: 0
 Added node: "ADDONE" [ fillcolor="white" label="ADDONE" ]
 Added edge: "unit" -> "ADDONE" [ label="" ]
-==================================================
-REF: ADDONE => ADDONE_attributes
-==================================================
-[
-  {
-    text => "{action =\\> addOneToParams}"
-  }
-]
-==================================================
 Added node: "ADDONE_attributes" [ fillcolor="#DAA520" label="{action =\> addOneToParams}" shape="Mrecord" ]
 Added edge: "ADDONE" -> "ADDONE_attributes" [ label="" ]
-Deal: ARRAY(0x2cf9478). Size: 0
 Added node: "IF units THEN units elifUnits ELSE units ENDIF" [ fillcolor="white" label="IF units THEN units elifUnits ELSE units ENDIF" ]
 Added edge: "unit" -> "IF units THEN units elifUnits ELSE units ENDIF" [ label="" ]
 Added node: "IF" [ fillcolor="white" label="IF" ]
@@ -594,18 +149,8 @@ Added edge: "IF units THEN units elifUnits ELSE units ENDIF" -> "ELSE" [ label="
 Added edge: "IF units THEN units elifUnits ELSE units ENDIF" -> "units" [ label="" ]
 Added node: "ENDIF" [ fillcolor="white" label="ENDIF" ]
 Added edge: "IF units THEN units elifUnits ELSE units ENDIF" -> "ENDIF" [ label="" ]
-==================================================
-REF: IF units THEN units elifUnits ELSE units ENDIF => IF units THEN units elifUnits ELSE units ENDIF_attributes
-==================================================
-[
-  {
-    text => "{action =\\> addIfThenElse}"
-  }
-]
-==================================================
 Added node: "IF units THEN units elifUnits ELSE units ENDIF_attributes" [ fillcolor="#DAA520" label="{action =\> addIfThenElse}" shape="Mrecord" ]
 Added edge: "IF units THEN units elifUnits ELSE units ENDIF" -> "IF units THEN units elifUnits ELSE units ENDIF_attributes" [ label="" ]
-Deal: ARRAY(0x2d5db08). Size: 0
 Added node: "IF units THEN units elifUnits ENDIF" [ fillcolor="white" label="IF units THEN units elifUnits ENDIF" ]
 Added edge: "unit" -> "IF units THEN units elifUnits ENDIF" [ label="" ]
 Added edge: "IF units THEN units elifUnits ENDIF" -> "IF" [ label="" ]
@@ -614,61 +159,18 @@ Added edge: "IF units THEN units elifUnits ENDIF" -> "THEN" [ label="" ]
 Added edge: "IF units THEN units elifUnits ENDIF" -> "units" [ label="" ]
 Added edge: "IF units THEN units elifUnits ENDIF" -> "elifUnits" [ label="" ]
 Added edge: "IF units THEN units elifUnits ENDIF" -> "ENDIF" [ label="" ]
-==================================================
-REF: IF units THEN units elifUnits ENDIF => IF units THEN units elifUnits ENDIF_attributes
-==================================================
-[
-  {
-    text => "{action =\\> addIfThen}"
-  }
-]
-==================================================
 Added node: "IF units THEN units elifUnits ENDIF_attributes" [ fillcolor="#DAA520" label="{action =\> addIfThen}" shape="Mrecord" ]
 Added edge: "IF units THEN units elifUnits ENDIF" -> "IF units THEN units elifUnits ENDIF_attributes" [ label="" ]
-Deal: ARRAY(0x2abf3b0). Size: 0
 Added node: "IF ENDIF" [ fillcolor="white" label="IF ENDIF" ]
 Added edge: "unit" -> "IF ENDIF" [ label="" ]
 Added edge: "IF ENDIF" -> "IF" [ label="" ]
 Added edge: "IF ENDIF" -> "ENDIF" [ label="" ]
-==================================================
-REF: IF ENDIF => IF ENDIF_attributes
-==================================================
-[
-  {
-    text => "{action =\\> ifEndif}"
-  }
-]
-==================================================
 Added node: "IF ENDIF_attributes" [ fillcolor="#DAA520" label="{action =\> ifEndif}" shape="Mrecord" ]
 Added edge: "IF ENDIF" -> "IF ENDIF_attributes" [ label="" ]
-Deal: ARRAY(0x2d60e18). Size: 0
 Added node: "EOF" [ fillcolor="white" label="EOF" ]
 Added edge: "unit" -> "EOF" [ label="" ]
-==================================================
-REF: EOF => EOF_attributes
-==================================================
-[
-  {
-    text => "{action =\\> eof}"
-  }
-]
-==================================================
 Added node: "EOF_attributes" [ fillcolor="#DAA520" label="{action =\> eof}" shape="Mrecord" ]
 Added edge: "EOF" -> "EOF_attributes" [ label="" ]
---------------------------------------------------
-Node:           elifUnit
-Daughter count: 1 ::=
-Daughter stack: 1
-	D: (ARRAY(0x2abcf60))-> ELSE @ units @ THEN @ units
-Adverb stack:   1
-	A: (ARRAY(0x2cfcb80))-> {action =\> elifUnit}
---------------------------------------------------
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-Node: elifUnit
-	D: <ARRAY(0x2abcf60)> -> ELSE @ units @ THEN @ units
-	A: <ARRAY(0x2cfcb80)> -> {action =\> elifUnit}
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-Deal: ARRAY(0x2cfcb80). Size: 0
 Added node: "ELSE units THEN units" [ fillcolor="white" label="ELSE units THEN units" ]
 Added node: "elifUnit"
 Added edge: "elifUnit" -> "ELSE units THEN units" [ label="" ]
@@ -676,278 +178,57 @@ Added edge: "ELSE units THEN units" -> "ELSE" [ label="" ]
 Added edge: "ELSE units THEN units" -> "units" [ label="" ]
 Added edge: "ELSE units THEN units" -> "THEN" [ label="" ]
 Added edge: "ELSE units THEN units" -> "units" [ label="" ]
-==================================================
-REF: ELSE units THEN units => ELSE units THEN units_attributes
-==================================================
-[
-  {
-    text => "{action =\\> elifUnit}"
-  }
-]
-==================================================
 Added node: "ELSE units THEN units_attributes" [ fillcolor="#DAA520" label="{action =\> elifUnit}" shape="Mrecord" ]
 Added edge: "ELSE units THEN units" -> "ELSE units THEN units_attributes" [ label="" ]
---------------------------------------------------
-Node:           elifUnits
-Daughter count: 1 ::=
-Daughter stack: 1
-	D: (ARRAY(0x2c888d0))-> elifUnit
-Adverb stack:   1
-	A: (ARRAY(0x2d7a400))-> 
---------------------------------------------------
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-Node: elifUnits
-	D: <ARRAY(0x2c888d0)> -> elifUnit
-	A: <ARRAY(0x2d7a400)> -> 
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-Deal: ARRAY(0x2d7a400). Size: -1
-Added node: "elifUnit" [ fillcolor="white" label="elifUnit" ]
-Added edge: "elifUnits" -> "elifUnit" [ label="" ]
---------------------------------------------------
-Node:           _CONST
-Daughter count: 1 ~
-Daughter stack: 1
-	D: (ARRAY(0x2a8cb10))-> [^']
-Adverb stack:   1
-	A: (ARRAY(0x2ca9518))-> 
---------------------------------------------------
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-Node: _CONST
-	D: <ARRAY(0x2a8cb10)> -> [^']
-	A: <ARRAY(0x2ca9518)> -> 
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-Deal: ARRAY(0x2ca9518). Size: -1
+Added node: "elifUnit*" [ fillcolor="white" label="elifUnit*" ]
+Added edge: "elifUnits" -> "elifUnit*" [ label="" ]
 Added node: "[^']" [ fillcolor="white" label="\[^'\]" ]
 Added node: "_CONST"
 Added edge: "_CONST" -> "[^']" [ label="" ]
---------------------------------------------------
-Node:           _CONST
-Daughter count: 1 ~
-Daughter stack: 1
-	D: (ARRAY(0x2c88318))-> _BS @ _ALLOWED_BS
-Adverb stack:   1
-	A: (ARRAY(0x2c888d0))-> 
---------------------------------------------------
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-Node: _CONST
-	D: <ARRAY(0x2c88318)> -> _BS @ _ALLOWED_BS
-	A: <ARRAY(0x2c888d0)> -> 
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-Deal: ARRAY(0x2c888d0). Size: -1
 Added node: "_BS _ALLOWED_BS" [ fillcolor="white" label="_BS _ALLOWED_BS" ]
 Added edge: "_CONST" -> "_BS _ALLOWED_BS" [ label="" ]
 Added node: "_BS" [ fillcolor="white" label="_BS" ]
 Added edge: "_BS _ALLOWED_BS" -> "_BS" [ label="" ]
 Added node: "_ALLOWED_BS" [ fillcolor="white" label="_ALLOWED_BS" ]
 Added edge: "_BS _ALLOWED_BS" -> "_ALLOWED_BS" [ label="" ]
---------------------------------------------------
-Node:           _DIGITS
-Daughter count: 1 ~
-Daughter stack: 1
-	D: (ARRAY(0x2d52b08))-> [\\d]
-Adverb stack:   1
-	A: (ARRAY(0x2d50180))-> 
---------------------------------------------------
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-Node: _DIGITS
-	D: <ARRAY(0x2d52b08)> -> [\\d]
-	A: <ARRAY(0x2d50180)> -> 
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-Deal: ARRAY(0x2d50180). Size: -1
-Added node: "[\\d]" [ fillcolor="white" label="\[\\d\]" ]
+Added node: "[\d]+" [ fillcolor="white" label="\[\d\]+" ]
 Added node: "_DIGITS"
-Added edge: "_DIGITS" -> "[\\d]" [ label="" ]
---------------------------------------------------
-Node:           _DIGIT
-Daughter count: 1 ~
-Daughter stack: 1
-	D: (ARRAY(0x2c888d0))-> [\\d]
-Adverb stack:   1
-	A: (ARRAY(0x2d44c20))-> 
---------------------------------------------------
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-Node: _DIGIT
-	D: <ARRAY(0x2c888d0)> -> [\\d]
-	A: <ARRAY(0x2d44c20)> -> 
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-Deal: ARRAY(0x2d44c20). Size: -1
+Added edge: "_DIGITS" -> "[\d]+" [ label="" ]
+Added node: "[\d]" [ fillcolor="white" label="\[\d\]" ]
 Added node: "_DIGIT"
-Added edge: "_DIGIT" -> "[\\d]" [ label="" ]
---------------------------------------------------
-Node:           _LCHAR
-Daughter count: 1 ~
-Daughter stack: 1
-	D: (ARRAY(0x2c88318))-> [a-z]
-Adverb stack:   1
-	A: (ARRAY(0x2abedc8))-> 
---------------------------------------------------
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-Node: _LCHAR
-	D: <ARRAY(0x2c88318)> -> [a-z]
-	A: <ARRAY(0x2abedc8)> -> 
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-Deal: ARRAY(0x2abedc8). Size: -1
+Added edge: "_DIGIT" -> "[\d]" [ label="" ]
 Added node: "[a-z]" [ fillcolor="white" label="\[a-z\]" ]
 Added node: "_LCHAR"
 Added edge: "_LCHAR" -> "[a-z]" [ label="" ]
---------------------------------------------------
-Node:           _UCHAR
-Daughter count: 1 ~
-Daughter stack: 1
-	D: (ARRAY(0x2d52b08))-> [A-Z]
-Adverb stack:   1
-	A: (ARRAY(0x2cc94e0))-> 
---------------------------------------------------
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-Node: _UCHAR
-	D: <ARRAY(0x2d52b08)> -> [A-Z]
-	A: <ARRAY(0x2cc94e0)> -> 
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-Deal: ARRAY(0x2cc94e0). Size: -1
 Added node: "[A-Z]" [ fillcolor="white" label="\[A-Z\]" ]
 Added node: "_UCHAR"
 Added edge: "_UCHAR" -> "[A-Z]" [ label="" ]
---------------------------------------------------
-Node:           _PERCENT
-Daughter count: 1 ~
-Daughter stack: 1
-	D: (ARRAY(0x2c888d0))-> '%'
-Adverb stack:   1
-	A: (ARRAY(0x2ac2200))-> 
---------------------------------------------------
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-Node: _PERCENT
-	D: <ARRAY(0x2c888d0)> -> '%'
-	A: <ARRAY(0x2ac2200)> -> 
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-Deal: ARRAY(0x2ac2200). Size: -1
 Added node: "'%'" [ fillcolor="white" label="'%'" ]
 Added node: "_PERCENT"
 Added edge: "_PERCENT" -> "'%'" [ label="" ]
---------------------------------------------------
-Node:           PERCENT
-Daughter count: 1 ~
-Daughter stack: 1
-	D: (ARRAY(0x2e17c18))-> _PERCENT @ _PERCENT
-Adverb stack:   1
-	A: (ARRAY(0x2d52b08))-> 
---------------------------------------------------
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-Node: PERCENT
-	D: <ARRAY(0x2e17c18)> -> _PERCENT @ _PERCENT
-	A: <ARRAY(0x2d52b08)> -> 
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-Deal: ARRAY(0x2d52b08). Size: -1
 Added node: "_PERCENT _PERCENT" [ fillcolor="white" label="_PERCENT _PERCENT" ]
 Added edge: "PERCENT" -> "_PERCENT _PERCENT" [ label="" ]
 Added node: "_PERCENT" [ fillcolor="white" label="_PERCENT" ]
 Added edge: "_PERCENT _PERCENT" -> "_PERCENT" [ label="" ]
 Added edge: "_PERCENT _PERCENT" -> "_PERCENT" [ label="" ]
---------------------------------------------------
-Node:           _C
-Daughter count: 1 ~
-Daughter stack: 1
-	D: (ARRAY(0x2e12908))-> 'c'
-Adverb stack:   1
-	A: (ARRAY(0x2e15410))-> 
---------------------------------------------------
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-Node: _C
-	D: <ARRAY(0x2e12908)> -> 'c'
-	A: <ARRAY(0x2e15410)> -> 
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-Deal: ARRAY(0x2e15410). Size: -1
 Added node: "'c'" [ fillcolor="white" label="'c'" ]
 Added node: "_C"
 Added edge: "_C" -> "'c'" [ label="" ]
---------------------------------------------------
-Node:           C
-Daughter count: 1 ~
-Daughter stack: 1
-	D: (ARRAY(0x2d5a8c0))-> _PERCENT @ _C
-Adverb stack:   1
-	A: (ARRAY(0x2e17c18))-> 
---------------------------------------------------
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-Node: C
-	D: <ARRAY(0x2d5a8c0)> -> _PERCENT @ _C
-	A: <ARRAY(0x2e17c18)> -> 
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-Deal: ARRAY(0x2e17c18). Size: -1
 Added node: "_PERCENT _C" [ fillcolor="white" label="_PERCENT _C" ]
 Added edge: "C" -> "_PERCENT _C" [ label="" ]
 Added edge: "_PERCENT _C" -> "_PERCENT" [ label="" ]
 Added node: "_C" [ fillcolor="white" label="_C" ]
 Added edge: "_PERCENT _C" -> "_C" [ label="" ]
---------------------------------------------------
-Node:           _COLON
-Daughter count: 1 ~
-Daughter stack: 1
-	D: (ARRAY(0x2ca91d0))-> '꞉'
-Adverb stack:   1
-	A: (ARRAY(0x2e17828))-> 
---------------------------------------------------
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-Node: _COLON
-	D: <ARRAY(0x2ca91d0)> -> '꞉'
-	A: <ARRAY(0x2e17828)> -> 
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-Deal: ARRAY(0x2e17828). Size: -1
-Added node: "'꞉'" [ fillcolor="white" label="'꞉'" ]
+Added node: "':'" [ fillcolor="white" label="':'" ]
 Added node: "_COLON"
-Added edge: "_COLON" -> "'꞉'" [ label="" ]
---------------------------------------------------
-Node:           _DOT
-Daughter count: 1 ~
-Daughter stack: 1
-	D: (ARRAY(0x2e17c18))-> '.'
-Adverb stack:   1
-	A: (ARRAY(0x2e17c90))-> 
---------------------------------------------------
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-Node: _DOT
-	D: <ARRAY(0x2e17c18)> -> '.'
-	A: <ARRAY(0x2e17c90)> -> 
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-Deal: ARRAY(0x2e17c90). Size: -1
+Added node: "'"
+Added edge: "_COLON" -> "'":' [ label="" ]
 Added node: "'.'" [ fillcolor="white" label="'.'" ]
 Added node: "_DOT"
 Added edge: "_DOT" -> "'.'" [ label="" ]
---------------------------------------------------
-Node:           __FLAGS
-Daughter count: 1 ~
-Daughter stack: 1
-	D: (ARRAY(0x2d5a8c0))-> [-+# ]
-Adverb stack:   1
-	A: (ARRAY(0x2d42738))-> 
---------------------------------------------------
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-Node: __FLAGS
-	D: <ARRAY(0x2d5a8c0)> -> [-+# ]
-	A: <ARRAY(0x2d42738)> -> 
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-Deal: ARRAY(0x2d42738). Size: -1
 Added node: "[-+# ]" [ fillcolor="white" label="\[-+# \]" ]
 Added node: "__FLAGS"
 Added edge: "__FLAGS" -> "[-+# ]" [ label="" ]
---------------------------------------------------
-Node:           _FLAGS
-Daughter count: 1 ~
-Daughter stack: 2
-	D: (ARRAY(0x2e17528))-> _COLON @ __FLAGS
-	D: (ARRAY(0x2d44f08))-> __FLAGS
-Adverb stack:   2
-	A: (ARRAY(0x2e17c18))-> 
-	A: (ARRAY(0x2abce58))-> 
---------------------------------------------------
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-Node: _FLAGS
-	D: <ARRAY(0x2e17528)> -> _COLON @ __FLAGS
-	D: <ARRAY(0x2d44f08)> -> __FLAGS
-	A: <ARRAY(0x2e17c18)> -> 
-	A: <ARRAY(0x2abce58)> -> 
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-Deal: ARRAY(0x2e17c18). Size: -1
 Added node: "_COLON __FLAGS" [ fillcolor="white" label="_COLON __FLAGS" ]
 Added node: "_FLAGS"
 Added edge: "_FLAGS" -> "_COLON __FLAGS" [ label="" ]
@@ -955,60 +236,21 @@ Added node: "_COLON" [ fillcolor="white" label="_COLON" ]
 Added edge: "_COLON __FLAGS" -> "_COLON" [ label="" ]
 Added node: "__FLAGS" [ fillcolor="white" label="__FLAGS" ]
 Added edge: "_COLON __FLAGS" -> "__FLAGS" [ label="" ]
-Deal: ARRAY(0x2abce58). Size: -1
 Added edge: "_FLAGS" -> "__FLAGS" [ label="" ]
---------------------------------------------------
-Node:           _FORMAT
-Daughter count: 1 ~
-Daughter stack: 1
-	D: (ARRAY(0x2a8c3f0))-> [doxXs]
-Adverb stack:   1
-	A: (ARRAY(0x2e182c0))-> 
---------------------------------------------------
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-Node: _FORMAT
-	D: <ARRAY(0x2a8c3f0)> -> [doxXs]
-	A: <ARRAY(0x2e182c0)> -> 
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-Deal: ARRAY(0x2e182c0). Size: -1
 Added node: "[doxXs]" [ fillcolor="white" label="\[doxXs\]" ]
 Added node: "_FORMAT"
 Added edge: "_FORMAT" -> "[doxXs]" [ label="" ]
---------------------------------------------------
-Node:           PRINT
-Daughter count: 1 ~
-Daughter stack: 3
-	D: (ARRAY(0x2e1df80))-> _PERCENT @ _FORMAT
-	D: (ARRAY(0x2cfcb80))-> _PERCENT @ _DIGITS @ _FORMAT
-	D: (ARRAY(0x2e17528))-> _PERCENT @ _DIGITS @ _DOT @ _DIGITS @ _FORMAT
-Adverb stack:   3
-	A: (ARRAY(0x2c888d0))-> 
-	A: (ARRAY(0x2e1df20))-> 
-	A: (ARRAY(0x2e1df38))-> 
---------------------------------------------------
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-Node: PRINT
-	D: <ARRAY(0x2e1df80)> -> _PERCENT @ _FORMAT
-	D: <ARRAY(0x2cfcb80)> -> _PERCENT @ _DIGITS @ _FORMAT
-	D: <ARRAY(0x2e17528)> -> _PERCENT @ _DIGITS @ _DOT @ _DIGITS @ _FORMAT
-	A: <ARRAY(0x2c888d0)> -> 
-	A: <ARRAY(0x2e1df20)> -> 
-	A: <ARRAY(0x2e1df38)> -> 
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-Deal: ARRAY(0x2c888d0). Size: -1
 Added node: "_PERCENT _FORMAT" [ fillcolor="white" label="_PERCENT _FORMAT" ]
 Added edge: "PRINT" -> "_PERCENT _FORMAT" [ label="" ]
 Added edge: "_PERCENT _FORMAT" -> "_PERCENT" [ label="" ]
 Added node: "_FORMAT" [ fillcolor="white" label="_FORMAT" ]
 Added edge: "_PERCENT _FORMAT" -> "_FORMAT" [ label="" ]
-Deal: ARRAY(0x2e1df20). Size: -1
 Added node: "_PERCENT _DIGITS _FORMAT" [ fillcolor="white" label="_PERCENT _DIGITS _FORMAT" ]
 Added edge: "PRINT" -> "_PERCENT _DIGITS _FORMAT" [ label="" ]
 Added edge: "_PERCENT _DIGITS _FORMAT" -> "_PERCENT" [ label="" ]
 Added node: "_DIGITS" [ fillcolor="white" label="_DIGITS" ]
 Added edge: "_PERCENT _DIGITS _FORMAT" -> "_DIGITS" [ label="" ]
 Added edge: "_PERCENT _DIGITS _FORMAT" -> "_FORMAT" [ label="" ]
-Deal: ARRAY(0x2e1df38). Size: -1
 Added node: "_PERCENT _DIGITS _DOT _DIGITS _FORMAT" [ fillcolor="white" label="_PERCENT _DIGITS _DOT _DIGITS _FORMAT" ]
 Added edge: "PRINT" -> "_PERCENT _DIGITS _DOT _DIGITS _FORMAT" [ label="" ]
 Added edge: "_PERCENT _DIGITS _DOT _DIGITS _FORMAT" -> "_PERCENT" [ label="" ]
@@ -1017,42 +259,18 @@ Added node: "_DOT" [ fillcolor="white" label="_DOT" ]
 Added edge: "_PERCENT _DIGITS _DOT _DIGITS _FORMAT" -> "_DOT" [ label="" ]
 Added edge: "_PERCENT _DIGITS _DOT _DIGITS _FORMAT" -> "_DIGITS" [ label="" ]
 Added edge: "_PERCENT _DIGITS _DOT _DIGITS _FORMAT" -> "_FORMAT" [ label="" ]
---------------------------------------------------
-Node:           PRINT
-Daughter count: 1 ~
-Daughter stack: 3
-	D: (ARRAY(0x2d8a988))-> _PERCENT @ _FLAGS @ _FORMAT
-	D: (ARRAY(0x2a8c3f0))-> _PERCENT @ _FLAGS @ _DIGITS @ _FORMAT
-	D: (ARRAY(0x2d4d100))-> _PERCENT @ _FLAGS @ _DIGITS @ _DOT @ _DIGITS @ _FORMAT
-Adverb stack:   3
-	A: (ARRAY(0x2abce58))-> 
-	A: (ARRAY(0x2d8a328))-> 
-	A: (ARRAY(0x2e1e280))-> 
---------------------------------------------------
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-Node: PRINT
-	D: <ARRAY(0x2d8a988)> -> _PERCENT @ _FLAGS @ _FORMAT
-	D: <ARRAY(0x2a8c3f0)> -> _PERCENT @ _FLAGS @ _DIGITS @ _FORMAT
-	D: <ARRAY(0x2d4d100)> -> _PERCENT @ _FLAGS @ _DIGITS @ _DOT @ _DIGITS @ _FORMAT
-	A: <ARRAY(0x2abce58)> -> 
-	A: <ARRAY(0x2d8a328)> -> 
-	A: <ARRAY(0x2e1e280)> -> 
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-Deal: ARRAY(0x2abce58). Size: -1
 Added node: "_PERCENT _FLAGS _FORMAT" [ fillcolor="white" label="_PERCENT _FLAGS _FORMAT" ]
 Added edge: "PRINT" -> "_PERCENT _FLAGS _FORMAT" [ label="" ]
 Added edge: "_PERCENT _FLAGS _FORMAT" -> "_PERCENT" [ label="" ]
 Added node: "_FLAGS" [ fillcolor="white" label="_FLAGS" ]
 Added edge: "_PERCENT _FLAGS _FORMAT" -> "_FLAGS" [ label="" ]
 Added edge: "_PERCENT _FLAGS _FORMAT" -> "_FORMAT" [ label="" ]
-Deal: ARRAY(0x2d8a328). Size: -1
 Added node: "_PERCENT _FLAGS _DIGITS _FORMAT" [ fillcolor="white" label="_PERCENT _FLAGS _DIGITS _FORMAT" ]
 Added edge: "PRINT" -> "_PERCENT _FLAGS _DIGITS _FORMAT" [ label="" ]
 Added edge: "_PERCENT _FLAGS _DIGITS _FORMAT" -> "_PERCENT" [ label="" ]
 Added edge: "_PERCENT _FLAGS _DIGITS _FORMAT" -> "_FLAGS" [ label="" ]
 Added edge: "_PERCENT _FLAGS _DIGITS _FORMAT" -> "_DIGITS" [ label="" ]
 Added edge: "_PERCENT _FLAGS _DIGITS _FORMAT" -> "_FORMAT" [ label="" ]
-Deal: ARRAY(0x2e1e280). Size: -1
 Added node: "_PERCENT _FLAGS _DIGITS _DOT _DIGITS _FORMAT" [ fillcolor="white" label="_PERCENT _FLAGS _DIGITS _DOT _DIGITS _FORMAT" ]
 Added edge: "PRINT" -> "_PERCENT _FLAGS _DIGITS _DOT _DIGITS _FORMAT" [ label="" ]
 Added edge: "_PERCENT _FLAGS _DIGITS _DOT _DIGITS _FORMAT" -> "_PERCENT" [ label="" ]
@@ -1061,149 +279,37 @@ Added edge: "_PERCENT _FLAGS _DIGITS _DOT _DIGITS _FORMAT" -> "_DIGITS" [ label=
 Added edge: "_PERCENT _FLAGS _DIGITS _DOT _DIGITS _FORMAT" -> "_DOT" [ label="" ]
 Added edge: "_PERCENT _FLAGS _DIGITS _DOT _DIGITS _FORMAT" -> "_DIGITS" [ label="" ]
 Added edge: "_PERCENT _FLAGS _DIGITS _DOT _DIGITS _FORMAT" -> "_FORMAT" [ label="" ]
---------------------------------------------------
-Node:           PUSH
-Daughter count: 1 ~
-Daughter stack: 1
-	D: (ARRAY(0x2e1e388))-> '%p' @ _DIGIT
-Adverb stack:   1
-	A: (ARRAY(0x2a8c3f0))-> 
---------------------------------------------------
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-Node: PUSH
-	D: <ARRAY(0x2e1e388)> -> '%p' @ _DIGIT
-	A: <ARRAY(0x2a8c3f0)> -> 
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-Deal: ARRAY(0x2a8c3f0). Size: -1
 Added node: "'%p' _DIGIT" [ fillcolor="white" label="'%p' _DIGIT" ]
 Added edge: "PUSH" -> "'%p' _DIGIT" [ label="" ]
 Added node: "'%p'" [ fillcolor="white" label="'%p'" ]
 Added edge: "'%p' _DIGIT" -> "'%p'" [ label="" ]
 Added node: "_DIGIT" [ fillcolor="white" label="_DIGIT" ]
 Added edge: "'%p' _DIGIT" -> "_DIGIT" [ label="" ]
---------------------------------------------------
-Node:           DYNPOP
-Daughter count: 1 ~
-Daughter stack: 1
-	D: (ARRAY(0x2e1df80))-> '%P' @ _LCHAR
-Adverb stack:   1
-	A: (ARRAY(0x2a8c3f0))-> 
---------------------------------------------------
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-Node: DYNPOP
-	D: <ARRAY(0x2e1df80)> -> '%P' @ _LCHAR
-	A: <ARRAY(0x2a8c3f0)> -> 
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-Deal: ARRAY(0x2a8c3f0). Size: -1
 Added node: "'%P' _LCHAR" [ fillcolor="white" label="'%P' _LCHAR" ]
 Added edge: "DYNPOP" -> "'%P' _LCHAR" [ label="" ]
 Added node: "'%P'" [ fillcolor="white" label="'%P'" ]
 Added edge: "'%P' _LCHAR" -> "'%P'" [ label="" ]
 Added node: "_LCHAR" [ fillcolor="white" label="_LCHAR" ]
 Added edge: "'%P' _LCHAR" -> "_LCHAR" [ label="" ]
---------------------------------------------------
-Node:           DYNPUSH
-Daughter count: 1 ~
-Daughter stack: 1
-	D: (ARRAY(0x2d4d6a0))-> '%g' @ _LCHAR
-Adverb stack:   1
-	A: (ARRAY(0x2a8c3f0))-> 
---------------------------------------------------
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-Node: DYNPUSH
-	D: <ARRAY(0x2d4d6a0)> -> '%g' @ _LCHAR
-	A: <ARRAY(0x2a8c3f0)> -> 
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-Deal: ARRAY(0x2a8c3f0). Size: -1
 Added node: "'%g' _LCHAR" [ fillcolor="white" label="'%g' _LCHAR" ]
 Added edge: "DYNPUSH" -> "'%g' _LCHAR" [ label="" ]
 Added node: "'%g'" [ fillcolor="white" label="'%g'" ]
 Added edge: "'%g' _LCHAR" -> "'%g'" [ label="" ]
 Added edge: "'%g' _LCHAR" -> "_LCHAR" [ label="" ]
---------------------------------------------------
-Node:           STATICPOP
-Daughter count: 1 ~
-Daughter stack: 1
-	D: (ARRAY(0x2d8a988))-> '%P' @ _UCHAR
-Adverb stack:   1
-	A: (ARRAY(0x2a8c3f0))-> 
---------------------------------------------------
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-Node: STATICPOP
-	D: <ARRAY(0x2d8a988)> -> '%P' @ _UCHAR
-	A: <ARRAY(0x2a8c3f0)> -> 
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-Deal: ARRAY(0x2a8c3f0). Size: -1
 Added node: "'%P' _UCHAR" [ fillcolor="white" label="'%P' _UCHAR" ]
 Added edge: "STATICPOP" -> "'%P' _UCHAR" [ label="" ]
 Added edge: "'%P' _UCHAR" -> "'%P'" [ label="" ]
 Added node: "_UCHAR" [ fillcolor="white" label="_UCHAR" ]
 Added edge: "'%P' _UCHAR" -> "_UCHAR" [ label="" ]
---------------------------------------------------
-Node:           STATICPUSH
-Daughter count: 1 ~
-Daughter stack: 1
-	D: (ARRAY(0x2e1e388))-> '%g' @ _UCHAR
-Adverb stack:   1
-	A: (ARRAY(0x2a8c3f0))-> 
---------------------------------------------------
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-Node: STATICPUSH
-	D: <ARRAY(0x2e1e388)> -> '%g' @ _UCHAR
-	A: <ARRAY(0x2a8c3f0)> -> 
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-Deal: ARRAY(0x2a8c3f0). Size: -1
 Added node: "'%g' _UCHAR" [ fillcolor="white" label="'%g' _UCHAR" ]
 Added edge: "STATICPUSH" -> "'%g' _UCHAR" [ label="" ]
 Added edge: "'%g' _UCHAR" -> "'%g'" [ label="" ]
 Added edge: "'%g' _UCHAR" -> "_UCHAR" [ label="" ]
---------------------------------------------------
-Node:           L
-Daughter count: 1 ~
-Daughter stack: 1
-	D: (ARRAY(0x2d4d3d0))-> 'ls'
-Adverb stack:   1
-	A: (ARRAY(0x2e17f90))-> 
---------------------------------------------------
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-Node: L
-	D: <ARRAY(0x2d4d3d0)> -> 'ls'
-	A: <ARRAY(0x2e17f90)> -> 
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-Deal: ARRAY(0x2e17f90). Size: -1
 Added node: "'ls'" [ fillcolor="white" label="'ls'" ]
 Added edge: "L" -> "'ls'" [ label="" ]
---------------------------------------------------
-Node:           _SQUOTE
-Daughter count: 1 ~
-Daughter stack: 1
-	D: (ARRAY(0x2a8c3f0))-> [']
-Adverb stack:   1
-	A: (ARRAY(0x2d52718))-> 
---------------------------------------------------
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-Node: _SQUOTE
-	D: <ARRAY(0x2a8c3f0)> -> [']
-	A: <ARRAY(0x2d52718)> -> 
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-Deal: ARRAY(0x2d52718). Size: -1
 Added node: "[']" [ fillcolor="white" label="\['\]" ]
 Added node: "_SQUOTE"
 Added edge: "_SQUOTE" -> "[']" [ label="" ]
---------------------------------------------------
-Node:           PUSHCONST
-Daughter count: 1 ~
-Daughter stack: 1
-	D: (ARRAY(0x2d454f0))-> '%' @ _SQUOTE @ _CONST @ _SQUOTE
-Adverb stack:   1
-	A: (ARRAY(0x2d61748))-> 
---------------------------------------------------
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-Node: PUSHCONST
-	D: <ARRAY(0x2d454f0)> -> '%' @ _SQUOTE @ _CONST @ _SQUOTE
-	A: <ARRAY(0x2d61748)> -> 
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-Deal: ARRAY(0x2d61748). Size: -1
 Added node: "'%' _SQUOTE _CONST _SQUOTE" [ fillcolor="white" label="'%' _SQUOTE _CONST _SQUOTE" ]
 Added edge: "PUSHCONST" -> "'%' _SQUOTE _CONST _SQUOTE" [ label="" ]
 Added edge: "'%' _SQUOTE _CONST _SQUOTE" -> "'%'" [ label="" ]
@@ -1212,54 +318,12 @@ Added edge: "'%' _SQUOTE _CONST _SQUOTE" -> "_SQUOTE" [ label="" ]
 Added node: "_CONST" [ fillcolor="white" label="_CONST" ]
 Added edge: "'%' _SQUOTE _CONST _SQUOTE" -> "_CONST" [ label="" ]
 Added edge: "'%' _SQUOTE _CONST _SQUOTE" -> "_SQUOTE" [ label="" ]
---------------------------------------------------
-Node:           _LCURLY
-Daughter count: 1 ~
-Daughter stack: 1
-	D: (ARRAY(0x2e1aca8))-> '{'
-Adverb stack:   1
-	A: (ARRAY(0x2e1e388))-> 
---------------------------------------------------
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-Node: _LCURLY
-	D: <ARRAY(0x2e1aca8)> -> '{'
-	A: <ARRAY(0x2e1e388)> -> 
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-Deal: ARRAY(0x2e1e388). Size: -1
 Added node: "'{'" [ fillcolor="white" label="'{'" ]
 Added node: "_LCURLY"
 Added edge: "_LCURLY" -> "'{'" [ label="" ]
---------------------------------------------------
-Node:           _RCURLY
-Daughter count: 1 ~
-Daughter stack: 1
-	D: (ARRAY(0x2d4f5f8))-> '}'
-Adverb stack:   1
-	A: (ARRAY(0x2e1df80))-> 
---------------------------------------------------
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-Node: _RCURLY
-	D: <ARRAY(0x2d4f5f8)> -> '}'
-	A: <ARRAY(0x2e1df80)> -> 
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-Deal: ARRAY(0x2e1df80). Size: -1
 Added node: "'}'" [ fillcolor="white" label="'}'" ]
 Added node: "_RCURLY"
 Added edge: "_RCURLY" -> "'}'" [ label="" ]
---------------------------------------------------
-Node:           PUSHINT
-Daughter count: 1 ~
-Daughter stack: 1
-	D: (ARRAY(0x2abcaf8))-> _PERCENT @ _LCURLY @ _DIGITS @ _RCURLY
-Adverb stack:   1
-	A: (ARRAY(0x2d88178))-> 
---------------------------------------------------
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-Node: PUSHINT
-	D: <ARRAY(0x2abcaf8)> -> _PERCENT @ _LCURLY @ _DIGITS @ _RCURLY
-	A: <ARRAY(0x2d88178)> -> 
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-Deal: ARRAY(0x2d88178). Size: -1
 Added node: "_PERCENT _LCURLY _DIGITS _RCURLY" [ fillcolor="white" label="_PERCENT _LCURLY _DIGITS _RCURLY" ]
 Added edge: "PUSHINT" -> "_PERCENT _LCURLY _DIGITS _RCURLY" [ label="" ]
 Added edge: "_PERCENT _LCURLY _DIGITS _RCURLY" -> "_PERCENT" [ label="" ]
@@ -1268,901 +332,197 @@ Added edge: "_PERCENT _LCURLY _DIGITS _RCURLY" -> "_LCURLY" [ label="" ]
 Added edge: "_PERCENT _LCURLY _DIGITS _RCURLY" -> "_DIGITS" [ label="" ]
 Added node: "_RCURLY" [ fillcolor="white" label="_RCURLY" ]
 Added edge: "_PERCENT _LCURLY _DIGITS _RCURLY" -> "_RCURLY" [ label="" ]
---------------------------------------------------
-Node:           _PLUS
-Daughter count: 1 ~
-Daughter stack: 1
-	D: (ARRAY(0x2d4f850))-> '+'
-Adverb stack:   1
-	A: (ARRAY(0x2d454f0))-> 
---------------------------------------------------
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-Node: _PLUS
-	D: <ARRAY(0x2d4f850)> -> '+'
-	A: <ARRAY(0x2d454f0)> -> 
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-Deal: ARRAY(0x2d454f0). Size: -1
 Added node: "'+'" [ fillcolor="white" label="'+'" ]
 Added node: "_PLUS"
 Added edge: "_PLUS" -> "'+'" [ label="" ]
---------------------------------------------------
-Node:           PLUS
-Daughter count: 1 ~
-Daughter stack: 1
-	D: (ARRAY(0x2d88178))-> _PERCENT @ _PLUS
-Adverb stack:   1
-	A: (ARRAY(0x2abcaf8))-> 
---------------------------------------------------
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-Node: PLUS
-	D: <ARRAY(0x2d88178)> -> _PERCENT @ _PLUS
-	A: <ARRAY(0x2abcaf8)> -> 
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-Deal: ARRAY(0x2abcaf8). Size: -1
 Added node: "_PERCENT _PLUS" [ fillcolor="white" label="_PERCENT _PLUS" ]
 Added edge: "PLUS" -> "_PERCENT _PLUS" [ label="" ]
 Added edge: "_PERCENT _PLUS" -> "_PERCENT" [ label="" ]
 Added node: "_PLUS" [ fillcolor="white" label="_PLUS" ]
 Added edge: "_PERCENT _PLUS" -> "_PLUS" [ label="" ]
---------------------------------------------------
-Node:           _MINUS
-Daughter count: 1 ~
-Daughter stack: 1
-	D: (ARRAY(0x2d8a0e8))-> '-'
-Adverb stack:   1
-	A: (ARRAY(0x2e1fe18))-> 
---------------------------------------------------
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-Node: _MINUS
-	D: <ARRAY(0x2d8a0e8)> -> '-'
-	A: <ARRAY(0x2e1fe18)> -> 
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-Deal: ARRAY(0x2e1fe18). Size: -1
 Added node: "'-'" [ fillcolor="white" label="'-'" ]
 Added node: "_MINUS"
 Added edge: "_MINUS" -> "'-'" [ label="" ]
---------------------------------------------------
-Node:           MINUS
-Daughter count: 1 ~
-Daughter stack: 1
-	D: (ARRAY(0x2d52718))-> _PERCENT @ _MINUS
-Adverb stack:   1
-	A: (ARRAY(0x2d88178))-> 
---------------------------------------------------
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-Node: MINUS
-	D: <ARRAY(0x2d52718)> -> _PERCENT @ _MINUS
-	A: <ARRAY(0x2d88178)> -> 
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-Deal: ARRAY(0x2d88178). Size: -1
 Added node: "_PERCENT _MINUS" [ fillcolor="white" label="_PERCENT _MINUS" ]
 Added edge: "MINUS" -> "_PERCENT _MINUS" [ label="" ]
 Added edge: "_PERCENT _MINUS" -> "_PERCENT" [ label="" ]
 Added node: "_MINUS" [ fillcolor="white" label="_MINUS" ]
 Added edge: "_PERCENT _MINUS" -> "_MINUS" [ label="" ]
---------------------------------------------------
-Node:           _STAR
-Daughter count: 1 ~
-Daughter stack: 1
-	D: (ARRAY(0x2e20220))-> '*'
-Adverb stack:   1
-	A: (ARRAY(0x2e20490))-> 
---------------------------------------------------
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-Node: _STAR
-	D: <ARRAY(0x2e20220)> -> '*'
-	A: <ARRAY(0x2e20490)> -> 
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-Deal: ARRAY(0x2e20490). Size: -1
 Added node: "'*'" [ fillcolor="white" label="'*'" ]
 Added node: "_STAR"
 Added edge: "_STAR" -> "'*'" [ label="" ]
---------------------------------------------------
-Node:           STAR
-Daughter count: 1 ~
-Daughter stack: 1
-	D: (ARRAY(0x2d4d9a0))-> _PERCENT @ _STAR
-Adverb stack:   1
-	A: (ARRAY(0x2d52718))-> 
---------------------------------------------------
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-Node: STAR
-	D: <ARRAY(0x2d4d9a0)> -> _PERCENT @ _STAR
-	A: <ARRAY(0x2d52718)> -> 
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-Deal: ARRAY(0x2d52718). Size: -1
 Added node: "_PERCENT _STAR" [ fillcolor="white" label="_PERCENT _STAR" ]
 Added edge: "STAR" -> "_PERCENT _STAR" [ label="" ]
 Added edge: "_PERCENT _STAR" -> "_PERCENT" [ label="" ]
 Added node: "_STAR" [ fillcolor="white" label="_STAR" ]
 Added edge: "_PERCENT _STAR" -> "_STAR" [ label="" ]
---------------------------------------------------
-Node:           _DIV
-Daughter count: 1 ~
-Daughter stack: 1
-	D: (ARRAY(0x2e38b68))-> '/'
-Adverb stack:   1
-	A: (ARRAY(0x2d64e78))-> 
---------------------------------------------------
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-Node: _DIV
-	D: <ARRAY(0x2e38b68)> -> '/'
-	A: <ARRAY(0x2d64e78)> -> 
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-Deal: ARRAY(0x2d64e78). Size: -1
 Added node: "'/'" [ fillcolor="white" label="'/'" ]
 Added node: "_DIV"
 Added edge: "_DIV" -> "'/'" [ label="" ]
---------------------------------------------------
-Node:           DIV
-Daughter count: 1 ~
-Daughter stack: 1
-	D: (ARRAY(0x2e20190))-> _PERCENT @ _DIV
-Adverb stack:   1
-	A: (ARRAY(0x2d4d9a0))-> 
---------------------------------------------------
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-Node: DIV
-	D: <ARRAY(0x2e20190)> -> _PERCENT @ _DIV
-	A: <ARRAY(0x2d4d9a0)> -> 
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-Deal: ARRAY(0x2d4d9a0). Size: -1
 Added node: "_PERCENT _DIV" [ fillcolor="white" label="_PERCENT _DIV" ]
 Added edge: "DIV" -> "_PERCENT _DIV" [ label="" ]
 Added edge: "_PERCENT _DIV" -> "_PERCENT" [ label="" ]
 Added node: "_DIV" [ fillcolor="white" label="_DIV" ]
 Added edge: "_PERCENT _DIV" -> "_DIV" [ label="" ]
---------------------------------------------------
-Node:           _MOD
-Daughter count: 1 ~
-Daughter stack: 1
-	D: (ARRAY(0x2d64f68))-> 'm'
-Adverb stack:   1
-	A: (ARRAY(0x2ac20f8))-> 
---------------------------------------------------
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-Node: _MOD
-	D: <ARRAY(0x2d64f68)> -> 'm'
-	A: <ARRAY(0x2ac20f8)> -> 
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-Deal: ARRAY(0x2ac20f8). Size: -1
 Added node: "'m'" [ fillcolor="white" label="'m'" ]
 Added node: "_MOD"
 Added edge: "_MOD" -> "'m'" [ label="" ]
---------------------------------------------------
-Node:           MOD
-Daughter count: 1 ~
-Daughter stack: 1
-	D: (ARRAY(0x2e38ad8))-> _PERCENT @ _MOD
-Adverb stack:   1
-	A: (ARRAY(0x2e20190))-> 
---------------------------------------------------
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-Node: MOD
-	D: <ARRAY(0x2e38ad8)> -> _PERCENT @ _MOD
-	A: <ARRAY(0x2e20190)> -> 
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-Deal: ARRAY(0x2e20190). Size: -1
 Added node: "_PERCENT _MOD" [ fillcolor="white" label="_PERCENT _MOD" ]
 Added edge: "MOD" -> "_PERCENT _MOD" [ label="" ]
 Added edge: "_PERCENT _MOD" -> "_PERCENT" [ label="" ]
 Added node: "_MOD" [ fillcolor="white" label="_MOD" ]
 Added edge: "_PERCENT _MOD" -> "_MOD" [ label="" ]
---------------------------------------------------
-Node:           _BITAND
-Daughter count: 1 ~
-Daughter stack: 1
-	D: (ARRAY(0x2c9a788))-> '&'
-Adverb stack:   1
-	A: (ARRAY(0x2c9ab18))-> 
---------------------------------------------------
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-Node: _BITAND
-	D: <ARRAY(0x2c9a788)> -> '&'
-	A: <ARRAY(0x2c9ab18)> -> 
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-Deal: ARRAY(0x2c9ab18). Size: -1
 Added node: "'&'" [ fillcolor="white" label="'&'" ]
 Added node: "_BITAND"
 Added edge: "_BITAND" -> "'&'" [ label="" ]
---------------------------------------------------
-Node:           BITAND
-Daughter count: 1 ~
-Daughter stack: 1
-	D: (ARRAY(0x2d64f20))-> _PERCENT @ _BITAND
-Adverb stack:   1
-	A: (ARRAY(0x2e38ad8))-> 
---------------------------------------------------
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-Node: BITAND
-	D: <ARRAY(0x2d64f20)> -> _PERCENT @ _BITAND
-	A: <ARRAY(0x2e38ad8)> -> 
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-Deal: ARRAY(0x2e38ad8). Size: -1
 Added node: "_PERCENT _BITAND" [ fillcolor="white" label="_PERCENT _BITAND" ]
 Added edge: "BITAND" -> "_PERCENT _BITAND" [ label="" ]
 Added edge: "_PERCENT _BITAND" -> "_PERCENT" [ label="" ]
 Added node: "_BITAND" [ fillcolor="white" label="_BITAND" ]
 Added edge: "_PERCENT _BITAND" -> "_BITAND" [ label="" ]
---------------------------------------------------
-Node:           _BITOR
-Daughter count: 1 ~
-Daughter stack: 1
-	D: (ARRAY(0x2abfc60))-> '|'
-Adverb stack:   1
-	A: (ARRAY(0x2a8c438))-> 
---------------------------------------------------
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-Node: _BITOR
-	D: <ARRAY(0x2abfc60)> -> '|'
-	A: <ARRAY(0x2a8c438)> -> 
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-Deal: ARRAY(0x2a8c438). Size: -1
 Added node: "'|'" [ fillcolor="white" label="'|'" ]
 Added node: "_BITOR"
 Added edge: "_BITOR" -> "'|'" [ label="" ]
---------------------------------------------------
-Node:           BITOR
-Daughter count: 1 ~
-Daughter stack: 1
-	D: (ARRAY(0x2ac2788))-> _PERCENT @ _BITOR
-Adverb stack:   1
-	A: (ARRAY(0x2d64f20))-> 
---------------------------------------------------
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-Node: BITOR
-	D: <ARRAY(0x2ac2788)> -> _PERCENT @ _BITOR
-	A: <ARRAY(0x2d64f20)> -> 
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-Deal: ARRAY(0x2d64f20). Size: -1
 Added node: "_PERCENT _BITOR" [ fillcolor="white" label="_PERCENT _BITOR" ]
 Added edge: "BITOR" -> "_PERCENT _BITOR" [ label="" ]
 Added edge: "_PERCENT _BITOR" -> "_PERCENT" [ label="" ]
 Added node: "_BITOR" [ fillcolor="white" label="_BITOR" ]
 Added edge: "_PERCENT _BITOR" -> "_BITOR" [ label="" ]
---------------------------------------------------
-Node:           _BITXOR
-Daughter count: 1 ~
-Daughter stack: 1
-	D: (ARRAY(0x2abee70))-> '^'
-Adverb stack:   1
-	A: (ARRAY(0x2a8caf8))-> 
---------------------------------------------------
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-Node: _BITXOR
-	D: <ARRAY(0x2abee70)> -> '^'
-	A: <ARRAY(0x2a8caf8)> -> 
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-Deal: ARRAY(0x2a8caf8). Size: -1
 Added node: "'^'" [ fillcolor="white" label="'^'" ]
 Added node: "_BITXOR"
 Added edge: "_BITXOR" -> "'^'" [ label="" ]
---------------------------------------------------
-Node:           BITXOR
-Daughter count: 1 ~
-Daughter stack: 1
-	D: (ARRAY(0x2abfa38))-> _PERCENT @ _BITXOR
-Adverb stack:   1
-	A: (ARRAY(0x2ac2788))-> 
---------------------------------------------------
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-Node: BITXOR
-	D: <ARRAY(0x2abfa38)> -> _PERCENT @ _BITXOR
-	A: <ARRAY(0x2ac2788)> -> 
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-Deal: ARRAY(0x2ac2788). Size: -1
 Added node: "_PERCENT _BITXOR" [ fillcolor="white" label="_PERCENT _BITXOR" ]
 Added edge: "BITXOR" -> "_PERCENT _BITXOR" [ label="" ]
 Added edge: "_PERCENT _BITXOR" -> "_PERCENT" [ label="" ]
 Added node: "_BITXOR" [ fillcolor="white" label="_BITXOR" ]
 Added edge: "_PERCENT _BITXOR" -> "_BITXOR" [ label="" ]
---------------------------------------------------
-Node:           _EQUAL
-Daughter count: 1 ~
-Daughter stack: 1
-	D: (ARRAY(0x2c88450))-> '='
-Adverb stack:   1
-	A: (ARRAY(0x2a8bfd0))-> 
---------------------------------------------------
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-Node: _EQUAL
-	D: <ARRAY(0x2c88450)> -> '='
-	A: <ARRAY(0x2a8bfd0)> -> 
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-Deal: ARRAY(0x2a8bfd0). Size: -1
 Added node: "'='" [ fillcolor="white" label="'='" ]
 Added node: "_EQUAL"
 Added edge: "_EQUAL" -> "'='" [ label="" ]
---------------------------------------------------
-Node:           EQUAL
-Daughter count: 1 ~
-Daughter stack: 1
-	D: (ARRAY(0x2abeac8))-> _PERCENT @ _EQUAL
-Adverb stack:   1
-	A: (ARRAY(0x2abfa38))-> 
---------------------------------------------------
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-Node: EQUAL
-	D: <ARRAY(0x2abeac8)> -> _PERCENT @ _EQUAL
-	A: <ARRAY(0x2abfa38)> -> 
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-Deal: ARRAY(0x2abfa38). Size: -1
 Added node: "_PERCENT _EQUAL" [ fillcolor="white" label="_PERCENT _EQUAL" ]
 Added edge: "EQUAL" -> "_PERCENT _EQUAL" [ label="" ]
 Added edge: "_PERCENT _EQUAL" -> "_PERCENT" [ label="" ]
 Added node: "_EQUAL" [ fillcolor="white" label="_EQUAL" ]
 Added edge: "_PERCENT _EQUAL" -> "_EQUAL" [ label="" ]
---------------------------------------------------
-Node:           _GREATER
-Daughter count: 1 ~
-Daughter stack: 1
-	D: (ARRAY(0x2ca8cf0))-> '\>'
-Adverb stack:   1
-	A: (ARRAY(0x2ca8c48))-> 
---------------------------------------------------
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-Node: _GREATER
-	D: <ARRAY(0x2ca8cf0)> -> '\>'
-	A: <ARRAY(0x2ca8c48)> -> 
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-Deal: ARRAY(0x2ca8c48). Size: -1
-Added node: "'\>'" [ fillcolor="white" label="'\>'" ]
+Added node: "'>'" [ fillcolor="white" label="'>'" ]
 Added node: "_GREATER"
-Added edge: "_GREATER" -> "'\>'" [ label="" ]
---------------------------------------------------
-Node:           GREATER
-Daughter count: 1 ~
-Daughter stack: 1
-	D: (ARRAY(0x2c88708))-> _PERCENT @ _GREATER
-Adverb stack:   1
-	A: (ARRAY(0x2abeac8))-> 
---------------------------------------------------
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-Node: GREATER
-	D: <ARRAY(0x2c88708)> -> _PERCENT @ _GREATER
-	A: <ARRAY(0x2abeac8)> -> 
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-Deal: ARRAY(0x2abeac8). Size: -1
+Added edge: "_GREATER" -> "'>'" [ label="" ]
 Added node: "_PERCENT _GREATER" [ fillcolor="white" label="_PERCENT _GREATER" ]
 Added edge: "GREATER" -> "_PERCENT _GREATER" [ label="" ]
 Added edge: "_PERCENT _GREATER" -> "_PERCENT" [ label="" ]
 Added node: "_GREATER" [ fillcolor="white" label="_GREATER" ]
 Added edge: "_PERCENT _GREATER" -> "_GREATER" [ label="" ]
---------------------------------------------------
-Node:           _LOWER
-Daughter count: 1 ~
-Daughter stack: 1
-	D: (ARRAY(0x2ca94d0))-> '\<'
-Adverb stack:   1
-	A: (ARRAY(0x2cc8a48))-> 
---------------------------------------------------
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-Node: _LOWER
-	D: <ARRAY(0x2ca94d0)> -> '\<'
-	A: <ARRAY(0x2cc8a48)> -> 
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-Deal: ARRAY(0x2cc8a48). Size: -1
-Added node: "'\<'" [ fillcolor="white" label="'\<'" ]
+Added node: "'<'" [ fillcolor="white" label="'<'" ]
 Added node: "_LOWER"
-Added edge: "_LOWER" -> "'\<'" [ label="" ]
---------------------------------------------------
-Node:           LOWER
-Daughter count: 1 ~
-Daughter stack: 1
-	D: (ARRAY(0x2ca8870))-> _PERCENT @ _LOWER
-Adverb stack:   1
-	A: (ARRAY(0x2c88708))-> 
---------------------------------------------------
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-Node: LOWER
-	D: <ARRAY(0x2ca8870)> -> _PERCENT @ _LOWER
-	A: <ARRAY(0x2c88708)> -> 
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-Deal: ARRAY(0x2c88708). Size: -1
+Added edge: "_LOWER" -> "'<'" [ label="" ]
 Added node: "_PERCENT _LOWER" [ fillcolor="white" label="_PERCENT _LOWER" ]
 Added edge: "LOWER" -> "_PERCENT _LOWER" [ label="" ]
 Added edge: "_PERCENT _LOWER" -> "_PERCENT" [ label="" ]
 Added node: "_LOWER" [ fillcolor="white" label="_LOWER" ]
 Added edge: "_PERCENT _LOWER" -> "_LOWER" [ label="" ]
---------------------------------------------------
-Node:           _AND
-Daughter count: 1 ~
-Daughter stack: 1
-	D: (ARRAY(0x2abe9f0))-> 'A'
-Adverb stack:   1
-	A: (ARRAY(0x2d42750))-> 
---------------------------------------------------
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-Node: _AND
-	D: <ARRAY(0x2abe9f0)> -> 'A'
-	A: <ARRAY(0x2d42750)> -> 
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-Deal: ARRAY(0x2d42750). Size: -1
 Added node: "'A'" [ fillcolor="white" label="'A'" ]
 Added node: "_AND"
 Added edge: "_AND" -> "'A'" [ label="" ]
---------------------------------------------------
-Node:           AND
-Daughter count: 1 ~
-Daughter stack: 1
-	D: (ARRAY(0x2ca9260))-> _PERCENT @ _AND
-Adverb stack:   1
-	A: (ARRAY(0x2ca8870))-> 
---------------------------------------------------
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-Node: AND
-	D: <ARRAY(0x2ca9260)> -> _PERCENT @ _AND
-	A: <ARRAY(0x2ca8870)> -> 
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-Deal: ARRAY(0x2ca8870). Size: -1
 Added node: "_PERCENT _AND" [ fillcolor="white" label="_PERCENT _AND" ]
 Added edge: "AND" -> "_PERCENT _AND" [ label="" ]
 Added edge: "_PERCENT _AND" -> "_PERCENT" [ label="" ]
 Added node: "_AND" [ fillcolor="white" label="_AND" ]
 Added edge: "_PERCENT _AND" -> "_AND" [ label="" ]
---------------------------------------------------
-Node:           _OR
-Daughter count: 1 ~
-Daughter stack: 1
-	D: (ARRAY(0x2d47e30))-> 'O'
-Adverb stack:   1
-	A: (ARRAY(0x2d47fe0))-> 
---------------------------------------------------
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-Node: _OR
-	D: <ARRAY(0x2d47e30)> -> 'O'
-	A: <ARRAY(0x2d47fe0)> -> 
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-Deal: ARRAY(0x2d47fe0). Size: -1
 Added node: "'O'" [ fillcolor="white" label="'O'" ]
 Added node: "_OR"
 Added edge: "_OR" -> "'O'" [ label="" ]
---------------------------------------------------
-Node:           OR
-Daughter count: 1 ~
-Daughter stack: 1
-	D: (ARRAY(0x2cf3f28))-> _PERCENT @ _OR
-Adverb stack:   1
-	A: (ARRAY(0x2ca9260))-> 
---------------------------------------------------
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-Node: OR
-	D: <ARRAY(0x2cf3f28)> -> _PERCENT @ _OR
-	A: <ARRAY(0x2ca9260)> -> 
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-Deal: ARRAY(0x2ca9260). Size: -1
 Added node: "_PERCENT _OR" [ fillcolor="white" label="_PERCENT _OR" ]
 Added edge: "OR" -> "_PERCENT _OR" [ label="" ]
 Added edge: "_PERCENT _OR" -> "_PERCENT" [ label="" ]
 Added node: "_OR" [ fillcolor="white" label="_OR" ]
 Added edge: "_PERCENT _OR" -> "_OR" [ label="" ]
---------------------------------------------------
-Node:           _NOT
-Daughter count: 1 ~
-Daughter stack: 1
-	D: (ARRAY(0x2d481a8))-> '!'
-Adverb stack:   1
-	A: (ARRAY(0x2d48910))-> 
---------------------------------------------------
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-Node: _NOT
-	D: <ARRAY(0x2d481a8)> -> '!'
-	A: <ARRAY(0x2d48910)> -> 
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-Deal: ARRAY(0x2d48910). Size: -1
 Added node: "'!'" [ fillcolor="white" label="'!'" ]
 Added node: "_NOT"
 Added edge: "_NOT" -> "'!'" [ label="" ]
---------------------------------------------------
-Node:           NOT
-Daughter count: 1 ~
-Daughter stack: 1
-	D: (ARRAY(0x2d47da0))-> _PERCENT @ _NOT
-Adverb stack:   1
-	A: (ARRAY(0x2cf3f28))-> 
---------------------------------------------------
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-Node: NOT
-	D: <ARRAY(0x2d47da0)> -> _PERCENT @ _NOT
-	A: <ARRAY(0x2cf3f28)> -> 
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-Deal: ARRAY(0x2cf3f28). Size: -1
 Added node: "_PERCENT _NOT" [ fillcolor="white" label="_PERCENT _NOT" ]
 Added edge: "NOT" -> "_PERCENT _NOT" [ label="" ]
 Added edge: "_PERCENT _NOT" -> "_PERCENT" [ label="" ]
 Added node: "_NOT" [ fillcolor="white" label="_NOT" ]
 Added edge: "_PERCENT _NOT" -> "_NOT" [ label="" ]
---------------------------------------------------
-Node:           _COMPLEMENT
-Daughter count: 1 ~
-Daughter stack: 1
-	D: (ARRAY(0x2d4d250))-> '~'
-Adverb stack:   1
-	A: (ARRAY(0x2d4d718))-> 
---------------------------------------------------
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-Node: _COMPLEMENT
-	D: <ARRAY(0x2d4d250)> -> '~'
-	A: <ARRAY(0x2d4d718)> -> 
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-Deal: ARRAY(0x2d4d718). Size: -1
 Added node: "'~'" [ fillcolor="white" label="'~'" ]
 Added node: "_COMPLEMENT"
 Added edge: "_COMPLEMENT" -> "'~'" [ label="" ]
---------------------------------------------------
-Node:           COMPLEMENT
-Daughter count: 1 ~
-Daughter stack: 1
-	D: (ARRAY(0x2d483d0))-> _PERCENT @ _COMPLEMENT
-Adverb stack:   1
-	A: (ARRAY(0x2d47da0))-> 
---------------------------------------------------
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-Node: COMPLEMENT
-	D: <ARRAY(0x2d483d0)> -> _PERCENT @ _COMPLEMENT
-	A: <ARRAY(0x2d47da0)> -> 
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-Deal: ARRAY(0x2d47da0). Size: -1
 Added node: "_PERCENT _COMPLEMENT" [ fillcolor="white" label="_PERCENT _COMPLEMENT" ]
 Added edge: "COMPLEMENT" -> "_PERCENT _COMPLEMENT" [ label="" ]
 Added edge: "_PERCENT _COMPLEMENT" -> "_PERCENT" [ label="" ]
 Added node: "_COMPLEMENT" [ fillcolor="white" label="_COMPLEMENT" ]
 Added edge: "_PERCENT _COMPLEMENT" -> "_COMPLEMENT" [ label="" ]
---------------------------------------------------
-Node:           _ADDONE
-Daughter count: 1 ~
-Daughter stack: 1
-	D: (ARRAY(0x2d617f0))-> 'i'
-Adverb stack:   1
-	A: (ARRAY(0x2d655a8))-> 
---------------------------------------------------
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-Node: _ADDONE
-	D: <ARRAY(0x2d617f0)> -> 'i'
-	A: <ARRAY(0x2d655a8)> -> 
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-Deal: ARRAY(0x2d655a8). Size: -1
 Added node: "'i'" [ fillcolor="white" label="'i'" ]
 Added node: "_ADDONE"
 Added edge: "_ADDONE" -> "'i'" [ label="" ]
---------------------------------------------------
-Node:           ADDONE
-Daughter count: 1 ~
-Daughter stack: 1
-	D: (ARRAY(0x2d4d460))-> _PERCENT @ _ADDONE
-Adverb stack:   1
-	A: (ARRAY(0x2d483d0))-> 
---------------------------------------------------
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-Node: ADDONE
-	D: <ARRAY(0x2d4d460)> -> _PERCENT @ _ADDONE
-	A: <ARRAY(0x2d483d0)> -> 
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-Deal: ARRAY(0x2d483d0). Size: -1
 Added node: "_PERCENT _ADDONE" [ fillcolor="white" label="_PERCENT _ADDONE" ]
 Added edge: "ADDONE" -> "_PERCENT _ADDONE" [ label="" ]
 Added edge: "_PERCENT _ADDONE" -> "_PERCENT" [ label="" ]
 Added node: "_ADDONE" [ fillcolor="white" label="_ADDONE" ]
 Added edge: "_PERCENT _ADDONE" -> "_ADDONE" [ label="" ]
---------------------------------------------------
-Node:           _IF
-Daughter count: 1 ~
-Daughter stack: 1
-	D: (ARRAY(0x2a2f388))-> '?'
-Adverb stack:   1
-	A: (ARRAY(0x2ac44a8))-> 
---------------------------------------------------
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-Node: _IF
-	D: <ARRAY(0x2a2f388)> -> '?'
-	A: <ARRAY(0x2ac44a8)> -> 
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-Deal: ARRAY(0x2ac44a8). Size: -1
 Added node: "'?'" [ fillcolor="white" label="'?'" ]
 Added node: "_IF"
 Added edge: "_IF" -> "'?'" [ label="" ]
---------------------------------------------------
-Node:           IF
-Daughter count: 1 ~
-Daughter stack: 1
-	D: (ARRAY(0x2d611f0))-> _PERCENT @ _IF
-Adverb stack:   1
-	A: (ARRAY(0x2d4d460))-> 
---------------------------------------------------
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-Node: IF
-	D: <ARRAY(0x2d611f0)> -> _PERCENT @ _IF
-	A: <ARRAY(0x2d4d460)> -> 
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-Deal: ARRAY(0x2d4d460). Size: -1
 Added node: "_PERCENT _IF" [ fillcolor="white" label="_PERCENT _IF" ]
 Added edge: "IF" -> "_PERCENT _IF" [ label="" ]
 Added edge: "_PERCENT _IF" -> "_PERCENT" [ label="" ]
 Added node: "_IF" [ fillcolor="white" label="_IF" ]
 Added edge: "_PERCENT _IF" -> "_IF" [ label="" ]
---------------------------------------------------
-Node:           _THEN
-Daughter count: 1 ~
-Daughter stack: 1
-	D: (ARRAY(0x2cfbb78))-> 't'
-Adverb stack:   1
-	A: (ARRAY(0x2d44e48))-> 
---------------------------------------------------
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-Node: _THEN
-	D: <ARRAY(0x2cfbb78)> -> 't'
-	A: <ARRAY(0x2d44e48)> -> 
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-Deal: ARRAY(0x2d44e48). Size: -1
 Added node: "'t'" [ fillcolor="white" label="'t'" ]
 Added node: "_THEN"
 Added edge: "_THEN" -> "'t'" [ label="" ]
---------------------------------------------------
-Node:           THEN
-Daughter count: 1 ~
-Daughter stack: 1
-	D: (ARRAY(0x2d61c10))-> _PERCENT @ _THEN
-Adverb stack:   1
-	A: (ARRAY(0x2d611f0))-> 
---------------------------------------------------
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-Node: THEN
-	D: <ARRAY(0x2d61c10)> -> _PERCENT @ _THEN
-	A: <ARRAY(0x2d611f0)> -> 
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-Deal: ARRAY(0x2d611f0). Size: -1
 Added node: "_PERCENT _THEN" [ fillcolor="white" label="_PERCENT _THEN" ]
 Added edge: "THEN" -> "_PERCENT _THEN" [ label="" ]
 Added edge: "_PERCENT _THEN" -> "_PERCENT" [ label="" ]
 Added node: "_THEN" [ fillcolor="white" label="_THEN" ]
 Added edge: "_PERCENT _THEN" -> "_THEN" [ label="" ]
---------------------------------------------------
-Node:           _ELSE
-Daughter count: 1 ~
-Daughter stack: 1
-	D: (ARRAY(0x2d4d5b0))-> 'e'
-Adverb stack:   1
-	A: (ARRAY(0x2d42528))-> 
---------------------------------------------------
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-Node: _ELSE
-	D: <ARRAY(0x2d4d5b0)> -> 'e'
-	A: <ARRAY(0x2d42528)> -> 
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-Deal: ARRAY(0x2d42528). Size: -1
 Added node: "'e'" [ fillcolor="white" label="'e'" ]
 Added node: "_ELSE"
 Added edge: "_ELSE" -> "'e'" [ label="" ]
---------------------------------------------------
-Node:           ELSE
-Daughter count: 1 ~
-Daughter stack: 1
-	D: (ARRAY(0x2cc90d8))-> _PERCENT @ _ELSE
-Adverb stack:   1
-	A: (ARRAY(0x2d61c10))-> 
---------------------------------------------------
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-Node: ELSE
-	D: <ARRAY(0x2cc90d8)> -> _PERCENT @ _ELSE
-	A: <ARRAY(0x2d61c10)> -> 
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-Deal: ARRAY(0x2d61c10). Size: -1
 Added node: "_PERCENT _ELSE" [ fillcolor="white" label="_PERCENT _ELSE" ]
 Added edge: "ELSE" -> "_PERCENT _ELSE" [ label="" ]
 Added edge: "_PERCENT _ELSE" -> "_PERCENT" [ label="" ]
 Added node: "_ELSE" [ fillcolor="white" label="_ELSE" ]
 Added edge: "_PERCENT _ELSE" -> "_ELSE" [ label="" ]
---------------------------------------------------
-Node:           _ENDIF
-Daughter count: 1 ~
-Daughter stack: 1
-	D: (ARRAY(0x2d4de68))-> ';'
-Adverb stack:   1
-	A: (ARRAY(0x2cc9810))-> 
---------------------------------------------------
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-Node: _ENDIF
-	D: <ARRAY(0x2d4de68)> -> ';'
-	A: <ARRAY(0x2cc9810)> -> 
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-Deal: ARRAY(0x2cc9810). Size: -1
 Added node: "';'" [ fillcolor="white" label="';'" ]
 Added node: "_ENDIF"
 Added edge: "_ENDIF" -> "';'" [ label="" ]
---------------------------------------------------
-Node:           ENDIF
-Daughter count: 1 ~
-Daughter stack: 1
-	D: (ARRAY(0x2d4dd78))-> _PERCENT @ _ENDIF
-Adverb stack:   1
-	A: (ARRAY(0x2cc90d8))-> 
---------------------------------------------------
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-Node: ENDIF
-	D: <ARRAY(0x2d4dd78)> -> _PERCENT @ _ENDIF
-	A: <ARRAY(0x2cc90d8)> -> 
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-Deal: ARRAY(0x2cc90d8). Size: -1
 Added node: "_PERCENT _ENDIF" [ fillcolor="white" label="_PERCENT _ENDIF" ]
 Added edge: "ENDIF" -> "_PERCENT _ENDIF" [ label="" ]
 Added edge: "_PERCENT _ENDIF" -> "_PERCENT" [ label="" ]
 Added node: "_ENDIF" [ fillcolor="white" label="_ENDIF" ]
 Added edge: "_PERCENT _ENDIF" -> "_ENDIF" [ label="" ]
---------------------------------------------------
-Node:           _EOF
-Daughter count: 1 ~
-Daughter stack: 1
-	D: (ARRAY(0x2d50210))-> ','
-Adverb stack:   1
-	A: (ARRAY(0x2d528b0))-> 
---------------------------------------------------
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-Node: _EOF
-	D: <ARRAY(0x2d50210)> -> ','
-	A: <ARRAY(0x2d528b0)> -> 
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-Deal: ARRAY(0x2d528b0). Size: -1
 Added node: "','" [ fillcolor="white" label="','" ]
 Added node: "_EOF"
 Added edge: "_EOF" -> "','" [ label="" ]
---------------------------------------------------
-Node:           ENDIF
-Daughter count: 1 ~
-Daughter stack: 1
-	D: (ARRAY(0x2cc90d8))-> _EOF
-Adverb stack:   1
-	A: (ARRAY(0x2cc8a90))-> 
---------------------------------------------------
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-Node: ENDIF
-	D: <ARRAY(0x2cc90d8)> -> _EOF
-	A: <ARRAY(0x2cc8a90)> -> 
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-Deal: ARRAY(0x2cc8a90). Size: -1
 Added node: "_EOF" [ fillcolor="white" label="_EOF" ]
 Added edge: "ENDIF" -> "_EOF" [ label="" ]
---------------------------------------------------
-Node:           _CARET
-Daughter count: 1 ~
-Daughter stack: 1
-	D: (ARRAY(0x2d4dd78))-> '^'
-Adverb stack:   1
-	A: (ARRAY(0x2d4f5c8))-> 
---------------------------------------------------
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-Node: _CARET
-	D: <ARRAY(0x2d4dd78)> -> '^'
-	A: <ARRAY(0x2d4f5c8)> -> 
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-Deal: ARRAY(0x2d4f5c8). Size: -1
 Added node: "_CARET"
 Added edge: "_CARET" -> "'^'" [ label="" ]
---------------------------------------------------
-Node:           _BS
-Daughter count: 1 ~
-Daughter stack: 1
-	D: (ARRAY(0x2d50210))-> '\\'
-Adverb stack:   1
-	A: (ARRAY(0x2d4fd90))-> 
---------------------------------------------------
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-Node: _BS
-	D: <ARRAY(0x2d50210)> -> '\\'
-	A: <ARRAY(0x2d4fd90)> -> 
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-Deal: ARRAY(0x2d4fd90). Size: -1
-Added node: "'\\'" [ fillcolor="white" label="'\\'" ]
-Added edge: "_BS" -> "'\\'" [ label="" ]
---------------------------------------------------
-Node:           _ALLOWED_BS
-Daughter count: 1 ~
-Daughter stack: 1
-	D: (ARRAY(0x2cc90d8))-> [abEeflnrst^\\,꞉0]
-Adverb stack:   1
-	A: (ARRAY(0x2cc8ee0))-> 
---------------------------------------------------
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-Node: _ALLOWED_BS
-	D: <ARRAY(0x2cc90d8)> -> [abEeflnrst^\\,꞉0]
-	A: <ARRAY(0x2cc8ee0)> -> 
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-Deal: ARRAY(0x2cc8ee0). Size: -1
-Added node: "[abEeflnrst^\\,꞉0]" [ fillcolor="white" label="\[abEeflnrst^\\,꞉0\]" ]
-Added edge: "_ALLOWED_BS" -> "[abEeflnrst^\\,꞉0]" [ label="" ]
---------------------------------------------------
-Node:           _ALLOWED_BS
-Daughter count: 1 ~
-Daughter stack: 1
-	D: (ARRAY(0x2d52d60))-> _DIGIT @ _DIGIT @ _DIGIT
-Adverb stack:   1
-	A: (ARRAY(0x2d41fb8))-> 
---------------------------------------------------
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-Node: _ALLOWED_BS
-	D: <ARRAY(0x2d52d60)> -> _DIGIT @ _DIGIT @ _DIGIT
-	A: <ARRAY(0x2d41fb8)> -> 
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-Deal: ARRAY(0x2d41fb8). Size: -1
+Added node: "'\'" [ fillcolor="white" label="'\'" ]
+Added edge: "_BS" -> "'\'" [ label="" ]
+Added node: "[abEeflnrst^\,:0]" [ fillcolor="white" label="\[abEeflnrst^\,:0\]" ]
+Added node: "[abEeflnrst^\,"
+Added edge: "_ALLOWED_BS" -> "[abEeflnrst^\,":0] [ label="" ]
 Added node: "_DIGIT _DIGIT _DIGIT" [ fillcolor="white" label="_DIGIT _DIGIT _DIGIT" ]
 Added edge: "_ALLOWED_BS" -> "_DIGIT _DIGIT _DIGIT" [ label="" ]
 Added edge: "_DIGIT _DIGIT _DIGIT" -> "_DIGIT" [ label="" ]
 Added edge: "_DIGIT _DIGIT _DIGIT" -> "_DIGIT" [ label="" ]
 Added edge: "_DIGIT _DIGIT _DIGIT" -> "_DIGIT" [ label="" ]
---------------------------------------------------
-Node:           _C0_AND_DEL
-Daughter count: 1 ~
-Daughter stack: 1
-	D: (ARRAY(0x2d88550))-> [@A-Z[\\]^_ ?]
-Adverb stack:   1
-	A: (ARRAY(0x2cc90d8))-> 
---------------------------------------------------
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-Node: _C0_AND_DEL
-	D: <ARRAY(0x2d88550)> -> [@A-Z[\\]^_ ?]
-	A: <ARRAY(0x2cc90d8)> -> 
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-Deal: ARRAY(0x2cc90d8). Size: -1
-Added node: "[@A-Z[\\]^_ ?]" [ fillcolor="white" label="\[@A-Z\[\\]^_ ?\]" ]
+Added node: "[@A-Z[\]^_ ?]" [ fillcolor="white" label="\[@A-Z\[\]^_ ?\]" ]
 Added node: "_C0_AND_DEL"
-Added edge: "_C0_AND_DEL" -> "[@A-Z[\\]^_ ?]" [ label="" ]
---------------------------------------------------
-Node:           ESCAPED_CHARACTER
-Daughter count: 1 ~
-Daughter stack: 2
-	D: (ARRAY(0x2cc90d8))-> _CARET @ _C0_AND_DEL
-	D: (ARRAY(0x2d88748))-> _BS @ _ALLOWED_BS
-Adverb stack:   2
-	A: (ARRAY(0x2ca0ed8))-> 
-	A: (ARRAY(0x2d451a8))-> 
---------------------------------------------------
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-Node: ESCAPED_CHARACTER
-	D: <ARRAY(0x2cc90d8)> -> _CARET @ _C0_AND_DEL
-	D: <ARRAY(0x2d88748)> -> _BS @ _ALLOWED_BS
-	A: <ARRAY(0x2ca0ed8)> -> 
-	A: <ARRAY(0x2d451a8)> -> 
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-Deal: ARRAY(0x2ca0ed8). Size: -1
+Added edge: "_C0_AND_DEL" -> "[@A-Z[\]^_ ?]" [ label="" ]
 Added node: "_CARET _C0_AND_DEL" [ fillcolor="white" label="_CARET _C0_AND_DEL" ]
 Added edge: "ESCAPED_CHARACTER" -> "_CARET _C0_AND_DEL" [ label="" ]
 Added node: "_CARET" [ fillcolor="white" label="_CARET" ]
 Added edge: "_CARET _C0_AND_DEL" -> "_CARET" [ label="" ]
 Added node: "_C0_AND_DEL" [ fillcolor="white" label="_C0_AND_DEL" ]
 Added edge: "_CARET _C0_AND_DEL" -> "_C0_AND_DEL" [ label="" ]
-Deal: ARRAY(0x2d451a8). Size: -1
 Added edge: "ESCAPED_CHARACTER" -> "_BS _ALLOWED_BS" [ label="" ]
 Added edge: "_BS _ALLOWED_BS" -> "_BS" [ label="" ]
 Added edge: "_BS _ALLOWED_BS" -> "_ALLOWED_BS" [ label="" ]
---------------------------------------------------
-Node:           INISPRINTEXCEPTCOMMA
-Daughter count: 1 ~
-Daughter stack: 1
-	D: (ARRAY(0x2d45328))-> [\\p{MarpaX꞉꞉Database꞉꞉Terminfo꞉꞉Grammar꞉꞉CharacterClasses꞉꞉InIsPrintExceptComma}]
-Adverb stack:   1
-	A: (ARRAY(0x2ca0920))-> 
---------------------------------------------------
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-Node: INISPRINTEXCEPTCOMMA
-	D: <ARRAY(0x2d45328)> -> [\\p{MarpaX꞉꞉Database꞉꞉Terminfo꞉꞉Grammar꞉꞉CharacterClasses꞉꞉InIsPrintExceptComma}]
-	A: <ARRAY(0x2ca0920)> -> 
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-Deal: ARRAY(0x2ca0920). Size: -1
-Added node: "[\\p{MarpaX꞉꞉Database꞉꞉Terminfo꞉꞉Grammar꞉꞉CharacterClasses꞉꞉InIsPrintExceptComma}]" [ fillcolor="white" label="\[\\p{MarpaX꞉꞉Database꞉꞉Terminfo꞉꞉Grammar꞉꞉CharacterClasses꞉꞉InIsPrintExceptComma}\]" ]
-Added edge: "INISPRINTEXCEPTCOMMA" -> "[\\p{MarpaX꞉꞉Database꞉꞉Terminfo꞉꞉Grammar꞉꞉CharacterClasses꞉꞉InIsPrintExceptComma}]" [ label="" ]
---------------------------------------------------
-Node:           EOF
-Daughter count: 1 ~
-Daughter stack: 1
-	D: (ARRAY(0x2d50210))-> _EOF
-Adverb stack:   1
-	A: (ARRAY(0x2d1ac00))-> 
---------------------------------------------------
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-Node: EOF
-	D: <ARRAY(0x2d50210)> -> _EOF
-	A: <ARRAY(0x2d1ac00)> -> 
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-Deal: ARRAY(0x2d1ac00). Size: -1
+Added node: "[\p{MarpaX::Database::Terminfo::Grammar::CharacterClasses::InIsPrintExceptComma}]" [ fillcolor="white" label="\[\p{MarpaX::Database::Terminfo::Grammar::CharacterClasses::InIsPrintExceptComma}\]" ]
+Added edge: "INISPRINTEXCEPTCOMMA" -> "[\p{MarpaX::Database::Terminfo::Grammar::CharacterClasses::InIsPrintExceptComma}]" [ label="" ]
 Added edge: "EOF" -> "_EOF" [ label="" ]
 Driver: /usr/local/bin/dot. Output file: html/termcap.info.svg. Format: svg. Timeout: 10 second(s)
 
@@ -2176,9 +536,10 @@ edge [ color="grey" ]
 "units" -> "꞉default" [ label="" ]
 "꞉default_1" [ fillcolor="lightblue" label="{action =\> \[values\]}" shape="Mrecord" ]
 "꞉default" -> "꞉default_1" [ label="" ]
-"unit" [ fillcolor="white" label="unit" ]
-"units" -> "unit" [ label="" ]
+"unit*" [ fillcolor="white" label="unit*" ]
+"units" -> "unit*" [ label="" ]
 "ESCAPED_CHARACTER" [ fillcolor="white" label="ESCAPED_CHARACTER" ]
+"unit"
 "unit" -> "ESCAPED_CHARACTER" [ label="" ]
 "ESCAPED_CHARACTER_attributes" [ fillcolor="#DAA520" label="{action =\> addEscapedCharacterToRc}" shape="Mrecord" ]
 "ESCAPED_CHARACTER" -> "ESCAPED_CHARACTER_attributes" [ label="" ]
@@ -2340,8 +701,8 @@ edge [ color="grey" ]
 "ELSE units THEN units" -> "units" [ label="" ]
 "ELSE units THEN units_attributes" [ fillcolor="#DAA520" label="{action =\> elifUnit}" shape="Mrecord" ]
 "ELSE units THEN units" -> "ELSE units THEN units_attributes" [ label="" ]
-"elifUnit" [ fillcolor="white" label="elifUnit" ]
-"elifUnits" -> "elifUnit" [ label="" ]
+"elifUnit*" [ fillcolor="white" label="elifUnit*" ]
+"elifUnits" -> "elifUnit*" [ label="" ]
 "[^']" [ fillcolor="white" label="\[^'\]" ]
 "_CONST"
 "_CONST" -> "[^']" [ label="" ]
@@ -2351,11 +712,12 @@ edge [ color="grey" ]
 "_BS _ALLOWED_BS" -> "_BS" [ label="" ]
 "_ALLOWED_BS" [ fillcolor="white" label="_ALLOWED_BS" ]
 "_BS _ALLOWED_BS" -> "_ALLOWED_BS" [ label="" ]
-"[\\d]" [ fillcolor="white" label="\[\\d\]" ]
+"[\d]+" [ fillcolor="white" label="\[\d\]+" ]
 "_DIGITS"
-"_DIGITS" -> "[\\d]" [ label="" ]
+"_DIGITS" -> "[\d]+" [ label="" ]
+"[\d]" [ fillcolor="white" label="\[\d\]" ]
 "_DIGIT"
-"_DIGIT" -> "[\\d]" [ label="" ]
+"_DIGIT" -> "[\d]" [ label="" ]
 "[a-z]" [ fillcolor="white" label="\[a-z\]" ]
 "_LCHAR"
 "_LCHAR" -> "[a-z]" [ label="" ]
@@ -2378,9 +740,10 @@ edge [ color="grey" ]
 "_PERCENT _C" -> "_PERCENT" [ label="" ]
 "_C" [ fillcolor="white" label="_C" ]
 "_PERCENT _C" -> "_C" [ label="" ]
-"'꞉'" [ fillcolor="white" label="'꞉'" ]
+"':'" [ fillcolor="white" label="':'" ]
 "_COLON"
-"_COLON" -> "'꞉'" [ label="" ]
+"'"
+"_COLON" -> "'":' [ label="" ]
 "'.'" [ fillcolor="white" label="'.'" ]
 "_DOT"
 "_DOT" -> "'.'" [ label="" ]
@@ -2562,17 +925,17 @@ edge [ color="grey" ]
 "_PERCENT _EQUAL" -> "_PERCENT" [ label="" ]
 "_EQUAL" [ fillcolor="white" label="_EQUAL" ]
 "_PERCENT _EQUAL" -> "_EQUAL" [ label="" ]
-"'\>'" [ fillcolor="white" label="'\>'" ]
+"'>'" [ fillcolor="white" label="'>'" ]
 "_GREATER"
-"_GREATER" -> "'\>'" [ label="" ]
+"_GREATER" -> "'>'" [ label="" ]
 "_PERCENT _GREATER" [ fillcolor="white" label="_PERCENT _GREATER" ]
 "GREATER" -> "_PERCENT _GREATER" [ label="" ]
 "_PERCENT _GREATER" -> "_PERCENT" [ label="" ]
 "_GREATER" [ fillcolor="white" label="_GREATER" ]
 "_PERCENT _GREATER" -> "_GREATER" [ label="" ]
-"'\<'" [ fillcolor="white" label="'\<'" ]
+"'<'" [ fillcolor="white" label="'<'" ]
 "_LOWER"
-"_LOWER" -> "'\<'" [ label="" ]
+"_LOWER" -> "'<'" [ label="" ]
 "_PERCENT _LOWER" [ fillcolor="white" label="_PERCENT _LOWER" ]
 "LOWER" -> "_PERCENT _LOWER" [ label="" ]
 "_PERCENT _LOWER" -> "_PERCENT" [ label="" ]
@@ -2657,18 +1020,19 @@ edge [ color="grey" ]
 "ENDIF" -> "_EOF" [ label="" ]
 "_CARET"
 "_CARET" -> "'^'" [ label="" ]
-"'\\'" [ fillcolor="white" label="'\\'" ]
-"_BS" -> "'\\'" [ label="" ]
-"[abEeflnrst^\\,꞉0]" [ fillcolor="white" label="\[abEeflnrst^\\,꞉0\]" ]
-"_ALLOWED_BS" -> "[abEeflnrst^\\,꞉0]" [ label="" ]
+"'\'" [ fillcolor="white" label="'\'" ]
+"_BS" -> "'\'" [ label="" ]
+"[abEeflnrst^\,:0]" [ fillcolor="white" label="\[abEeflnrst^\,:0\]" ]
+"[abEeflnrst^\,"
+"_ALLOWED_BS" -> "[abEeflnrst^\,":0] [ label="" ]
 "_DIGIT _DIGIT _DIGIT" [ fillcolor="white" label="_DIGIT _DIGIT _DIGIT" ]
 "_ALLOWED_BS" -> "_DIGIT _DIGIT _DIGIT" [ label="" ]
 "_DIGIT _DIGIT _DIGIT" -> "_DIGIT" [ label="" ]
 "_DIGIT _DIGIT _DIGIT" -> "_DIGIT" [ label="" ]
 "_DIGIT _DIGIT _DIGIT" -> "_DIGIT" [ label="" ]
-"[@A-Z[\\]^_ ?]" [ fillcolor="white" label="\[@A-Z\[\\]^_ ?\]" ]
+"[@A-Z[\]^_ ?]" [ fillcolor="white" label="\[@A-Z\[\]^_ ?\]" ]
 "_C0_AND_DEL"
-"_C0_AND_DEL" -> "[@A-Z[\\]^_ ?]" [ label="" ]
+"_C0_AND_DEL" -> "[@A-Z[\]^_ ?]" [ label="" ]
 "_CARET _C0_AND_DEL" [ fillcolor="white" label="_CARET _C0_AND_DEL" ]
 "ESCAPED_CHARACTER" -> "_CARET _C0_AND_DEL" [ label="" ]
 "_CARET" [ fillcolor="white" label="_CARET" ]
@@ -2678,8 +1042,7 @@ edge [ color="grey" ]
 "ESCAPED_CHARACTER" -> "_BS _ALLOWED_BS" [ label="" ]
 "_BS _ALLOWED_BS" -> "_BS" [ label="" ]
 "_BS _ALLOWED_BS" -> "_ALLOWED_BS" [ label="" ]
-"[\\p{MarpaX꞉꞉Database꞉꞉Terminfo꞉꞉Grammar꞉꞉CharacterClasses꞉꞉InIsPrintExceptComma}]" [ fillcolor="white" label="\[\\p{MarpaX꞉꞉Database꞉꞉Terminfo꞉꞉Grammar꞉꞉CharacterClasses꞉꞉InIsPrintExceptComma}\]" ]
-"INISPRINTEXCEPTCOMMA" -> "[\\p{MarpaX꞉꞉Database꞉꞉Terminfo꞉꞉Grammar꞉꞉CharacterClasses꞉꞉InIsPrintExceptComma}]" [ label="" ]
+"[\p{MarpaX::Database::Terminfo::Grammar::CharacterClasses::InIsPrintExceptComma}]" [ fillcolor="white" label="\[\p{MarpaX::Database::Terminfo::Grammar::CharacterClasses::InIsPrintExceptComma}\]" ]
+"INISPRINTEXCEPTCOMMA" -> "[\p{MarpaX::Database::Terminfo::Grammar::CharacterClasses::InIsPrintExceptComma}]" [ label="" ]
 "EOF" -> "_EOF" [ label="" ]
 }
-Wrote html/termcap.info.svg. Size: 167011 bytes

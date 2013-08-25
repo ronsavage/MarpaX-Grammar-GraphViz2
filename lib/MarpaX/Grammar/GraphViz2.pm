@@ -218,11 +218,15 @@ sub BUILD
 
 sub clean_name
 {
-	my($self, $name) = @_;
+	my($self, $name, $skip_symbols) = @_;
 
-	return $name if ($name =~ /(?::=|=>|=)/);
+	# If $skip_symbols is defined (in calls from rectify_name() ),
+	# then do not do this check.
+
+	return $name if ( (! defined $skip_symbols) && ($name =~ /(?::=|=>|=)/) );
 
 	$name =~ s/\\/\\\\/g;             # Escape \.
+	$name =~ s/\*/\\\*/g;             # Escape *.
 	$name =~ s/</\\</g;               # Escape <.
 	$name =~ s/>/\\>/g;               # Escape >.
 	$name =~ s/:/\x{a789}/g;          # Escape :.
@@ -468,7 +472,7 @@ sub process_discard_rule
 	# Ignore the first daughter, which is '=>'.
 
 	my(@daughters)      = $a_node -> daughters;
-	my($name)           = $daughters[1] -> name;
+	my($name)           = $self -> rectify_name($daughters[1]);
 	$$attributes{label} = $name;
 
 	$self -> add_node(name => $name, %$attributes);
@@ -510,7 +514,7 @@ sub process_lexeme_rule
 {
 	my($self, $index, $a_node) = @_;
 	my($daughters, $adverbs) = $self -> process_simple_adverbs($index, $a_node);
-	my($name)                = $$daughters[1] -> name;
+	my($name)                = $self -> rectify_name($$daughters[1]);
 	my($lexeme)              = $self -> lexemes;
 	$$lexeme{$name}          = $#$adverbs >= 0 ? $adverbs : '';
 
@@ -566,7 +570,7 @@ sub process_normal_rule
 sub process_normal_tokens
 {
 	my($self, $index, $a_node, $lexemes, $daughters, $adverbs) = @_;
-	my(@name)       = map{$_ -> name} @$daughters;
+	my(@name)       = map{$self -> rectify_name($_)} @$daughters;
 	my($rule_name)  = join(' ', @name);
 	my($attributes) = $self -> process_lexeme_token($lexemes, $rule_name);
 
@@ -621,7 +625,7 @@ sub process_start_rule
 {
 	my($self, $index, $a_node) = @_;
 	my(@daughters) = $a_node -> daughters;
-	my($name)      = $daughters[1] -> name;
+	my($name)      = $self -> rectify_name($daughters[1]);
 
 	$self -> root_node($daughters[1]);
 
@@ -634,6 +638,19 @@ sub process_start_rule
 	$self -> add_node(name => $name, %$attributes);
 
 } # End of process_start_rule.
+
+# --------------------------------------------------
+
+sub rectify_name
+{
+	my($self, $node) = @_;
+	my($attributes)  = $node -> attributes;
+
+	$self -> log(debug => "Star: $$attributes{real_name}") if ($$attributes{real_name} =~ /^attr/);
+
+	return $self -> clean_name($$attributes{real_name}, 1);
+
+} # End of rectify_name.
 
 # ------------------------------------------------
 
