@@ -7,8 +7,6 @@ use warnings  qw(FATAL utf8);    # Fatalize encoding glitches.
 use open      qw(:std :utf8);    # Undeclared streams in UTF-8.
 use charnames qw(:full :short);  # Unneeded in v5.16.
 
-use Data::Dumper::Concise;
-
 use File::Basename; # For basename().
 use File::Which; # For which().
 
@@ -220,13 +218,12 @@ sub clean_name
 {
 	my($self, $name, $skip_symbols) = @_;
 
-	# If $skip_symbols is defined (in calls from rectify_name() ),
+	# If $skip_symbols is defined (as in calls from rectify_name() ),
 	# then do not do this check.
 
 	return $name if ( (! defined $skip_symbols) && ($name =~ /(?::=|=>|=)/) );
 
 	$name =~ s/\\/\\\\/g;             # Escape \.
-	$name =~ s/\*/\\\*/g;             # Escape *.
 	$name =~ s/</\\</g;               # Escape <.
 	$name =~ s/>/\\>/g;               # Escape >.
 	$name =~ s/:/\x{a789}/g;          # Escape :.
@@ -472,11 +469,11 @@ sub process_discard_rule
 	# Ignore the first daughter, which is '=>'.
 
 	my(@daughters)      = $a_node -> daughters;
-	my($name)           = $self -> rectify_name($daughters[1]);
-	$$attributes{label} = $name;
+	my(@name)           = $self -> rectify_name($daughters[1]);
+	$$attributes{label} = $name[1];
 
-	$self -> add_node(name => $name, %$attributes);
-	$self -> graph -> add_edge(from => $discard_name, to => $name);
+	$self -> add_node(name => $name[0], %$attributes);
+	$self -> graph -> add_edge(from => $discard_name, to => $name[0]);
 
 } # End of process_discard_rule.
 
@@ -514,9 +511,9 @@ sub process_lexeme_rule
 {
 	my($self, $index, $a_node) = @_;
 	my($daughters, $adverbs) = $self -> process_simple_adverbs($index, $a_node);
-	my($name)                = $self -> rectify_name($$daughters[1]);
+	my(@name)                = $self -> rectify_name($$daughters[1]);
 	my($lexeme)              = $self -> lexemes;
-	$$lexeme{$name}          = $#$adverbs >= 0 ? $adverbs : '';
+	$$lexeme{$name[0]}       = $#$adverbs >= 0 ? $adverbs : '';
 
 	$self -> lexemes($lexeme);
 
@@ -526,7 +523,7 @@ sub process_lexeme_rule
 
 sub process_lexeme_token
 {
-	my($self, $lexemes, $name) = @_;
+	my($self, $lexemes, $name, $label) = @_;
 
 	my($attributes);
 
@@ -535,7 +532,7 @@ sub process_lexeme_token
 		$attributes =
 		{
 			fillcolor => 'lightblue',
-			label     => [{text => "\{\x{a789}lexeme"}, {text => "$name}"}],
+			label     => [{text => "\{\x{a789}lexeme"}, {text => "$label}"}],
 		};
 	}
 	else
@@ -543,7 +540,7 @@ sub process_lexeme_token
 		$attributes =
 		{
 			fillcolor => 'white',
-			label     => $name,
+			label     => $label,
 		};
 	}
 
@@ -570,12 +567,19 @@ sub process_normal_rule
 sub process_normal_tokens
 {
 	my($self, $index, $a_node, $lexemes, $daughters, $adverbs) = @_;
-	my(@name)       = map{$self -> rectify_name($_)} @$daughters;
+	my(@name_map)   = map{$self -> rectify_name($_)} @$daughters;
+	$self -> log(debug => 'Labels: ' . join(', ', @name_map) );
+	my(@name)       = map{$name_map[$_]} indexes{$_ % 2 == 0} 0 .. $#name_map;
+	my(@label)      = map{$name_map[$_]} indexes{$_ % 2 != 0} 0 .. $#name_map;
 	my($rule_name)  = join(' ', @name);
-	my($attributes) = $self -> process_lexeme_token($lexemes, $rule_name);
+	my($rule_label) = join(' ', @label);
+	$self -> log(debug => "Labels: $rule_name");
+	$self -> log(debug => "Labels: $rule_label");
+	my($attributes) = $self -> process_lexeme_token($lexemes, $rule_name, $rule_label);
+	my(@parent)     = $self -> rectify_name($a_node);
 
 	$self -> add_node(name => $rule_name, %$attributes);
-	$self -> graph -> add_edge(from => $a_node -> name, to => $rule_name);
+	$self -> graph -> add_edge(from => $parent[0], to => $rule_name);
 
 	my($attr_name);
 	my($name);
@@ -584,7 +588,7 @@ sub process_normal_tokens
 	{
 		$name = $name[$i];
 
-		$attributes = $self -> process_lexeme_token($lexemes, $name);
+		$attributes = $self -> process_lexeme_token($lexemes, $name, $label[$i]);
 
 		# Don't re-add the node added just above.
 		# This happens in cases where there is just 1 daughter,
@@ -625,17 +629,17 @@ sub process_start_rule
 {
 	my($self, $index, $a_node) = @_;
 	my(@daughters) = $a_node -> daughters;
-	my($name)      = $self -> rectify_name($daughters[1]);
+	my(@name)      = $self -> rectify_name($daughters[1]);
 
 	$self -> root_node($daughters[1]);
 
 	my($attributes) =
 	{
 		fillcolor => 'lightgreen',
-		label     => [{text => '{:start'}, {text => "$name}"}],
+		label     => [{text => '{:start'}, {text => "$name[1]}"}],
 	};
 
-	$self -> add_node(name => $name, %$attributes);
+	$self -> add_node(name => $name[0], %$attributes);
 
 } # End of process_start_rule.
 
@@ -645,10 +649,10 @@ sub rectify_name
 {
 	my($self, $node) = @_;
 	my($attributes)  = $node -> attributes;
+	my($name)        = $self -> clean_name($$attributes{real_name}, 1);
+	my($label)       = $name . $$attributes{quantifier};
 
-	$self -> log(debug => "Star: $$attributes{real_name}") if ($$attributes{real_name} =~ /^attr/);
-
-	return $self -> clean_name($$attributes{real_name}, 1);
+	return ($name, $label);
 
 } # End of rectify_name.
 
@@ -690,8 +694,6 @@ sub run
 	{
 		$self -> process_lexeme_rule($index + 1, $rule[$index]);
 	}
-
-	$self -> graph -> add_edge(from => $self -> root_node -> name, to => "\x{a789}lexeme", label => $self -> lexeme_count) if ($self -> lexeme_count > 0);
 
 	my(%seen) =
 	(
