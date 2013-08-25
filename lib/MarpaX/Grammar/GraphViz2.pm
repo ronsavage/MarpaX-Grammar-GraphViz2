@@ -176,9 +176,19 @@ sub add_legend
 
 	$self -> graph -> push_subgraph
 	(
-		name     => 'cluster_legend',
-		graph    => {label => 'cluster_Legend', rankdir => 'LR'},
+		# No options...
+		# Legend: top. Border: no.  Label: no.
+		#
+		# label => 'cluster_legend',
+		# Legend: top. Border: no.  Label: no.
+		#
+		# name  => 'cluster_legend',
+		# Legend: top. Border: yes. Label: *.bnf.
+		#
+		graph => {label => 'cluster_legend'},
+		# Legend: top. Border: no.  Label: no. Not using subgraph => {...}.
 		subgraph => {rank => 'max'},
+		# Legend: top. Border: no.  Label: no. Using graph => {...}.
 	);
 
 	$self -> graph -> add_node
@@ -192,14 +202,21 @@ sub add_legend
 	(
 		fillcolor => 'lightblue',
 		name      => 'Legend_2',
-		label     => [{text => '{Lightblue nodes'}, {text => 'are for pseudo rules}'}],
+		label     => [{text => '{Lightblue nodes'}, {text => 'are for lexeme attributes}'}],
 		style     => 'filled',
 	);
 	$self -> graph -> add_node
 	(
-		fillcolor => '#DAA520', # Goldenrod.
+		fillcolor => 'orchid',
 		name      => 'Legend_3',
-		label     => [{text => '{Golden nodes'}, {text => 'are for adverbs}'}],
+		label     => [{text => '{Orchid nodes'}, {text => 'are for lexemes}'}],
+		style     => 'filled',
+	);
+	$self -> graph -> add_node
+	(
+		fillcolor => 'goldenrod',
+		name      => 'Legend_4',
+		label     => [{text => '{Golden nodes'}, {text => 'are for actions}'}],
 		style     => 'filled',
 	);
 
@@ -495,8 +512,9 @@ sub process_default_rule
 
 	if ($#$adverbs >= 0)
 	{
-		$$attributes{label} = $adverbs;
-		my($adverb_name)    = "${default_name}_$default_count";
+		$$attributes{fillcolor} = 'goldenrod';
+		$$attributes{label}     = $adverbs;
+		my($adverb_name)        = "${default_name}_$default_count";
 
 		$self -> add_node(name => $adverb_name, %$attributes);
 		$self -> graph -> add_edge(from => $default_name, to => $adverb_name);
@@ -591,7 +609,7 @@ sub process_lexeme_token
 	{
 		$attributes =
 		{
-			fillcolor => '#DAA520', # Goldenrod.
+			fillcolor => 'orchid',
 			label     => [{text => "\{\x{a789}lexeme"}, {text => "$label}"}],
 		};
 	}
@@ -663,8 +681,9 @@ sub process_normal_tokens
 
 		if (defined $$lexemes{$name})
 		{
-			$$attributes{label} = $$lexemes{$name};
-			$attr_name          = "${name}_$i";
+			$$attributes{fillcolor} = 'lightblue';
+			$$attributes{label}     = $$lexemes{$name};
+			$attr_name              = "${name}_$i";
 
 			$self -> add_node(name => $attr_name, %$attributes);
 			$self -> graph -> add_edge(from => $name, to => $attr_name);
@@ -673,7 +692,7 @@ sub process_normal_tokens
 
 	if ($#$adverbs >= 0)
 	{
-		$$attributes{fillcolor} = '#DAA520'; # Goldenrod.
+		$$attributes{fillcolor} = 'goldenrod';
 		$$attributes{label}     = $adverbs;
 		$attr_name              = "${rule_name}_attributes";
 
