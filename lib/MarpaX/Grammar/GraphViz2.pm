@@ -60,6 +60,14 @@ has graph =>
 	required => 0,
 );
 
+has legend =>
+(
+	default  => sub{return 0},
+	is       => 'rw',
+	#isa     => 'Int',
+	required => 0,
+);
+
 has lexeme_count =>
 (
 	default  => sub{return 0},
@@ -157,6 +165,47 @@ has root_node =>
 );
 
 our $VERSION = '1.00';
+
+# --------------------------------------------------
+
+sub add_legend
+{
+	my($self) = @_;
+
+	# The effect of this subgraph to display the legend is disappointing.
+
+	$self -> graph -> push_subgraph
+	(
+		name     => 'cluster_legend',
+		graph    => {label => 'cluster_Legend', rankdir => 'LR'},
+		subgraph => {rank => 'max'},
+	);
+
+	$self -> graph -> add_node
+	(
+		fillcolor => 'lightgreen',
+		name      => 'Legend_1',
+		label     => [{text => '{The green node'}, {text => 'is the start node}'}],
+		style     => 'filled',
+	);
+	$self -> graph -> add_node
+	(
+		fillcolor => 'lightblue',
+		name      => 'Legend_2',
+		label     => [{text => '{Lightblue nodes'}, {text => 'are for pseudo rules}'}],
+		style     => 'filled',
+	);
+	$self -> graph -> add_node
+	(
+		fillcolor => '#DAA520', # Goldenrod.
+		name      => 'Legend_3',
+		label     => [{text => '{Golden nodes'}, {text => 'are for adverbs}'}],
+		style     => 'filled',
+	);
+
+	$self -> graph -> pop_subgraph;
+
+} # End of add_legend.
 
 # ------------------------------------------------
 
@@ -726,37 +775,7 @@ sub run
 		$self -> process_normal_rule($index + 1, $rule[$index], $lexemes);
 	}
 
-# The effect of this subgraph to display the legend is disappointing.
-#
-#	$self -> graph -> push_subgraph
-#	(
-#		graph    => {label => 'cluster_Legend', rankdir => 'TB'},
-#		subgraph => {rank => 'max'},
-#	);
-#
-#	$self -> graph -> add_node
-#	(
-#		fillcolor => 'lightgreen',
-#		name      => 'Legend_1',
-#		label     => [{text => '{The green node'}, {text => 'is the start node}'}],
-#		style     => 'filled',
-#	);
-#	$self -> graph -> add_node
-#	(
-#		fillcolor => 'lightblue',
-#		name      => 'Legend_2',
-#		label     => [{text => '{Lightblue nodes'}, {text => 'are for pseudo rules}'}],
-#		style     => 'filled',
-#	);
-#	$self -> graph -> add_node
-#	(
-#		fillcolor => '#DAA520', # Goldenrod.
-#		name      => 'Legend_3',
-#		label     => [{text => '{Golden nodes'}, {text => 'are for adverbs}'}],
-#		style     => 'filled',
-#	);
-#
-#	$self -> graph -> pop_subgraph;
+	$self -> add_legend if ($self -> legend);
 
 	my($output_file) = $self -> output_file;
 

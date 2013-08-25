@@ -21,6 +21,7 @@ if ($option_parser -> getoptions
 	'format=s',
 	'driver=s',
 	'help',
+	'legend=i',
 	'logger=s',
 	'marpa_bnf_file=s',
 	'maxlevel=s',
@@ -56,6 +57,7 @@ bnf2graph.pl [options]
 	-format imageFormat
 	-driver aGraphvizDriverName
 	-help
+	-legend Boolean
 	-logger aLog::HandlerObject
 	-marpa_bnf_file aMarpaSLIF-DSLFileName
 	-maxlevel logOption1
@@ -84,6 +86,12 @@ Default: 'dot'.
 =item o -help
 
 Print help and exit.
+
+=item o -legend Boolean
+
+Add a legend (1) to the graph, or omit it (0).
+
+Default: 0 (no legend).
 
 =item o -logger aLog::HandlerObject
 
