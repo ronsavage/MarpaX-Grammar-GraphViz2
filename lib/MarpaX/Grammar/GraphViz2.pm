@@ -542,7 +542,7 @@ sub process_lexeme_token
 	{
 		$attributes =
 		{
-			fillcolor => 'lightblue',
+			fillcolor => '#DAA520', # Goldenrod.
 			label     => [{text => "\{\x{a789}lexeme"}, {text => "$label}"}],
 		};
 	}
@@ -725,6 +725,38 @@ sub run
 
 		$self -> process_normal_rule($index + 1, $rule[$index], $lexemes);
 	}
+
+# The effect of this subgraph to display the legend is disappointing.
+#
+#	$self -> graph -> push_subgraph
+#	(
+#		graph    => {label => 'cluster_Legend', rankdir => 'TB'},
+#		subgraph => {rank => 'max'},
+#	);
+#
+#	$self -> graph -> add_node
+#	(
+#		fillcolor => 'lightgreen',
+#		name      => 'Legend_1',
+#		label     => [{text => '{The green node'}, {text => 'is the start node}'}],
+#		style     => 'filled',
+#	);
+#	$self -> graph -> add_node
+#	(
+#		fillcolor => 'lightblue',
+#		name      => 'Legend_2',
+#		label     => [{text => '{Lightblue nodes'}, {text => 'are for pseudo rules}'}],
+#		style     => 'filled',
+#	);
+#	$self -> graph -> add_node
+#	(
+#		fillcolor => '#DAA520', # Goldenrod.
+#		name      => 'Legend_3',
+#		label     => [{text => '{Golden nodes'}, {text => 'are for adverbs}'}],
+#		style     => 'filled',
+#	);
+#
+#	$self -> graph -> pop_subgraph;
 
 	my($output_file) = $self -> output_file;
 

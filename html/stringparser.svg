@@ -244,7 +244,7 @@
 </g>
 <!-- start_node -->
 <g id="node18" class="node"><title>start_node</title>
-<path fill="lightblue" stroke="black" d="M141.5,-192C141.5,-192 190.5,-192 190.5,-192 196.5,-192 202.5,-198 202.5,-204 202.5,-204 202.5,-226 202.5,-226 202.5,-232 196.5,-238 190.5,-238 190.5,-238 141.5,-238 141.5,-238 135.5,-238 129.5,-232 129.5,-226 129.5,-226 129.5,-204 129.5,-204 129.5,-198 135.5,-192 141.5,-192"/>
+<path fill="#daa520" stroke="black" d="M141.5,-192C141.5,-192 190.5,-192 190.5,-192 196.5,-192 202.5,-198 202.5,-204 202.5,-204 202.5,-226 202.5,-226 202.5,-232 196.5,-238 190.5,-238 190.5,-238 141.5,-238 141.5,-238 135.5,-238 129.5,-232 129.5,-226 129.5,-226 129.5,-204 129.5,-204 129.5,-198 135.5,-192 141.5,-192"/>
 <text text-anchor="middle" x="166" y="-222.8" font-family="Times,serif" font-size="14.00">꞉lexeme</text>
 <polyline fill="none" stroke="black" points="129.5,-215 202.5,-215 "/>
 <text text-anchor="middle" x="166" y="-199.8" font-family="Times,serif" font-size="14.00">start_node</text>
@@ -266,7 +266,7 @@
 </g>
 <!-- start_node_0 -->
 <g id="node19" class="node"><title>start_node_0</title>
-<path fill="lightblue" stroke="black" d="M12,-108C12,-108 114,-108 114,-108 120,-108 126,-114 126,-120 126,-120 126,-142 126,-142 126,-148 120,-154 114,-154 114,-154 12,-154 12,-154 6,-154 0,-148 0,-142 0,-142 0,-120 0,-120 0,-114 6,-108 12,-108"/>
+<path fill="#daa520" stroke="black" d="M12,-108C12,-108 114,-108 114,-108 120,-108 126,-114 126,-120 126,-120 126,-142 126,-142 126,-148 120,-154 114,-154 114,-154 12,-154 12,-154 6,-154 0,-148 0,-142 0,-142 0,-120 0,-120 0,-114 6,-108 12,-108"/>
 <text text-anchor="middle" x="63" y="-138.8" font-family="Times,serif" font-size="14.00">event =&gt; start_node</text>
 <polyline fill="none" stroke="black" points="0,-131 126,-131 "/>
 <text text-anchor="middle" x="63" y="-115.8" font-family="Times,serif" font-size="14.00">pause =&gt; before</text>
@@ -347,7 +347,7 @@
 </g>
 <!-- directed_edge -->
 <g id="node29" class="node"><title>directed_edge</title>
-<path fill="lightblue" stroke="black" d="M747,-276C747,-276 815,-276 815,-276 821,-276 827,-282 827,-288 827,-288 827,-310 827,-310 827,-316 821,-322 815,-322 815,-322 747,-322 747,-322 741,-322 735,-316 735,-310 735,-310 735,-288 735,-288 735,-282 741,-276 747,-276"/>
+<path fill="#daa520" stroke="black" d="M747,-276C747,-276 815,-276 815,-276 821,-276 827,-282 827,-288 827,-288 827,-310 827,-310 827,-316 821,-322 815,-322 815,-322 747,-322 747,-322 741,-322 735,-316 735,-310 735,-310 735,-288 735,-288 735,-282 741,-276 747,-276"/>
 <text text-anchor="middle" x="781" y="-306.8" font-family="Times,serif" font-size="14.00">꞉lexeme</text>
 <polyline fill="none" stroke="black" points="735,-299 827,-299 "/>
 <text text-anchor="middle" x="781" y="-283.8" font-family="Times,serif" font-size="14.00">directed_edge</text>
@@ -359,7 +359,7 @@
 </g>
 <!-- undirected_edge -->
 <g id="node31" class="node"><title>undirected_edge</title>
-<path fill="lightblue" stroke="black" d="M864,-276C864,-276 946,-276 946,-276 952,-276 958,-282 958,-288 958,-288 958,-310 958,-310 958,-316 952,-322 946,-322 946,-322 864,-322 864,-322 858,-322 852,-316 852,-310 852,-310 852,-288 852,-288 852,-282 858,-276 864,-276"/>
+<path fill="#daa520" stroke="black" d="M864,-276C864,-276 946,-276 946,-276 952,-276 958,-282 958,-288 958,-288 958,-310 958,-310 958,-316 952,-322 946,-322 946,-322 864,-322 864,-322 858,-322 852,-316 852,-310 852,-310 852,-288 852,-288 852,-282 858,-276 864,-276"/>
 <text text-anchor="middle" x="905" y="-306.8" font-family="Times,serif" font-size="14.00">꞉lexeme</text>
 <polyline fill="none" stroke="black" points="852,-299 958,-299 "/>
 <text text-anchor="middle" x="905" y="-283.8" font-family="Times,serif" font-size="14.00">undirected_edge</text>
@@ -396,7 +396,7 @@
 </g>
 <!-- directed_edge_0 -->
 <g id="node30" class="node"><title>directed_edge_0</title>
-<path fill="lightblue" stroke="black" d="M602,-192C602,-192 724,-192 724,-192 730,-192 736,-198 736,-204 736,-204 736,-226 736,-226 736,-232 730,-238 724,-238 724,-238 602,-238 602,-238 596,-238 590,-232 590,-226 590,-226 590,-204 590,-204 590,-198 596,-192 602,-192"/>
+<path fill="#daa520" stroke="black" d="M602,-192C602,-192 724,-192 724,-192 730,-192 736,-198 736,-204 736,-204 736,-226 736,-226 736,-232 730,-238 724,-238 724,-238 602,-238 602,-238 596,-238 590,-232 590,-226 590,-226 590,-204 590,-204 590,-198 596,-192 602,-192"/>
 <text text-anchor="middle" x="663" y="-222.8" font-family="Times,serif" font-size="14.00">event =&gt; directed_edge</text>
 <polyline fill="none" stroke="black" points="590,-215 736,-215 "/>
 <text text-anchor="middle" x="663" y="-199.8" font-family="Times,serif" font-size="14.00">pause =&gt; before</text>
@@ -418,7 +418,7 @@
 </g>
 <!-- undirected_edge_0 -->
 <g id="node32" class="node"><title>undirected_edge_0</title>
-<path fill="lightblue" stroke="black" d="M837.5,-192C837.5,-192 972.5,-192 972.5,-192 978.5,-192 984.5,-198 984.5,-204 984.5,-204 984.5,-226 984.5,-226 984.5,-232 978.5,-238 972.5,-238 972.5,-238 837.5,-238 837.5,-238 831.5,-238 825.5,-232 825.5,-226 825.5,-226 825.5,-204 825.5,-204 825.5,-198 831.5,-192 837.5,-192"/>
+<path fill="#daa520" stroke="black" d="M837.5,-192C837.5,-192 972.5,-192 972.5,-192 978.5,-192 984.5,-198 984.5,-204 984.5,-204 984.5,-226 984.5,-226 984.5,-232 978.5,-238 972.5,-238 972.5,-238 837.5,-238 837.5,-238 831.5,-238 825.5,-232 825.5,-226 825.5,-226 825.5,-204 825.5,-204 825.5,-198 831.5,-192 837.5,-192"/>
 <text text-anchor="middle" x="905" y="-222.8" font-family="Times,serif" font-size="14.00">event =&gt; undirected_edge</text>
 <polyline fill="none" stroke="black" points="825.5,-215 984.5,-215 "/>
 <text text-anchor="middle" x="905" y="-199.8" font-family="Times,serif" font-size="14.00">pause =&gt; before</text>
@@ -450,7 +450,7 @@
 </g>
 <!-- start_attributes -->
 <g id="node37" class="node"><title>start_attributes</title>
-<path fill="lightblue" stroke="black" d="M389.5,-108C389.5,-108 462.5,-108 462.5,-108 468.5,-108 474.5,-114 474.5,-120 474.5,-120 474.5,-142 474.5,-142 474.5,-148 468.5,-154 462.5,-154 462.5,-154 389.5,-154 389.5,-154 383.5,-154 377.5,-148 377.5,-142 377.5,-142 377.5,-120 377.5,-120 377.5,-114 383.5,-108 389.5,-108"/>
+<path fill="#daa520" stroke="black" d="M389.5,-108C389.5,-108 462.5,-108 462.5,-108 468.5,-108 474.5,-114 474.5,-120 474.5,-120 474.5,-142 474.5,-142 474.5,-148 468.5,-154 462.5,-154 462.5,-154 389.5,-154 389.5,-154 383.5,-154 377.5,-148 377.5,-142 377.5,-142 377.5,-120 377.5,-120 377.5,-114 383.5,-108 389.5,-108"/>
 <text text-anchor="middle" x="426" y="-138.8" font-family="Times,serif" font-size="14.00">꞉lexeme</text>
 <polyline fill="none" stroke="black" points="377.5,-131 474.5,-131 "/>
 <text text-anchor="middle" x="426" y="-115.8" font-family="Times,serif" font-size="14.00">start_attributes</text>
@@ -472,7 +472,7 @@
 </g>
 <!-- start_attributes_0 -->
 <g id="node38" class="node"><title>start_attributes_0</title>
-<path fill="lightblue" stroke="black" d="M254,-24C254,-24 380,-24 380,-24 386,-24 392,-30 392,-36 392,-36 392,-58 392,-58 392,-64 386,-70 380,-70 380,-70 254,-70 254,-70 248,-70 242,-64 242,-58 242,-58 242,-36 242,-36 242,-30 248,-24 254,-24"/>
+<path fill="#daa520" stroke="black" d="M254,-24C254,-24 380,-24 380,-24 386,-24 392,-30 392,-36 392,-36 392,-58 392,-58 392,-64 386,-70 380,-70 380,-70 254,-70 254,-70 248,-70 242,-64 242,-58 242,-58 242,-36 242,-36 242,-30 248,-24 254,-24"/>
 <text text-anchor="middle" x="317" y="-54.8" font-family="Times,serif" font-size="14.00">event =&gt; start_attributes</text>
 <polyline fill="none" stroke="black" points="242,-47 392,-47 "/>
 <text text-anchor="middle" x="317" y="-31.8" font-family="Times,serif" font-size="14.00">pause =&gt; before</text>
