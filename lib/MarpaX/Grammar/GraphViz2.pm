@@ -718,7 +718,7 @@ sub process_normal_tokens
 			$self -> graph -> add_edge(from => $rule_name, to => $name);
 		}
 
-		if (defined $$lexemes{$name})
+		if ($$lexemes{$name})
 		{
 			$$attributes{fillcolor} = 'lightblue';
 			$$attributes{label}     = $$lexemes{$name};
