@@ -105,7 +105,7 @@ has marpa_bnf_file =>
 	default  => sub{return ''},
 	is       => 'rw',
 	#isa     => 'Str',
-	required => 0,
+	required => 1,
 );
 
 has maxlevel =>
@@ -161,7 +161,7 @@ has user_bnf_file =>
 	default  => sub{return ''},
 	is       => 'rw',
 	#isa     => 'Str',
-	required => 0,
+	required => 1,
 );
 
 has root_node =>

@@ -5,7 +5,7 @@ Default global: label => ->
 Default global: name => Perl
 Default global: record_shape => Mrecord
 Default global: strict => 0
-Default global: subgraph => HASH(0x39a57c0)
+Default global: subgraph => HASH(0x27a9670)
 Default global: timeout => 10
 Default graph: label => stringparser.bnf, rankdir => TB
 Default node: shape => rectangle, style => filled
@@ -112,7 +112,7 @@ Added node: "Legend_2" [ fillcolor="lightblue" label="{Lightblue nodes|are for l
 Added node: "Legend_3" [ fillcolor="orchid" label="{Orchid nodes|are for lexemes}" shape="Mrecord" style="filled" ]
 Added node: "Legend_4" [ fillcolor="goldenrod" label="{Golden nodes|are for actions}" shape="Mrecord" style="filled" ]
 Added node: "Legend_5" [ fillcolor="firebrick1" label="{Red nodes|are for events}" shape="Mrecord" style="filled" ]
-Driver: /usr/local/bin/dot. Output file: html/stringparser.svg. Format: svg. Timeout: 10 second(s)
+Driver: /usr/local/bin/dot. Output file: . Format: svg. Timeout: 10 second(s)
 
 digraph Perl
 {
@@ -226,4 +226,3 @@ rank="max"
 "Legend_5" [ fillcolor="firebrick1" label="{Red nodes|are for events}" shape="Mrecord" style="filled" ]
 }
 }
-Wrote html/stringparser.svg. Size: 39618 bytes
