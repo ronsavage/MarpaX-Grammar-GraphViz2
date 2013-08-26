@@ -1129,6 +1129,79 @@ If no output file is supplied, nothing is written.
 
 Note: C<tree_file> is a parameter to new().
 
+=head1 Files Shipped with this Module
+
+=head2 Data Files
+
+=over 4
+
+=item o share/c.ast.bnf
+
+This is part of L<MarpaX::Languages::C::AST>, by Jean-Damien Durand. It's 1,565 lines long.
+
+=item o share/json.1.bnf
+
+It is part of L<MarpaX::Demo::JSONParser>, written as a gist by Peter Stuifzand.
+
+See L<https://gist.github.com/pstuifzand/4447349>.
+
+=item o share/json.2.bnf
+
+It also is part of L<MarpaX::Demo::JSONParser>, written by Jeffrey Kegler as a reply to the gist above from Peter.
+
+=item o share/metag.bnf.
+
+This is a copy of L<Marpa::R2>'s SLIF-DSL.
+
+See L</marpa_bnf_file([$bnf_file_name])> above.
+
+=item o share/stringparser.bnf.
+
+This is a copy of L<MarpaX::Demo::StringParser>'s SLIF-DSL.
+
+See L</user_bnf_file([$bnf_file_name])> above.
+
+=item o share/termcap.info.bnf
+
+It also is part of L<MarpaX::Database::Terminfo>, written by Jean-Damien Durand.
+
+=back
+
+=head2 Scripts
+
+=over 4
+
+=item o scripts/bnf2graph.pl
+
+This is a neat way of using the module. For help, run:
+
+	shell> perl -Ilib scripts/bnf2graph.pl -h
+
+Of course you are also encouraged to include this module directly in your own code.
+
+=item o scripts/bnf2graph.sh
+
+This is a quick way for me to run bnf2graph.pl.
+
+=item o scripts/find.grammars.pl
+
+This prints the path to a grammar file. After installation of the module, run it with:
+
+	shell> perl scripts/find.grammars.pl (Defaults to json.1.bnf)
+	shell> perl scripts/find.grammars.pl c.ast.bnf
+	shell> perl scripts/find.grammars.pl json.1.bnf
+	shell> perl scripts/find.grammars.pl json.2.bnf
+	shell> perl scripts/find.grammars.pl stringparser.bnf
+	shell> perl scripts/find.grammars.pl termcap.inf.bnf
+
+It will print the name of the path to given grammar file.
+
+=item o scripts/pod2html.sh
+
+This lets me quickly proof-read edits to the docs.
+
+=back
+
 =head1 FAQ
 
 =head2 Why are some characters replaced by Unicode versions?
