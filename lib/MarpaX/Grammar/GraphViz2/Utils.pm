@@ -107,7 +107,7 @@ sub generate_demo_index
 			{
 				{
 					bnf_name => basename($image{$_}{bnf_name}),
-					count    => $count2,
+					count    => ++$count2,
 				};
 			} sort keys %image
 			],
