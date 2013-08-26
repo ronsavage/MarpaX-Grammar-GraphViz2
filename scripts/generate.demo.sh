@@ -6,4 +6,4 @@ perl -Ilib scripts/bnf2graph.pl -marpa share/metag.bnf -o html/json.2.svg       
 perl -Ilib scripts/bnf2graph.pl -marpa share/metag.bnf -o html/stringparser.svg -user share/stringparser.bnf
 perl -Ilib scripts/bnf2graph.pl -marpa share/metag.bnf -o html/termcap.info.svg -user share/termcap.info.bnf
 
-perl -Ilib scripts/generate.demo.pl svg
+perl -Ilib scripts/generate.demo.pl
