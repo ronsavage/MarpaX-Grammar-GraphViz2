@@ -21,13 +21,17 @@
 	<p align = "center">Note 2: Some images have a tiny sub-graph whose root is 'comma'. This is due to the author using<br>
 		both 'comma' and '&lt;comma&gt;' as tokens within the grammar. So far this module does not handle that.</p>
 
-	<p align = "center">Note 3: Some characters are replaced by similar Unicode characters, because Graphviz teats those characters<br>
+	<p align = "center">Note 3: A similar thing (as in Note 2) can happen elsewhere, e.g. with named event statements,
+		when the rhs name uses (say) '&lt;xyz&gt;' and the rule referred to uses just 'xyz'.<br>
+		In all cases, there will be 2 nodes, with 2 names differing in just the brackets.</p>
+
+	<p align = "center">Note 4: Some characters are replaced by similar Unicode characters, because Graphviz teats those characters<br>
 		as special. These characters are: &lt;, &gt;, " and :. Indeed, the " char is replaced by 2 single quotes.</p>
 
-	<p align = "center">Note 4: The legend is experimental, and it's form may change at any time. It is displayed here on all<br>
+	<p align = "center">Note 5: The legend is experimental, and it's form may change at any time. It is displayed here on all<br>
 		images, but is of course optional.</p>
 
-	<p align = "center">Note 5: There is a problem displaying any grammar, when a token is used on the right-hand side of a rule<br>
+	<p align = "center">Note 6: There is a problem displaying any grammar, when a token is used on the right-hand side of a rule<br>
 		both with and without a qualifier. An example is 'value' in these 2 rules in the json.1.bnf:</p>
 
 	<table align = "center" border = "1">
@@ -36,6 +40,10 @@
 	</table>
 
 	<p align = "center">There is no way to display the text 'value' both with and without that '+' sign.</p>
+
+	<p align = "center">Note 7: Numbers on nodes are rule numbers within the input stream.</p>
+
+	<p align = "center">Table of Contents</p>
 
 <table align = "center" border = "1">
 <tr>

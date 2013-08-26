@@ -509,7 +509,7 @@ sub process_default_rule
 		$self -> graph -> add_edge(from => $self -> root_node -> name, to => $default_name);
 	}
 
-	my($daughters, $adverbs) = $self -> process_simple_adverbs($index, $a_node);
+	my($daughters, $adverbs) = $self -> process_adverbs([$a_node -> daughters]);
 
 	if ($#$adverbs >= 0)
 	{
@@ -609,7 +609,7 @@ sub process_lexeme_default_rule
 	$self -> add_node(name => $lexeme_name, %$attributes);
 	$self -> graph -> add_edge(from => $self -> root_node -> name, to => $lexeme_name);
 
-	my($daughters, $adverbs) = $self -> process_simple_adverbs($index, $a_node);
+	my($daughters, $adverbs) = $self -> process_adverbs([$a_node -> daughters]);
 
 	if ($#$adverbs >= 0)
 	{
@@ -627,7 +627,7 @@ sub process_lexeme_default_rule
 sub process_lexeme_rule
 {
 	my($self, $index, $a_node) = @_;
-	my($daughters, $adverbs) = $self -> process_simple_adverbs($index, $a_node);
+	my($daughters, $adverbs) = $self -> process_adverbs([$a_node -> daughters]);
 	my(@name)                = $self -> rectify_name($$daughters[1]);
 	my($lexeme)              = $self -> lexemes;
 	$$lexeme{$name[0]}       = $#$adverbs >= 0 ? $adverbs : '';
@@ -640,7 +640,7 @@ sub process_lexeme_rule
 
 sub process_lexeme_token
 {
-	my($self, $lexemes, $name, $label) = @_;
+	my($self, $index, $lexemes, $name, $label) = @_;
 
 	my($attributes);
 
@@ -692,7 +692,7 @@ sub process_normal_tokens
 	my(@label)      = map{$name_map[$_]} indexes{$_ % 2 != 0} 0 .. $#name_map;
 	my($rule_name)  = join(' ', @name);
 	my($rule_label) = join(' ', @label);
-	my($attributes) = $self -> process_lexeme_token($lexemes, $rule_name, $rule_label);
+	my($attributes) = $self -> process_lexeme_token($index, $lexemes, $rule_name, $rule_label);
 	my(@parent)     = $self -> rectify_name($a_node);
 
 	$self -> add_node(name => $rule_name, %$attributes);
@@ -705,7 +705,7 @@ sub process_normal_tokens
 	{
 		$name = $name[$i];
 
-		$attributes = $self -> process_lexeme_token($lexemes, $name, $label[$i]);
+		$attributes = $self -> process_lexeme_token($index, $lexemes, $name, $label[$i]);
 
 		# Don't re-add the node added just above.
 		# This happens in cases where there is just 1 daughter,
@@ -740,20 +740,6 @@ sub process_normal_tokens
 	}
 
 } # End of process_normal_tokens.
-
-# --------------------------------------------------
-# This handles ':default', ':lexeme' and 'lexeme default'.
-
-sub process_simple_adverbs
-{
-	my($self, $index, $a_node) = @_;
-	my($name)      = $a_node -> name;
-
-	my($daughters, $adverbs) = $self -> process_adverbs([$a_node -> daughters]);
-
-	return ($daughters, $adverbs);
-
-} # End of process_simple_adverbs.
 
 # --------------------------------------------------
 
