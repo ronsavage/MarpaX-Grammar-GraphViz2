@@ -46,7 +46,7 @@ our $VERSION = '1.00';
 sub BUILD
 {
 	my($self) = @_;
-	my($path) = path(File::HomeDir -> my_dist_config('MarpaX::Grammar::GraphViz2'), '.htmarpax::grammar::graphviz2.conf');
+	my($path) = path('config', '.htmarpax.grammar.graphviz2.conf');
 
 	$self -> read($path);
 

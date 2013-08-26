@@ -21,7 +21,7 @@ sub get_files
 	my($self, $dir_name, $type) = @_;
 
 	opendir(INX, $dir_name);
-	my(@file) = sort grep{/$type$/} readdir INX;
+	my(@file) = sort grep{! /metag.bnf/} grep{/$type$/} readdir INX;
 	closedir INX;
 
 	my(%file);
@@ -67,7 +67,11 @@ It returns a new object of type C<MarpaX::Grammar::GraphViz2::Filer>.
 
 =head2 get_files($dir_name, $type)
 
-Returns a list of files from the given $dir_name, whose type (extension) matches $type.
+Returns a hash (sic) of files from the given $dir_name, whose type (extension) matches $type.
+
+The hash is keyed by the file's basename. See L<File::Basename>.
+
+The file share/metag.bnf is omitted from the set returned.
 
 =head1 Version Numbers
 

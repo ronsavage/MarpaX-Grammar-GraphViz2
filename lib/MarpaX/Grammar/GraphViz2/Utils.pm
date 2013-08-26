@@ -67,6 +67,19 @@ sub generate_demo_index
 		path        => $$config{template_path},
 	);
 	my($count) = 0;
+	my(%file)  = MarpaX::Grammar::GraphViz2::Filer -> new -> get_files('share', 'bnf');
+
+	my(%file_set);
+
+	for my $file (keys %file)
+	{
+		print "$file\n";
+	}
+
+	return;
+
+	my(@key);
+
 	my($index) = $templater -> render
 	(
 	'graphviz2.index.tx',
@@ -79,9 +92,9 @@ sub generate_demo_index
 				{
 					count       => ++$count,
 					image       => "./$_.svg",
-					image_name  => $script_file{$_}{image_name},
-					note        => $script_file{$_}{note},
-					script_name => $script_file{$_}{script_name},
+					image_name  => $file{$_}{image_name},
+					note        => $file{$_}{note},
+					script_name => $file{$_}{script_name},
 				};
 			} @key
 			],
