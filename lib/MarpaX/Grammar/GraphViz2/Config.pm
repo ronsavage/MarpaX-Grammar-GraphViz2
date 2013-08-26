@@ -1,4 +1,4 @@
-package GraphViz2::Config;
+package MarpaX::Grammar::GraphViz2::Config;
 
 use strict;
 use utf8;
@@ -39,14 +39,14 @@ has section =>
 	required => 0,
 );
 
-our $VERSION = '2.19';
+our $VERSION = '1.00';
 
 # -----------------------------------------------
 
 sub BUILD
 {
 	my($self) = @_;
-	my($path) = path(File::HomeDir -> my_dist_config('GraphViz2'), '.htgraphviz2.conf');
+	my($path) = path(File::HomeDir -> my_dist_config('MarpaX::Grammar::GraphViz2'), '.htmarpax::grammar::graphviz2.conf');
 
 	$self -> read($path);
 
@@ -99,42 +99,25 @@ sub read
 
 =head1 NAME
 
-GraphViz2::Config - A wrapper for AT&T's Graphviz
+MarpaX::Grammar::GraphViz2::Config - Helps generate the demo page for MarpaX::Grammar::GraphViz2
 
 =head1 Synopsis
 
-See L<GraphViz2>.
+This module is only for use by the author of C<MarpaX::Grammar::GraphViz2>.
+
+See scripts/generate.demo.pl.
 
 =head1 Description
 
-L<GraphViz2> provides a wrapper for AT&T's Graphviz.
+C<MarpaX::Grammar::GraphViz2::Config> helps generate the demo page for L<MarpaX::Grammar::GraphViz2>.
 
 =head1 Methods
 
-=head2 _init()
-
-For use by subclasses.
-
-Sets default values for object attributes.
-
-=head2 new()
-
-For use by subclasses.
-
 =head2 read()
 
-read() is called by new(). It does the actual reading of the config file.
+read() is called automatically by BUILD(). It does the actual reading of the config file.
 
 If the file can't be read, die is called.
-
-The path to the config file is determined by:
-
-	path(File::HomeDir -> my_dist_config('GraphViz2'), '.htgraphviz2.conf');
-
-During installation, you should have run scripts/copy.config.pl, which uses the same code, to move the config file
-from the config/ directory in the disto into an OS-dependent directory.
-
-The run-time code uses this module to look in the same directory as used by scripts/copy.config.pl.
 
 =head1 Version Numbers
 
@@ -148,17 +131,17 @@ The file Changes was converted into Changelog.ini by L<Module::Metadata::Changes
 
 Email the author, or log a bug on RT:
 
-L<https://rt.cpan.org/Public/Dist/Display.html?Name=GraphViz2>.
+L<https://rt.cpan.org/Public/Dist/Display.html?Name=MarpaX::Grammar::GraphViz2>.
 
 =head1 Author
 
-L<GraphViz2> was written by Ron Savage I<E<lt>ron@savage.net.auE<gt>> in 2011.
+L<MarpaX::Grammar::GraphViz2> was written by Ron Savage I<E<lt>ron@savage.net.auE<gt>> in 2013.
 
 Home page: L<http://savage.net.au/index.html>.
 
 =head1 Copyright
 
-Australian copyright (c) 2011, Ron Savage.
+Australian copyright (c) 2013, Ron Savage.
 
 	All Programs of mine are 'OSI Certified Open Source Software';
 	you can redistribute them and/or modify them under the terms of

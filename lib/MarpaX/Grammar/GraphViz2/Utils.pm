@@ -1,4 +1,4 @@
-package GraphViz2::Utils;
+package MarpaX::Grammar::GraphViz2::Utils;
 
 use strict;
 use utf8;
@@ -13,8 +13,8 @@ use Date::Simple;
 
 use File::Spec;
 
-use GraphViz2::Config;
-use GraphViz2::Filer;
+use MarpaX::Grammar::GraphViz2::Config;
+use MarpaX::Grammar::GraphViz2::Filer;
 
 use HTML::Entities::Interpolate;
 
@@ -26,13 +26,13 @@ use Text::Xslate 'mark_raw';
 
 has config =>
 (
-	default  => sub{return GraphViz2::Config -> new -> config},
+	default  => sub{return MarpaX::Grammar::GraphViz2::Config -> new -> config},
 	is       => 'rw',
 #	isa      => 'HashRef',
 	required => 0,
 );
 
-our $VERSION = '2.19';
+our $VERSION = '1.00';
 
 # ------------------------------------------------
 
@@ -60,31 +60,8 @@ sub generate_demo_index
 {
 	my($self)          = @_;
 	my($html_dir_name) = 'html';
-	my(%script_file)   = GraphViz2::Filer -> new -> get_scripts;
-
-	my($html_name);
-	my($line, @line);
-	my($note);
-
-	for my $key (sort keys %script_file)
-	{
-		$line      = slurp $script_file{$key}, {utf8 => 1};
-		@line      = split(/\n/, $line);
-		$note      = $line[3];
-		$note      =~ s/Annotation: //;
-		$html_name = "$html_dir_name/$key.svg";
-
-		$script_file{$key} =
-		{
-			image_name  => -e $html_name ? $html_name : '',
-			note        => $note,
-			script_name => $script_file{$key},
-		};
-	}
-
-	my(@key)       = sort keys %script_file;
-	my($config)    = $self -> config;
-	my($templater) = Text::Xslate -> new
+	my($config)        = $self -> config;
+	my($templater)     = Text::Xslate -> new
 	(
 		input_layer => '',
 		path        => $$config{template_path},
@@ -135,17 +112,13 @@ sub generate_demo_index
 
 =head1 NAME
 
-L<GraphViz2::Utils> - Some utils to generate the demo page
+L<MarpaX::Grammar::GraphViz2::Utils> - Helps generate the demo page for MarpaX::Grammar::GraphViz2
 
 =head1 Synopsis
 
-See L<GraphViz2/Synopsis>.
+This module is only for use by the author of C<MarpaX::Grammar::GraphViz2>.
 
-See scripts/generate.index.pl.
-
-Note: scripts/generate.index.pl outputs to a directory called 'html' in the 'current' directory.
-
-See: L<http://savage.net.au/Perl-modules/html/graph.easy.marpa/index.html>.
+See scripts/generate.demo.pl.
 
 =head1 Description
 
@@ -153,54 +126,13 @@ Some utils to simplify generation of the demo page.
 
 It is not expected that end-users would ever need to use this module.
 
-=head1 Distributions
-
-This module is available as a Unix-style distro (*.tgz).
-
-See L<http://savage.net.au/Perl-modules/html/installing-a-module.html>
-for help on unpacking and installing distros.
-
-=head1 Installation
-
-Install L<GraphViz2> as you would for any C<Perl> module:
-
-Run:
-
-	cpanm GraphViz2
-
-or run:
-
-	sudo cpan GraphViz2
-
-or unpack the distro, and then either:
-
-	perl Build.PL
-	./Build
-	./Build test
-	sudo ./Build install
-
-or:
-
-	perl Makefile.PL
-	make (or dmake or nmake)
-	make test
-	make install
-
 =head1 Constructor and Initialization
 
 =head2 Calling new()
 
-C<new()> is called as C<< my($obj) = GraphViz2::Utils -> new(k1 => v1, k2 => v2, ...) >>.
+C<new()> is called as C<< my($obj) = MarpaX::Grammar::GraphViz2::Utils -> new() >>.
 
-It returns a new object of type C<GraphViz2::Utils>.
-
-Key-value pairs accepted in the parameter list:
-
-=over 4
-
-=item o (none)
-
-=back
+It returns a new object of type C<MarpaX::Grammar::GraphViz2::Utils>.
 
 =head1 Methods
 
@@ -208,7 +140,7 @@ Key-value pairs accepted in the parameter list:
 
 Returns a hashref of OS, etc, values.
 
-Keys are C<left> and C<right>, to suit C<htdocs/assets/templates/graph/easy/marpa/fancy.table.tx>.
+Keys are C<left> and C<right>, to suit C<htdocs/assets/templates/marpax/grammar/graphviz2/fancy.table.tx>.
 
 C<*.tx> files are used by L<Text::Xslate>.
 
@@ -216,17 +148,9 @@ Called by L</generate_demo_index()>.
 
 =head2 generate_demo_index()
 
-Calls L<GraphViz2::Filer/get_files($dir_name, $type)> and L</generate_demo_environment()>.
+Calls L<MarpaX::Grammar::GraphViz2::Filer/get_files($dir_name, $type)> and L</generate_demo_environment()>.
 
 Writes C<html/index.html>.
-
-See scripts/generate.index.pl.
-
-=head1 Thanks
-
-Many thanks are due to the people who chose to make L<Graphviz|http://www.graphviz.org/> Open Source.
-
-And thanks to L<Leon Brocard|http://search.cpan.org/~lbrocard/>, who wrote L<GraphViz>, and kindly gave me co-maint of the module.
 
 =head1 Version Numbers
 
@@ -240,17 +164,17 @@ The file Changes was converted into Changelog.ini by L<Module::Metadata::Changes
 
 Email the author, or log a bug on RT:
 
-L<https://rt.cpan.org/Public/Dist/Display.html?Name=GraphViz2>.
+L<https://rt.cpan.org/Public/Dist/Display.html?Name=MarpaX::Grammar::GraphViz2>.
 
 =head1 Author
 
-L<GraphViz2> was written by Ron Savage I<E<lt>ron@savage.net.auE<gt>> in 2011.
+L<MarpaX::Grammar::GraphViz2> was written by Ron Savage I<E<lt>ron@savage.net.auE<gt>> in 2013.
 
 Home page: L<http://savage.net.au/index.html>.
 
 =head1 Copyright
 
-Australian copyright (c) 2011, Ron Savage.
+Australian copyright (c) 2013, Ron Savage.
 
 	All Programs of mine are 'OSI Certified Open Source Software';
 	you can redistribute them and/or modify them under the terms of

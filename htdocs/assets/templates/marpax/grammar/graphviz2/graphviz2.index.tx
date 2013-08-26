@@ -2,7 +2,7 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-	<title>Index of sample files created by GraphViz2 V <: $version :></title>
+	<title>Index of sample files created by MarpaX::Grammar::GraphViz2 V <: $version :></title>
 	<meta http-equiv="content-type" content="text/html;charset=utf-8" />
 	<meta http-equiv="cache-control" content="no-cache">
 	<meta http-equiv="pragma" content="no-cache">
@@ -10,9 +10,9 @@
 	<link rel="stylesheet" type="text/css" href="<: $fancy_table_css :>">
 </head>
 <body>
-	<h1>Index of sample files created by <a href="http://metacpan.org/release/GraphViz2">GraphViz2</a> V <: $version :>.</h1>
+	<h1>Index of sample files created by <a href="http://metacpan.org/release/MarpaX-Grammar-GraphViz2">GraphViz2</a> V <: $version :>.</h1>
 
-	<p>All scripts and input files required to generate these examples are shipped with the GraphViz2 distro. Output files are shipped too.</p>
+	<p>All scripts and input files required to generate these examples are shipped with the MarpaX::Grammar::GraphViz2 distro. Output files are shipped too.</p>
 
 <table border = "1">
 :for $data -> $row {
