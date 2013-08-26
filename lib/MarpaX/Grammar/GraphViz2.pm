@@ -44,6 +44,14 @@ has driver =>
 	required => 0,
 );
 
+has event_count =>
+(
+	default  => sub{return 0},
+	is       => 'rw',
+	#isa     => 'Int',
+	required => 0,
+);
+
 has format =>
 (
 	default  => sub{return ''},
@@ -217,6 +225,13 @@ sub add_legend
 		fillcolor => 'goldenrod',
 		name      => 'Legend_4',
 		label     => [{text => '{Golden nodes'}, {text => 'are for actions}'}],
+		style     => 'filled',
+	);
+	$self -> graph -> add_node
+	(
+		fillcolor => 'firebrick1',
+		name      => 'Legend_5',
+		label     => [{text => '{Red nodes'}, {text => 'are for events}'}],
 		style     => 'filled',
 	);
 
@@ -473,20 +488,6 @@ sub process_complex_adverbs
 } # End of process_complex_adverbs.
 
 # --------------------------------------------------
-# This handles ':default', ':lexeme' and 'lexeme default'.
-
-sub process_simple_adverbs
-{
-	my($self, $index, $a_node) = @_;
-	my($name)      = $a_node -> name;
-
-	my($daughters, $adverbs) = $self -> process_adverbs([$a_node -> daughters]);
-
-	return ($daughters, $adverbs);
-
-} # End of process_simple_adverbs.
-
-# --------------------------------------------------
 
 sub process_default_rule
 {
@@ -554,6 +555,44 @@ sub process_discard_rule
 	$self -> graph -> add_edge(from => $discard_name, to => $name[0]);
 
 } # End of process_discard_rule.
+
+# --------------------------------------------------
+
+sub process_event_rule
+{
+	my($self, $index, $a_node) = @_;
+
+	$self -> event_count($self -> event_count + 1);
+
+	my($event_count) = $self -> event_count;
+	my($event_name)  = 'event';
+	my($attributes)  =
+	{
+		fillcolor => 'firebrick1',
+		label     => $event_name,
+	};
+
+	if ($event_count == 1)
+	{
+		$self -> add_node(name => $event_name, %$attributes);
+		$self -> graph -> add_edge(from => $self -> root_node -> name, to => $event_name);
+	}
+
+	my($item_name)      = "${event_name}_$event_count";
+	my(@daughters)      = $a_node -> daughters;
+	my(@lhs)            = $self -> rectify_name($daughters[3]);
+	$$attributes{label} =
+	[
+		{text => '{' . $daughters[0] -> name},
+		{text => $daughters[2] -> name},
+		{text => "$lhs[0]}"},
+	];
+
+	$self -> add_node(name => $item_name, %$attributes);
+	$self -> graph -> add_edge(from => $event_name, to => $item_name);
+	$self -> graph -> add_edge(from => $item_name, to => $lhs[0]);
+
+} # End of process_event_rule.
 
 # --------------------------------------------------
 
@@ -703,6 +742,20 @@ sub process_normal_tokens
 } # End of process_normal_tokens.
 
 # --------------------------------------------------
+# This handles ':default', ':lexeme' and 'lexeme default'.
+
+sub process_simple_adverbs
+{
+	my($self, $index, $a_node) = @_;
+	my($name)      = $a_node -> name;
+
+	my($daughters, $adverbs) = $self -> process_adverbs([$a_node -> daughters]);
+
+	return ($daughters, $adverbs);
+
+} # End of process_simple_adverbs.
+
+# --------------------------------------------------
 
 sub process_start_rule
 {
@@ -780,6 +833,7 @@ sub run
 	(
 		"\x{a789}default" => 1,
 		"\x{a789}discard" => 1,
+		'event'           => 1, # Not yet, but we want process_normal_rule() to skip them.
 		"\x{a789}lexeme"  => 1,
 		'lexeme default'  => 1,
 		"\x{a789}start"   => 1,
@@ -792,6 +846,11 @@ sub run
 		next if ($seen{$rule[$index] -> name});
 
 		$self -> process_normal_rule($index + 1, $rule[$index], $lexemes);
+	}
+
+	for my $index (indexes {$_ -> name eq 'event'} @rule)
+	{
+		$self -> process_event_rule($index + 1, $rule[$index]);
 	}
 
 	$self -> add_legend if ($self -> legend);
