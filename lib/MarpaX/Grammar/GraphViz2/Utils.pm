@@ -11,6 +11,7 @@ use Config;
 
 use Date::Simple;
 
+use File::Basename;
 use File::Spec;
 
 use MarpaX::Grammar::GraphViz2::Config;
@@ -20,6 +21,7 @@ use HTML::Entities::Interpolate;
 
 use Moo;
 
+use Path::Tiny;   # For path().
 use Perl6::Slurp; # For slurp().
 
 use Text::Xslate 'mark_raw';
@@ -66,21 +68,21 @@ sub generate_demo_index
 		input_layer => '',
 		path        => $$config{template_path},
 	);
-	my($count) = 0;
-	my(%file)  = MarpaX::Grammar::GraphViz2::Filer -> new -> get_files('share', 'bnf');
+	my(%file) = MarpaX::Grammar::GraphViz2::Filer -> new -> get_files('share', 'bnf');
 
-	my(%file_set);
+	my($image_name, %image);
 
-	for my $file (keys %file)
+	for my $file (grep{! /c.ast/} keys %file)
 	{
-		print "$file\n";
+		$image{$file}{bnf_name}   = $file{$file};
+		$image_name               = path('html', $file);
+		$image_name               =~ s/bnf$/svg/;
+		$image{$file}{image_name} = "$image_name.svg";
 	}
 
-	return;
-
-	my(@key);
-
-	my($index) = $templater -> render
+	my($count1) = 0;
+	my($count2) = 0;
+	my($index)  = $templater -> render
 	(
 	'graphviz2.index.tx',
 	{
@@ -90,16 +92,25 @@ sub generate_demo_index
 			map
 			{
 				{
-					count       => ++$count,
-					image       => "./$_.svg",
-					image_name  => $file{$_}{image_name},
-					note        => $file{$_}{note},
-					script_name => $file{$_}{script_name},
+					bnf_name   => $image{$_}{bnf_name},
+					count      => ++$count1,
+					image      => "./$_.svg",
+					image_name => $image{$_}{image_name},
 				};
-			} @key
+			} sort keys %image
 			],
 		environment     => $self -> generate_demo_environment,
 		fancy_table_css => "$$config{css_url}/fancy.table.css",
+		index           =>
+			[
+			map
+			{
+				{
+					bnf_name => basename($image{$_}{bnf_name}),
+					count    => $count2,
+				};
+			} sort keys %image
+			],
 		version         => $VERSION,
 	}
 	);

@@ -10,15 +10,45 @@
 	<link rel="stylesheet" type="text/css" href="<: $fancy_table_css :>">
 </head>
 <body>
-	<h1>Index of sample files created by <a href="http://metacpan.org/release/MarpaX-Grammar-GraphViz2">GraphViz2</a> V <: $version :>.</h1>
+	<h1>Index of sample files created by <a href="http://metacpan.org/release/MarpaX-Grammar-GraphViz2">MarpaX::Grammar::GraphViz2</a> V <: $version :>.</h1>
 
 	<p>All scripts and input files required to generate these examples are shipped with the MarpaX::Grammar::GraphViz2 distro. Output files are shipped too.</p>
+
+	<p>Note 1: The SVG file for c.ast.bnf has been omitted from this demo page because of its size.<br>
+		It takes Graphviz's 'dot' program 6 m 25 s to generate (off-line), and is 1.4 Mb in size.<br>
+		These are not problems, only facts. The problem is the width of the image. So I skipped it.</p>
+
+	<p>Note 2: Some images have a tiny sub-graph whose root is 'comma'. This is due to the author using<br>
+		both 'comma' and '&lt;comma&gt;' as tokens within the grammar. So far this module does not handle that.</p>
+
+	<p>Note 3: Some characters are replaced by similar Unicode characters, because Graphviz teats those characters<br>
+		as special. These characters are: &lt;, &gt;, " and :. Indeed, the " char is replaced by 2 single quotes.</p>
+
+	<p>Note 4: The legend is experimental, and it's form may change at any time. It is displayed here on all<br>
+		images, but is of course optional.</p>
+
+	<p>Note 5: There is a problem displaying any grammar, when a token is used on the right-hand side of a rule<br>
+		both with and without a qualifier. An example is 'value' in these 2 rules in the json.1.bnf:</p>
+
+	<p>pair ::= string ':' value action => do_pair</p>
+
+	<p>elements ::= value+ separator => comma action => do_list</p>
+
+	<p>There is no way to display the text 'value' both with and without that '+' sign.</p>
+
+<table align = "center" border = "1">
+:for $index -> $row {
+<tr>
+  <td><a href = "./index.html#<: $row.bnf_name :>">Input file # <: $row.count :> - <: $row.bnf_name :></a></td>
+</tr>
+:}
+</table>
 
 <table border = "1">
 :for $data -> $row {
 <tr>
-  <td>Input file # <: $row.count :> - <: $row.script_name :>:<br /><: $row.note :></td>
-  <td><: $row.note :><br /><object data = "<: $row.image :>"></object><br />Output file # <: $row.count :> - <: $row.image_name :></td>
+  <td><a name = "<: $row.bnf_name :>"></a>Input file # <: $row.count :> - <: $row.bnf_name :></td>
+  <td><object data = "<: $row.image :>"></object><br />Output file # <: $row.count :> - <: $row.image_name :></td>
 </tr>
 :}
 </table>
