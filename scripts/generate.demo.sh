@@ -1,9 +1,11 @@
 #!/bin/bash
 
-perl -Ilib scripts/bnf2graph.pl -legend 1 -marpa share/metag.bnf -o html/c.ast.svg        -user share/c.ast.bnf
-perl -Ilib scripts/bnf2graph.pl -legend 1 -marpa share/metag.bnf -o html/json.1.svg       -user share/json.1.bnf
-perl -Ilib scripts/bnf2graph.pl -legend 1 -marpa share/metag.bnf -o html/json.2.svg       -user share/json.2.bnf
-perl -Ilib scripts/bnf2graph.pl -legend 1 -marpa share/metag.bnf -o html/stringparser.svg -user share/stringparser.bnf
-perl -Ilib scripts/bnf2graph.pl -legend 1 -marpa share/metag.bnf -o html/termcap.info.svg -user share/termcap.info.bnf
+scripts/bnf2graph.sh c.ast.bnf
+scripts/bnf2graph.sh json.1.bnf
+scripts/bnf2graph.sh json.2.bnf
+scripts/bnf2graph.sh stringparser.bnf
+scripts/bnf2graph.sh termcap.info.bnf
 
 perl -Ilib scripts/generate.demo.pl
+
+cp html/* $DR/Perl-modules/html/marpax.grammar.graphviz2/
