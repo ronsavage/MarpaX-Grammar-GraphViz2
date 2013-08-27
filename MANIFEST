@@ -40,6 +40,7 @@ scripts/generate.demo.pl
 scripts/generate.demo.sh
 scripts/pod2html.sh
 share/c.ast.bnf
+share/c.ast.log
 share/json.1.bnf
 share/json.1.log
 share/json.2.bnf
