@@ -364,7 +364,7 @@ sub log
 
 # --------------------------------------------------
 
-sub process_adverbs
+sub _process_adverbs
 {
 	my($self, $daughters) = @_;
 	my($end)        = $#$daughters;
@@ -411,12 +411,12 @@ sub process_adverbs
 
 	return ([@$daughters], [@adverbs]);
 
-} # End of process_adverbs.
+} # End of _process_adverbs.
 
 # --------------------------------------------------
 # This handles prioritized rules and quantized rules.
 
-sub process_complex_adverbs
+sub _process_complex_adverbs
 {
 	my($self, $index, $a_node) = @_;
 	my($finished)  = 0;
@@ -457,7 +457,7 @@ sub process_complex_adverbs
 	{
 		# Chew adverbs, if any, off the end of the list of daughters.
 
-		($daughters, $adverbs) = $self -> process_adverbs($daughters);
+		($daughters, $adverbs) = $self -> _process_adverbs($daughters);
 
 		# Stack the adverbs owned by the token(s) at the end of the daughters.
 
@@ -488,11 +488,11 @@ sub process_complex_adverbs
 
 	return ([@daughter_stack], [@adverb_stack]);
 
-} # End of process_complex_adverbs.
+} # End of _process_complex_adverbs.
 
 # --------------------------------------------------
 
-sub process_default_rule
+sub _process_default_rule
 {
 	my($self, $index, $a_node) = @_;
 
@@ -512,7 +512,7 @@ sub process_default_rule
 		$self -> graph -> add_edge(from => $self -> root_node -> name, to => $default_name);
 	}
 
-	my($daughters, $adverbs) = $self -> process_adverbs([$a_node -> daughters]);
+	my($daughters, $adverbs) = $self -> _process_adverbs([$a_node -> daughters]);
 
 	if ($#$adverbs >= 0)
 	{
@@ -524,11 +524,11 @@ sub process_default_rule
 		$self -> graph -> add_edge(from => $default_name, to => $adverb_name);
 	}
 
-} # End of process_default_rule.
+} # End of _process_default_rule.
 
 # --------------------------------------------------
 
-sub process_discard_rule
+sub _process_discard_rule
 {
 	my($self, $index, $a_node) = @_;
 
@@ -557,11 +557,11 @@ sub process_discard_rule
 	$self -> add_node(name => $name[0], %$attributes);
 	$self -> graph -> add_edge(from => $discard_name, to => $name[0]);
 
-} # End of process_discard_rule.
+} # End of _process_discard_rule.
 
 # --------------------------------------------------
 
-sub process_event_rule
+sub _process_event_rule
 {
 	my($self, $index, $a_node) = @_;
 
@@ -595,11 +595,11 @@ sub process_event_rule
 	$self -> graph -> add_edge(from => $event_name, to => $item_name);
 	$self -> graph -> add_edge(from => $item_name, to => $lhs[0]);
 
-} # End of process_event_rule.
+} # End of _process_event_rule.
 
 # --------------------------------------------------
 
-sub process_lexeme_default_rule
+sub _process_lexeme_default_rule
 {
 	my($self, $index, $a_node) = @_;
 	my($lexeme_name) = 'lexeme default';
@@ -612,7 +612,7 @@ sub process_lexeme_default_rule
 	$self -> add_node(name => $lexeme_name, %$attributes);
 	$self -> graph -> add_edge(from => $self -> root_node -> name, to => $lexeme_name);
 
-	my($daughters, $adverbs) = $self -> process_adverbs([$a_node -> daughters]);
+	my($daughters, $adverbs) = $self -> _process_adverbs([$a_node -> daughters]);
 
 	if ($#$adverbs >= 0)
 	{
@@ -623,25 +623,25 @@ sub process_lexeme_default_rule
 		$self -> graph -> add_edge(from => $lexeme_name, to => $adverb_name);
 	}
 
-} # End of process_lexeme_default_rule.
+} # End of _process_lexeme_default_rule.
 
 # --------------------------------------------------
 
-sub process_lexeme_rule
+sub _process_lexeme_rule
 {
 	my($self, $index, $a_node) = @_;
-	my($daughters, $adverbs) = $self -> process_adverbs([$a_node -> daughters]);
+	my($daughters, $adverbs) = $self -> _process_adverbs([$a_node -> daughters]);
 	my(@name)                = $self -> rectify_name($$daughters[1]);
 	my($lexeme)              = $self -> lexemes;
 	$$lexeme{$name[0]}       = $#$adverbs >= 0 ? $adverbs : '';
 
 	$self -> lexemes($lexeme);
 
-} # End of process_lexeme_rule.
+} # End of _process_lexeme_rule.
 
 # --------------------------------------------------
 
-sub process_lexeme_token
+sub _process_lexeme_token
 {
 	my($self, $index, $lexemes, $name, $label) = @_;
 
@@ -666,25 +666,25 @@ sub process_lexeme_token
 
 	return $attributes;
 
-} # End of process_lexeme_token.
+} # End of _process_lexeme_token.
 
 # --------------------------------------------------
 
-sub process_normal_rule
+sub _process_normal_rule
 {
 	my($self, $index, $a_node, $lexemes) = @_;
-	my($daughters, $adverbs) = $self -> process_complex_adverbs($index, $a_node);
+	my($daughters, $adverbs) = $self -> _process_complex_adverbs($index, $a_node);
 
 	for my $i (0 .. $#$daughters)
 	{
-		$self -> process_normal_tokens($index, $a_node, $lexemes, $$daughters[$i], $$adverbs[$i]);
+		$self -> _process_normal_tokens($index, $a_node, $lexemes, $$daughters[$i], $$adverbs[$i]);
 	}
 
-} # End of process_normal_rule.
+} # End of _process_normal_rule.
 
 # --------------------------------------------------
 
-sub process_normal_tokens
+sub _process_normal_tokens
 {
 	my($self, $index, $a_node, $lexemes, $daughters, $adverbs) = @_;
 
@@ -695,7 +695,7 @@ sub process_normal_tokens
 	my(@label)      = map{$name_map[$_]} indexes{$_ % 2 != 0} 0 .. $#name_map;
 	my($rule_name)  = join(' ', @name);
 	my($rule_label) = join(' ', @label);
-	my($attributes) = $self -> process_lexeme_token($index, $lexemes, $rule_name, $rule_label);
+	my($attributes) = $self -> _process_lexeme_token($index, $lexemes, $rule_name, $rule_label);
 	my(@parent)     = $self -> rectify_name($a_node);
 
 	$self -> add_node(name => $rule_name, %$attributes);
@@ -708,7 +708,7 @@ sub process_normal_tokens
 	{
 		$name = $name[$i];
 
-		$attributes = $self -> process_lexeme_token($index, $lexemes, $name, $label[$i]);
+		$attributes = $self -> _process_lexeme_token($index, $lexemes, $name, $label[$i]);
 
 		# Don't re-add the node added just above.
 		# This happens in cases where there is just 1 daughter,
@@ -742,11 +742,11 @@ sub process_normal_tokens
 		$self -> graph -> add_edge(from => $rule_name, to => $attr_name);
 	}
 
-} # End of process_normal_tokens.
+} # End of _process_normal_tokens.
 
 # --------------------------------------------------
 
-sub process_start_rule
+sub _process_start_rule
 {
 	my($self, $index, $a_node) = @_;
 	my(@daughters) = $a_node -> daughters;
@@ -762,7 +762,7 @@ sub process_start_rule
 
 	$self -> add_node(name => $name[0], %$attributes);
 
-} # End of process_start_rule.
+} # End of _process_start_rule.
 
 # --------------------------------------------------
 
@@ -797,25 +797,25 @@ sub run
 
 	# Warning: This must be first because it sets $self -> root_node().
 
-	$self -> process_start_rule($start_index + 1, $rule[$start_index]);
+	$self -> _process_start_rule($start_index + 1, $rule[$start_index]);
 
 	for my $index (indexes {$_ -> name eq "\x{a789}default"} @rule)
 	{
-		$self -> process_default_rule($index + 1, $rule[$index]);
+		$self -> _process_default_rule($index + 1, $rule[$index]);
 	}
 
 	for my $index (indexes {$_ -> name eq "\x{a789}discard"} @rule)
 	{
-		$self -> process_discard_rule($index + 1, $rule[$index]);
+		$self -> _process_discard_rule($index + 1, $rule[$index]);
 	}
 
 	my($lexeme_default_index) = first_index{$_ -> name eq 'lexeme default'} @rule;
 
-	$self -> process_lexeme_default_rule($lexeme_default_index + 1, $rule[$lexeme_default_index]) if ($lexeme_default_index >= 0);
+	$self -> _process_lexeme_default_rule($lexeme_default_index + 1, $rule[$lexeme_default_index]) if ($lexeme_default_index >= 0);
 
 	for my $index (indexes {$_ -> name eq "\x{a789}lexeme"} @rule)
 	{
-		$self -> process_lexeme_rule($index + 1, $rule[$index]);
+		$self -> _process_lexeme_rule($index + 1, $rule[$index]);
 	}
 
 	my(%seen) =
@@ -834,12 +834,12 @@ sub run
 	{
 		next if ($seen{$rule[$index] -> name});
 
-		$self -> process_normal_rule($index + 1, $rule[$index], $lexemes);
+		$self -> _process_normal_rule($index + 1, $rule[$index], $lexemes);
 	}
 
 	for my $index (indexes {$_ -> name eq 'event'} @rule)
 	{
-		$self -> process_event_rule($index + 1, $rule[$index]);
+		$self -> _process_event_rule($index + 1, $rule[$index]);
 	}
 
 	$self -> add_legend if ($self -> legend);
