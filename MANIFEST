@@ -1,6 +1,15 @@
 Changelog.ini
 Changes
+config/.htmarpax.grammar.graphviz2.conf
+htdocs/assets/css/marpax/grammar/graphviz2/default.css
+htdocs/assets/css/marpax/grammar/graphviz2/fancy.table.css
+htdocs/assets/css/marpax/grammar/graphviz2/web.page.css
+htdocs/assets/templates/marpax/grammar/graphviz2/basic.column.tx
+htdocs/assets/templates/marpax/grammar/graphviz2/basic.table.tx
+htdocs/assets/templates/marpax/grammar/graphviz2/fancy.table.tx
+htdocs/assets/templates/marpax/grammar/graphviz2/graphviz2.index.tx
 html/c.ast.svg
+html/index.html
 html/json.1.svg
 html/json.2.svg
 html/stringparser.svg
@@ -16,6 +25,9 @@ inc/Module/Install/Share.pm
 inc/Module/Install/Win32.pm
 inc/Module/Install/WriteAll.pm
 lib/MarpaX/Grammar/GraphViz2.pm
+lib/MarpaX/Grammar/GraphViz2/Config.pm
+lib/MarpaX/Grammar/GraphViz2/Filer.pm
+lib/MarpaX/Grammar/GraphViz2/Utils.pm
 Makefile.PL
 MANIFEST			This list of files
 META.json
@@ -24,6 +36,9 @@ README
 scripts/bnf2graph.pl
 scripts/bnf2graph.sh
 scripts/find.grammars.pl
+scripts/generate.demo.pl
+scripts/generate.demo.sh
+scripts/pod2html.sh
 scripts/run.1.sh
 scripts/run.all.sh
 share/c.ast.bnf
@@ -36,4 +51,5 @@ share/stringparser.bnf
 share/stringparser.log
 share/termcap.info.bnf
 share/termcap.info.log
+t/runner.t
 xt/author/pod.t
