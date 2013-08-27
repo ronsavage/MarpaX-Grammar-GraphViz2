@@ -18,12 +18,12 @@
 		It takes Graphviz's 'dot' program 6 m 25 s to generate (off-line), and is 1.4 Mb in size.<br>
 		These are not problems, only facts. The problem is the width of the image. So I skipped it.</p>
 
-	<p align = "center">Note 2: Some images have a tiny sub-graph whose root is 'comma'. This is due to the author using<br>
+	<p align = "center">Note 2: Some images have a tiny subgraph whose root is, e.g., 'comma'. This is due to the author using<br>
 		both 'comma' and '&lt;comma&gt;' as tokens within the grammar. So far this module does not handle that.</p>
 
 	<p align = "center">Note 3: A similar thing (as in Note 2) can happen elsewhere, e.g. with named event statements,
 		when the rhs name uses (say) '&lt;xyz&gt;' and the rule referred to uses just 'xyz'.<br>
-		In all cases, there will be 2 nodes, with 2 names differing in just the brackets.</p>
+		In all such cases, there will be 2 nodes, with 2 names differing in just the brackets.</p>
 
 	<p align = "center">Note 4: Some characters are replaced by similar Unicode characters, because Graphviz teats those characters<br>
 		as special. These characters are: &lt;, &gt;, " and :. Indeed, the " char is replaced by 2 single quotes.</p>
@@ -114,7 +114,7 @@ Date
 <!-- Right -->
 <td>
 <div class="odd_right">
-2013-08-26
+2013-08-27
 </div>
 </td>
 </tr>

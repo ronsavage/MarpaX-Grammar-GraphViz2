@@ -148,6 +148,14 @@ has parser =>
 	required => 0,
 );
 
+has root_node =>
+(
+	default  => sub{return ''},
+	is       => 'rw',
+	#isa     => 'Tree::DAG_Node',
+	required => 0,
+);
+
 has separators =>
 (
 	default  => sub{return {} },
@@ -162,14 +170,6 @@ has user_bnf_file =>
 	is       => 'rw',
 	#isa     => 'Str',
 	required => 1,
-);
-
-has root_node =>
-(
-	default  => sub{return ''},
-	is       => 'rw',
-	#isa     => 'Tree::DAG_Node',
-	required => 0,
 );
 
 our $VERSION = '1.00';
@@ -260,6 +260,9 @@ sub add_node
 sub BUILD
 {
 	my($self)  = @_;
+
+	die "No Marpa SLIF-DSL file found\n" if (! -e $self -> marpa_bnf_file);
+	die "No user SLIF-DSL file found\n"  if (! -e $self -> user_bnf_file);
 
 	$self -> driver($self -> driver || which('dot') );
 	$self -> format($self -> format || 'svg');
@@ -819,7 +822,7 @@ sub run
 	(
 		"\x{a789}default" => 1,
 		"\x{a789}discard" => 1,
-		'event'           => 1, # Not yet, but we want process_normal_rule() to skip them.
+		'event'           => 1, # Not yet, but we want process_normal_rule() to skip events.
 		"\x{a789}lexeme"  => 1,
 		'lexeme default'  => 1,
 		"\x{a789}start"   => 1,
@@ -865,7 +868,43 @@ L<MarpaX::Grammar::GraphViz2> - Convert a Marpa grammar into an image
 
 =head1 Synopsis
 
+	use MarpaX::Grammar::GraphViz2;
+
+	my(%option) =
+	(		# Inputs:
+		legend         => 1,
+		marpa_bnf_file => 'share/metag.bnf',
+		user_bnf_file  => 'share/stringparser.bnf',
+			# Outputs:
+		output_file    => 'html/stringparser.svg',
+	);
+
+	my($parser) = MarpaX::Grammar::GraphViz2 -> new(%option);
+
+	$parser -> run;
+
+	# Output is in html/stringparser.svg.
+
+For help, run:
+
+	shell> perl -Ilib scripts/bnf2graph.pl -h
+
+See share/metag.bnf for the SLIF-DSL file which ships with L<Marpa::R2> V 2.068000.
+
+See share/*.bnf for input files and html/*.svg for output files.
+
+Note: Installation includes copying all files from the share/ directory, into a dir chosen by L<File::ShareDir>.
+Run scripts/find.grammars.pl to display the name of the latter dir.
+
+See also L<the demo page|http://savage.net.au/Perl-modules/html/marpax.grammar.graphviz2/index.html>.
+
 =head1 Description
+
+Process the output cooked tree from L<MarpaX::Grammar::Parser>, and turn it into an image.
+
+The tree holds a representation of the user's Marpa-style BNF, and is managed by L<Tree::DAG_Node>.
+
+This modules uses L<MarpaX::Grammar::Parser> internally. It does not read that module's output file.
 
 =head1 Installation
 
@@ -893,7 +932,8 @@ or:
 	make test
 	make install
 
-=head1 Scripts Shipped with this Module
+Note: Installation includes copying all files from the share/ directory, into a dir chosen by L<File::ShareDir>.
+Run scripts/find.grammars.pl to display the name of the latter dir.
 
 =head1 Constructor and Initialization
 
@@ -902,9 +942,15 @@ C<new()> is called as C<< my($parser) = MarpaX::Grammar::GraphViz2 -> new(k1 => 
 It returns a new object of type C<MarpaX::Grammar::GraphViz2>.
 
 Key-value pairs accepted in the parameter list (see corresponding methods for details
-[e.g. logger([$string])]):
+[e.g. L</marpa_bnf_file([$bnf_file_name])>]):
 
 =over 4
+
+=item o driver aGraphvizDriverName
+
+The name of the Graphviz program to provide to L<GraphViz2>.
+
+Default: 'dot'.
 
 =item o format => $format_name
 
@@ -918,33 +964,22 @@ Default: 'svg'.
 
 Provides an object of type L<GraphViz2>, to do the rendering.
 
-If '', the image is not rendered. And, even if provided, if C<output_file> is not provided, the image
-is not generated.
-
 Default:
 
 	my($graph) ||= GraphViz2 -> new
 		(
 			edge   => {color => 'grey'},
-			global => {directed => 1},
-			graph  => {rankdir => 'TB'},
-			logger => '',
-			node   => {shape => 'oval'},
+			global => {directed => 1, driver => $self -> driver, format => $self -> format},
+			graph  => {label => basename($self -> user_bnf_file), rankdir => 'TB'},
+			logger => $self -> logger,
+			node   => {shape => 'rectangle', style => 'filled'},
 		);
 
-Set to '' to disable rendering.
+=item o legend => $Boolean
 
-=item o input_file => $grammar_file_name
+Add a legend (1) to the graph, or omit it (0).
 
-Read the grammar definition from this file.
-
-The whole file is slurped in as a single string.
-
-The parameter is mandatory.
-
-See data/stringparser.grammar.bnf for a sample.
-
-Default: ''.
+Default: 0 (no legend).
 
 =item o logger => $logger_object
 
@@ -957,6 +992,20 @@ To disable logging, just set I<logger> to the empty string.
 The value for I<logger> is passed to L<Graph::Easy::Marpa::Parser> and to L<Graph::Easy::Marpa::Renderer::GraphViz2>.
 
 Default: undef.
+
+=item o marpa_bnf_file aMarpaSLIF-DSLFileName
+
+Specify the name of Marpa's own SLIF-DSL file.
+
+This file ships with L<Marpa::R2>. It's name is metag.bnf.
+
+A copy, as of Marpa::R2 V 2.068000, ships with C<MarpaX::Grammar::GraphViz2>.
+
+See share/metag.bnf.
+
+This option is mandatory.
+
+Default: ''.
 
 =item o maxlevel => $level
 
@@ -980,53 +1029,73 @@ Default: 'error'.
 
 No lower levels are used.
 
-==item o output_file => $output_file_name
+=item o output_file => $output_file_name
 
 Write the image to this file.
 
-If '', the file is not written. And even if provided, if C<graph> is '', the image is not rendered.
-
-Default: ''.
-
-=item o tree_file => $file_name
-
-The name of the text file to write containing the grammar as a tree.
-
-The output is generated by L<Tree::DAG_Node>'s C<tree2string()> method.
+Use the C<format> option to specify the type of image desired.
 
 If '', the file is not written.
 
 Default: ''.
 
+=item o user_bnf_file aUserSLIF-DSLFileName
+
+Specify the name of the file containing your Marpa::R2-style grammar.
+
+See share/stringparser.bnf for a sample.
+
+This option is mandatory.
+
+Default: ''.
+
 =back
 
-=head1 Installing the module
-
-Install L<MarpaX::Grammar::GraphViz2> as you would for any C<Perl> module:
-
-Run:
-
-	cpanm MarpaX::Grammar::GraphViz2
-
-or run:
-
-	sudo cpan MarpaX::Grammar::GraphViz2
-
-or unpack the distro, and then either:
-
-	perl Build.PL
-	./Build
-	./Build test
-	sudo ./Build install
-
-or:
-
-	perl Makefile.PL
-	make (or dmake)
-	make test
-	make install
-
 =head1 Methods
+
+=head2 add_legend()
+
+Adds a legend to the graph if new() was called as C<< new(legend => 1) >>.
+
+=head2 add_node(%attributes)
+
+Adds (once only) a node (whose name is C<$attributes{name}>) to the graph.
+
+Also, adds that name to the hashref of node names seen which is returned by L</nodes_seen()>.
+
+=head2 clean_name($name, $skip_symbols)
+
+Cleans the given name to escape or replace characters special to L<dot|http://graphviz.org>.
+
+Note: L<GraphViz2> also escapes some characters.
+
+See the L</FAQ> for details.
+
+Returns the cleaned-up name.
+
+=head2 clean_tree()
+
+Calls L</clean_name($name, $skip_symbols)> for each node in the tree.
+
+=head2 default_count()
+
+Returns the number of ':default' rules in the user's input.
+
+=head2 discard_count()
+
+Returns the number of ':discard' rules in the user's input.
+
+=head2 driver([$executable_name])
+
+Here, the [] indicate an optional parameter.
+
+Get or set the name of the Graphviz program to provide to L<GraphViz2>.
+
+Note: C<driver> is a parameter to new().
+
+=head2 event_count()
+
+Returns the number of 'event' rules in the user's input.
 
 =head2 format([$format])
 
@@ -1040,36 +1109,28 @@ Note: C<format> is a parameter to new().
 
 Get of set the L<GraphViz2> object which will do the graphing.
 
-The default object is:
-
-	my($graph) ||= GraphViz2 -> new
-		(
-			edge   => {color => 'grey'},
-			global => {directed => 1},
-			graph  => {rankdir => 'TB'},
-			logger => '',
-			node   => {shape => 'oval'},
-		);
-
-Set to '' to disable rendering.
-
 See also L</output_file([$output_file_name])>.
 
 Note: C<graph> is a parameter to new().
 
-=head2 input_file([$graph_file_name])
+=head2 legend([$Boolean])
 
 Here, the [] indicate an optional parameter.
 
-Get or set the name of the file to read the grammar definition from.
+Get or set the option to include (1) or exclude (0) a legend from the image.
 
-The whole file is slurped in as a single string.
+Note: C<legend> is a parameter to new().
 
-The parameter is mandatory.
+=head2 lexeme_count()
 
-See data/stringparser.grammar.bnf for a sample.
+Returns the number of ':lexeme' rules in the user's input.
 
-Note: C<input_file> is a parameter to new().
+=head2 lexemes()
+
+Returns a hashref keyed by the clean name, of lexemes seen in the user's input.
+
+The value for each key is an arrayref of hashrefs suitable for forcing L<GraphViz2> to plot the node as
+a record structure. See L<http://www.graphviz.org/content/node-shapes#record> for the gory details.
 
 =head2 log($level, $s)
 
@@ -1083,9 +1144,23 @@ Get or set the logger object.
 
 To disable logging, just set logger to the empty string.
 
-This logger is passed to L<Graph::Easy::Marpa::Parser> and L<Graph::Easy::Marpa::Renderer::GraphViz2>.
+This logger is passed to L<GraphViz2>.
 
 Note: C<logger> is a parameter to new().
+
+=head2 marpa_bnf_file([$bnf_file_name])
+
+Here, the [] indicate an optional parameter.
+
+Get or set the name of the file to read Marpa's grammar from. The whole file is slurped in as a single string.
+
+This file ships with L<Marpa::R2>. It's name is metag.bnf.
+
+A copy, as of Marpa::R2 V 2.068000, ships with C<MarpaX::Grammar::GraphViz2>.
+
+See share/metag.bnf for a sample.
+
+Note: C<marpa_bnf_file> is a parameter to new().
 
 =head2 maxlevel([$string])
 
@@ -1107,11 +1182,21 @@ This option is only used if an object of type L<Log::Handler> is created. See L<
 
 Note: C<minlevel> is a parameter to new().
 
+=head2 new()
+
+The constructor. See L</Constructor and Initialization>.
+
+=head2 nodes_seen()
+
+Returns a hashref keyed by the node name, of nodes passed to L<GraphViz2>.
+
+This is simply used to stop nodes being plotted twice.
+
 =head2 output_file([$output_file_name])
 
 Here, the [] indicate an optional parameter.
 
-Get or set the name of the file to which the renderer will write to resultant graph.
+Get or set the name of the file to which the renderer will write the resultant graph.
 
 If no output file is supplied, nothing is written.
 
@@ -1119,15 +1204,34 @@ See also L<graph([$graph])>.
 
 Note: C<output_file> is a parameter to new().
 
-=head2 tree_file([$output_file_name])
+=head2 parser()
 
-Here, the [] indicate an optional parameter.
+Returns the L<Marpa::Grammar::Parser> object which will do the analysis of the user's grammar.
 
-Get or set the name of the file to which the tree form of the graph will be written.
+=head2 rectify_node($node)
 
-If no output file is supplied, nothing is written.
+For the given $node, which is an object of type L<Tree::DAG_Node>, cleans the node's real name.
 
-Note: C<tree_file> is a parameter to new().
+Then it adds the node's quantifier ('', '*' or '+') to that name, to act as the label (visible name) of the
+node, when the node is finally passed to L<GraphViz2>.
+
+Returns a 2-element list of ($name, $label).
+
+=head2 root_name()
+
+Returns an object of type L<Tree::DAG_Node>, representing the ':start' token in the user's grammar.
+
+=head2 run()
+
+The method which does all the work.
+
+See L</Synopsis> and scripts/bnf2graph.pl for sample code.
+
+=head2 separators()
+
+Returns a hashref keyed by token name, of tokens used in the grammar construct C<< separator => $token >>.
+
+This hashref is currently not used.
 
 =head1 Files Shipped with this Module
 
@@ -1224,6 +1328,49 @@ We use this code to handle these:
 	$name =~ s/:/\x{a789}/g;          # Replace : with a Unicode :
 	$name =~ s/\"/\x{a78c}\x{a78c}/g; # Replace " with 2 copies of a Unicode ' ...
 	                                  # ... because we could not find a Unicode ".
+
+=head2 Why do some images have a tiny sub-graph, whose root is, e.g., '<comma>'?
+
+This is due to the author using both 'comma' and '<comma>' as tokens within the grammar.
+
+So far this module does not handle that.
+
+A similar thing can happen elsewhere, e.g. with named event statements, when the rhs name uses (say) '<xyz>'
+and the rule referred to uses just 'xyz'.
+
+In all such cases, there will be 2 nodes, with 2 names differing in just the brackets.
+
+=head2 Why do some nodes have (or lack) a quantifier when I use it both with and without one?
+
+There is simply no way to plot a node both with and without the quantifier. The one which appears is chosen
+arbitrarily, depending on how the code scans the grammar. This means it is currently beyond control.
+
+=head2 Why do the nodes on the demo page lack rule numbers?
+
+I'm undecided as to whether or not they are a good idea. I documented it on the demo page to indicate
+it was easy (for some nodes), and await feedback.
+
+=head2 Can I control the format of the legend?
+
+No. The legend is experimental, and it's form may change at any time. When I've finally developed a pretty
+format, I'll document it.
+
+Ideally, it would be a record, with the current nodes rolled into a single table. That may be possible using
+the HTML-like attributes for nodes, but I would want each row to have a different color.
+
+You can turn it off with the C<legend> option to C<< new() >>.
+
+=head1 ToDo
+
+=over 4
+
+=item o Perhaps add rule # to each node
+
+This is the rule # within the input stream. Doing this is simple for some nodes, and difficult for others.
+
+=item o Work on the format of the legend
+
+=back
 
 =head1 Machine-Readable Change Log
 

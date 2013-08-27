@@ -71,17 +71,17 @@ Exit value: 0 for success, 1 for failure. Die upon error.
 
 =over 4
 
-=item o -format imageFormat
-
-Specify the type of image to be created.
-
-Default: 'svg'.
-
 =item o -driver aGraphvizDriverName
 
 The name of the Graphviz program to provide to L<GraphViz2>.
 
 Default: 'dot'.
+
+=item o -format imageFormat
+
+Specify the type of image to be created.
+
+Default: 'svg'.
 
 =item o -help
 
