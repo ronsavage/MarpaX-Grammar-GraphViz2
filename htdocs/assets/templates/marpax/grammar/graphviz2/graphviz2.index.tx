@@ -53,6 +53,9 @@
 :}
 </table>
 
+	<p align = "center">Due to its width, the SVG file for the c.ast.bnf case is not in this table,
+		but can be <a href="./c.ast.svg">viewed here.</a></p>
+
 <table border = "1">
 :for $data -> $row {
 <tr>
