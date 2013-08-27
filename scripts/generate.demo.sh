@@ -1,7 +1,7 @@
 #!/bin/bash
 
 if [ -n "$1" ]; then
-	echo Processing c.ast. Wait 6 m 25 secs
+	echo Processing c.ast. Wait 6 m 47 secs
 	scripts/bnf2graph.sh c.ast
 fi
 
@@ -14,4 +14,4 @@ perl -Ilib scripts/generate.demo.pl
 
 cp html/* $DR/Perl-modules/html/marpax.grammar.graphviz2/
 
-echo Also, copy files to other web site...
+echo Also, copy demo files to the real web site...

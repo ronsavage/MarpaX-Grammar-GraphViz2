@@ -471,7 +471,7 @@ sub _process_complex_adverbs
 
 		unshift @daughter_stack, [@token_stack];
 
-		# Discard the '|' separating alternatives in the BNF.
+		# Discard the '|' separating alternatives in the SLIF-DSL.
 
 		pop @$daughters if ($$daughters[$i] -> name eq '|');
 
@@ -871,19 +871,13 @@ L<MarpaX::Grammar::GraphViz2> - Convert a Marpa grammar into an image
 		output_file    => 'html/stringparser.svg',
 	);
 
-	my($parser) = MarpaX::Grammar::GraphViz2 -> new(%option);
-
-	$parser -> run;
-
-	# Output is in html/stringparser.svg.
-
-For help, run:
-
-	shell> perl -Ilib scripts/bnf2graph.pl -h
-
-See share/metag.bnf for the SLIF-DSL file which ships with L<Marpa::R2> V 2.068000.
+	MarpaX::Grammar::GraphViz2 -> new(%option) -> run;
 
 See share/*.bnf for input files and html/*.svg for output files.
+
+For more help, run:
+
+	shell> perl -Ilib scripts/bnf2graph.pl -h
 
 Note: Installation includes copying all files from the share/ directory, into a dir chosen by L<File::ShareDir>.
 Run scripts/find.grammars.pl to display the name of the latter dir.
@@ -894,7 +888,7 @@ See also L<the demo page|http://savage.net.au/Perl-modules/html/marpax.grammar.g
 
 Process the output cooked tree from L<MarpaX::Grammar::Parser>, and turn it into an image.
 
-The tree holds a representation of the user's Marpa-style BNF, and is managed by L<Tree::DAG_Node>.
+The tree holds a representation of the user's SLIF-DSL, and is managed by L<Tree::DAG_Node>.
 
 This modules uses L<MarpaX::Grammar::Parser> internally. It does not read that module's output file.
 
@@ -933,7 +927,7 @@ C<new()> is called as C<< my($parser) = MarpaX::Grammar::GraphViz2 -> new(k1 => 
 
 It returns a new object of type C<MarpaX::Grammar::GraphViz2>.
 
-Key-value pairs accepted in the parameter list (see corresponding methods for details
+Key-value pairs accepted in the parameter list (see also the corresponding methods
 [e.g. L</marpa_bnf_file([$bnf_file_name])>]):
 
 =over 4
@@ -946,9 +940,7 @@ Default: 'dot'.
 
 =item o format => $format_name
 
-This is the format of the output file, to be created by the renderer.
-
-The value for I<format> is passed to L<Graph::Easy::Marpa::Renderer::GraphViz2>.
+This is the format of the output file, to be passed to L<GraphViz2>.
 
 Default: 'svg'.
 
@@ -958,20 +950,20 @@ Provides an object of type L<GraphViz2>, to do the rendering.
 
 Default:
 
-	my($graph) ||= GraphViz2 -> new
-		(
-			edge   => {color => 'grey'},
-			global => {directed => 1, driver => $self -> driver, format => $self -> format},
-			graph  => {label => basename($self -> user_bnf_file), rankdir => 'TB'},
-			logger => $self -> logger,
-			node   => {shape => 'rectangle', style => 'filled'},
-		);
+	GraphViz2 -> new
+	(
+		edge   => {color => 'grey'},
+		global => {directed => 1, driver => $self -> driver, format => $self -> format},
+		graph  => {label => basename($self -> user_bnf_file), rankdir => 'TB'},
+		logger => $self -> logger,
+		node   => {shape => 'rectangle', style => 'filled'},
+	);
 
 =item o legend => $Boolean
 
 Add a legend (1) to the graph, or omit it (0).
 
-Default: 0 (no legend).
+Default: 0.
 
 =item o logger => $logger_object
 
@@ -981,19 +973,15 @@ The default value triggers creation of an object of type L<Log::Handler> which o
 
 To disable logging, just set I<logger> to the empty string.
 
-The value for I<logger> is passed to L<Graph::Easy::Marpa::Parser> and to L<Graph::Easy::Marpa::Renderer::GraphViz2>.
+The value for I<logger> is passed to L<GraphViz2>.
 
 Default: undef.
 
 =item o marpa_bnf_file aMarpaSLIF-DSLFileName
 
-Specify the name of Marpa's own SLIF-DSL file.
+Specify the name of Marpa's own SLIF-DSL file. This file ships with L<Marpa::R2>. It's name is metag.bnf.
 
-This file ships with L<Marpa::R2>. It's name is metag.bnf.
-
-A copy, as of Marpa::R2 V 2.068000, ships with C<MarpaX::Grammar::GraphViz2>.
-
-See share/metag.bnf.
+A copy, as of Marpa::R2 V 2.068000, ships with C<MarpaX::Grammar::GraphViz2>. See share/metag.bnf.
 
 This option is mandatory.
 
@@ -1005,8 +993,6 @@ This option is only used if an object of type L<Log::Handler> is created. See I<
 
 See also L<Log::Handler::Levels>.
 
-The value for I<maxlevel> is passed to L<Graph::Easy::Marpa::Parser> and to L<Graph::Easy::Marpa::Renderer::GraphViz2>.
-
 Default: 'info'. A typical value is 'debug'.
 
 =item o minlevel => $level
@@ -1014,8 +1000,6 @@ Default: 'info'. A typical value is 'debug'.
 This option is only used if an object of type L<Log::Handler> is created. See I<logger> above.
 
 See also L<Log::Handler::Levels>.
-
-The value for I<minlevel> is passed to L<Graph::Easy::Marpa::Parser> and to L<Graph::Easy::Marpa::Renderer::GraphViz2>.
 
 Default: 'error'.
 
@@ -1051,15 +1035,17 @@ Adds a legend to the graph if new() was called as C<< new(legend => 1) >>.
 
 =head2 add_node(%attributes)
 
-Adds (once only) a node (whose name is C<$attributes{name}>) to the graph.
+Adds (once only) a node to the graph. The node's name is C<$attributes{name}>.
 
-Also, adds that name to the hashref of node names seen which is returned by L</nodes_seen()>.
+Also, adds that name to the hashref of node names seen, which is returned by L</nodes_seen()>.
 
 =head2 clean_name($name, $skip_symbols)
 
 Cleans the given name to escape or replace characters special to L<dot|http://graphviz.org>.
 
 Note: L<GraphViz2> also escapes some characters.
+
+$skip_symbols is used by the caller in 1 case to stop a regexp being activated.
 
 See the L</FAQ> for details.
 
@@ -1071,11 +1057,11 @@ Calls L</clean_name($name, $skip_symbols)> for each node in the tree.
 
 =head2 default_count()
 
-Returns the number of ':default' rules in the user's input.
+Returns the number of C<:default>' rules in the user's input.
 
 =head2 discard_count()
 
-Returns the number of ':discard' rules in the user's input.
+Returns the number of C<:discard> rules in the user's input.
 
 =head2 driver([$executable_name])
 
@@ -1087,7 +1073,7 @@ Note: C<driver> is a parameter to new().
 
 =head2 event_count()
 
-Returns the number of 'event' rules in the user's input.
+Returns the number of C<event> rules in the user's input.
 
 =head2 format([$format])
 
@@ -1115,7 +1101,7 @@ Note: C<legend> is a parameter to new().
 
 =head2 lexeme_count()
 
-Returns the number of ':lexeme' rules in the user's input.
+Returns the number of C<:lexeme> rules in the user's input.
 
 =head2 lexemes()
 
@@ -1144,13 +1130,7 @@ Note: C<logger> is a parameter to new().
 
 Here, the [] indicate an optional parameter.
 
-Get or set the name of the file to read Marpa's grammar from. The whole file is slurped in as a single string.
-
-This file ships with L<Marpa::R2>. It's name is metag.bnf.
-
-A copy, as of Marpa::R2 V 2.068000, ships with C<MarpaX::Grammar::GraphViz2>.
-
-See share/metag.bnf for a sample.
+Get or set the name of the file to read Marpa's grammar from.
 
 Note: C<marpa_bnf_file> is a parameter to new().
 
@@ -1200,9 +1180,11 @@ Note: C<output_file> is a parameter to new().
 
 Returns the L<Marpa::Grammar::Parser> object which will do the analysis of the user's grammar.
 
+This object is created automatically during the call to L</new()>.
+
 =head2 rectify_node($node)
 
-For the given $node, which is an object of type L<Tree::DAG_Node>, cleans the node's real name.
+For the given $node, which is an object of type L<Tree::DAG_Node>, clean it's real name.
 
 Then it adds the node's quantifier ('', '*' or '+') to that name, to act as the label (visible name) of the
 node, when the node is finally passed to L<GraphViz2>.
@@ -1211,7 +1193,7 @@ Returns a 2-element list of ($name, $label).
 
 =head2 root_name()
 
-Returns an object of type L<Tree::DAG_Node>, representing the ':start' token in the user's grammar.
+Returns an object of type L<Tree::DAG_Node>, representing the C<:start> token in the user's grammar.
 
 =head2 run()
 
@@ -1235,19 +1217,55 @@ This hashref is currently not used.
 
 This is part of L<MarpaX::Languages::C::AST>, by Jean-Damien Durand. It's 1,565 lines long.
 
+=item o html/c.ast.svg
+
+This is the image from c.ast.bnf.
+
+See the next point for how this file is created.
+
+=item o share/c.ast.log
+
+This is the log produced by running the code at log level C<debug>:
+
+	shell> scripts/bnf2graph.sh c.ast -max debug > share/c.ast.log
+
 =item o share/json.1.bnf
 
 It is part of L<MarpaX::Demo::JSONParser>, written as a gist by Peter Stuifzand.
 
 See L<https://gist.github.com/pstuifzand/4447349>.
 
+=item o html/json.1.svg
+
+This is the image from json.1.bnf.
+
+See the next point for how this file is created.
+
+=item o share/json.1.log
+
+This is the log produced by running the code at log level C<debug>:
+
+	shell> scripts/bnf2graph.sh json.1 -max debug > share/json.1.log
+
 =item o share/json.2.bnf
 
 It also is part of L<MarpaX::Demo::JSONParser>, written by Jeffrey Kegler as a reply to the gist above from Peter.
 
+=item o html/json.2.svg
+
+This is the image from json.2.bnf.
+
+See the next point for how this file is created.
+
+=item o share/json.2.log
+
+This is the log produced by running the code at log level C<debug>:
+
+	shell> scripts/bnf2graph.sh json.2 -max debug > share/json.2.log
+
 =item o share/metag.bnf.
 
-This is a copy of L<Marpa::R2>'s SLIF-DSL.
+This is a copy of L<Marpa::R2>'s SLIF-DSL, as of Marpa::R2 V 2.068000.
 
 See L</marpa_bnf_file([$bnf_file_name])> above.
 
@@ -1255,11 +1273,35 @@ See L</marpa_bnf_file([$bnf_file_name])> above.
 
 This is a copy of L<MarpaX::Demo::StringParser>'s SLIF-DSL.
 
+=item o html/stringparser.svg
+
+This is the image from stringparser.bnf.
+
+See the next point for how this file is created.
+
+=item o share/stringparser.log
+
+This is the log produced by running the code at log level C<debug>:
+
+	shell> scripts/bnf2graph.sh stringparser -max debug > share/stringparser.log
+
 See L</user_bnf_file([$bnf_file_name])> above.
 
 =item o share/termcap.info.bnf
 
 It also is part of L<MarpaX::Database::Terminfo>, written by Jean-Damien Durand.
+
+=item o html/termcap.info.svg
+
+This is the image from termcap.info.bnf.
+
+See the next point for how this file is created.
+
+=item o share/termcap.info.log
+
+This is the log produced by running the code at log level C<debug>:
+
+	shell> scripts/bnf2graph.sh termcap.info -max debug > share/termcap.info.log
 
 =back
 
@@ -1292,6 +1334,19 @@ This prints the path to a grammar file. After installation of the module, run it
 
 It will print the name of the path to given grammar file.
 
+=item o scripts/generate.demo.pl
+
+Generates html/index.html.
+
+=item o scripts/generate.demo.sh
+
+This calls generate.demo.pl for each grammar shipped with the module.
+
+Actually, it skips c.ast by default, since it takes 6 m 47 s to run that. But if you pass any command line
+parameter to the script, it includes c.ast.
+
+Then it copies html/* to my web server's doc root (which is in Debian's default RAM disk) at /dev/shm/html.
+
 =item o scripts/pod2html.sh
 
 This lets me quickly proof-read edits to the docs.
@@ -1300,7 +1355,7 @@ This lets me quickly proof-read edits to the docs.
 
 =head1 FAQ
 
-=head2 Why are some characters replaced by Unicode versions?
+=head2 Why are some characters in the images replaced by Unicode versions?
 
 Firstly, the Perl module L<GraphViz2> escapes some characters. Currently, these are:
 
@@ -1319,7 +1374,7 @@ We use this code to handle these:
 	$name =~ s/>/\\>/g;               # Escape >.
 	$name =~ s/:/\x{a789}/g;          # Replace : with a Unicode :
 	$name =~ s/\"/\x{a78c}\x{a78c}/g; # Replace " with 2 copies of a Unicode ' ...
-	                                  # ... because we could not find a Unicode ".
+	                                  # ... because I could not find a Unicode ".
 
 =head2 Why do some images have a tiny sub-graph, whose root is, e.g., '<comma>'?
 
@@ -1342,15 +1397,9 @@ arbitrarily, depending on how the code scans the grammar. This means it is curre
 I'm undecided as to whether or not they are a good idea. I documented it on the demo page to indicate
 it was easy (for some nodes), and await feedback.
 
-=head2 Can I control the format of the legend?
+=head2 Can I control the format or placement of the legend?
 
-No. The legend is experimental, and it's form may change at any time. When I've finally developed a pretty
-format, I'll document it.
-
-Ideally, it would be a record, with the current nodes rolled into a single table. That may be possible using
-the HTML-like attributes for nodes, but I would want each row to have a different color.
-
-You can turn it off with the C<legend> option to C<< new() >>.
+No, but you can turn it off with the C<legend> option to C<< new() >>.
 
 =head1 ToDo
 
@@ -1359,8 +1408,6 @@ You can turn it off with the C<legend> option to C<< new() >>.
 =item o Perhaps add rule # to each node
 
 This is the rule # within the input stream. Doing this is simple for some nodes, and difficult for others.
-
-=item o Work on the format of the legend
 
 =back
 
