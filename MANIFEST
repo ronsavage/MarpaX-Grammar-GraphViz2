@@ -39,8 +39,6 @@ scripts/find.grammars.pl
 scripts/generate.demo.pl
 scripts/generate.demo.sh
 scripts/pod2html.sh
-scripts/run.1.sh
-scripts/run.all.sh
 share/c.ast.bnf
 share/json.1.bnf
 share/json.1.log
