@@ -180,59 +180,51 @@ sub add_legend
 {
 	my($self) = @_;
 
-	# The effect of this subgraph to display the legend is disappointing.
-
 	$self -> graph -> push_subgraph
 	(
 		# No options...
-		# Legend: top. Border: no.  Label: no.
+		# Legend: top. Border: no. Label: no.
 		#
 		# label => 'cluster_legend',
-		# Legend: top. Border: no.  Label: no.
+		# Legend: top. Border: no. Label: no.
 		#
 		# name  => 'cluster_legend',
 		# Legend: top. Border: yes. Label: *.bnf.
 		#
-		graph => {label => 'cluster_legend'},
-		# Legend: top. Border: no.  Label: no. Not using subgraph => {...}.
+		#graph => {label => 'cluster_legend'},
+		# Legend: top. Border: no. Label: no. Not using subgraph => {...}.
+		#graph => {label => 'cluster_Legend'},
+		# Legend: bottom. Border: no. Label: no. Using subgraph => {...}.
+		# Legend: top. Border: no. Label: no. Not using subgraph => {...}.
 		subgraph => {rank => 'max'},
-		# Legend: top. Border: no.  Label: no. Using graph => {...}.
+		# Legend: top. Border: no. Label: no. Using graph => {...}.
+		# Legend: bottom. Border: no. Label: no. Not using graph => {...}.
 	);
 
 	$self -> graph -> add_node
 	(
-		fillcolor => 'lightgreen',
-		name      => 'Legend_1',
-		label     => [{text => '{The green node'}, {text => 'is the start node}'}],
-		style     => 'filled',
-	);
-	$self -> graph -> add_node
-	(
-		fillcolor => 'lightblue',
-		name      => 'Legend_2',
-		label     => [{text => '{Lightblue nodes'}, {text => 'are for lexeme attributes}'}],
-		style     => 'filled',
-	);
-	$self -> graph -> add_node
-	(
-		fillcolor => 'orchid',
-		name      => 'Legend_3',
-		label     => [{text => '{Orchid nodes'}, {text => 'are for lexemes}'}],
-		style     => 'filled',
-	);
-	$self -> graph -> add_node
-	(
-		fillcolor => 'goldenrod',
-		name      => 'Legend_4',
-		label     => [{text => '{Golden nodes'}, {text => 'are for actions}'}],
-		style     => 'filled',
-	);
-	$self -> graph -> add_node
-	(
-		fillcolor => 'firebrick1',
-		name      => 'Legend_5',
-		label     => [{text => '{Red nodes'}, {text => 'are for events}'}],
-		style     => 'filled',
+		label =>
+q|
+<<table bgcolor = 'white'>
+<tr>
+	<td bgcolor = 'lightgreen'>The green node is the start node</td>
+</tr>
+<tr>
+	<td bgcolor = 'lightblue'>Lightblue nodes are for lexeme attributes</td>
+</tr>
+<tr>
+	<td bgcolor = 'orchid'>Orchid nodes are for lexemes</td>
+</tr>
+<tr>
+	<td bgcolor = 'goldenrod'>Golden nodes are for actions</td>
+</tr>
+<tr>
+	<td bgcolor = 'firebrick1'>Red nodes are for events</td>
+</tr>
+</table>>
+|,
+		name  => 'Legend',
+		shape => 'plaintext',
 	);
 
 	$self -> graph -> pop_subgraph;
