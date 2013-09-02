@@ -2,13 +2,13 @@
 
 if [ -n "$1" ]; then
 	echo Processing c.ast. Wait 6 m 47 secs
-	scripts/bnf2graph.sh c.ast
+	scripts/bnf2graph.sh c.ast -legend 1
 fi
 
-scripts/bnf2graph.sh json.1
-scripts/bnf2graph.sh json.2
-scripts/bnf2graph.sh stringparser
-scripts/bnf2graph.sh termcap.info
+scripts/bnf2graph.sh json.1 -legend 1
+scripts/bnf2graph.sh json.2 -legend 1
+scripts/bnf2graph.sh stringparser -legend 1
+scripts/bnf2graph.sh termcap.info -legend 1
 
 perl -Ilib scripts/generate.demo.pl
 
