@@ -20,7 +20,6 @@ requires 'Config::Tiny'            => 2.15;
 requires 'Date::Simple'            => 3.03;
 requires 'Getopt::Long'            => 2.41;
 requires 'File::Basename'          => 2.82;
-requires 'File::Copy'              => 2.21;
 requires 'File::HomeDir'           => 1.00;
 requires 'File::ShareDir'          => 1.03;
 requires 'File::Slurp'             => 9999.19;
