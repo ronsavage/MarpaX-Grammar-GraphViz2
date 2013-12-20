@@ -23,7 +23,6 @@ requires:
   Config::Tiny: 2.15
   Date::Simple: 3.03
   File::Basename: 2.82
-  File::Copy: 2.21
   File::HomeDir: 1
   File::ShareDir: 1.03
   File::Slurp: 9999.19
