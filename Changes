@@ -1,4 +1,8 @@
 Revision history for Perl extension MarpaX::Grammar::GraphViz2.
 
+1.01  Sat Feb 22 17:44:00 2014
+	- Add 'lexeme default = latm => 1' to the grammar.
+	- Make V 2.082 the minimum version for Marpa::R2.
+
 1.00  Tue Aug 27 11:00:00 2013
 	  - Original version

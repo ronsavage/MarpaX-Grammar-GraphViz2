@@ -1,4 +1,7 @@
-:default ::= action => [values]
+:default       ::= action => [values]
+
+lexeme default = latm => 1
+
 :start ::= units
 
 units ::= unit*
