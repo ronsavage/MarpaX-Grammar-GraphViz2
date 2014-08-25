@@ -3,49 +3,49 @@ abstract: 'Convert a Marpa grammar into an image'
 author:
   - 'Ron Savage <ron@savage.net.au>'
 build_requires:
-  ExtUtils::MakeMaker: 6.59
-  Test::More: 0.98
+  ExtUtils::MakeMaker: '6.59'
+  Test::More: '0.98'
 configure_requires:
-  ExtUtils::MakeMaker: 0
+  Module::Build: '0.38'
 dynamic_config: 0
-generated_by: 'Module::Build version 0.4005, CPAN::Meta::Converter version 2.131560, CPAN::Meta::Converter version 2.133380'
+generated_by: 'Module::Build version 0.4005, CPAN::Meta::Converter version 2.131560, CPAN::Meta::Converter version 2.142060'
 license: artistic_2
 meta-spec:
   url: http://module-build.sourceforge.net/META-spec-v1.4.html
-  version: 1.4
+  version: '1.4'
 name: MarpaX-Grammar-GraphViz2
 provides:
   MarpaX::Grammar::GraphViz2:
     file: lib/MarpaX/Grammar/GraphViz2.pm
-    version: 1.00
+    version: '1.00'
 requires:
-  Config: 0
-  Config::Tiny: 2.15
-  Date::Simple: 3.03
-  File::Basename: 2.82
-  File::HomeDir: 1
-  File::ShareDir: 1.03
-  File::Slurp: 9999.19
-  File::Spec: 3.4
-  File::Temp: 0.2301
-  File::Which: 1.09
-  Getopt::Long: 2.41
-  GraphViz2: 2.19
-  HTML::Entities::Interpolate: 1.05
-  List::AllUtils: 0.03
-  Log::Handler: 0.78
-  MarpaX::Grammar::Parser: 1.01
-  Moo: 1.002
-  Path::Tiny: 0.025
-  Perl6::Slurp: 0.03
-  Pod::Usage: 1.36
-  Text::Xslate: 1.6002
-  charnames: 1.18
-  open: 0
-  perl: 5.014
-  strict: 0
-  utf8: 0
-  warnings: 0
+  Config: '0'
+  Config::Tiny: '2.15'
+  Date::Simple: '3.03'
+  File::Basename: '2.82'
+  File::HomeDir: '1'
+  File::ShareDir: '1.03'
+  File::Slurp: '9999.19'
+  File::Spec: '3.4'
+  File::Temp: '0.2301'
+  File::Which: '1.09'
+  Getopt::Long: '2.41'
+  GraphViz2: '2.19'
+  HTML::Entities::Interpolate: '1.05'
+  List::AllUtils: '0.03'
+  Log::Handler: '0.78'
+  MarpaX::Grammar::Parser: '1.01'
+  Moo: '1.002'
+  Path::Tiny: '0.025'
+  Perl6::Slurp: '0.03'
+  Pod::Usage: '1.36'
+  Text::Xslate: '1.6002'
+  charnames: '1.18'
+  open: '0'
+  perl: '5.014'
+  strict: '0'
+  utf8: '0'
+  warnings: '0'
 resources:
   license: http://www.perlfoundation.org/artistic_license_2_0
-version: 1.00
+version: '1.00'
