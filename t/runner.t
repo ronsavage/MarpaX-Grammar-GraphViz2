@@ -31,9 +31,14 @@ sub process
 
 BEGIN {use_ok('MarpaX::Grammar::Parser'); }
 
+my($count) = 1;
+
 for (qw/c.ast json.1 json.2 stringparser termcap.info/)
 {
 	process($_);
+	$count++;
 }
+
+print "# Internal test count: $count. \n";
 
 done_testing;
