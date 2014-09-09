@@ -37,7 +37,6 @@ requires:
   MarpaX::Grammar::Parser: '1.01'
   Moo: '1.002'
   Path::Tiny: '0.025'
-  Perl6::Slurp: '0.03'
   Pod::Usage: '1.36'
   Text::Xslate: '1.6002'
   charnames: '1.18'
