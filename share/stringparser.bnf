@@ -1,7 +1,5 @@
 :default				::= action => [values]
 
-lexeme default			= latm => 1
-
 # Overall stuff.
 
 :start 					::= graph_grammar
