@@ -7,6 +7,7 @@ fi
 
 scripts/bnf2graph.sh json.1 -legend 1
 scripts/bnf2graph.sh json.2 -legend 1
+scripts/bnf2graph.sh json.3 -legend 1
 scripts/bnf2graph.sh stringparser -legend 1
 scripts/bnf2graph.sh termcap.info -legend 1
 

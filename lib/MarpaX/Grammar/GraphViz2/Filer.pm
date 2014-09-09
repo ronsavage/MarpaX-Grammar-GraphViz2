@@ -20,9 +20,9 @@ sub get_files
 {
 	my($self, $dir_name, $type) = @_;
 
-	opendir(INX, $dir_name);
-	my(@file) = sort grep{! /metag.bnf/} grep{/$type$/} readdir INX;
-	closedir INX;
+	opendir(my $fh, $dir_name);
+	my(@file) = sort grep{! /metag.bnf/} grep{/$type$/} readdir $fh;
+	closedir $fh;
 
 	my(%file);
 
