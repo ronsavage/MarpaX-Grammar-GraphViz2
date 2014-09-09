@@ -35,7 +35,6 @@ requires 'Moo'                     => 1.002000;
 requires 'open'                    => 0;
 requires 'Path::Tiny'              => 0.025;
 requires 'perl'                    => '5.14.2'; # For the utf8 stuff.
-requires 'Perl6::Slurp'            => 0.03;
 requires 'Pod::Usage'              => 1.36;
 requires 'strict'                  => 0;
 requires 'Text::Xslate'            => 1.6002;

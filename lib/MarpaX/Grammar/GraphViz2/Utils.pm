@@ -22,7 +22,6 @@ use HTML::Entities::Interpolate;
 use Moo;
 
 use Path::Tiny;   # For path().
-use Perl6::Slurp; # For slurp().
 
 use Text::Xslate 'mark_raw';
 
@@ -34,7 +33,7 @@ has config =>
 	required => 0,
 );
 
-our $VERSION = '1.01';
+our $VERSION = '1.02';
 
 # ------------------------------------------------
 
