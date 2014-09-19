@@ -1263,6 +1263,10 @@ This is the log produced by running the code at log level C<debug>:
 
 	shell> scripts/bnf2graph.sh json.2 -max debug > share/json.2.log
 
+=item o share/json.2.bnf
+
+It also is part of L<MarpaX::Demo::JSONParser>, and is written by Jeffrey Kegler.
+
 =item o share/metag.bnf.
 
 This is a copy of L<Marpa::R2>'s SLIF-DSL, as of Marpa::R2 V 2.068000.
