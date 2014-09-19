@@ -1,5 +1,8 @@
 Revision history for Perl extension MarpaX::Grammar::GraphViz2.
 
+1.03  Fri Sep 19 13:10:00 2014
+	- Update Makefile.PL and docs re this module now being on github.
+
 1.02  Tue Sep  9 09:57:00 2014
 	- Switch from Perl6::Slurp to File::Slurp.
 	- Copy share/*.bnf from MarpaX::Grammar::Parser.

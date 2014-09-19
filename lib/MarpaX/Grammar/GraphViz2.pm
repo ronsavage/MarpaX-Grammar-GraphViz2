@@ -172,7 +172,7 @@ has user_bnf_file =>
 	required => 1,
 );
 
-our $VERSION = '1.02';
+our $VERSION = '1.03';
 
 # --------------------------------------------------
 
@@ -981,7 +981,7 @@ Default: undef.
 
 Specify the name of Marpa's own SLIF-DSL file. This file ships with L<Marpa::R2>. It's name is metag.bnf.
 
-A copy, as of Marpa::R2 V 2.068000, ships with C<MarpaX::Grammar::GraphViz2>. See share/metag.bnf.
+A copy, as of Marpa::R2 V 2.094000, ships with C<MarpaX::Grammar::GraphViz2>. See share/metag.bnf.
 
 This option is mandatory.
 
@@ -1235,10 +1235,6 @@ It is part of L<MarpaX::Demo::JSONParser>, written as a gist by Peter Stuifzand.
 
 See L<https://gist.github.com/pstuifzand/4447349>.
 
-=item o html/json.1.svg
-
-This is the image from json.1.bnf.
-
 See the next point for how this file is created.
 
 =item o share/json.1.log
@@ -1247,15 +1243,13 @@ This is the log produced by running the code at log level C<debug>:
 
 	shell> scripts/bnf2graph.sh json.1 -max debug > share/json.1.log
 
+=item o html/json.1.svg
+
+This is the image from json.1.bnf.
+
 =item o share/json.2.bnf
 
 It also is part of L<MarpaX::Demo::JSONParser>, written by Jeffrey Kegler as a reply to the gist above from Peter.
-
-=item o html/json.2.svg
-
-This is the image from json.2.bnf.
-
-See the next point for how this file is created.
 
 =item o share/json.2.log
 
@@ -1263,13 +1257,29 @@ This is the log produced by running the code at log level C<debug>:
 
 	shell> scripts/bnf2graph.sh json.2 -max debug > share/json.2.log
 
-=item o share/json.2.bnf
+=item o html/json.2.svg
+
+This is the image from json.2.bnf.
+
+See the previous point for how this file is created.
+
+=item o share/json.3.bnf
 
 It also is part of L<MarpaX::Demo::JSONParser>, and is written by Jeffrey Kegler.
 
+=item o share/json.3.log
+
+This is the log produced by running the code at log level C<debug>:
+
+	shell> scripts/bnf2graph.sh json.3 -max debug > share/json.3.log
+
+=item o html/json.3.svg
+
+This is the image from json.3.bnf.
+
 =item o share/metag.bnf.
 
-This is a copy of L<Marpa::R2>'s SLIF-DSL, as of Marpa::R2 V 2.068000.
+This is a copy of L<Marpa::R2>'s SLIF-DSL, as of Marpa::R2 V 2.094000.
 
 See L</marpa_bnf_file([$bnf_file_name])> above.
 
@@ -1422,6 +1432,10 @@ The file Changes was converted into Changelog.ini by L<Module::Metadata::Changes
 =head1 Version Numbers
 
 Version numbers < 1.00 represent development versions. From 1.00 up, they are production versions.
+
+=head1 Repository
+
+L<https://github.com/ronsavage/MarpaX-Grammar-GraphViz2>
 
 =head1 Support
 
