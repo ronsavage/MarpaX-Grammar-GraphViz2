@@ -13,6 +13,8 @@ scripts/bnf2graph.sh termcap.info -legend 1
 
 perl -Ilib scripts/generate.demo.pl
 
+rm $DR/Perl-modules/html/marpax.grammar.graphviz2/*
 cp html/* $DR/Perl-modules/html/marpax.grammar.graphviz2/
 
-echo Also, copy demo files to the real web site...
+rm ~/savage.net.au/Perl-modules/html/marpax.grammar.graphviz2/*
+cp html/* ~/savage.net.au/Perl-modules/html/marpax.grammar.graphviz2/
