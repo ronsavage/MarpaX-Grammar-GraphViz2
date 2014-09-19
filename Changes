@@ -1,5 +1,8 @@
 Revision history for Perl extension MarpaX::Grammar::GraphViz2.
 
+1.04  Fri Sep 19 16:32:00 2014
+	- Update version # in /all/ modules this time.
+
 1.03  Fri Sep 19 13:10:00 2014
 	- Update Makefile.PL and docs re this module now being on github.
 
