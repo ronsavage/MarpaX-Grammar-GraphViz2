@@ -14,6 +14,8 @@ all_from 'lib/MarpaX/Grammar/GraphViz2.pm';
 
 install_share;
 
+repository 'https://github.com/ronsavage/MarpaX-Grammar-GraphViz2';
+
 requires 'charnames'               => 1.18;
 requires 'Config'                  => undef;
 requires 'Config::Tiny'            => 2.15;

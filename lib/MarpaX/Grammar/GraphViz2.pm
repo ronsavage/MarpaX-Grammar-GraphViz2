@@ -473,7 +473,7 @@ sub _process_complex_adverbs
 
 		# Discard the '|' separating alternatives in the SLIF-DSL.
 
-		pop @$daughters if ($$daughters[$i] -> name eq '|');
+		pop @$daughters if ( ($i >= 0) && ($$daughters[$i] -> name eq '|') );
 
 		$finished = 1 if ($#$daughters == 0);
 	}
