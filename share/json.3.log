@@ -5,26 +5,26 @@ Default global: label => ->
 Default global: name => Perl
 Default global: record_shape => Mrecord
 Default global: strict => 0
-Default global: subgraph => HASH(0x2f2b968)
+Default global: subgraph => HASH(0x3396530)
 Default global: timeout => 10
 Default graph: label => json.3.bnf, rankdir => TB
 Default node: shape => rectangle, style => filled
 Default edge: color => grey
-Added node: "[\\s]" [ fillcolor="lightgreen" label="{:start|\[\\s\]+}" shape="Mrecord" ]
+Added node: "" [ fillcolor="lightgreen" label="{:start|}" shape="Mrecord" ]
 Added node: "꞉default" [ fillcolor="lightblue" label="꞉default" ]
-Added edge: "[\\s]" -> "꞉default"
+Added node: "json"
+Added edge: "json" -> "꞉default"
 Added node: "꞉default_1" [ fillcolor="goldenrod" label="{action =\> ꞉꞉first}" shape="Mrecord" ]
 Added edge: "꞉default" -> "꞉default_1"
 Added node: "꞉discard" [ fillcolor="lightblue" label="꞉discard" ]
-Added edge: "[\\s]" -> "꞉discard"
+Added edge: "json" -> "꞉discard"
 Added node: "whitespace" [ fillcolor="lightblue" label="whitespace" ]
 Added edge: "꞉discard" -> "whitespace"
 Added node: "lexeme default" [ fillcolor="lightblue" label="lexeme default" ]
-Added edge: "[\\s]" -> "lexeme default"
-Added node: "lexeme default_1" [ fillcolor="lightblue" label="{action =\> \[name,value\]}" shape="Mrecord" ]
+Added edge: "json" -> "lexeme default"
+Added node: "lexeme default_1" [ fillcolor="lightblue" label="{action =\> \[name,value\]|latm =\> 1}" shape="Mrecord" ]
 Added edge: "lexeme default" -> "lexeme default_1"
 Added node: "hash" [ fillcolor="white" label="hash" ]
-Added node: "json"
 Added edge: "json" -> "hash"
 Added node: "array" [ fillcolor="white" label="array" ]
 Added edge: "json" -> "array"
@@ -184,6 +184,7 @@ Added edge: "\<any char\>" -> "[\\d\\D]"
 Added node: "','" [ fillcolor="white" label="','" ]
 Added node: "comma"
 Added edge: "comma" -> "','"
+Added node: "[\\s]" [ fillcolor="white" label="\[\\s\]+" ]
 Added edge: "whitespace" -> "[\\s]"
 Default graph: label => json.3.bnf, rankdir => TB
 Default node: shape => rectangle, style => filled
@@ -213,21 +214,21 @@ digraph Perl
 graph [ label="json.3.bnf" rankdir="TB" ]
 node [ shape="rectangle" style="filled" ]
 edge [ color="grey" ]
-"[\\s]" [ fillcolor="lightgreen" label="{:start|\[\\s\]+}" shape="Mrecord" ]
+"" [ fillcolor="lightgreen" label="{:start|}" shape="Mrecord" ]
 "꞉default" [ fillcolor="lightblue" label="꞉default" ]
-"[\\s]" -> "꞉default"
+"json"
+"json" -> "꞉default"
 "꞉default_1" [ fillcolor="goldenrod" label="{action =\> ꞉꞉first}" shape="Mrecord" ]
 "꞉default" -> "꞉default_1"
 "꞉discard" [ fillcolor="lightblue" label="꞉discard" ]
-"[\\s]" -> "꞉discard"
+"json" -> "꞉discard"
 "whitespace" [ fillcolor="lightblue" label="whitespace" ]
 "꞉discard" -> "whitespace"
 "lexeme default" [ fillcolor="lightblue" label="lexeme default" ]
-"[\\s]" -> "lexeme default"
-"lexeme default_1" [ fillcolor="lightblue" label="{action =\> \[name,value\]}" shape="Mrecord" ]
+"json" -> "lexeme default"
+"lexeme default_1" [ fillcolor="lightblue" label="{action =\> \[name,value\]|latm =\> 1}" shape="Mrecord" ]
 "lexeme default" -> "lexeme default_1"
 "hash" [ fillcolor="white" label="hash" ]
-"json"
 "json" -> "hash"
 "array" [ fillcolor="white" label="array" ]
 "json" -> "array"
@@ -387,6 +388,7 @@ edge [ color="grey" ]
 "','" [ fillcolor="white" label="','" ]
 "comma"
 "comma" -> "','"
+"[\\s]" [ fillcolor="white" label="\[\\s\]+" ]
 "whitespace" -> "[\\s]"
 
 subgraph 
@@ -414,4 +416,4 @@ rank="max"
 </table>> shape="plaintext" ]
 }
 }
-Wrote html/json.3.svg. Size: 66750 bytes
+Wrote html/json.3.svg. Size: 67574 bytes

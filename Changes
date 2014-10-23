@@ -1,5 +1,13 @@
 Revision history for Perl extension MarpaX::Grammar::GraphViz2.
 
+1.05  Wed Oct 22 17:31:00 2014
+	- Bump the required version of MarpaX::Grammar::Parser from V 1.04 to V 1.07. This is necessary
+		because the latter version bumps the pre-req for Marpa::R2 to 2.096000, which allows usage
+		of the 'forgiving' and 'latm' tokens.
+	- Fix bug in handling unspecified attributes.
+	- Regenerate demo files. This affects all output due to patches to MarpaX::Grammar::Parser.
+	- Clean up visual breaks, which should have all be 50 chars long.
+
 1.04  Fri Sep 19 16:32:00 2014
 	- Update version # in /all/ modules this time.
 

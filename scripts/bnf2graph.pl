@@ -107,8 +107,6 @@ Specify the name of Marpa's own SLIF-DSL file.
 
 This file ships with L<Marpa::R2>, in the meta/ directory. It's name is metag.bnf.
 
-A copy, as of Marpa::R2 V 2.066000, ships with L<MarpaX::Grammar::Parser>.
-
 See share/metag.bnf.
 
 This option is mandatory.

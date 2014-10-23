@@ -33,7 +33,7 @@ has config =>
 	required => 0,
 );
 
-our $VERSION = '1.04';
+our $VERSION = '1.05';
 
 # ------------------------------------------------
 
@@ -55,7 +55,7 @@ sub generate_demo_environment
 
 } # End of generate_demo_environment.
 
-# -----------------------------------------------
+# ------------------------------------------------
 
 sub generate_demo_index
 {
@@ -127,7 +127,7 @@ sub generate_demo_index
 
 } # End of generate_demo_index.
 
-# -----------------------------------------------
+# ------------------------------------------------
 
 1;
 

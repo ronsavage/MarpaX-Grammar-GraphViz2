@@ -110,7 +110,7 @@ has marpa_bnf_file =>
 
 has maxlevel =>
 (
-	default  => sub{return 'info'},
+	default  => sub{return 'notice'},
 	is       => 'rw',
 #	isa      => 'Str',
 	required => 0,
@@ -172,9 +172,9 @@ has user_bnf_file =>
 	required => 1,
 );
 
-our $VERSION = '1.04';
+our $VERSION = '1.05';
 
-# --------------------------------------------------
+# ------------------------------------------------
 
 sub add_legend
 {
@@ -253,8 +253,8 @@ sub BUILD
 {
 	my($self)  = @_;
 
-	die "No Marpa SLIF-DSL file found\n" if (! -e $self -> marpa_bnf_file);
-	die "No user SLIF-DSL file found\n"  if (! -e $self -> user_bnf_file);
+	die "No Marpa BNF file found\n" if (! -e $self -> marpa_bnf_file);
+	die "No user BNF file found\n"  if (! -e $self -> user_bnf_file);
 
 	$self -> driver($self -> driver || which('dot') );
 	$self -> format($self -> format || 'svg');
@@ -296,7 +296,7 @@ sub BUILD
 
 } # End of BUILD.
 
-# --------------------------------------------------
+# ------------------------------------------------
 
 sub clean_name
 {
@@ -317,7 +317,7 @@ sub clean_name
 
 } # End of clean_name.
 
-# --------------------------------------------------
+# ------------------------------------------------
 
 sub clean_tree
 {
@@ -330,9 +330,14 @@ sub clean_tree
 	({
 		callback => sub
 		{
+			# Elsewhere, the code uses these attributes (so we init them if necessary):
+			# o name.
+			# o quantifier.
+			# o real_name.
+
 			my($node, $options) = @_;
 			$name               = $node -> name;
-			$attributes         = $node -> attributes;
+			$attributes         = {name => '', quantifier => '', real_name => '', %{$node -> attributes} };
 
 			$node -> attributes($attributes);
 			$node -> name($self -> clean_name($name) );
@@ -344,7 +349,18 @@ sub clean_tree
 
 } # End of clean_tree.
 
-# --------------------------------------------------
+# ------------------------------------------------
+
+sub hashref2string
+{
+	my($self, $hashref) = @_;
+	$hashref ||= {};
+
+	return '{' . join(', ', map{qq|$_ => "$$hashref{$_}"|} sort keys %$hashref) . '}';
+
+} # End of hashref2string.
+
+# ------------------------------------------------
 
 sub log
 {
@@ -354,7 +370,7 @@ sub log
 
 } # End of log.
 
-# --------------------------------------------------
+# ------------------------------------------------
 
 sub _process_adverbs
 {
@@ -372,7 +388,10 @@ sub _process_adverbs
 		if ($$daughters[$end - 1] -> name eq '=>')
 		{
 			$adverb = $$daughters[$end - 2] -> name;
-			@token  = $self -> rectify_name($$daughters[$end]);
+
+			# rectify_name() returns a ($name => $label) pair.
+
+			@token = $self -> rectify_name($$daughters[$end]);
 
 			pop @$daughters for 1 .. 3;
 
@@ -405,41 +424,42 @@ sub _process_adverbs
 
 } # End of _process_adverbs.
 
-# --------------------------------------------------
+# ------------------------------------------------
 # This handles prioritized rules and quantized rules.
 
 sub _process_complex_adverbs
 {
 	my($self, $index, $a_node) = @_;
-	my($finished)  = 0;
-	my($daughters) = [$a_node -> daughters];
 
 	# Sample inputs:
 	# o 1 token, no adverbs:
-	#   |---number
-	#   |   |---~
-	#   |   |---int
+	#   |--- number
+	#   |   |--- ~
+	#   |   |--- int
 	# o 2 tokens, no adverbs:
-	#   |---json
-	#   |   |---::=
-	#   |   |---object
-	#   |   |---|
-	#   |   |---array
+	#   |--- json
+	#   |   |--- ::=
+	#   |   |--- object
+	#   |   |--- |
+	#   |   |--- array
 	# o 5 tokens, various adverbs:
-	#   |---object
-	#   |   |---::=
-	#   |   |---'{'
-	#   |   |---'}'
-	#   |   |---action
-	#   |   |---=>
-	#   |   |---do_empty_object
-	#   |   |---|
-	#   |   |---'{'
-	#   |   |---members
-	#   |   |---'}'
-	#   |   |---action
-	#   |   |---=>
-	#   |   |---do_object
+	#   |--- object
+	#   |   |--- ::=
+	#   |   |--- '{'
+	#   |   |--- '}'
+	#   |   |--- action
+	#   |   |--- =>
+	#   |   |--- do_empty_object
+	#   |   |--- |
+	#   |   |--- '{'
+	#   |   |--- members
+	#   |   |--- '}'
+	#   |   |--- action
+	#   |   |--- =>
+	#   |   |--- do_object
+
+	my($daughters) = [$a_node -> daughters];
+	my($finished)  = $#$daughters >= 0 ? 0 : 1;
 
 	my($adverbs, @adverb_stack);
 	my(@daughter_stack);
@@ -482,7 +502,7 @@ sub _process_complex_adverbs
 
 } # End of _process_complex_adverbs.
 
-# --------------------------------------------------
+# ------------------------------------------------
 
 sub _process_default_rule
 {
@@ -518,7 +538,7 @@ sub _process_default_rule
 
 } # End of _process_default_rule.
 
-# --------------------------------------------------
+# ------------------------------------------------
 
 sub _process_discard_rule
 {
@@ -542,7 +562,10 @@ sub _process_discard_rule
 
 	# Ignore the first daughter, which is '=>'.
 
-	my(@daughters)      = $a_node -> daughters;
+	my(@daughters) = $a_node -> daughters;
+
+	# rectify_name() returns a ($name => $label) pair.
+
 	my(@name)           = $self -> rectify_name($daughters[1]);
 	$$attributes{label} = $name[1];
 
@@ -551,7 +574,7 @@ sub _process_discard_rule
 
 } # End of _process_discard_rule.
 
-# --------------------------------------------------
+# ------------------------------------------------
 
 sub _process_event_rule
 {
@@ -573,8 +596,11 @@ sub _process_event_rule
 		$self -> graph -> add_edge(from => $self -> root_node -> name, to => $event_name);
 	}
 
-	my($item_name)      = "${event_name}_$event_count";
-	my(@daughters)      = $a_node -> daughters;
+	my($item_name) = "${event_name}_$event_count";
+	my(@daughters) = $a_node -> daughters;
+
+	# rectify_name() returns a ($name => $label) pair.
+
 	my(@lhs)            = $self -> rectify_name($daughters[3]);
 	$$attributes{label} =
 	[
@@ -589,7 +615,7 @@ sub _process_event_rule
 
 } # End of _process_event_rule.
 
-# --------------------------------------------------
+# ------------------------------------------------
 
 sub _process_lexeme_default_rule
 {
@@ -617,21 +643,24 @@ sub _process_lexeme_default_rule
 
 } # End of _process_lexeme_default_rule.
 
-# --------------------------------------------------
+# ------------------------------------------------
 
 sub _process_lexeme_rule
 {
 	my($self, $index, $a_node) = @_;
-	my($daughters, $adverbs) = $self -> _process_adverbs([$a_node -> daughters]);
-	my(@name)                = $self -> rectify_name($$daughters[1]);
-	my($lexeme)              = $self -> lexemes;
-	$$lexeme{$name[0]}       = $#$adverbs >= 0 ? $adverbs : '';
+	my($daughters, $adverbs)   = $self -> _process_adverbs([$a_node -> daughters]);
+
+	# rectify_name() returns a ($name => $label) pair.
+
+	my(@name)          = $self -> rectify_name($$daughters[1]);
+	my($lexeme)        = $self -> lexemes;
+	$$lexeme{$name[0]} = $#$adverbs >= 0 ? $adverbs : '';
 
 	$self -> lexemes($lexeme);
 
 } # End of _process_lexeme_rule.
 
-# --------------------------------------------------
+# ------------------------------------------------
 
 sub _process_lexeme_token
 {
@@ -660,7 +689,7 @@ sub _process_lexeme_token
 
 } # End of _process_lexeme_token.
 
-# --------------------------------------------------
+# ------------------------------------------------
 
 sub _process_normal_rule
 {
@@ -669,18 +698,21 @@ sub _process_normal_rule
 
 	for my $i (0 .. $#$daughters)
 	{
-		$self -> _process_normal_tokens($index, $a_node, $lexemes, $$daughters[$i], $$adverbs[$i]);
+		if ($#{$$daughters[$i]} >= 0)
+		{
+			$self -> _process_normal_tokens($index, $a_node, $lexemes, $$daughters[$i], $$adverbs[$i]);
+		}
 	}
 
 } # End of _process_normal_rule.
 
-# --------------------------------------------------
+# ------------------------------------------------
 
 sub _process_normal_tokens
 {
 	my($self, $index, $a_node, $lexemes, $daughters, $adverbs) = @_;
 
-	# rectify_name() returns a set of ($name => $label) pairs.
+	# rectify_name() returns a ($name => $label) pair.
 
 	my(@name_map)   = map{$self -> rectify_name($_)} @$daughters;
 	my(@name)       = map{$name_map[$_]} indexes{$_ % 2 == 0} 0 .. $#name_map;
@@ -736,7 +768,7 @@ sub _process_normal_tokens
 
 } # End of _process_normal_tokens.
 
-# --------------------------------------------------
+# ------------------------------------------------
 
 sub _process_start_rule
 {
@@ -756,7 +788,7 @@ sub _process_start_rule
 
 } # End of _process_start_rule.
 
-# --------------------------------------------------
+# ------------------------------------------------
 
 sub rectify_name
 {
@@ -769,7 +801,7 @@ sub rectify_name
 
 } # End of rectify_name.
 
-# ------------------------------------------------
+# ----------------------------------------------
 
 sub run
 {
@@ -993,7 +1025,7 @@ This option is only used if an object of type L<Log::Handler> is created. See I<
 
 See also L<Log::Handler::Levels>.
 
-Default: 'info'. A typical value is 'debug'.
+Default: 'notice'. A typical value is 'debug'.
 
 =item o minlevel => $level
 

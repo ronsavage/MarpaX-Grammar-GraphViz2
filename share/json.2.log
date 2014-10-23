@@ -5,7 +5,7 @@ Default global: label => ->
 Default global: name => Perl
 Default global: record_shape => Mrecord
 Default global: strict => 0
-Default global: subgraph => HASH(0x28c4d58)
+Default global: subgraph => HASH(0x296f238)
 Default global: timeout => 10
 Default graph: label => json.2.bnf, rankdir => TB
 Default node: shape => rectangle, style => filled
@@ -21,6 +21,8 @@ Added node: "whitespace" [ fillcolor="lightblue" label="whitespace" ]
 Added edge: "꞉discard" -> "whitespace"
 Added node: "lexeme default" [ fillcolor="lightblue" label="lexeme default" ]
 Added edge: "json" -> "lexeme default"
+Added node: "lexeme default_1" [ fillcolor="lightblue" label="{latm =\> 1}" shape="Mrecord" ]
+Added edge: "lexeme default" -> "lexeme default_1"
 Added node: "object" [ fillcolor="white" label="object" ]
 Added edge: "json" -> "object"
 Added node: "object_attributes" [ fillcolor="goldenrod" label="{action =\> ꞉꞉first}" shape="Mrecord" ]
@@ -210,6 +212,8 @@ edge [ color="grey" ]
 "꞉discard" -> "whitespace"
 "lexeme default" [ fillcolor="lightblue" label="lexeme default" ]
 "json" -> "lexeme default"
+"lexeme default_1" [ fillcolor="lightblue" label="{latm =\> 1}" shape="Mrecord" ]
+"lexeme default" -> "lexeme default_1"
 "object" [ fillcolor="white" label="object" ]
 "json" -> "object"
 "object_attributes" [ fillcolor="goldenrod" label="{action =\> ꞉꞉first}" shape="Mrecord" ]
@@ -386,4 +390,4 @@ rank="max"
 </table>> shape="plaintext" ]
 }
 }
-Wrote html/json.2.svg. Size: 58964 bytes
+Wrote html/json.2.svg. Size: 59786 bytes
