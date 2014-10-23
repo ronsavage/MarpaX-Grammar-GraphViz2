@@ -22,7 +22,7 @@
       },
       "configure" : {
          "requires" : {
-            "Module::Build" : "0.38"
+            "ExtUtils::MakeMaker" : "0"
          }
       },
       "runtime" : {
@@ -42,7 +42,7 @@
             "HTML::Entities::Interpolate" : "1.05",
             "List::AllUtils" : "0.03",
             "Log::Handler" : "0.78",
-            "MarpaX::Grammar::Parser" : "1.03",
+            "MarpaX::Grammar::Parser" : "1.07",
             "Moo" : "1.002",
             "Path::Tiny" : "0.025",
             "Pod::Usage" : "1.36",
