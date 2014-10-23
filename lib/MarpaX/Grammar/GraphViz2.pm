@@ -1233,7 +1233,7 @@ of the node, when the node is finally passed to L<GraphViz2>.
 
 Returns a 2-element list of ($name, $label).
 
-=head2 root_name()
+=head2 root_node()
 
 Returns an object of type L<Tree::DAG_Node>, representing the C<:start> token in the user's grammar.
 
@@ -1249,6 +1249,14 @@ Returns a hashref keyed by token name, of tokens used in the grammar construc
  C<< separator => $token >>.
 
 This hashref is currently not used.
+
+=head2 user_bnf_file([$bnf_file_name])
+
+Here, the [] indicate an optional parameter.
+
+Get or set the name of the file to read the user's grammar from.
+
+Note: C<user_bnf_file> is a parameter to new().
 
 =head1 Files Shipped with this Module
 
@@ -1440,7 +1448,7 @@ We use this code to handle these:
 
 This is due to the author using both 'comma' and '<comma>' as tokens within the grammar.
 
-So far this module does not handle that.
+So far this module does not notice the two are the same.
 
 A similar thing can happen elsewhere, e.g. with named event statements, when the rhs name uses (say)
 '<xyz>'
