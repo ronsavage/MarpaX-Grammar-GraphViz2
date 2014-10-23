@@ -126,7 +126,7 @@ has minlevel =>
 
 has nodes_seen =>
 (
-	default  => sub{return {}},
+	default  => sub{return {} },
 	is       => 'rw',
 	#isa     => 'HashRef',
 	required => 0,
@@ -491,7 +491,7 @@ sub _process_complex_adverbs
 
 		unshift @daughter_stack, [@token_stack];
 
-		# Discard the '|' separating alternatives in the SLIF-DSL.
+		# Discard the '|' separating alternatives in the BND.
 
 		pop @$daughters if ( ($i >= 0) && ($$daughters[$i] -> name eq '|') );
 
@@ -870,7 +870,10 @@ sub run
 
 	my($output_file) = $self -> output_file;
 
-	$self -> graph -> run(output_file => $output_file);
+	if ($output_file)
+	{
+		$self -> graph -> run(output_file => $output_file);
+	}
 
 	# Return 0 for success and 1 for failure.
 
@@ -911,16 +914,18 @@ For more help, run:
 
 	shell> perl -Ilib scripts/bnf2graph.pl -h
 
-Note: Installation includes copying all files from the share/ directory, into a dir chosen by L<File::ShareDir>.
-Run scripts/find.grammars.pl to display the name of the latter dir.
+Note: Installation includes copying all files from the share/ directory, into a dir chosen by
+L<File::ShareDir>. Run scripts/find.grammars.pl to display the name of the latter dir.
 
-See also L<the demo page|http://savage.net.au/Perl-modules/html/marpax.grammar.graphviz2/index.html>.
+See also
+L<the demo page|http://savage.net.au/Perl-modules/html/marpax.grammar.graphviz2/index.html>.
 
 =head1 Description
 
-Process the output cooked tree from L<MarpaX::Grammar::Parser>, and turn it into an image.
+For a given BNF, process the cooked tree output by L<MarpaX::Grammar::Parser>, and turn it into an
+image.
 
-The tree holds a representation of the user's SLIF-DSL, and is managed by L<Tree::DAG_Node>.
+The tree holds a representation of the user's BNF (SLIF-DSL), and is managed by L<Tree::DAG_Node>.
 
 This modules uses L<MarpaX::Grammar::Parser> internally. It does not read that module's output file.
 
@@ -950,12 +955,12 @@ or:
 	make test
 	make install
 
-Note: Installation includes copying all files from the share/ directory, into a dir chosen by L<File::ShareDir>.
-Run scripts/find.grammars.pl to display the name of the latter dir.
+Note: Installation includes copying all files from the share/ directory, into a dir chosen by
+L<File::ShareDir>. Run scripts/find.grammars.pl to display the name of the latter dir.
 
 =head1 Constructor and Initialization
 
-C<new()> is called as C<< my($parser) = MarpaX::Grammar::GraphViz2 -> new(k1 => v1, k2 => v2, ...) >>.
+Call C<new()> as C<< my($parser) = MarpaX::Grammar::GraphViz2 -> new(k1 => v1, k2 => v2, ...) >>.
 
 It returns a new object of type C<MarpaX::Grammar::GraphViz2>.
 
@@ -1001,7 +1006,8 @@ Default: 0.
 
 Specify a logger object.
 
-The default value triggers creation of an object of type L<Log::Handler> which outputs to the screen.
+The default value triggers creation of an object of type L<Log::Handler> which outputs to the
+screen.
 
 To disable logging, just set I<logger> to the empty string.
 
@@ -1009,11 +1015,12 @@ The value for I<logger> is passed to L<GraphViz2>.
 
 Default: undef.
 
-=item o marpa_bnf_file aMarpaSLIF-DSLFileName
+=item o marpa_bnf_file aMarpaBNFFileName
 
-Specify the name of Marpa's own SLIF-DSL file. This file ships with L<Marpa::R2>. It's name is metag.bnf.
+Specify the name of Marpa's own BNF file. This file ships with L<Marpa::R2>. It's name is
+metag.bnf.
 
-A copy, as of Marpa::R2 V 2.094000, ships with C<MarpaX::Grammar::GraphViz2>. See share/metag.bnf.
+A copy, as of Marpa::R2 V 2.096000, ships with C<MarpaX::Grammar::GraphViz2>. See share/metag.bnf.
 
 This option is mandatory.
 
@@ -1047,7 +1054,7 @@ If '', the file is not written.
 
 Default: ''.
 
-=item o user_bnf_file aUserSLIF-DSLFileName
+=item o user_bnf_file aUserBNFFileName
 
 Specify the name of the file containing your Marpa::R2-style grammar.
 
@@ -1139,8 +1146,9 @@ Returns the number of C<:lexeme> rules in the user's input.
 
 Returns a hashref keyed by the clean name, of lexemes seen in the user's input.
 
-The value for each key is an arrayref of hashrefs suitable for forcing L<GraphViz2> to plot the node as
-a record structure. See L<http://www.graphviz.org/content/node-shapes#record> for the gory details.
+The value for each key is an arrayref of hashrefs suitable for forcing L<GraphViz2> to plot the node
+as a record structure. See L<http://www.graphviz.org/content/node-shapes#record> for the gory
+details.
 
 =head2 log($level, $s)
 
@@ -1172,7 +1180,8 @@ Here, the [] indicate an optional parameter.
 
 Get or set the value used by the logger object.
 
-This option is only used if an object of type L<Log::Handler> is created. See L<Log::Handler::Levels>.
+This option is only used if an object of type L<Log::Handler> is created. See
+L<Log::Handler::Levels>.
 
 Note: C<maxlevel> is a parameter to new().
 
@@ -1182,7 +1191,8 @@ Here, the [] indicate an optional parameter.
 
 Get or set the value used by the logger object.
 
-This option is only used if an object of type L<Log::Handler> is created. See L<Log::Handler::Levels>.
+This option is only used if an object of type L<Log::Handler> is created. See
+L<Log::Handler::Levels>.
 
 Note: C<minlevel> is a parameter to new().
 
@@ -1218,8 +1228,8 @@ This object is created automatically during the call to L</new()>.
 
 For the given $node, which is an object of type L<Tree::DAG_Node>, clean it's real name.
 
-Then it adds the node's quantifier ('', '*' or '+') to that name, to act as the label (visible name) of the
-node, when the node is finally passed to L<GraphViz2>.
+Then it adds the node's quantifier ('', '*' or '+') to that name, to act as the label (visible name)
+of the node, when the node is finally passed to L<GraphViz2>.
 
 Returns a 2-element list of ($name, $label).
 
@@ -1235,7 +1245,8 @@ See L</Synopsis> and scripts/bnf2graph.pl for sample code.
 
 =head2 separators()
 
-Returns a hashref keyed by token name, of tokens used in the grammar construct C<< separator => $token >>.
+Returns a hashref keyed by token name, of tokens used in the grammar construc
+ C<< separator => $token >>.
 
 This hashref is currently not used.
 
@@ -1281,7 +1292,8 @@ This is the image from json.1.bnf.
 
 =item o share/json.2.bnf
 
-It also is part of L<MarpaX::Demo::JSONParser>, written by Jeffrey Kegler as a reply to the gist above from Peter.
+It also is part of L<MarpaX::Demo::JSONParser>, written by Jeffrey Kegler as a reply to the gist
+above from Peter.
 
 =item o share/json.2.log
 
@@ -1311,13 +1323,13 @@ This is the image from json.3.bnf.
 
 =item o share/metag.bnf.
 
-This is a copy of L<Marpa::R2>'s SLIF-DSL, as of Marpa::R2 V 2.094000.
+This is a copy of L<Marpa::R2>'s BNF, as of Marpa::R2 V 2.096000.
 
 See L</marpa_bnf_file([$bnf_file_name])> above.
 
 =item o share/stringparser.bnf.
 
-This is a copy of L<MarpaX::Demo::StringParser>'s SLIF-DSL.
+This is a copy of L<MarpaX::Demo::StringParser>'s BNF.
 
 =item o html/stringparser.svg
 
@@ -1388,10 +1400,11 @@ Generates html/index.html.
 
 This calls generate.demo.pl for each grammar shipped with the module.
 
-Actually, it skips c.ast by default, since it takes 6 m 47 s to run that. But if you pass any command line
-parameter to the script, it includes c.ast.
+Actually, it skips c.ast by default, since it takes 6 m 47 s to run that. But if you pass any
+command line parameter to the script, it includes c.ast.
 
-Then it copies html/* to my web server's doc root (which is in Debian's default RAM disk) at /dev/shm/html.
+Then it copies html/* to my web server's doc root (which is in Debian's default RAM disk) at
+/dev/shm/html.
 
 =item o scripts/pod2html.sh
 
@@ -1409,7 +1422,8 @@ Firstly, the Perl module L<GraphViz2> escapes some characters. Currently, these 
 
 We let L<GraphViz2> handle these.
 
-Secondly, L<Graphviz|http://graphviz.org> itself treats some characters specially. Currently, these are:
+Secondly, L<Graphviz|http://graphviz.org> itself treats some characters specially. Currently, these
+are:
 
 	< > : "
 
@@ -1428,20 +1442,22 @@ This is due to the author using both 'comma' and '<comma>' as tokens within the 
 
 So far this module does not handle that.
 
-A similar thing can happen elsewhere, e.g. with named event statements, when the rhs name uses (say) '<xyz>'
+A similar thing can happen elsewhere, e.g. with named event statements, when the rhs name uses (say)
+'<xyz>'
 and the rule referred to uses just 'xyz'.
 
 In all such cases, there will be 2 nodes, with 2 names differing in just the brackets.
 
 =head2 Why do some nodes have (or lack) a quantifier when I use it both with and without one?
 
-There is simply no way to plot a node both with and without the quantifier. The one which appears is chosen
-arbitrarily, depending on how the code scans the grammar. This means it is currently beyond control.
+There is simply no way to plot a node both with and without the quantifier. The one which appears is
+chosen arbitrarily, depending on how the code scans the grammar. This means it is currently beyond
+control.
 
 =head2 Why do the nodes on the demo page lack rule numbers?
 
-I'm undecided as to whether or not they are a good idea. I documented it on the demo page to indicate
-it was easy (for some nodes), and await feedback.
+I'm undecided as to whether or not they are a good idea. I documented it on the demo page to
+indicate it was easy (for some nodes), and await feedback.
 
 =head2 Can I control the format or placement of the legend?
 
@@ -1453,7 +1469,8 @@ No, but you can turn it off with the C<legend> option to C<< new() >>.
 
 =item o Perhaps add rule # to each node
 
-This is the rule # within the input stream. Doing this is simple for some nodes, and difficult for others.
+This is the rule # within the input stream. Doing this is simple for some nodes, and difficult for
+others.
 
 =back
 
