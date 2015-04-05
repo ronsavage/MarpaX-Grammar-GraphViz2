@@ -5,214 +5,242 @@ Default global: label => ->
 Default global: name => Perl
 Default global: record_shape => Mrecord
 Default global: strict => 0
-Default global: subgraph => HASH(0x2fdf318)
+Default global: subgraph => HASH(0x2b563a8)
 Default global: timeout => 10
 Default graph: label => json.1.bnf, rankdir => TB
 Default node: shape => rectangle, style => filled
 Default edge: color => grey
-Added node: "json" [ fillcolor="lightgreen" label="{:start|json}" shape="Mrecord" ]
-Added node: "꞉discard" [ fillcolor="lightblue" label="꞉discard" ]
-Added edge: "json" -> "꞉discard"
-Added node: "whitespace" [ fillcolor="lightblue" label="whitespace" ]
-Added edge: "꞉discard" -> "whitespace"
-Added node: "lexeme default" [ fillcolor="lightblue" label="lexeme default" ]
-Added edge: "json" -> "lexeme default"
-Added node: "lexeme default_1" [ fillcolor="lightblue" label="{latm =\> 1}" shape="Mrecord" ]
-Added edge: "lexeme default" -> "lexeme default_1"
-Added node: "object" [ fillcolor="white" label="object" ]
-Added edge: "json" -> "object"
-Added node: "array" [ fillcolor="white" label="array" ]
-Added edge: "json" -> "array"
-Added node: "'{' '}'" [ fillcolor="white" label="'{' '}'" ]
-Added edge: "object" -> "'{' '}'"
-Added node: "'{'" [ fillcolor="white" label="'{'" ]
-Added edge: "'{' '}'" -> "'{'"
-Added node: "'}'" [ fillcolor="white" label="'}'" ]
-Added edge: "'{' '}'" -> "'}'"
-Added node: "'{' '}'_attributes" [ fillcolor="goldenrod" label="{action =\> do_empty_object}" shape="Mrecord" ]
-Added edge: "'{' '}'" -> "'{' '}'_attributes"
-Added node: "'{' members '}'" [ fillcolor="white" label="'{' members '}'" ]
-Added edge: "object" -> "'{' members '}'"
-Added edge: "'{' members '}'" -> "'{'"
-Added node: "members" [ fillcolor="white" label="members" ]
-Added edge: "'{' members '}'" -> "members"
-Added edge: "'{' members '}'" -> "'}'"
-Added node: "'{' members '}'_attributes" [ fillcolor="goldenrod" label="{action =\> do_object}" shape="Mrecord" ]
-Added edge: "'{' members '}'" -> "'{' members '}'_attributes"
-Added node: "pair" [ fillcolor="white" label="pair+" ]
-Added edge: "members" -> "pair"
-Added node: "pair_attributes" [ fillcolor="goldenrod" label="{action =\> do_list|separator =\> \<comma\>}" shape="Mrecord" ]
-Added edge: "pair" -> "pair_attributes"
-Added node: "string '꞉' value" [ fillcolor="white" label="string '꞉' value" ]
-Added edge: "pair" -> "string '꞉' value"
-Added node: "string" [ fillcolor="white" label="string" ]
-Added edge: "string '꞉' value" -> "string"
-Added node: "'꞉'" [ fillcolor="white" label="'꞉'" ]
-Added edge: "string '꞉' value" -> "'꞉'"
-Added node: "value" [ fillcolor="white" label="value" ]
-Added edge: "string '꞉' value" -> "value"
-Added node: "string '꞉' value_attributes" [ fillcolor="goldenrod" label="{action =\> do_pair}" shape="Mrecord" ]
-Added edge: "string '꞉' value" -> "string '꞉' value_attributes"
-Added edge: "value" -> "string"
-Added edge: "value" -> "object"
-Added node: "number" [ fillcolor="white" label="number" ]
-Added edge: "value" -> "number"
-Added edge: "value" -> "array"
-Added node: "'true'" [ fillcolor="white" label="'true'" ]
-Added edge: "value" -> "'true'"
-Added node: "'true'_attributes" [ fillcolor="goldenrod" label="{action =\> do_true}" shape="Mrecord" ]
-Added edge: "'true'" -> "'true'_attributes"
-Added node: "'false'" [ fillcolor="white" label="'false'" ]
-Added edge: "value" -> "'false'"
-Added node: "'false'_attributes" [ fillcolor="goldenrod" label="{action =\> do_true}" shape="Mrecord" ]
-Added edge: "'false'" -> "'false'_attributes"
-Added node: "'null'" [ fillcolor="white" label="'null'" ]
-Added edge: "value" -> "'null'"
-Added node: "'null'_attributes" [ fillcolor="goldenrod" label="{action =\> do_null}" shape="Mrecord" ]
-Added edge: "'null'" -> "'null'_attributes"
-Added node: "'[' ']'" [ fillcolor="white" label="'\[' '\]'" ]
-Added edge: "array" -> "'[' ']'"
-Added node: "'['" [ fillcolor="white" label="'\['" ]
-Added edge: "'[' ']'" -> "'['"
-Added node: "']'" [ fillcolor="white" label="'\]'" ]
-Added edge: "'[' ']'" -> "']'"
-Added node: "'[' ']'_attributes" [ fillcolor="goldenrod" label="{action =\> do_empty_array}" shape="Mrecord" ]
-Added edge: "'[' ']'" -> "'[' ']'_attributes"
-Added node: "'[' elements ']'" [ fillcolor="white" label="'\[' elements '\]'" ]
-Added edge: "array" -> "'[' elements ']'"
-Added edge: "'[' elements ']'" -> "'['"
-Added node: "elements" [ fillcolor="white" label="elements" ]
-Added edge: "'[' elements ']'" -> "elements"
-Added edge: "'[' elements ']'" -> "']'"
-Added node: "'[' elements ']'_attributes" [ fillcolor="goldenrod" label="{action =\> do_array}" shape="Mrecord" ]
-Added edge: "'[' elements ']'" -> "'[' elements ']'_attributes"
-Added edge: "elements" -> "value"
-Added node: "value_attributes" [ fillcolor="goldenrod" label="{action =\> do_list|separator =\> \<comma\>}" shape="Mrecord" ]
-Added edge: "value" -> "value_attributes"
-Added node: "int" [ fillcolor="white" label="int" ]
-Added edge: "number" -> "int"
-Added node: "int frac" [ fillcolor="white" label="int frac" ]
-Added edge: "number" -> "int frac"
-Added edge: "int frac" -> "int"
-Added node: "frac" [ fillcolor="white" label="frac" ]
-Added edge: "int frac" -> "frac"
-Added node: "int exp" [ fillcolor="white" label="int exp" ]
-Added edge: "number" -> "int exp"
-Added edge: "int exp" -> "int"
-Added node: "exp" [ fillcolor="white" label="exp" ]
-Added edge: "int exp" -> "exp"
-Added node: "int frac exp" [ fillcolor="white" label="int frac exp" ]
-Added edge: "number" -> "int frac exp"
-Added edge: "int frac exp" -> "int"
-Added edge: "int frac exp" -> "frac"
-Added edge: "int frac exp" -> "exp"
-Added node: "digits" [ fillcolor="white" label="digits" ]
-Added edge: "int" -> "digits"
-Added node: "'-' digits" [ fillcolor="white" label="'-' digits" ]
-Added edge: "int" -> "'-' digits"
-Added node: "'-'" [ fillcolor="white" label="'-'" ]
-Added edge: "'-' digits" -> "'-'"
-Added edge: "'-' digits" -> "digits"
-Added node: "[\\d]" [ fillcolor="white" label="\[\\d\]+" ]
-Added edge: "digits" -> "[\\d]"
-Added node: "'.' digits" [ fillcolor="white" label="'.' digits" ]
-Added edge: "frac" -> "'.' digits"
-Added node: "'.'" [ fillcolor="white" label="'.'" ]
-Added edge: "'.' digits" -> "'.'"
-Added edge: "'.' digits" -> "digits"
-Added node: "e digits" [ fillcolor="white" label="e digits" ]
-Added edge: "exp" -> "e digits"
-Added node: "e" [ fillcolor="white" label="e" ]
-Added edge: "e digits" -> "e"
-Added edge: "e digits" -> "digits"
-Added node: "'e'" [ fillcolor="white" label="'e'" ]
-Added edge: "e" -> "'e'"
-Added node: "'e+'" [ fillcolor="white" label="'e+'" ]
-Added edge: "e" -> "'e+'"
-Added node: "'e-'" [ fillcolor="white" label="'e-'" ]
-Added edge: "e" -> "'e-'"
-Added node: "'E'" [ fillcolor="white" label="'E'" ]
-Added edge: "e" -> "'E'"
-Added node: "'E+'" [ fillcolor="white" label="'E+'" ]
-Added edge: "e" -> "'E+'"
-Added node: "'E-'" [ fillcolor="white" label="'E-'" ]
-Added edge: "e" -> "'E-'"
-Added node: "lstring" [ fillcolor="white" label="lstring" ]
-Added edge: "string" -> "lstring"
-Added node: "lstring_attributes" [ fillcolor="goldenrod" label="{action =\> do_string}" shape="Mrecord" ]
-Added edge: "lstring" -> "lstring_attributes"
-Added node: "quote in_string quote" [ fillcolor="white" label="quote in_string quote" ]
-Added edge: "lstring" -> "quote in_string quote"
-Added node: "quote" [ fillcolor="white" label="quote" ]
-Added edge: "quote in_string quote" -> "quote"
-Added node: "in_string" [ fillcolor="white" label="in_string" ]
-Added edge: "quote in_string quote" -> "in_string"
-Added edge: "quote in_string quote" -> "quote"
-Added node: "[ꞌꞌ]" [ fillcolor="white" label="\[ꞌꞌ\]" ]
-Added edge: "quote" -> "[ꞌꞌ]"
-Added node: "in_string_char" [ fillcolor="white" label="in_string_char*" ]
-Added edge: "in_string" -> "in_string_char"
-Added node: "[^ꞌꞌ\\\\]" [ fillcolor="white" label="\[^ꞌꞌ\\\\]" ]
-Added edge: "in_string_char" -> "[^ꞌꞌ\\\\]"
-Added node: "'\\' 'ꞌꞌ'" [ fillcolor="white" label="'\\' 'ꞌꞌ'" ]
-Added edge: "in_string_char" -> "'\\' 'ꞌꞌ'"
-Added node: "'\\'" [ fillcolor="white" label="'\\'" ]
-Added edge: "'\\' 'ꞌꞌ'" -> "'\\'"
-Added node: "'ꞌꞌ'" [ fillcolor="white" label="'ꞌꞌ'" ]
-Added edge: "'\\' 'ꞌꞌ'" -> "'ꞌꞌ'"
-Added node: "'\\' 'b'" [ fillcolor="white" label="'\\' 'b'" ]
-Added edge: "in_string_char" -> "'\\' 'b'"
-Added edge: "'\\' 'b'" -> "'\\'"
-Added node: "'b'" [ fillcolor="white" label="'b'" ]
-Added edge: "'\\' 'b'" -> "'b'"
-Added node: "'\\' 'f'" [ fillcolor="white" label="'\\' 'f'" ]
-Added edge: "in_string_char" -> "'\\' 'f'"
-Added edge: "'\\' 'f'" -> "'\\'"
-Added node: "'f'" [ fillcolor="white" label="'f'" ]
-Added edge: "'\\' 'f'" -> "'f'"
-Added node: "'\\' 't'" [ fillcolor="white" label="'\\' 't'" ]
-Added edge: "in_string_char" -> "'\\' 't'"
-Added edge: "'\\' 't'" -> "'\\'"
-Added node: "'t'" [ fillcolor="white" label="'t'" ]
-Added edge: "'\\' 't'" -> "'t'"
-Added node: "'\\' 'n'" [ fillcolor="white" label="'\\' 'n'" ]
-Added edge: "in_string_char" -> "'\\' 'n'"
-Added edge: "'\\' 'n'" -> "'\\'"
-Added node: "'n'" [ fillcolor="white" label="'n'" ]
-Added edge: "'\\' 'n'" -> "'n'"
-Added node: "'\\' 'r'" [ fillcolor="white" label="'\\' 'r'" ]
-Added edge: "in_string_char" -> "'\\' 'r'"
-Added edge: "'\\' 'r'" -> "'\\'"
-Added node: "'r'" [ fillcolor="white" label="'r'" ]
-Added edge: "'\\' 'r'" -> "'r'"
-Added node: "'\\' 'u' four_hex_digits" [ fillcolor="white" label="'\\' 'u' four_hex_digits" ]
-Added edge: "in_string_char" -> "'\\' 'u' four_hex_digits"
-Added edge: "'\\' 'u' four_hex_digits" -> "'\\'"
-Added node: "'u'" [ fillcolor="white" label="'u'" ]
-Added edge: "'\\' 'u' four_hex_digits" -> "'u'"
-Added node: "four_hex_digits" [ fillcolor="white" label="four_hex_digits" ]
-Added edge: "'\\' 'u' four_hex_digits" -> "four_hex_digits"
-Added node: "'\\' '/'" [ fillcolor="white" label="'\\' '/'" ]
-Added edge: "in_string_char" -> "'\\' '/'"
-Added edge: "'\\' '/'" -> "'\\'"
-Added node: "'/'" [ fillcolor="white" label="'/'" ]
-Added edge: "'\\' '/'" -> "'/'"
-Added node: "'\\\\'" [ fillcolor="white" label="'\\\\'" ]
-Added edge: "in_string_char" -> "'\\\\'"
-Added node: "hex_digit hex_digit hex_digit hex_digit" [ fillcolor="white" label="hex_digit hex_digit hex_digit hex_digit" ]
-Added edge: "four_hex_digits" -> "hex_digit hex_digit hex_digit hex_digit"
-Added node: "hex_digit" [ fillcolor="white" label="hex_digit" ]
-Added edge: "hex_digit hex_digit hex_digit hex_digit" -> "hex_digit"
-Added edge: "hex_digit hex_digit hex_digit hex_digit" -> "hex_digit"
-Added edge: "hex_digit hex_digit hex_digit hex_digit" -> "hex_digit"
-Added edge: "hex_digit hex_digit hex_digit hex_digit" -> "hex_digit"
-Added node: "[0-9a-fA-F]" [ fillcolor="white" label="\[0-9a-fA-F\]" ]
-Added edge: "hex_digit" -> "[0-9a-fA-F]"
-Added node: "','" [ fillcolor="white" label="','" ]
-Added node: "comma"
-Added edge: "comma" -> "','"
-Added node: "[\\s]" [ fillcolor="white" label="\[\\s\]+" ]
-Added edge: "whitespace" -> "[\\s]"
+Statements. Attributes: {name => "", quantifier => "", real_name => "Statements"}
+    |--- statement. Attributes: {name => "", quantifier => "", real_name => "statement"}
+    |    |--- lexeme default. Attributes: {name => "", quantifier => "", real_name => "lexeme default"}
+    |    |--- =. Attributes: {name => "", quantifier => "", real_name => "="}
+    |    |--- latm. Attributes: {name => "", quantifier => "", real_name => "latm"}
+    |    |--- =>. Attributes: {name => "", quantifier => "", real_name => "=>"}
+    |    |--- 1. Attributes: {name => "", quantifier => "", real_name => "1"}
+    |--- statement. Attributes: {name => "", quantifier => "", real_name => "statement"}
+    |    |--- ꞉start. Attributes: {name => "", quantifier => "", real_name => ":start"}
+    |    |--- ::=. Attributes: {name => "", quantifier => "", real_name => "::="}
+    |    |--- json. Attributes: {name => "", quantifier => "", real_name => "json"}
+    |--- statement. Attributes: {name => "", quantifier => "", real_name => "statement"}
+    |    |--- json. Attributes: {name => "", quantifier => "", real_name => "json"}
+    |    |--- ::=. Attributes: {name => "", quantifier => "", real_name => "::="}
+    |    |--- object. Attributes: {name => "", quantifier => "", real_name => "object"}
+    |    |--- |. Attributes: {name => "", quantifier => "", real_name => "|"}
+    |    |--- array. Attributes: {name => "", quantifier => "", real_name => "array"}
+    |--- statement. Attributes: {name => "", quantifier => "", real_name => "statement"}
+    |    |--- object. Attributes: {name => "", quantifier => "", real_name => "object"}
+    |    |--- ::=. Attributes: {name => "", quantifier => "", real_name => "::="}
+    |    |--- '{'. Attributes: {name => "", quantifier => "", real_name => "'{'"}
+    |    |--- '}'. Attributes: {name => "", quantifier => "", real_name => "'}'"}
+    |    |--- action. Attributes: {name => "", quantifier => "", real_name => "action"}
+    |    |--- =>. Attributes: {name => "", quantifier => "", real_name => "=>"}
+    |    |--- do_empty_object. Attributes: {name => "", quantifier => "", real_name => "do_empty_object"}
+    |    |--- |. Attributes: {name => "", quantifier => "", real_name => "|"}
+    |    |--- '{'. Attributes: {name => "", quantifier => "", real_name => "'{'"}
+    |    |--- members. Attributes: {name => "", quantifier => "", real_name => "members"}
+    |    |--- '}'. Attributes: {name => "", quantifier => "", real_name => "'}'"}
+    |    |--- action. Attributes: {name => "", quantifier => "", real_name => "action"}
+    |    |--- =>. Attributes: {name => "", quantifier => "", real_name => "=>"}
+    |    |--- do_object. Attributes: {name => "", quantifier => "", real_name => "do_object"}
+    |--- statement. Attributes: {name => "", quantifier => "", real_name => "statement"}
+    |    |--- members. Attributes: {name => "", quantifier => "", real_name => "members"}
+    |    |--- ::=. Attributes: {name => "", quantifier => "", real_name => "::="}
+    |    |--- pair. Attributes: {name => "", quantifier => "", real_name => "pair"}
+    |    |--- +. Attributes: {name => "", quantifier => "", real_name => "+"}
+    |    |--- separator. Attributes: {name => "", quantifier => "", real_name => "separator"}
+    |    |--- =>. Attributes: {name => "", quantifier => "", real_name => "=>"}
+    |    |--- \<comma\>. Attributes: {name => "", quantifier => "", real_name => "<comma>"}
+    |    |--- action. Attributes: {name => "", quantifier => "", real_name => "action"}
+    |    |--- =>. Attributes: {name => "", quantifier => "", real_name => "=>"}
+    |    |--- do_list. Attributes: {name => "", quantifier => "", real_name => "do_list"}
+    |--- statement. Attributes: {name => "", quantifier => "", real_name => "statement"}
+    |    |--- pair. Attributes: {name => "", quantifier => "", real_name => "pair"}
+    |    |--- ::=. Attributes: {name => "", quantifier => "", real_name => "::="}
+    |    |--- string. Attributes: {name => "", quantifier => "", real_name => "string"}
+    |    |--- '꞉'. Attributes: {name => "", quantifier => "", real_name => "':'"}
+    |    |--- value. Attributes: {name => "", quantifier => "", real_name => "value"}
+    |    |--- action. Attributes: {name => "", quantifier => "", real_name => "action"}
+    |    |--- =>. Attributes: {name => "", quantifier => "", real_name => "=>"}
+    |    |--- do_pair. Attributes: {name => "", quantifier => "", real_name => "do_pair"}
+    |--- statement. Attributes: {name => "", quantifier => "", real_name => "statement"}
+    |    |--- value. Attributes: {name => "", quantifier => "", real_name => "value"}
+    |    |--- ::=. Attributes: {name => "", quantifier => "", real_name => "::="}
+    |    |--- string. Attributes: {name => "", quantifier => "", real_name => "string"}
+    |    |--- |. Attributes: {name => "", quantifier => "", real_name => "|"}
+    |    |--- object. Attributes: {name => "", quantifier => "", real_name => "object"}
+    |    |--- |. Attributes: {name => "", quantifier => "", real_name => "|"}
+    |    |--- number. Attributes: {name => "", quantifier => "", real_name => "number"}
+    |    |--- |. Attributes: {name => "", quantifier => "", real_name => "|"}
+    |    |--- array. Attributes: {name => "", quantifier => "", real_name => "array"}
+    |    |--- |. Attributes: {name => "", quantifier => "", real_name => "|"}
+    |    |--- 'true'. Attributes: {name => "", quantifier => "", real_name => "'true'"}
+    |    |--- action. Attributes: {name => "", quantifier => "", real_name => "action"}
+    |    |--- =>. Attributes: {name => "", quantifier => "", real_name => "=>"}
+    |    |--- do_true. Attributes: {name => "", quantifier => "", real_name => "do_true"}
+    |    |--- |. Attributes: {name => "", quantifier => "", real_name => "|"}
+    |    |--- 'false'. Attributes: {name => "", quantifier => "", real_name => "'false'"}
+    |    |--- action. Attributes: {name => "", quantifier => "", real_name => "action"}
+    |    |--- =>. Attributes: {name => "", quantifier => "", real_name => "=>"}
+    |    |--- do_true. Attributes: {name => "", quantifier => "", real_name => "do_true"}
+    |    |--- |. Attributes: {name => "", quantifier => "", real_name => "|"}
+    |    |--- 'null'. Attributes: {name => "", quantifier => "", real_name => "'null'"}
+    |    |--- action. Attributes: {name => "", quantifier => "", real_name => "action"}
+    |    |--- =>. Attributes: {name => "", quantifier => "", real_name => "=>"}
+    |    |--- do_null. Attributes: {name => "", quantifier => "", real_name => "do_null"}
+    |--- statement. Attributes: {name => "", quantifier => "", real_name => "statement"}
+    |    |--- array. Attributes: {name => "", quantifier => "", real_name => "array"}
+    |    |--- ::=. Attributes: {name => "", quantifier => "", real_name => "::="}
+    |    |--- '['. Attributes: {name => "", quantifier => "", real_name => "'['"}
+    |    |--- ']'. Attributes: {name => "", quantifier => "", real_name => "']'"}
+    |    |--- action. Attributes: {name => "", quantifier => "", real_name => "action"}
+    |    |--- =>. Attributes: {name => "", quantifier => "", real_name => "=>"}
+    |    |--- do_empty_array. Attributes: {name => "", quantifier => "", real_name => "do_empty_array"}
+    |    |--- |. Attributes: {name => "", quantifier => "", real_name => "|"}
+    |    |--- '['. Attributes: {name => "", quantifier => "", real_name => "'['"}
+    |    |--- elements. Attributes: {name => "", quantifier => "", real_name => "elements"}
+    |    |--- ']'. Attributes: {name => "", quantifier => "", real_name => "']'"}
+    |    |--- action. Attributes: {name => "", quantifier => "", real_name => "action"}
+    |    |--- =>. Attributes: {name => "", quantifier => "", real_name => "=>"}
+    |    |--- do_array. Attributes: {name => "", quantifier => "", real_name => "do_array"}
+    |--- statement. Attributes: {name => "", quantifier => "", real_name => "statement"}
+    |    |--- elements. Attributes: {name => "", quantifier => "", real_name => "elements"}
+    |    |--- ::=. Attributes: {name => "", quantifier => "", real_name => "::="}
+    |    |--- value. Attributes: {name => "", quantifier => "", real_name => "value"}
+    |    |--- +. Attributes: {name => "", quantifier => "", real_name => "+"}
+    |    |--- separator. Attributes: {name => "", quantifier => "", real_name => "separator"}
+    |    |--- =>. Attributes: {name => "", quantifier => "", real_name => "=>"}
+    |    |--- \<comma\>. Attributes: {name => "", quantifier => "", real_name => "<comma>"}
+    |    |--- action. Attributes: {name => "", quantifier => "", real_name => "action"}
+    |    |--- =>. Attributes: {name => "", quantifier => "", real_name => "=>"}
+    |    |--- do_list. Attributes: {name => "", quantifier => "", real_name => "do_list"}
+    |--- statement. Attributes: {name => "", quantifier => "", real_name => "statement"}
+    |    |--- number. Attributes: {name => "", quantifier => "", real_name => "number"}
+    |    |--- ~. Attributes: {name => "", quantifier => "", real_name => "~"}
+    |    |--- int. Attributes: {name => "", quantifier => "", real_name => "int"}
+    |    |--- |. Attributes: {name => "", quantifier => "", real_name => "|"}
+    |    |--- int. Attributes: {name => "", quantifier => "", real_name => "int"}
+    |    |--- frac. Attributes: {name => "", quantifier => "", real_name => "frac"}
+    |    |--- |. Attributes: {name => "", quantifier => "", real_name => "|"}
+    |    |--- int. Attributes: {name => "", quantifier => "", real_name => "int"}
+    |    |--- exp. Attributes: {name => "", quantifier => "", real_name => "exp"}
+    |    |--- |. Attributes: {name => "", quantifier => "", real_name => "|"}
+    |    |--- int. Attributes: {name => "", quantifier => "", real_name => "int"}
+    |    |--- frac. Attributes: {name => "", quantifier => "", real_name => "frac"}
+    |    |--- exp. Attributes: {name => "", quantifier => "", real_name => "exp"}
+    |--- statement. Attributes: {name => "", quantifier => "", real_name => "statement"}
+    |    |--- int. Attributes: {name => "", quantifier => "", real_name => "int"}
+    |    |--- ~. Attributes: {name => "", quantifier => "", real_name => "~"}
+    |    |--- digits. Attributes: {name => "", quantifier => "", real_name => "digits"}
+    |    |--- |. Attributes: {name => "", quantifier => "", real_name => "|"}
+    |    |--- '-'. Attributes: {name => "", quantifier => "", real_name => "'-'"}
+    |    |--- digits. Attributes: {name => "", quantifier => "", real_name => "digits"}
+    |--- statement. Attributes: {name => "", quantifier => "", real_name => "statement"}
+    |    |--- digits. Attributes: {name => "", quantifier => "", real_name => "digits"}
+    |    |--- ~. Attributes: {name => "", quantifier => "", real_name => "~"}
+    |    |--- [\\d]. Attributes: {name => "", quantifier => "", real_name => "[\d]"}
+    |    |--- +. Attributes: {name => "", quantifier => "", real_name => "+"}
+    |--- statement. Attributes: {name => "", quantifier => "", real_name => "statement"}
+    |    |--- frac. Attributes: {name => "", quantifier => "", real_name => "frac"}
+    |    |--- ~. Attributes: {name => "", quantifier => "", real_name => "~"}
+    |    |--- '.'. Attributes: {name => "", quantifier => "", real_name => "'.'"}
+    |    |--- digits. Attributes: {name => "", quantifier => "", real_name => "digits"}
+    |--- statement. Attributes: {name => "", quantifier => "", real_name => "statement"}
+    |    |--- exp. Attributes: {name => "", quantifier => "", real_name => "exp"}
+    |    |--- ~. Attributes: {name => "", quantifier => "", real_name => "~"}
+    |    |--- e. Attributes: {name => "", quantifier => "", real_name => "e"}
+    |    |--- digits. Attributes: {name => "", quantifier => "", real_name => "digits"}
+    |--- statement. Attributes: {name => "", quantifier => "", real_name => "statement"}
+    |    |--- e. Attributes: {name => "", quantifier => "", real_name => "e"}
+    |    |--- ~. Attributes: {name => "", quantifier => "", real_name => "~"}
+    |    |--- 'e'. Attributes: {name => "", quantifier => "", real_name => "'e'"}
+    |    |--- |. Attributes: {name => "", quantifier => "", real_name => "|"}
+    |    |--- 'e+'. Attributes: {name => "", quantifier => "", real_name => "'e+'"}
+    |    |--- |. Attributes: {name => "", quantifier => "", real_name => "|"}
+    |    |--- 'e-'. Attributes: {name => "", quantifier => "", real_name => "'e-'"}
+    |    |--- |. Attributes: {name => "", quantifier => "", real_name => "|"}
+    |    |--- 'E'. Attributes: {name => "", quantifier => "", real_name => "'E'"}
+    |    |--- |. Attributes: {name => "", quantifier => "", real_name => "|"}
+    |    |--- 'E+'. Attributes: {name => "", quantifier => "", real_name => "'E+'"}
+    |    |--- |. Attributes: {name => "", quantifier => "", real_name => "|"}
+    |    |--- 'E-'. Attributes: {name => "", quantifier => "", real_name => "'E-'"}
+    |--- statement. Attributes: {name => "", quantifier => "", real_name => "statement"}
+    |    |--- string. Attributes: {name => "", quantifier => "", real_name => "string"}
+    |    |--- ::=. Attributes: {name => "", quantifier => "", real_name => "::="}
+    |    |--- lstring. Attributes: {name => "", quantifier => "", real_name => "lstring"}
+    |    |--- action. Attributes: {name => "", quantifier => "", real_name => "action"}
+    |    |--- =>. Attributes: {name => "", quantifier => "", real_name => "=>"}
+    |    |--- do_string. Attributes: {name => "", quantifier => "", real_name => "do_string"}
+    |--- statement. Attributes: {name => "", quantifier => "", real_name => "statement"}
+    |    |--- lstring. Attributes: {name => "", quantifier => "", real_name => "lstring"}
+    |    |--- ~. Attributes: {name => "", quantifier => "", real_name => "~"}
+    |    |--- quote. Attributes: {name => "", quantifier => "", real_name => "quote"}
+    |    |--- in_string. Attributes: {name => "", quantifier => "", real_name => "in_string"}
+    |    |--- quote. Attributes: {name => "", quantifier => "", real_name => "quote"}
+    |--- statement. Attributes: {name => "", quantifier => "", real_name => "statement"}
+    |    |--- quote. Attributes: {name => "", quantifier => "", real_name => "quote"}
+    |    |--- ~. Attributes: {name => "", quantifier => "", real_name => "~"}
+    |    |--- [ꞌꞌ]. Attributes: {name => "", quantifier => "", real_name => "["]"}
+    |--- statement. Attributes: {name => "", quantifier => "", real_name => "statement"}
+    |    |--- in_string. Attributes: {name => "", quantifier => "", real_name => "in_string"}
+    |    |--- ~. Attributes: {name => "", quantifier => "", real_name => "~"}
+    |    |--- in_string_char. Attributes: {name => "", quantifier => "", real_name => "in_string_char"}
+    |    |--- *. Attributes: {name => "", quantifier => "", real_name => "*"}
+    |--- statement. Attributes: {name => "", quantifier => "", real_name => "statement"}
+    |    |--- in_string_char. Attributes: {name => "", quantifier => "", real_name => "in_string_char"}
+    |    |--- ~. Attributes: {name => "", quantifier => "", real_name => "~"}
+    |    |--- [^ꞌꞌ\\\\]. Attributes: {name => "", quantifier => "", real_name => "[^"\\]"}
+    |    |--- |. Attributes: {name => "", quantifier => "", real_name => "|"}
+    |    |--- '\\'. Attributes: {name => "", quantifier => "", real_name => "'\'"}
+    |    |--- 'ꞌꞌ'. Attributes: {name => "", quantifier => "", real_name => "'"'"}
+    |    |--- |. Attributes: {name => "", quantifier => "", real_name => "|"}
+    |    |--- '\\'. Attributes: {name => "", quantifier => "", real_name => "'\'"}
+    |    |--- 'b'. Attributes: {name => "", quantifier => "", real_name => "'b'"}
+    |    |--- |. Attributes: {name => "", quantifier => "", real_name => "|"}
+    |    |--- '\\'. Attributes: {name => "", quantifier => "", real_name => "'\'"}
+    |    |--- 'f'. Attributes: {name => "", quantifier => "", real_name => "'f'"}
+    |    |--- |. Attributes: {name => "", quantifier => "", real_name => "|"}
+    |    |--- '\\'. Attributes: {name => "", quantifier => "", real_name => "'\'"}
+    |    |--- 't'. Attributes: {name => "", quantifier => "", real_name => "'t'"}
+    |    |--- |. Attributes: {name => "", quantifier => "", real_name => "|"}
+    |    |--- '\\'. Attributes: {name => "", quantifier => "", real_name => "'\'"}
+    |    |--- 'n'. Attributes: {name => "", quantifier => "", real_name => "'n'"}
+    |    |--- |. Attributes: {name => "", quantifier => "", real_name => "|"}
+    |    |--- '\\'. Attributes: {name => "", quantifier => "", real_name => "'\'"}
+    |    |--- 'r'. Attributes: {name => "", quantifier => "", real_name => "'r'"}
+    |    |--- |. Attributes: {name => "", quantifier => "", real_name => "|"}
+    |    |--- '\\'. Attributes: {name => "", quantifier => "", real_name => "'\'"}
+    |    |--- 'u'. Attributes: {name => "", quantifier => "", real_name => "'u'"}
+    |    |--- four_hex_digits. Attributes: {name => "", quantifier => "", real_name => "four_hex_digits"}
+    |    |--- |. Attributes: {name => "", quantifier => "", real_name => "|"}
+    |    |--- '\\'. Attributes: {name => "", quantifier => "", real_name => "'\'"}
+    |    |--- '/'. Attributes: {name => "", quantifier => "", real_name => "'/'"}
+    |    |--- |. Attributes: {name => "", quantifier => "", real_name => "|"}
+    |    |--- '\\\\'. Attributes: {name => "", quantifier => "", real_name => "'\\'"}
+    |--- statement. Attributes: {name => "", quantifier => "", real_name => "statement"}
+    |    |--- four_hex_digits. Attributes: {name => "", quantifier => "", real_name => "four_hex_digits"}
+    |    |--- ~. Attributes: {name => "", quantifier => "", real_name => "~"}
+    |    |--- hex_digit. Attributes: {name => "", quantifier => "", real_name => "hex_digit"}
+    |    |--- hex_digit. Attributes: {name => "", quantifier => "", real_name => "hex_digit"}
+    |    |--- hex_digit. Attributes: {name => "", quantifier => "", real_name => "hex_digit"}
+    |    |--- hex_digit. Attributes: {name => "", quantifier => "", real_name => "hex_digit"}
+    |--- statement. Attributes: {name => "", quantifier => "", real_name => "statement"}
+    |    |--- hex_digit. Attributes: {name => "", quantifier => "", real_name => "hex_digit"}
+    |    |--- ~. Attributes: {name => "", quantifier => "", real_name => "~"}
+    |    |--- [0-9a-fA-F]. Attributes: {name => "", quantifier => "", real_name => "[0-9a-fA-F]"}
+    |--- statement. Attributes: {name => "", quantifier => "", real_name => "statement"}
+    |    |--- comma. Attributes: {name => "", quantifier => "", real_name => "comma"}
+    |    |--- ~. Attributes: {name => "", quantifier => "", real_name => "~"}
+    |    |--- ','. Attributes: {name => "", quantifier => "", real_name => "','"}
+    |--- statement. Attributes: {name => "", quantifier => "", real_name => "statement"}
+    |    |--- ꞉discard. Attributes: {name => "", quantifier => "", real_name => ":discard"}
+    |    |--- ~. Attributes: {name => "", quantifier => "", real_name => "~"}
+    |    |--- whitespace. Attributes: {name => "", quantifier => "", real_name => "whitespace"}
+    |--- statement. Attributes: {name => "", quantifier => "", real_name => "statement"}
+         |--- whitespace. Attributes: {name => "", quantifier => "", real_name => "whitespace"}
+         |--- ~. Attributes: {name => "", quantifier => "", real_name => "~"}
+         |--- [\\s]. Attributes: {name => "", quantifier => "", real_name => "[\s]"}
+         |--- +. Attributes: {name => "", quantifier => "", real_name => "+"}
+Added node: "json" [ fillcolor="lightgreen" label="{\:start|json}" shape="Mrecord" ]
 Default graph: label => json.1.bnf, rankdir => TB
 Default node: shape => rectangle, style => filled
 Default edge: color => grey
@@ -241,209 +269,7 @@ digraph Perl
 graph [ label="json.1.bnf" rankdir="TB" ]
 node [ shape="rectangle" style="filled" ]
 edge [ color="grey" ]
-"json" [ fillcolor="lightgreen" label="{:start|json}" shape="Mrecord" ]
-"꞉discard" [ fillcolor="lightblue" label="꞉discard" ]
-"json" -> "꞉discard"
-"whitespace" [ fillcolor="lightblue" label="whitespace" ]
-"꞉discard" -> "whitespace"
-"lexeme default" [ fillcolor="lightblue" label="lexeme default" ]
-"json" -> "lexeme default"
-"lexeme default_1" [ fillcolor="lightblue" label="{latm =\> 1}" shape="Mrecord" ]
-"lexeme default" -> "lexeme default_1"
-"object" [ fillcolor="white" label="object" ]
-"json" -> "object"
-"array" [ fillcolor="white" label="array" ]
-"json" -> "array"
-"'{' '}'" [ fillcolor="white" label="'{' '}'" ]
-"object" -> "'{' '}'"
-"'{'" [ fillcolor="white" label="'{'" ]
-"'{' '}'" -> "'{'"
-"'}'" [ fillcolor="white" label="'}'" ]
-"'{' '}'" -> "'}'"
-"'{' '}'_attributes" [ fillcolor="goldenrod" label="{action =\> do_empty_object}" shape="Mrecord" ]
-"'{' '}'" -> "'{' '}'_attributes"
-"'{' members '}'" [ fillcolor="white" label="'{' members '}'" ]
-"object" -> "'{' members '}'"
-"'{' members '}'" -> "'{'"
-"members" [ fillcolor="white" label="members" ]
-"'{' members '}'" -> "members"
-"'{' members '}'" -> "'}'"
-"'{' members '}'_attributes" [ fillcolor="goldenrod" label="{action =\> do_object}" shape="Mrecord" ]
-"'{' members '}'" -> "'{' members '}'_attributes"
-"pair" [ fillcolor="white" label="pair+" ]
-"members" -> "pair"
-"pair_attributes" [ fillcolor="goldenrod" label="{action =\> do_list|separator =\> \<comma\>}" shape="Mrecord" ]
-"pair" -> "pair_attributes"
-"string '꞉' value" [ fillcolor="white" label="string '꞉' value" ]
-"pair" -> "string '꞉' value"
-"string" [ fillcolor="white" label="string" ]
-"string '꞉' value" -> "string"
-"'꞉'" [ fillcolor="white" label="'꞉'" ]
-"string '꞉' value" -> "'꞉'"
-"value" [ fillcolor="white" label="value" ]
-"string '꞉' value" -> "value"
-"string '꞉' value_attributes" [ fillcolor="goldenrod" label="{action =\> do_pair}" shape="Mrecord" ]
-"string '꞉' value" -> "string '꞉' value_attributes"
-"value" -> "string"
-"value" -> "object"
-"number" [ fillcolor="white" label="number" ]
-"value" -> "number"
-"value" -> "array"
-"'true'" [ fillcolor="white" label="'true'" ]
-"value" -> "'true'"
-"'true'_attributes" [ fillcolor="goldenrod" label="{action =\> do_true}" shape="Mrecord" ]
-"'true'" -> "'true'_attributes"
-"'false'" [ fillcolor="white" label="'false'" ]
-"value" -> "'false'"
-"'false'_attributes" [ fillcolor="goldenrod" label="{action =\> do_true}" shape="Mrecord" ]
-"'false'" -> "'false'_attributes"
-"'null'" [ fillcolor="white" label="'null'" ]
-"value" -> "'null'"
-"'null'_attributes" [ fillcolor="goldenrod" label="{action =\> do_null}" shape="Mrecord" ]
-"'null'" -> "'null'_attributes"
-"'[' ']'" [ fillcolor="white" label="'\[' '\]'" ]
-"array" -> "'[' ']'"
-"'['" [ fillcolor="white" label="'\['" ]
-"'[' ']'" -> "'['"
-"']'" [ fillcolor="white" label="'\]'" ]
-"'[' ']'" -> "']'"
-"'[' ']'_attributes" [ fillcolor="goldenrod" label="{action =\> do_empty_array}" shape="Mrecord" ]
-"'[' ']'" -> "'[' ']'_attributes"
-"'[' elements ']'" [ fillcolor="white" label="'\[' elements '\]'" ]
-"array" -> "'[' elements ']'"
-"'[' elements ']'" -> "'['"
-"elements" [ fillcolor="white" label="elements" ]
-"'[' elements ']'" -> "elements"
-"'[' elements ']'" -> "']'"
-"'[' elements ']'_attributes" [ fillcolor="goldenrod" label="{action =\> do_array}" shape="Mrecord" ]
-"'[' elements ']'" -> "'[' elements ']'_attributes"
-"elements" -> "value"
-"value_attributes" [ fillcolor="goldenrod" label="{action =\> do_list|separator =\> \<comma\>}" shape="Mrecord" ]
-"value" -> "value_attributes"
-"int" [ fillcolor="white" label="int" ]
-"number" -> "int"
-"int frac" [ fillcolor="white" label="int frac" ]
-"number" -> "int frac"
-"int frac" -> "int"
-"frac" [ fillcolor="white" label="frac" ]
-"int frac" -> "frac"
-"int exp" [ fillcolor="white" label="int exp" ]
-"number" -> "int exp"
-"int exp" -> "int"
-"exp" [ fillcolor="white" label="exp" ]
-"int exp" -> "exp"
-"int frac exp" [ fillcolor="white" label="int frac exp" ]
-"number" -> "int frac exp"
-"int frac exp" -> "int"
-"int frac exp" -> "frac"
-"int frac exp" -> "exp"
-"digits" [ fillcolor="white" label="digits" ]
-"int" -> "digits"
-"'-' digits" [ fillcolor="white" label="'-' digits" ]
-"int" -> "'-' digits"
-"'-'" [ fillcolor="white" label="'-'" ]
-"'-' digits" -> "'-'"
-"'-' digits" -> "digits"
-"[\\d]" [ fillcolor="white" label="\[\\d\]+" ]
-"digits" -> "[\\d]"
-"'.' digits" [ fillcolor="white" label="'.' digits" ]
-"frac" -> "'.' digits"
-"'.'" [ fillcolor="white" label="'.'" ]
-"'.' digits" -> "'.'"
-"'.' digits" -> "digits"
-"e digits" [ fillcolor="white" label="e digits" ]
-"exp" -> "e digits"
-"e" [ fillcolor="white" label="e" ]
-"e digits" -> "e"
-"e digits" -> "digits"
-"'e'" [ fillcolor="white" label="'e'" ]
-"e" -> "'e'"
-"'e+'" [ fillcolor="white" label="'e+'" ]
-"e" -> "'e+'"
-"'e-'" [ fillcolor="white" label="'e-'" ]
-"e" -> "'e-'"
-"'E'" [ fillcolor="white" label="'E'" ]
-"e" -> "'E'"
-"'E+'" [ fillcolor="white" label="'E+'" ]
-"e" -> "'E+'"
-"'E-'" [ fillcolor="white" label="'E-'" ]
-"e" -> "'E-'"
-"lstring" [ fillcolor="white" label="lstring" ]
-"string" -> "lstring"
-"lstring_attributes" [ fillcolor="goldenrod" label="{action =\> do_string}" shape="Mrecord" ]
-"lstring" -> "lstring_attributes"
-"quote in_string quote" [ fillcolor="white" label="quote in_string quote" ]
-"lstring" -> "quote in_string quote"
-"quote" [ fillcolor="white" label="quote" ]
-"quote in_string quote" -> "quote"
-"in_string" [ fillcolor="white" label="in_string" ]
-"quote in_string quote" -> "in_string"
-"quote in_string quote" -> "quote"
-"[ꞌꞌ]" [ fillcolor="white" label="\[ꞌꞌ\]" ]
-"quote" -> "[ꞌꞌ]"
-"in_string_char" [ fillcolor="white" label="in_string_char*" ]
-"in_string" -> "in_string_char"
-"[^ꞌꞌ\\\\]" [ fillcolor="white" label="\[^ꞌꞌ\\\\]" ]
-"in_string_char" -> "[^ꞌꞌ\\\\]"
-"'\\' 'ꞌꞌ'" [ fillcolor="white" label="'\\' 'ꞌꞌ'" ]
-"in_string_char" -> "'\\' 'ꞌꞌ'"
-"'\\'" [ fillcolor="white" label="'\\'" ]
-"'\\' 'ꞌꞌ'" -> "'\\'"
-"'ꞌꞌ'" [ fillcolor="white" label="'ꞌꞌ'" ]
-"'\\' 'ꞌꞌ'" -> "'ꞌꞌ'"
-"'\\' 'b'" [ fillcolor="white" label="'\\' 'b'" ]
-"in_string_char" -> "'\\' 'b'"
-"'\\' 'b'" -> "'\\'"
-"'b'" [ fillcolor="white" label="'b'" ]
-"'\\' 'b'" -> "'b'"
-"'\\' 'f'" [ fillcolor="white" label="'\\' 'f'" ]
-"in_string_char" -> "'\\' 'f'"
-"'\\' 'f'" -> "'\\'"
-"'f'" [ fillcolor="white" label="'f'" ]
-"'\\' 'f'" -> "'f'"
-"'\\' 't'" [ fillcolor="white" label="'\\' 't'" ]
-"in_string_char" -> "'\\' 't'"
-"'\\' 't'" -> "'\\'"
-"'t'" [ fillcolor="white" label="'t'" ]
-"'\\' 't'" -> "'t'"
-"'\\' 'n'" [ fillcolor="white" label="'\\' 'n'" ]
-"in_string_char" -> "'\\' 'n'"
-"'\\' 'n'" -> "'\\'"
-"'n'" [ fillcolor="white" label="'n'" ]
-"'\\' 'n'" -> "'n'"
-"'\\' 'r'" [ fillcolor="white" label="'\\' 'r'" ]
-"in_string_char" -> "'\\' 'r'"
-"'\\' 'r'" -> "'\\'"
-"'r'" [ fillcolor="white" label="'r'" ]
-"'\\' 'r'" -> "'r'"
-"'\\' 'u' four_hex_digits" [ fillcolor="white" label="'\\' 'u' four_hex_digits" ]
-"in_string_char" -> "'\\' 'u' four_hex_digits"
-"'\\' 'u' four_hex_digits" -> "'\\'"
-"'u'" [ fillcolor="white" label="'u'" ]
-"'\\' 'u' four_hex_digits" -> "'u'"
-"four_hex_digits" [ fillcolor="white" label="four_hex_digits" ]
-"'\\' 'u' four_hex_digits" -> "four_hex_digits"
-"'\\' '/'" [ fillcolor="white" label="'\\' '/'" ]
-"in_string_char" -> "'\\' '/'"
-"'\\' '/'" -> "'\\'"
-"'/'" [ fillcolor="white" label="'/'" ]
-"'\\' '/'" -> "'/'"
-"'\\\\'" [ fillcolor="white" label="'\\\\'" ]
-"in_string_char" -> "'\\\\'"
-"hex_digit hex_digit hex_digit hex_digit" [ fillcolor="white" label="hex_digit hex_digit hex_digit hex_digit" ]
-"four_hex_digits" -> "hex_digit hex_digit hex_digit hex_digit"
-"hex_digit" [ fillcolor="white" label="hex_digit" ]
-"hex_digit hex_digit hex_digit hex_digit" -> "hex_digit"
-"hex_digit hex_digit hex_digit hex_digit" -> "hex_digit"
-"hex_digit hex_digit hex_digit hex_digit" -> "hex_digit"
-"hex_digit hex_digit hex_digit hex_digit" -> "hex_digit"
-"[0-9a-fA-F]" [ fillcolor="white" label="\[0-9a-fA-F\]" ]
-"hex_digit" -> "[0-9a-fA-F]"
-"','" [ fillcolor="white" label="','" ]
-"comma"
-"comma" -> "','"
-"[\\s]" [ fillcolor="white" label="\[\\s\]+" ]
-"whitespace" -> "[\\s]"
+"json" [ fillcolor="lightgreen" label="{\:start|json}" shape="Mrecord" ]
 
 subgraph 
 {
@@ -470,4 +296,4 @@ rank="max"
 </table>> shape="plaintext" ]
 }
 }
-Wrote html/json.1.svg. Size: 74716 bytes
+Wrote html/json.1.svg. Size: 3241 bytes

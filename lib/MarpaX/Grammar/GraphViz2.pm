@@ -172,7 +172,7 @@ has user_bnf_file =>
 	required => 1,
 );
 
-our $VERSION = '1.05';
+our $VERSION = '2.00';
 
 # ------------------------------------------------
 
@@ -210,7 +210,7 @@ q|
 	<td bgcolor = 'lightgreen'>The green node is the start node</td>
 </tr>
 <tr>
-	<td bgcolor = 'lightblue'>Lightblue nodes are for lexeme attributes</td>
+	<td bgcolor = 'lightblue'>Lightblue nodes are for lexeme attributes etc</td>
 </tr>
 <tr>
 	<td bgcolor = 'orchid'>Orchid nodes are for lexemes</td>
@@ -337,7 +337,7 @@ sub clean_tree
 
 			my($node, $options) = @_;
 			$name               = $node -> name;
-			$attributes         = {name => '', quantifier => '', real_name => '', %{$node -> attributes} };
+			$attributes         = {name => '', quantifier => '', real_name => $name};
 
 			$node -> attributes($attributes);
 			$node -> name($self -> clean_name($name) );
@@ -482,7 +482,7 @@ sub _process_complex_adverbs
 
 		my($i) = $#$daughters;
 
-		while ( ($i > 0) && ($$daughters[$i] -> name ne '|') )
+		while ( ($i > 0) && ($$daughters[$i] -> name !~ /^\|/) )
 		{
 			unshift @token_stack, pop @$daughters;
 
@@ -491,9 +491,9 @@ sub _process_complex_adverbs
 
 		unshift @daughter_stack, [@token_stack];
 
-		# Discard the '|' separating alternatives in the BND.
+		# Discard the '|' or '||' separating alternatives in the BNF.
 
-		pop @$daughters if ( ($i >= 0) && ($$daughters[$i] -> name eq '|') );
+		pop @$daughters if ( ($i >= 0) && ($$daughters[$i] -> name =~ /^\|/) );
 
 		$finished = 1 if ($#$daughters == 0);
 	}
@@ -560,17 +560,13 @@ sub _process_discard_rule
 		$self -> graph -> add_edge(from => $self -> root_node -> name, to => $discard_name);
 	}
 
-	# Ignore the first daughter, which is '=>'.
-
 	my(@daughters) = $a_node -> daughters;
+	my($name)      = $daughters[2] -> name;
 
-	# rectify_name() returns a ($name => $label) pair.
+	$$attributes{label} = $name;
 
-	my(@name)           = $self -> rectify_name($daughters[1]);
-	$$attributes{label} = $name[1];
-
-	$self -> add_node(name => $name[0], %$attributes);
-	$self -> graph -> add_edge(from => $discard_name, to => $name[0]);
+	$self -> add_node(name => $name, %$attributes);
+	$self -> graph -> add_edge(from => $discard_name, to => $name);
 
 } # End of _process_discard_rule.
 
@@ -774,17 +770,17 @@ sub _process_start_rule
 {
 	my($self, $index, $a_node) = @_;
 	my(@daughters) = $a_node -> daughters;
-	my(@name)      = $self -> rectify_name($daughters[1]);
+	my($name)      = $daughters[2] -> name;
 
-	$self -> root_node($daughters[1]);
+	$self -> root_node($daughters[2]);
 
 	my($attributes) =
 	{
 		fillcolor => 'lightgreen',
-		label     => [{text => '{:start'}, {text => "$name[1]}"}],
+		label     => [{text => '{\:start'}, {text => "$name}"}],
 	};
 
-	$self -> add_node(name => $name[0], %$attributes);
+	$self -> add_node(name => $name, %$attributes);
 
 } # End of _process_start_rule.
 
@@ -816,22 +812,42 @@ sub run
 
 	#$self -> log(debug => $_) for @{$self -> parser -> cooked_tree -> tree2string({no_attributes => 0})};
 
-	my(@rule)        = $self -> parser -> cooked_tree -> daughters;
-	my($start_index) = first_index{$_ -> name eq "\x{a789}start"} @rule;
+	my(@rule) = $self -> parser -> cooked_tree -> daughters;
 
-	# Warning: This must be first because it sets $self -> root_node().
+	# Warning: _process_start_rule() must be first because it sets $self -> root_node().
 
-	$self -> _process_start_rule($start_index + 1, $rule[$start_index]);
+	my($offset);
 
-	for my $index (indexes {$_ -> name eq "\x{a789}default"} @rule)
+	for my $i (0 .. $#rule)
 	{
-		$self -> _process_default_rule($index + 1, $rule[$index]);
+		$offset = first_index{$_ -> name eq "\x{a789}start"} $rule[$i] -> daughters;
+
+		if ($offset >= 0)
+		{
+			$self -> _process_start_rule($i + 1, $rule[$i]);
+
+			last;
+		}
 	}
 
-	for my $index (indexes {$_ -> name eq "\x{a789}discard"} @rule)
+	for my $i (0 .. $#rule)
 	{
-		$self -> _process_discard_rule($index + 1, $rule[$index]);
+		$offset = first_index{$_ -> name eq "\x{a789}default"} $rule[$i] -> daughters;
+
+		if ($offset >= 0)
+		{
+			$self -> _process_default_rule($i + 1, $rule[$i]);
+		}
+
+		$offset = first_index{$_ -> name eq "\x{a789}discard"} $rule[$i] -> daughters;
+
+		if ($offset >= 0)
+		{
+			$self -> _process_discard_rule($i + 1, $rule[$i]);
+		}
 	}
+
+=pod
 
 	my($lexeme_default_index) = first_index{$_ -> name eq 'lexeme default'} @rule;
 
@@ -865,6 +881,8 @@ sub run
 	{
 		$self -> _process_event_rule($index + 1, $rule[$index]);
 	}
+
+=cut
 
 	$self -> add_legend if ($self -> legend);
 
@@ -1333,7 +1351,31 @@ This is the image from json.3.bnf.
 
 This is a copy of L<Marpa::R2>'s BNF, as of Marpa::R2 V 2.096000.
 
-See L</marpa_bnf_file([$bnf_file_name])> above.
+=item o share/metag.log
+
+This is the log produced by running the code at log level C<debug>:
+
+	shell> scripts/bnf2graph.sh metag -max debug > share/metag.log
+
+=item o html/metag.svg
+
+This is the image from metag.bnf.
+
+=item o share/numeric.expressions.bnf.
+
+This BNF was extracted from L<MarpaX::Demo::SampleScripts>'s examples/ambiguous.grammar.01.pl.
+
+=item o html/numeric.expressions.svg
+
+This is the image from numeric.expressions.bnf.
+
+See the next point for how this file is created.
+
+=item o share/numeric.expressions.log
+
+This is the log produced by running the code at log level C<debug>:
+
+	shell> scripts/bnf2graph.sh numeric.expressions -max debug > share/numeric.expressions.log
 
 =item o share/stringparser.bnf.
 
@@ -1350,8 +1392,6 @@ See the next point for how this file is created.
 This is the log produced by running the code at log level C<debug>:
 
 	shell> scripts/bnf2graph.sh stringparser -max debug > share/stringparser.log
-
-See L</user_bnf_file([$bnf_file_name])> above.
 
 =item o share/termcap.info.bnf
 

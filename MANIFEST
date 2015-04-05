@@ -50,6 +50,8 @@ share/json.2.log
 share/json.3.bnf
 share/json.3.log
 share/metag.bnf
+share/numeric.expressions.bnf
+share/numeric.expressions.log
 share/stringparser.bnf
 share/stringparser.log
 share/termcap.info.bnf
