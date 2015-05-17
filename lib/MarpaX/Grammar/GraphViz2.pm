@@ -375,52 +375,34 @@ sub log
 
 sub _process_adverbs
 {
-	my($self, $daughters) = @_;
-	my($end)        = $#$daughters;
-	my($separators) = $self -> separators;
+	my($self, $daughters, $j, $name_map) = @_;
 
-	# Chop adverbs off the end of the list.
-
-	my($adverb, @adverbs);
+	my($attr);
+	my(@adverbs);
 	my($name);
+	my($token);
 
-	while ($end > 0)
+	for my $j ($j + 1 .. $#$daughters)
 	{
-		if ($$daughters[$end - 1] -> name eq '=>')
+		$name = $$daughters[$j] -> name;
+
+		if ($name =~ /action|blessing_name|boolean|latm_specification/)
 		{
-			$name   = $$daughters[$end] -> name;
-			$adverb = $$daughters[$end - 2] -> name;
+			$attr  = ($$daughters[$j] -> daughters)[0] -> attributes;
+			$token = $$attr{token};
 
-			push @adverbs,
-			{
-				adverb => $adverb,
-				name   => $name,
-			};
-
-			# Discard $adverb, '=>', $name.
-
-			pop @$daughters for 1 .. 3;
-
-			$end                = $#$daughters;
-			$$separators{$name} = 1 if ($adverb eq 'separator');
-		}
-		else
-		{
-			$end = 0;
+			push @adverbs, "$$name_map{$name} =\\> $token";
 		}
 	}
 
-	# Construct the label as an array of hashrefs.
-
 	if ($#adverbs >= 0)
 	{
-		@adverbs            = map{"$$_{adverb} =\\> $$_{name}"} @adverbs;
 		$adverbs[0]         = "\{$adverbs[0]";
 		$adverbs[$#adverbs] .= '}';
 		@adverbs            = map{ {text => $_} } @adverbs;
 	}
 
-	return ([@$daughters], [@adverbs]);
+	return [@adverbs];
 
 } # End of _process_adverbs.
 
@@ -506,7 +488,7 @@ sub _process_complex_adverbs
 
 sub _process_default_rule
 {
-	my($self, $daughters, $index) = @_;
+	my($self, $rules, $i, $daughters, $j) = @_;
 
 	$self -> default_count($self -> default_count + 1);
 
@@ -525,32 +507,12 @@ sub _process_default_rule
 	}
 
 	my(%name_map) = (action => 'action', blessing_name => 'bless');
+	my($adverbs)  = $self -> _process_adverbs($daughters, $j, \%name_map);
 
-	my($attr);
-	my(@adverbs);
-	my($name);
-	my($token);
-
-	for my $j ($index + 1 .. $#$daughters)
+	if ($#$adverbs >= 0)
 	{
-		$name = $$daughters[$j] -> name;
-
-		if ($name =~ /action|blessing_name/)
-		{
-			$attr  = ($$daughters[$j] -> daughters)[0] -> attributes;
-			$token = $$attr{token};
-
-			push @adverbs, "$name_map{$name} =\\> $token";
-		}
-	}
-
-	if ($#adverbs >= 0)
-	{
-		$adverbs[0]             = "\{$adverbs[0]";
-		$adverbs[$#adverbs]     .= '}';
-		@adverbs                = map{ {text => $_} } @adverbs;
 		$$attributes{fillcolor} = 'goldenrod';
-		$$attributes{label}     = [@adverbs];
+		$$attributes{label}     = [@$adverbs];
 		my($adverb_name)        = "${default_name}_$default_count";
 
 		$self -> add_node(name => $adverb_name, %$attributes);
@@ -563,7 +525,7 @@ sub _process_default_rule
 
 sub _process_discard_rule
 {
-	my($self, $index, $a_node) = @_;
+	my($self, $rules, $i, $daughters, $j) = @_;
 
 	$self -> discard_count($self -> discard_count + 1);
 
@@ -581,13 +543,13 @@ sub _process_discard_rule
 		$self -> graph -> add_edge(from => $self -> root_name, to => $discard_name);
 	}
 
-	my(@daughters) = $a_node -> daughters;
-	my($name)      = $daughters[2] -> name;
+	my($attr)  = $$daughters[$j + 1] -> attributes;
+	my($token) = $$attr{token};
 
-	$$attributes{label} = $name;
+	$$attributes{label} = $token;
 
-	$self -> add_node(name => $name, %$attributes);
-	$self -> graph -> add_edge(from => $discard_name, to => $name);
+	$self -> add_node(name => $token, %$attributes);
+	$self -> graph -> add_edge(from => $discard_name, to => $token);
 
 } # End of _process_discard_rule.
 
@@ -636,7 +598,7 @@ sub _process_event_rule
 
 sub _process_lexeme_default_rule
 {
-	my($self, $index, $a_node) = @_;
+	my($self, $rules, $i, $daughters, $j) = @_;
 	my($lexeme_name) = 'lexeme default';
 	my($attributes)  =
 	{
@@ -647,7 +609,8 @@ sub _process_lexeme_default_rule
 	$self -> add_node(name => $lexeme_name, %$attributes);
 	$self -> graph -> add_edge(from => $self -> root_name, to => $lexeme_name);
 
-	my($daughters, $adverbs) = $self -> _process_adverbs([$a_node -> daughters]);
+	my(%name_map) = (action => 'action', latm_specification => 'latm');
+	my($adverbs)  = $self -> _process_adverbs($daughters, $j, \%name_map);
 
 	if ($#$adverbs >= 0)
 	{
@@ -786,10 +749,9 @@ sub _process_normal_tokens
 
 sub _process_start_rule
 {
-	my($self, $index, $a_node) = @_;
-	my(@daughters)  = $a_node -> daughters;
-	my($name)       = $daughters[2] -> name;
-	my($attributes) =
+	my($self, $rules, $i, $daughters, $j) = @_;
+	my($name)        = "\x{a789}start";
+	my($attributes)  =
 	{
 		fillcolor => 'lightgreen',
 		label     => [{text => '{\:start'}, {text => "$name}"}],
@@ -826,17 +788,28 @@ sub run
 
 ##	$self -> clean_tree;
 
-	my(@rule) = $self -> parser -> cooked_tree -> daughters;
+	# Look over the statements.
+
+	my(@rules) = $self -> parser -> cooked_tree -> daughters;
 
 	my($attributes);
 	my(@daughters);
 	my($name);
 	my($offset);
-	my($token);
+	my($type, $token);
 
-	for my $i (0 .. $#rule)
+	for my $i (0 .. $#rules)
 	{
-		@daughters = $rule[$i] -> daughters;
+		# Loop over the components of a single satement.
+
+		@daughters  = $rules[$i] -> daughters;
+		$attributes = $daughters[1] -> attributes;
+		$type     = $$attributes{token}; # 'bnf' or 'lexeme'.
+
+		if ($type !~ /bnf|lexeme/)
+		{
+			die "Statement type neither bnf nor lexeme: i: $i. \n";
+		}
 
 		for my $j (0 .. $#daughters)
 		{
@@ -846,33 +819,21 @@ sub run
 
 			if ($token eq ':default')
 			{
-				$self -> _process_default_rule(\@daughters, $i);
+				$self -> _process_default_rule(\@rules, $i, \@daughters, $j);
+			}
+			elsif ($token eq ':discard')
+			{
+				$self -> _process_discard_rule(\@rules, $i, \@daughters, $j);
+			}
+			elsif ($token eq 'lexeme default')
+			{
+				$self -> _process_lexeme_default_rule(\@rules, $i, \@daughters, $j);
+			}
+			elsif ($token eq ':start')
+			{
+				$self -> _process_start_rule(\@rules, $i, \@daughters, $j);
 			}
 		}
-
-=pod
-
-		if ($offset >= 0)
-		{
-			$self -> _process_start_rule($i + 1, $rule[$i]);
-		}
-
-		if ($offset >= 0)
-		{
-			$self -> _process_discard_rule($i + 1, $rule[$i]);
-		}
-
-		if ($offset >= 0)
-		{
-			$self -> _process_lexeme_default_rule($i + 1, $rule[$i]);
-		}
-
-		if ($offset >= 0)
-		{
-			$self -> _process_lexeme_rule($i + 1, $rule[$i]);
-		}
-
-=cut
 
 	}
 

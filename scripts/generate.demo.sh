@@ -10,6 +10,7 @@ scripts/bnf2graph.sh json.2
 scripts/bnf2graph.sh json.3
 # Process killed!
 #scripts/bnf2graph.sh metag
+scripts/bnf2graph.sh numeric.expressions
 scripts/bnf2graph.sh stringparser
 scripts/bnf2graph.sh termcap.info
 
