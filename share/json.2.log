@@ -5,20 +5,103 @@ Default global: label => ->
 Default global: name => Perl
 Default global: record_shape => Mrecord
 Default global: strict => 0
-Default global: subgraph => HASH(0x2c3cd10)
+Default global: subgraph => HASH(0x367e580)
 Default global: timeout => 10
 Default graph: label => json.2.bnf, rankdir => TB
 Default node: shape => rectangle, style => filled
 Default edge: color => grey
-Added node: "json" [ fillcolor="lightgreen" label="{\:start|json}" shape="Mrecord" ]
 Added node: "꞉default" [ fillcolor="lightblue" label="꞉default" ]
-Added edge: "json" -> "꞉default"
+Added node: "BNF"
+Added edge: "BNF" -> "꞉default"
 Added node: "꞉default_1" [ fillcolor="goldenrod" label="{action =\> ꞉꞉array}" shape="Mrecord" ]
 Added edge: "꞉default" -> "꞉default_1"
+Added node: "lexeme default" [ fillcolor="lightblue" label="lexeme default" ]
+Added edge: "BNF" -> "lexeme default"
+Added node: "lexeme default_1" [ fillcolor="lightblue" label="{latm =\> 1}" shape="Mrecord" ]
+Added edge: "lexeme default" -> "lexeme default_1"
+Added node: "json" [ fillcolor="lightgreen" label="{\:start|json}" shape="Mrecord" ]
+Added edge: "BNF" -> "json"
 Added node: "꞉discard" [ fillcolor="lightblue" label="꞉discard" ]
-Added edge: "json" -> "꞉discard"
+Added edge: "BNF" -> "꞉discard"
 Added node: "whitespace" [ fillcolor="lightblue" label="whitespace" ]
 Added edge: "꞉discard" -> "whitespace"
+Added node: "::= object" [ fillcolor="white" label="::= object" ]
+Added edge: "BNF" -> "::= object"
+Added node: "array" [ fillcolor="white" label="array" ]
+Added edge: "BNF" -> "array"
+Added node: "::= ( '{' ) members ( '}' )" [ fillcolor="white" label="::= ( '{' ) members ( '}' )" ]
+Added edge: "BNF" -> "::= ( '{' ) members ( '}' )"
+Added node: "::= pair *" [ fillcolor="white" label="::= pair *" ]
+Added edge: "BNF" -> "::= pair *"
+Added node: "::= string ( '꞉' ) value" [ fillcolor="white" label="::= string ( '꞉' ) value" ]
+Added edge: "BNF" -> "::= string ( '꞉' ) value"
+Added node: "::= string" [ fillcolor="white" label="::= string" ]
+Added edge: "BNF" -> "::= string"
+Added node: "object" [ fillcolor="white" label="object" ]
+Added edge: "BNF" -> "object"
+Added node: "number" [ fillcolor="white" label="number" ]
+Added edge: "BNF" -> "number"
+Added edge: "BNF" -> "array"
+Added node: "'true'" [ fillcolor="white" label="'true'" ]
+Added edge: "BNF" -> "'true'"
+Added node: "'false'" [ fillcolor="white" label="'false'" ]
+Added edge: "BNF" -> "'false'"
+Added node: "'null'" [ fillcolor="white" label="'null'" ]
+Added edge: "BNF" -> "'null'"
+Added node: "::= ( '[' ']' )" [ fillcolor="white" label="::= ( '\[' '\]' )" ]
+Added edge: "BNF" -> "::= ( '[' ']' )"
+Added node: "( '[' ) elements ( ']' )" [ fillcolor="white" label="( '\[' ) elements ( '\]' )" ]
+Added edge: "BNF" -> "( '[' ) elements ( ']' )"
+Added node: "::= value +" [ fillcolor="white" label="::= value +" ]
+Added edge: "BNF" -> "::= value +"
+Added node: "~ int" [ fillcolor="white" label="~ int" ]
+Added edge: "BNF" -> "~ int"
+Added node: "int frac" [ fillcolor="white" label="int frac" ]
+Added edge: "BNF" -> "int frac"
+Added node: "int exp" [ fillcolor="white" label="int exp" ]
+Added edge: "BNF" -> "int exp"
+Added node: "int frac exp" [ fillcolor="white" label="int frac exp" ]
+Added edge: "BNF" -> "int frac exp"
+Added node: "~ digits" [ fillcolor="white" label="~ digits" ]
+Added edge: "BNF" -> "~ digits"
+Added node: "'-' digits" [ fillcolor="white" label="'-' digits" ]
+Added edge: "BNF" -> "'-' digits"
+Added node: "~ [\\d] +" [ fillcolor="white" label="~ \[\\d\] +" ]
+Added edge: "BNF" -> "~ [\\d] +"
+Added node: "~ '.' digits" [ fillcolor="white" label="~ '.' digits" ]
+Added edge: "BNF" -> "~ '.' digits"
+Added node: "~ e digits" [ fillcolor="white" label="~ e digits" ]
+Added edge: "BNF" -> "~ e digits"
+Added node: "~ 'e'" [ fillcolor="white" label="~ 'e'" ]
+Added edge: "BNF" -> "~ 'e'"
+Added node: "'e+'" [ fillcolor="white" label="'e+'" ]
+Added edge: "BNF" -> "'e+'"
+Added node: "'e-'" [ fillcolor="white" label="'e-'" ]
+Added edge: "BNF" -> "'e-'"
+Added node: "'E'" [ fillcolor="white" label="'E'" ]
+Added edge: "BNF" -> "'E'"
+Added node: "'E+'" [ fillcolor="white" label="'E+'" ]
+Added edge: "BNF" -> "'E+'"
+Added node: "'E-'" [ fillcolor="white" label="'E-'" ]
+Added edge: "BNF" -> "'E-'"
+Added node: "::= \<string lexeme\>" [ fillcolor="white" label="::= \<string lexeme\>" ]
+Added edge: "BNF" -> "::= \<string lexeme\>"
+Added node: "~ quote \<string contents\> quote" [ fillcolor="white" label="~ quote \<string contents\> quote" ]
+Added edge: "BNF" -> "~ quote \<string contents\> quote"
+Added node: "~ [ꞌꞌ]" [ fillcolor="white" label="~ \[ꞌꞌ\]" ]
+Added edge: "BNF" -> "~ [ꞌꞌ]"
+Added node: "~ \<string char\> *" [ fillcolor="white" label="~ \<string char\> *" ]
+Added edge: "BNF" -> "~ \<string char\> *"
+Added node: "~ [^ꞌꞌ\\\\]" [ fillcolor="white" label="~ \[^ꞌꞌ\\\\]" ]
+Added edge: "BNF" -> "~ [^ꞌꞌ\\\\]"
+Added node: "'\\' \<any char\>" [ fillcolor="white" label="'\\' \<any char\>" ]
+Added edge: "BNF" -> "'\\' \<any char\>"
+Added node: "~ [\\d\\D]" [ fillcolor="white" label="~ \[\\d\\D\]" ]
+Added edge: "BNF" -> "~ [\\d\\D]"
+Added node: "~ ','" [ fillcolor="white" label="~ ','" ]
+Added edge: "BNF" -> "~ ','"
+Added node: "~ [\\s] +" [ fillcolor="white" label="~ \[\\s\] +" ]
+Added edge: "BNF" -> "~ [\\s] +"
 Default graph: label => json.2.bnf, rankdir => TB
 Default node: shape => rectangle, style => filled
 Default edge: color => grey
@@ -28,7 +111,7 @@ Added node: "Legend" [ label=<<table bgcolor = 'white'>
 	<td bgcolor = 'lightgreen'>The green node is the start node</td>
 </tr>
 <tr>
-	<td bgcolor = 'lightblue'>Lightblue nodes are for lexeme attributes etc</td>
+	<td bgcolor = 'lightblue'>Lightblue nodes are for reserved rule names, etc</td>
 </tr>
 <tr>
 	<td bgcolor = 'orchid'>Orchid nodes are for lexemes</td>
@@ -47,15 +130,98 @@ digraph Perl
 graph [ label="json.2.bnf" rankdir="TB" ]
 node [ shape="rectangle" style="filled" ]
 edge [ color="grey" ]
-"json" [ fillcolor="lightgreen" label="{\:start|json}" shape="Mrecord" ]
 "꞉default" [ fillcolor="lightblue" label="꞉default" ]
-"json" -> "꞉default"
+"BNF"
+"BNF" -> "꞉default"
 "꞉default_1" [ fillcolor="goldenrod" label="{action =\> ꞉꞉array}" shape="Mrecord" ]
 "꞉default" -> "꞉default_1"
+"lexeme default" [ fillcolor="lightblue" label="lexeme default" ]
+"BNF" -> "lexeme default"
+"lexeme default_1" [ fillcolor="lightblue" label="{latm =\> 1}" shape="Mrecord" ]
+"lexeme default" -> "lexeme default_1"
+"json" [ fillcolor="lightgreen" label="{\:start|json}" shape="Mrecord" ]
+"BNF" -> "json"
 "꞉discard" [ fillcolor="lightblue" label="꞉discard" ]
-"json" -> "꞉discard"
+"BNF" -> "꞉discard"
 "whitespace" [ fillcolor="lightblue" label="whitespace" ]
 "꞉discard" -> "whitespace"
+"::= object" [ fillcolor="white" label="::= object" ]
+"BNF" -> "::= object"
+"array" [ fillcolor="white" label="array" ]
+"BNF" -> "array"
+"::= ( '{' ) members ( '}' )" [ fillcolor="white" label="::= ( '{' ) members ( '}' )" ]
+"BNF" -> "::= ( '{' ) members ( '}' )"
+"::= pair *" [ fillcolor="white" label="::= pair *" ]
+"BNF" -> "::= pair *"
+"::= string ( '꞉' ) value" [ fillcolor="white" label="::= string ( '꞉' ) value" ]
+"BNF" -> "::= string ( '꞉' ) value"
+"::= string" [ fillcolor="white" label="::= string" ]
+"BNF" -> "::= string"
+"object" [ fillcolor="white" label="object" ]
+"BNF" -> "object"
+"number" [ fillcolor="white" label="number" ]
+"BNF" -> "number"
+"BNF" -> "array"
+"'true'" [ fillcolor="white" label="'true'" ]
+"BNF" -> "'true'"
+"'false'" [ fillcolor="white" label="'false'" ]
+"BNF" -> "'false'"
+"'null'" [ fillcolor="white" label="'null'" ]
+"BNF" -> "'null'"
+"::= ( '[' ']' )" [ fillcolor="white" label="::= ( '\[' '\]' )" ]
+"BNF" -> "::= ( '[' ']' )"
+"( '[' ) elements ( ']' )" [ fillcolor="white" label="( '\[' ) elements ( '\]' )" ]
+"BNF" -> "( '[' ) elements ( ']' )"
+"::= value +" [ fillcolor="white" label="::= value +" ]
+"BNF" -> "::= value +"
+"~ int" [ fillcolor="white" label="~ int" ]
+"BNF" -> "~ int"
+"int frac" [ fillcolor="white" label="int frac" ]
+"BNF" -> "int frac"
+"int exp" [ fillcolor="white" label="int exp" ]
+"BNF" -> "int exp"
+"int frac exp" [ fillcolor="white" label="int frac exp" ]
+"BNF" -> "int frac exp"
+"~ digits" [ fillcolor="white" label="~ digits" ]
+"BNF" -> "~ digits"
+"'-' digits" [ fillcolor="white" label="'-' digits" ]
+"BNF" -> "'-' digits"
+"~ [\\d] +" [ fillcolor="white" label="~ \[\\d\] +" ]
+"BNF" -> "~ [\\d] +"
+"~ '.' digits" [ fillcolor="white" label="~ '.' digits" ]
+"BNF" -> "~ '.' digits"
+"~ e digits" [ fillcolor="white" label="~ e digits" ]
+"BNF" -> "~ e digits"
+"~ 'e'" [ fillcolor="white" label="~ 'e'" ]
+"BNF" -> "~ 'e'"
+"'e+'" [ fillcolor="white" label="'e+'" ]
+"BNF" -> "'e+'"
+"'e-'" [ fillcolor="white" label="'e-'" ]
+"BNF" -> "'e-'"
+"'E'" [ fillcolor="white" label="'E'" ]
+"BNF" -> "'E'"
+"'E+'" [ fillcolor="white" label="'E+'" ]
+"BNF" -> "'E+'"
+"'E-'" [ fillcolor="white" label="'E-'" ]
+"BNF" -> "'E-'"
+"::= \<string lexeme\>" [ fillcolor="white" label="::= \<string lexeme\>" ]
+"BNF" -> "::= \<string lexeme\>"
+"~ quote \<string contents\> quote" [ fillcolor="white" label="~ quote \<string contents\> quote" ]
+"BNF" -> "~ quote \<string contents\> quote"
+"~ [ꞌꞌ]" [ fillcolor="white" label="~ \[ꞌꞌ\]" ]
+"BNF" -> "~ [ꞌꞌ]"
+"~ \<string char\> *" [ fillcolor="white" label="~ \<string char\> *" ]
+"BNF" -> "~ \<string char\> *"
+"~ [^ꞌꞌ\\\\]" [ fillcolor="white" label="~ \[^ꞌꞌ\\\\]" ]
+"BNF" -> "~ [^ꞌꞌ\\\\]"
+"'\\' \<any char\>" [ fillcolor="white" label="'\\' \<any char\>" ]
+"BNF" -> "'\\' \<any char\>"
+"~ [\\d\\D]" [ fillcolor="white" label="~ \[\\d\\D\]" ]
+"BNF" -> "~ [\\d\\D]"
+"~ ','" [ fillcolor="white" label="~ ','" ]
+"BNF" -> "~ ','"
+"~ [\\s] +" [ fillcolor="white" label="~ \[\\s\] +" ]
+"BNF" -> "~ [\\s] +"
 
 subgraph 
 {
@@ -68,7 +234,7 @@ rank="max"
 	<td bgcolor = 'lightgreen'>The green node is the start node</td>
 </tr>
 <tr>
-	<td bgcolor = 'lightblue'>Lightblue nodes are for lexeme attributes etc</td>
+	<td bgcolor = 'lightblue'>Lightblue nodes are for reserved rule names, etc</td>
 </tr>
 <tr>
 	<td bgcolor = 'orchid'>Orchid nodes are for lexemes</td>
@@ -82,4 +248,4 @@ rank="max"
 </table>> shape="plaintext" ]
 }
 }
-Wrote html/json.2.svg. Size: 6034 bytes
+Wrote html/json.2.svg. Size: 34833 bytes

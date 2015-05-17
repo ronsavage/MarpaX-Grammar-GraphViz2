@@ -16,6 +16,8 @@ use List::AllUtils qw/first_index indexes/;
 
 use Log::Handler;
 
+use Types::Standard qw/Any HashRef Int Str/;
+
 use MarpaX::Grammar::Parser;
 
 use Moo;
@@ -24,7 +26,7 @@ has default_count =>
 (
 	default  => sub{return 0},
 	is       => 'rw',
-	#isa     => 'Int',
+	isa      => Int,
 	required => 0,
 );
 
@@ -32,7 +34,7 @@ has discard_count =>
 (
 	default  => sub{return 0},
 	is       => 'rw',
-	#isa     => 'Int',
+	isa      => Int,
 	required => 0,
 );
 
@@ -40,7 +42,7 @@ has driver =>
 (
 	default  => sub{return ''},
 	is       => 'rw',
-	#isa     => 'Str',
+	isa      => Str,
 	required => 0,
 );
 
@@ -48,7 +50,7 @@ has event_count =>
 (
 	default  => sub{return 0},
 	is       => 'rw',
-	#isa     => 'Int',
+	isa      => Int,
 	required => 0,
 );
 
@@ -56,7 +58,7 @@ has format =>
 (
 	default  => sub{return ''},
 	is       => 'rw',
-	#isa     => 'Str',
+	isa      => Str,
 	required => 0,
 );
 
@@ -64,7 +66,7 @@ has graph =>
 (
 	default  => sub{return ''},
 	is       => 'rw',
-	#isa     => 'GraphViz',
+	isa      => Any, # Actually an Object.
 	required => 0,
 );
 
@@ -72,7 +74,7 @@ has legend =>
 (
 	default  => sub{return 0},
 	is       => 'rw',
-	#isa     => 'Int',
+	isa      => Int,
 	required => 0,
 );
 
@@ -80,7 +82,7 @@ has lexeme_count =>
 (
 	default  => sub{return 0},
 	is       => 'rw',
-	#isa     => 'Int',
+	isa      => Int,
 	required => 0,
 );
 
@@ -88,7 +90,7 @@ has lexemes =>
 (
 	default  => sub{return {} },
 	is       => 'rw',
-	#isa     => 'HashRef',
+	isa      => HashRef,
 	required => 0,
 );
 
@@ -96,7 +98,7 @@ has logger =>
 (
 	default  => sub{return undef},
 	is       => 'rw',
-#	isa      => 'Str',
+	isa      => Any,
 	required => 0,
 );
 
@@ -104,7 +106,7 @@ has marpa_bnf_file =>
 (
 	default  => sub{return ''},
 	is       => 'rw',
-	#isa     => 'Str',
+	isa      => Str,
 	required => 1,
 );
 
@@ -112,7 +114,7 @@ has maxlevel =>
 (
 	default  => sub{return 'notice'},
 	is       => 'rw',
-#	isa      => 'Str',
+	isa      => Str,
 	required => 0,
 );
 
@@ -120,7 +122,7 @@ has minlevel =>
 (
 	default  => sub{return 'error'},
 	is       => 'rw',
-#	isa      => 'Str',
+	isa      => Str,
 	required => 0,
 );
 
@@ -128,7 +130,7 @@ has nodes_seen =>
 (
 	default  => sub{return {} },
 	is       => 'rw',
-	#isa     => 'HashRef',
+	isa     => HashRef,
 	required => 0,
 );
 
@@ -136,7 +138,7 @@ has output_file =>
 (
 	default  => sub{return ''},
 	is       => 'rw',
-	#isa     => 'Str',
+	isa      => Str,
 	required => 0,
 );
 
@@ -144,15 +146,15 @@ has parser =>
 (
 	default  => sub{return ''},
 	is       => 'rw',
-	#isa     => 'MarpaX::Grammar::Parser',
+	isa      => Any, # Actually an Object.
 	required => 0,
 );
 
-has root_node =>
+has root_name =>
 (
-	default  => sub{return ''},
+	default  => sub{return 'BNF'},
 	is       => 'rw',
-	#isa     => 'Tree::DAG_Node',
+	isa      => Str,
 	required => 0,
 );
 
@@ -160,7 +162,7 @@ has separators =>
 (
 	default  => sub{return {} },
 	is       => 'rw',
-	#isa     => 'HashRef',
+	isa      => HashRef,
 	required => 0,
 );
 
@@ -168,84 +170,11 @@ has user_bnf_file =>
 (
 	default  => sub{return ''},
 	is       => 'rw',
-	#isa     => 'Str',
+	isa      => Str,
 	required => 1,
 );
 
 our $VERSION = '2.00';
-
-# ------------------------------------------------
-
-sub add_legend
-{
-	my($self) = @_;
-
-	$self -> graph -> push_subgraph
-	(
-		# No options...
-		# Legend: top. Border: no. Label: no.
-		#
-		# label => 'cluster_legend',
-		# Legend: top. Border: no. Label: no.
-		#
-		# name  => 'cluster_legend',
-		# Legend: top. Border: yes. Label: *.bnf.
-		#
-		#graph => {label => 'cluster_legend'},
-		# Legend: top. Border: no. Label: no. Not using subgraph => {...}.
-		#graph => {label => 'cluster_Legend'},
-		# Legend: bottom. Border: no. Label: no. Using subgraph => {...}.
-		# Legend: top. Border: no. Label: no. Not using subgraph => {...}.
-		subgraph => {rank => 'max'},
-		# Legend: top. Border: no. Label: no. Using graph => {...}.
-		# Legend: bottom. Border: no. Label: no. Not using graph => {...}.
-	);
-
-	$self -> graph -> add_node
-	(
-		label =>
-q|
-<<table bgcolor = 'white'>
-<tr>
-	<td bgcolor = 'lightgreen'>The green node is the start node</td>
-</tr>
-<tr>
-	<td bgcolor = 'lightblue'>Lightblue nodes are for lexeme attributes etc</td>
-</tr>
-<tr>
-	<td bgcolor = 'orchid'>Orchid nodes are for lexemes</td>
-</tr>
-<tr>
-	<td bgcolor = 'goldenrod'>Golden nodes are for actions</td>
-</tr>
-<tr>
-	<td bgcolor = 'firebrick1'>Red nodes are for events</td>
-</tr>
-</table>>
-|,
-		name  => 'Legend',
-		shape => 'plaintext',
-	);
-
-	$self -> graph -> pop_subgraph;
-
-} # End of add_legend.
-
-# ------------------------------------------------
-
-sub add_node
-{
-	my($self, %attributes) = @_;
-	my($name) = delete $attributes{name};
- 	my($seen) = $self -> nodes_seen;
-
-	$self -> graph -> add_node(name => $name, %attributes) if (! $$seen{$name});
-
-	$$seen{$name} = 1;
-
-	$self -> nodes_seen($seen);
-
-} # End of add_node.
 
 # ------------------------------------------------
 
@@ -283,7 +212,6 @@ sub BUILD
 		);
 
 	$self -> graph($graph);
-
 	$self -> parser
 	(
 		MarpaX::Grammar::Parser -> new
@@ -295,6 +223,79 @@ sub BUILD
 	);
 
 } # End of BUILD.
+
+# ------------------------------------------------
+
+sub add_legend
+{
+	my($self) = @_;
+
+	$self -> graph -> push_subgraph
+	(
+		# No options...
+		# Legend: top. Border: no. Label: no.
+		#
+		# label => 'cluster_legend',
+		# Legend: top. Border: no. Label: no.
+		#
+		# name  => 'cluster_legend',
+		# Legend: top. Border: yes. Label: *.bnf.
+		#
+		#graph => {label => 'cluster_legend'},
+		# Legend: top. Border: no. Label: no. Not using subgraph => {...}.
+		#graph => {label => 'cluster_Legend'},
+		# Legend: bottom. Border: no. Label: no. Using subgraph => {...}.
+		# Legend: top. Border: no. Label: no. Not using subgraph => {...}.
+		subgraph => {rank => 'max'},
+		# Legend: top. Border: no. Label: no. Using graph => {...}.
+		# Legend: bottom. Border: no. Label: no. Not using graph => {...}.
+	);
+
+	$self -> graph -> add_node
+	(
+		label =>
+q|
+<<table bgcolor = 'white'>
+<tr>
+	<td bgcolor = 'lightgreen'>The green node is the start node</td>
+</tr>
+<tr>
+	<td bgcolor = 'lightblue'>Lightblue nodes are for reserved rule names, etc</td>
+</tr>
+<tr>
+	<td bgcolor = 'orchid'>Orchid nodes are for lexemes</td>
+</tr>
+<tr>
+	<td bgcolor = 'goldenrod'>Golden nodes are for actions</td>
+</tr>
+<tr>
+	<td bgcolor = 'firebrick1'>Red nodes are for events</td>
+</tr>
+</table>>
+|,
+		name  => 'Legend',
+		shape => 'plaintext',
+	);
+
+	$self -> graph -> pop_subgraph;
+
+} # End of add_legend.
+
+# ------------------------------------------------
+
+sub add_node
+{
+	my($self, %attributes) = @_;
+	my($name) = delete $attributes{name};
+ 	my($seen) = $self -> nodes_seen;
+
+	$self -> graph -> add_node(name => $name, %attributes) if (! $$seen{$name});
+
+	$$seen{$name} = 1;
+
+	$self -> nodes_seen($seen);
+
+} # End of add_node.
 
 # ------------------------------------------------
 
@@ -381,28 +382,27 @@ sub _process_adverbs
 	# Chop adverbs off the end of the list.
 
 	my($adverb, @adverbs);
-	my(@token);
+	my($name);
 
 	while ($end > 0)
 	{
 		if ($$daughters[$end - 1] -> name eq '=>')
 		{
+			$name   = $$daughters[$end] -> name;
 			$adverb = $$daughters[$end - 2] -> name;
-
-			# rectify_name() returns a ($name => $label) pair.
-
-			@token = $self -> rectify_name($$daughters[$end]);
-
-			pop @$daughters for 1 .. 3;
 
 			push @adverbs,
 			{
 				adverb => $adverb,
-				name   => $token[0],
+				name   => $name,
 			};
 
-			$end                    = $#$daughters;
-			$$separators{$token[0]} = 1 if ($adverb eq 'separator');
+			# Discard $adverb, '=>', $name.
+
+			pop @$daughters for 1 .. 3;
+
+			$end                = $#$daughters;
+			$$separators{$name} = 1 if ($adverb eq 'separator');
 		}
 		else
 		{
@@ -476,7 +476,7 @@ sub _process_complex_adverbs
 		unshift @adverb_stack, $adverbs;
 
 		# Chew the tokens owning the adverbs off the end of the list of daughters.
-		# This backward processing stops with a '|' or $daughter[0].
+		# This backward processing stops with a '|', a '||', or $daughter[0].
 
 		@token_stack = ();
 
@@ -521,7 +521,7 @@ sub _process_default_rule
 	if ($default_count == 1)
 	{
 		$self -> add_node(name => $default_name, %$attributes);
-		$self -> graph -> add_edge(from => $self -> root_node -> name, to => $default_name);
+		$self -> graph -> add_edge(from => $self -> root_name, to => $default_name);
 	}
 
 	my($daughters, $adverbs) = $self -> _process_adverbs([$a_node -> daughters]);
@@ -557,7 +557,7 @@ sub _process_discard_rule
 	if ($discard_count == 1)
 	{
 		$self -> add_node(name => $discard_name, %$attributes);
-		$self -> graph -> add_edge(from => $self -> root_node -> name, to => $discard_name);
+		$self -> graph -> add_edge(from => $self -> root_name, to => $discard_name);
 	}
 
 	my(@daughters) = $a_node -> daughters;
@@ -589,7 +589,7 @@ sub _process_event_rule
 	if ($event_count == 1)
 	{
 		$self -> add_node(name => $event_name, %$attributes);
-		$self -> graph -> add_edge(from => $self -> root_node -> name, to => $event_name);
+		$self -> graph -> add_edge(from => $self -> root_name, to => $event_name);
 	}
 
 	my($item_name) = "${event_name}_$event_count";
@@ -624,7 +624,7 @@ sub _process_lexeme_default_rule
 	};
 
 	$self -> add_node(name => $lexeme_name, %$attributes);
-	$self -> graph -> add_edge(from => $self -> root_node -> name, to => $lexeme_name);
+	$self -> graph -> add_edge(from => $self -> root_name, to => $lexeme_name);
 
 	my($daughters, $adverbs) = $self -> _process_adverbs([$a_node -> daughters]);
 
@@ -646,11 +646,9 @@ sub _process_lexeme_rule
 	my($self, $index, $a_node) = @_;
 	my($daughters, $adverbs)   = $self -> _process_adverbs([$a_node -> daughters]);
 
-	# rectify_name() returns a ($name => $label) pair.
-
-	my(@name)          = $self -> rectify_name($$daughters[1]);
-	my($lexeme)        = $self -> lexemes;
-	$$lexeme{$name[0]} = $#$adverbs >= 0 ? $adverbs : '';
+	my($name)       = $$daughters[0] -> name;
+	my($lexeme)     = $self -> lexemes;
+	$$lexeme{$name} = $#$adverbs >= 0 ? $adverbs : '';
 
 	$self -> lexemes($lexeme);
 
@@ -707,19 +705,18 @@ sub _process_normal_rule
 sub _process_normal_tokens
 {
 	my($self, $index, $a_node, $lexemes, $daughters, $adverbs) = @_;
-
-	# rectify_name() returns a ($name => $label) pair.
-
-	my(@name_map)   = map{$self -> rectify_name($_)} @$daughters;
+	my(@name_map)   = map{$_ -> name} @$daughters;
 	my(@name)       = map{$name_map[$_]} indexes{$_ % 2 == 0} 0 .. $#name_map;
 	my(@label)      = map{$name_map[$_]} indexes{$_ % 2 != 0} 0 .. $#name_map;
+
 	my($rule_name)  = join(' ', @name);
 	my($rule_label) = join(' ', @label);
 	my($attributes) = $self -> _process_lexeme_token($index, $lexemes, $rule_name, $rule_label);
-	my(@parent)     = $self -> rectify_name($a_node);
 
 	$self -> add_node(name => $rule_name, %$attributes);
-	$self -> graph -> add_edge(from => $parent[0], to => $rule_name);
+	$self -> graph -> add_edge(from => $self -> root_name, to => $rule_name);
+
+	return; # TODO.
 
 	my($attr_name);
 	my($name);
@@ -769,11 +766,8 @@ sub _process_normal_tokens
 sub _process_start_rule
 {
 	my($self, $index, $a_node) = @_;
-	my(@daughters) = $a_node -> daughters;
-	my($name)      = $daughters[2] -> name;
-
-	$self -> root_node($daughters[2]);
-
+	my(@daughters)  = $a_node -> daughters;
+	my($name)       = $daughters[2] -> name;
 	my($attributes) =
 	{
 		fillcolor => 'lightgreen',
@@ -781,6 +775,7 @@ sub _process_start_rule
 	};
 
 	$self -> add_node(name => $name, %$attributes);
+	$self -> graph -> add_edge(from => $self -> root_name, to => $name);
 
 } # End of _process_start_rule.
 
@@ -790,7 +785,7 @@ sub rectify_name
 {
 	my($self, $node) = @_;
 	my($attributes)  = $node -> attributes;
-	my($name)        = $self -> clean_name($$attributes{real_name}, 1);
+	my($name)        = $node -> name;
 	my($label)       = $name . $$attributes{quantifier};
 
 	return ($name, $label);
@@ -810,11 +805,7 @@ sub run
 
 	$self -> clean_tree;
 
-	#$self -> log(debug => $_) for @{$self -> parser -> cooked_tree -> tree2string({no_attributes => 0})};
-
 	my(@rule) = $self -> parser -> cooked_tree -> daughters;
-
-	# Warning: _process_start_rule() must be first because it sets $self -> root_node().
 
 	my($offset);
 
@@ -825,13 +816,7 @@ sub run
 		if ($offset >= 0)
 		{
 			$self -> _process_start_rule($i + 1, $rule[$i]);
-
-			last;
 		}
-	}
-
-	for my $i (0 .. $#rule)
-	{
 		$offset = first_index{$_ -> name eq "\x{a789}default"} $rule[$i] -> daughters;
 
 		if ($offset >= 0)
@@ -845,17 +830,20 @@ sub run
 		{
 			$self -> _process_discard_rule($i + 1, $rule[$i]);
 		}
-	}
 
-=pod
+		$offset = first_index{$_ -> name eq 'lexeme default'} $rule[$i] -> daughters;
 
-	my($lexeme_default_index) = first_index{$_ -> name eq 'lexeme default'} @rule;
+		if ($offset >= 0)
+		{
+			$self -> _process_lexeme_default_rule($i + 1, $rule[$i]);
+		}
 
-	$self -> _process_lexeme_default_rule($lexeme_default_index + 1, $rule[$lexeme_default_index]) if ($lexeme_default_index >= 0);
+		$offset = first_index{$_ -> name eq "\x{a789}lexeme"} $rule[$i] -> daughters;
 
-	for my $index (indexes {$_ -> name eq "\x{a789}lexeme"} @rule)
-	{
-		$self -> _process_lexeme_rule($index + 1, $rule[$index]);
+		if ($offset >= 0)
+		{
+			$self -> _process_lexeme_rule($i + 1, $rule[$i]);
+		}
 	}
 
 	my(%seen) =
@@ -870,12 +858,18 @@ sub run
 
 	my($lexemes) = $self -> lexemes;
 
-	for my $index (0 .. $#rule)
-	{
-		next if ($seen{$rule[$index] -> name});
+	my(@daughters);
 
-		$self -> _process_normal_rule($index + 1, $rule[$index], $lexemes);
+	for my $i (0 .. $#rule)
+	{
+		@daughters = $rule[$i] -> daughters;
+
+		next if ($seen{$daughters[0] -> name});
+
+		$self -> _process_normal_rule($i + 1, $rule[$i], $lexemes);
 	}
+
+=pod
 
 	for my $index (indexes {$_ -> name eq 'event'} @rule)
 	{
@@ -1251,9 +1245,9 @@ of the node, when the node is finally passed to L<GraphViz2>.
 
 Returns a 2-element list of ($name, $label).
 
-=head2 root_node()
+=head2 root_name()
 
-Returns an object of type L<Tree::DAG_Node>, representing the C<:start> token in the user's grammar.
+Returns a string which is the name of the root node of graph.
 
 =head2 run()
 
