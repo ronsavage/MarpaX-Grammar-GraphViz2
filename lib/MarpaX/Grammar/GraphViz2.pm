@@ -506,7 +506,7 @@ sub _process_complex_adverbs
 
 sub _process_default_rule
 {
-	my($self, $index, $a_node) = @_;
+	my($self, $daughters, $index) = @_;
 
 	$self -> default_count($self -> default_count + 1);
 
@@ -524,12 +524,33 @@ sub _process_default_rule
 		$self -> graph -> add_edge(from => $self -> root_name, to => $default_name);
 	}
 
-	my($daughters, $adverbs) = $self -> _process_adverbs([$a_node -> daughters]);
+	my(%name_map) = (action => 'action', blessing_name => 'bless');
 
-	if ($#$adverbs >= 0)
+	my($attr);
+	my(@adverbs);
+	my($name);
+	my($token);
+
+	for my $j ($index + 1 .. $#$daughters)
 	{
+		$name = $$daughters[$j] -> name;
+
+		if ($name =~ /action|blessing_name/)
+		{
+			$attr  = ($$daughters[$j] -> daughters)[0] -> attributes;
+			$token = $$attr{token};
+
+			push @adverbs, "$name_map{$name} =\\> $token";
+		}
+	}
+
+	if ($#adverbs >= 0)
+	{
+		$adverbs[0]             = "\{$adverbs[0]";
+		$adverbs[$#adverbs]     .= '}';
+		@adverbs                = map{ {text => $_} } @adverbs;
 		$$attributes{fillcolor} = 'goldenrod';
-		$$attributes{label}     = $adverbs;
+		$$attributes{label}     = [@adverbs];
 		my($adverb_name)        = "${default_name}_$default_count";
 
 		$self -> add_node(name => $adverb_name, %$attributes);
@@ -803,48 +824,59 @@ sub run
 
 	return $result if ($result == 1);
 
-	$self -> clean_tree;
+##	$self -> clean_tree;
 
 	my(@rule) = $self -> parser -> cooked_tree -> daughters;
 
+	my($attributes);
+	my(@daughters);
+	my($name);
 	my($offset);
+	my($token);
 
 	for my $i (0 .. $#rule)
 	{
-		$offset = first_index{$_ -> name eq "\x{a789}start"} $rule[$i] -> daughters;
+		@daughters = $rule[$i] -> daughters;
+
+		for my $j (0 .. $#daughters)
+		{
+			$name       = $daughters[$j] -> name;
+			$attributes = $daughters[$j] -> attributes;
+			$token      = $$attributes{token};
+
+			if ($token eq ':default')
+			{
+				$self -> _process_default_rule(\@daughters, $i);
+			}
+		}
+
+=pod
 
 		if ($offset >= 0)
 		{
 			$self -> _process_start_rule($i + 1, $rule[$i]);
 		}
-		$offset = first_index{$_ -> name eq "\x{a789}default"} $rule[$i] -> daughters;
-
-		if ($offset >= 0)
-		{
-			$self -> _process_default_rule($i + 1, $rule[$i]);
-		}
-
-		$offset = first_index{$_ -> name eq "\x{a789}discard"} $rule[$i] -> daughters;
 
 		if ($offset >= 0)
 		{
 			$self -> _process_discard_rule($i + 1, $rule[$i]);
 		}
 
-		$offset = first_index{$_ -> name eq 'lexeme default'} $rule[$i] -> daughters;
-
 		if ($offset >= 0)
 		{
 			$self -> _process_lexeme_default_rule($i + 1, $rule[$i]);
 		}
 
-		$offset = first_index{$_ -> name eq "\x{a789}lexeme"} $rule[$i] -> daughters;
-
 		if ($offset >= 0)
 		{
 			$self -> _process_lexeme_rule($i + 1, $rule[$i]);
 		}
+
+=cut
+
 	}
+
+=pod
 
 	my(%seen) =
 	(
@@ -868,8 +900,6 @@ sub run
 
 		$self -> _process_normal_rule($i + 1, $rule[$i], $lexemes);
 	}
-
-=pod
 
 	for my $index (indexes {$_ -> name eq 'event'} @rule)
 	{
