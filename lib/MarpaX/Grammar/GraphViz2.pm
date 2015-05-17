@@ -750,7 +750,8 @@ sub _process_normal_tokens
 sub _process_start_rule
 {
 	my($self, $rules, $i, $daughters, $j) = @_;
-	my($name)        = "\x{a789}start";
+	my($attr)        = $$daughters[$j] -> attributes;
+	my($name)        = $$attr{token};
 	my($attributes)  =
 	{
 		fillcolor => 'lightgreen',
@@ -829,7 +830,7 @@ sub run
 			{
 				$self -> _process_lexeme_default_rule(\@rules, $i, \@daughters, $j);
 			}
-			elsif ($token eq ':start')
+			elsif ($name eq ':start') # Warning: $name not $token.
 			{
 				$self -> _process_start_rule(\@rules, $i, \@daughters, $j);
 			}
