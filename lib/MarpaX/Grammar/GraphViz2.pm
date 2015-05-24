@@ -256,25 +256,25 @@ sub add_legend
 q|
 <<table bgcolor = 'white'>
 <tr>
-	<td bgcolor = 'lightgreen'>The green node is the start node</td>
-</tr>
-<tr>
 	<td bgcolor = 'lightblue'>Lightblue nodes are for reserved rule names, etc</td>
 </tr>
 <tr>
-	<td bgcolor = 'orchid'>Orchid nodes are for lexemes</td>
+	<td bgcolor = 'orange'>Orange nodes are ':default' rules</td>
 </tr>
 <tr>
-	<td bgcolor = 'orange'>Orange nodes are for ':default'</td>
+	<td bgcolor = 'magenta'>Magenta nodes are ':discard' rules</td>
 </tr>
 <tr>
-	<td bgcolor = 'magenta'>Magenta nodes are for ':discard'</td>
+	<td bgcolor = 'orchid'>The orchid node is the 'discard default' rule</td>
 </tr>
 <tr>
-	<td bgcolor = 'goldenrod'>Golden nodes are for 'lexeme default'</td>
+	<td bgcolor = 'firebrick1'>Red nodes are the events</td>
 </tr>
 <tr>
-	<td bgcolor = 'firebrick1'>Red nodes are for events</td>
+	<td bgcolor = 'goldenrod'>The golden node is the 'lexeme default' rule</td>
+</tr>
+<tr>
+	<td bgcolor = 'lightgreen'>The green node is the ':start' rule</td>
 </tr>
 </table>>
 |,
@@ -383,7 +383,6 @@ sub _process_adverbs
 	my($self, $daughters, $j) = @_;
 
 	my($attr);
-	my($type);
 	my(@adverbs);
 	my($name);
 	my($token_1, $token_2);
@@ -530,6 +529,37 @@ sub _process_default_rule
 
 # ------------------------------------------------
 
+sub _process_discard_default_rule
+{
+	my($self, $rules, $i, $daughters, $j) = @_;
+
+	my($discard_name) = "discard default";
+	my($attributes)   =
+	{
+		fillcolor => 'orchid',
+		label     => $discard_name,
+	};
+
+	$self -> add_node(name => $discard_name, %$attributes);
+	$self -> graph -> add_edge(from => $self -> root_name, to => $discard_name);
+
+	my($adverbs) = $self -> _process_adverbs($daughters, $j);
+
+	if ($#$adverbs >= 0)
+	{
+		$$attributes{fillcolor} = 'orchid';
+		$$attributes{label}     = $adverbs;
+		my($adverb_name)        = "${discard_name}_1";
+
+		$self -> add_node(name => $adverb_name, %$attributes);
+		$self -> graph -> add_edge(from => $discard_name, to => $adverb_name);
+	}
+
+
+} # End of _process_discard_default_rule.
+
+# ------------------------------------------------
+
 sub _process_discard_rule
 {
 	my($self, $rules, $i, $daughters, $j) = @_;
@@ -550,7 +580,7 @@ sub _process_discard_rule
 		$self -> graph -> add_edge(from => $self -> root_name, to => $discard_name);
 	}
 
-	my($attr)  = $$daughters[$j + 1] -> attributes;
+	my($attr)  = $$daughters[$j + 2] -> attributes;
 	my($token) = $$attr{token};
 
 	$$attributes{fillcolor} = 'magenta';
@@ -758,16 +788,22 @@ sub _process_normal_tokens
 sub _process_start_rule
 {
 	my($self, $rules, $i, $daughters, $j) = @_;
-	my($attr)        = $$daughters[$j + 2] -> attributes;
-	my($name)        = $$attr{token};
-	my($attributes)  =
+	my($name)       = 'start';
+	my($attributes) =
 	{
 		fillcolor => 'lightgreen', # Warning: Don't delete the ' ' before the \x.
-		label     => [{text => "{ \x{a789}start"}, {text => "$name}"}],
+		label     => [{text => " \x{a789}start"}],
 	};
 
 	$self -> add_node(name => $name, %$attributes);
 	$self -> graph -> add_edge(from => $self -> root_name, to => $name);
+
+	my($attr)           = $$daughters[$j + 2] -> attributes;
+	my($starter)        = $$attr{token};
+	$$attributes{label} = [{text => $$attr{token} }];
+
+	$self -> add_node(name => $starter, %$attributes);
+	$self -> graph -> add_edge(from => $name, to => $starter);
 
 } # End of _process_start_rule.
 
@@ -805,15 +841,13 @@ sub run
 	my(@daughters);
 	my($name);
 	my($offset);
-	my($type, $token);
+	my($token);
 
 	for my $i (0 .. $#rules)
 	{
 		# Loop over the components of a single statement/rule.
 
-		@daughters  = $rules[$i] -> daughters;
-		$attributes = $daughters[1] -> attributes;
-		$type       = $$attributes{token}; # 'bnf' or 'lexeme'.
+		@daughters = $rules[$i] -> daughters;
 
 		for my $j (0 .. $#daughters)
 		{
@@ -828,6 +862,10 @@ sub run
 			elsif ($token eq ':discard')
 			{
 				$self -> _process_discard_rule(\@rules, $i, \@daughters, $j);
+			}
+			elsif ( ($token eq 'discard default') && ($name eq 'lhs') )
+			{
+				$self -> _process_discard_default_rule(\@rules, $i, \@daughters, $j);
 			}
 			elsif ($token eq 'lexeme default')
 			{
