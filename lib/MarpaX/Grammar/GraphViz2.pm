@@ -1281,12 +1281,6 @@ This is the image from c.ast.bnf.
 
 See the next point for how this file is created.
 
-=item o share/c.ast.log
-
-This is the log produced by running the code at log level C<debug>:
-
-	shell> scripts/bnf2graph.sh c.ast -max debug > share/c.ast.log
-
 =item o share/json.1.bnf
 
 It is part of L<MarpaX::Demo::JSONParser>, written as a gist by Peter Stuifzand.
@@ -1294,12 +1288,6 @@ It is part of L<MarpaX::Demo::JSONParser>, written as a gist by Peter Stuifzand.
 See L<https://gist.github.com/pstuifzand/4447349>.
 
 See the next point for how this file is created.
-
-=item o share/json.1.log
-
-This is the log produced by running the code at log level C<debug>:
-
-	shell> scripts/bnf2graph.sh json.1 -max debug > share/json.1.log
 
 =item o html/json.1.svg
 
@@ -1309,12 +1297,6 @@ This is the image from json.1.bnf.
 
 It also is part of L<MarpaX::Demo::JSONParser>, written by Jeffrey Kegler as a reply to the gist
 above from Peter.
-
-=item o share/json.2.log
-
-This is the log produced by running the code at log level C<debug>:
-
-	shell> scripts/bnf2graph.sh json.2 -max debug > share/json.2.log
 
 =item o html/json.2.svg
 
@@ -1326,12 +1308,6 @@ See the previous point for how this file is created.
 
 It also is part of L<MarpaX::Demo::JSONParser>, and is written by Jeffrey Kegler.
 
-=item o share/json.3.log
-
-This is the log produced by running the code at log level C<debug>:
-
-	shell> scripts/bnf2graph.sh json.3 -max debug > share/json.3.log
-
 =item o html/json.3.svg
 
 This is the image from json.3.bnf.
@@ -1339,12 +1315,6 @@ This is the image from json.3.bnf.
 =item o share/metag.bnf.
 
 This is a copy of L<Marpa::R2>'s BNF, as of Marpa::R2 V 2.096000.
-
-=item o share/metag.log
-
-This is the log produced by running the code at log level C<debug>:
-
-	shell> scripts/bnf2graph.sh metag -max debug > share/metag.log
 
 =item o html/metag.svg
 
@@ -1360,12 +1330,6 @@ This is the image from numeric.expressions.bnf.
 
 See the next point for how this file is created.
 
-=item o share/numeric.expressions.log
-
-This is the log produced by running the code at log level C<debug>:
-
-	shell> scripts/bnf2graph.sh numeric.expressions -max debug > share/numeric.expressions.log
-
 =item o share/stringparser.bnf.
 
 This is a copy of L<MarpaX::Demo::StringParser>'s BNF.
@@ -1376,12 +1340,6 @@ This is the image from stringparser.bnf.
 
 See the next point for how this file is created.
 
-=item o share/stringparser.log
-
-This is the log produced by running the code at log level C<debug>:
-
-	shell> scripts/bnf2graph.sh stringparser -max debug > share/stringparser.log
-
 =item o share/termcap.info.bnf
 
 It also is part of L<MarpaX::Database::Terminfo>, written by Jean-Damien Durand.
@@ -1391,12 +1349,6 @@ It also is part of L<MarpaX::Database::Terminfo>, written by Jean-Damien Durand.
 This is the image from termcap.info.bnf.
 
 See the next point for how this file is created.
-
-=item o share/termcap.info.log
-
-This is the log produced by running the code at log level C<debug>:
-
-	shell> scripts/bnf2graph.sh termcap.info -max debug > share/termcap.info.log
 
 =back
 
