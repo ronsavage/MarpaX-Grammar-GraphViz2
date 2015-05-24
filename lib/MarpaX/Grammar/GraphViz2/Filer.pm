@@ -3,9 +3,8 @@ package MarpaX::Grammar::GraphViz2::Filer;
 use strict;
 use utf8;
 use warnings;
-use warnings  qw(FATAL utf8);    # Fatalize encoding glitches.
-use open      qw(:std :utf8);    # Undeclared streams in UTF-8.
-use charnames qw(:full :short);  # Unneeded in v5.16.
+use warnings  qw(FATAL utf8); # Fatalize encoding glitches.
+use open      qw(:std :utf8); # Undeclared streams in UTF-8.
 
 use File::Basename; # For basename().
 use File::Slurp;    # For read_file().
@@ -21,7 +20,7 @@ sub get_files
 	my($self, $dir_name, $type) = @_;
 
 	opendir(my $fh, $dir_name);
-	my(@file) = sort grep{! /metag.bnf/} grep{/$type$/} readdir $fh;
+	my(@file) = sort grep{/$type$/} readdir $fh;
 	closedir $fh;
 
 	my(%file);
@@ -70,8 +69,6 @@ It returns a new object of type C<MarpaX::Grammar::GraphViz2::Filer>.
 Returns a hash (sic) of files from the given $dir_name, whose type (extension) matches $type.
 
 The hash is keyed by the file's basename. See L<File::Basename>.
-
-The file share/metag.bnf is omitted from the set returned.
 
 =head1 Version Numbers
 

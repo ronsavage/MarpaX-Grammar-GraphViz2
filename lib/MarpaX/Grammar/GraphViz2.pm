@@ -3,9 +3,8 @@ package MarpaX::Grammar::GraphViz2;
 use strict;
 use utf8;
 use warnings;
-use warnings  qw(FATAL utf8);    # Fatalize encoding glitches.
-use open      qw(:std :utf8);    # Undeclared streams in UTF-8.
-use charnames qw(:full :short);  # Unneeded in v5.16.
+use warnings  qw(FATAL utf8); # Fatalize encoding glitches.
+use open      qw(:std :utf8); # Undeclared streams in UTF-8.
 
 use File::Basename; # For basename().
 use File::Which; # For which().
@@ -266,7 +265,10 @@ q|
 	<td bgcolor = 'orchid'>Orchid nodes are for lexemes</td>
 </tr>
 <tr>
-	<td bgcolor = 'goldenrod'>Golden nodes are for actions</td>
+	<td bgcolor = 'goldenrod'>Golden nodes are for ':default'</td>
+</tr>
+<tr>
+	<td bgcolor = 'orange'>Orange nodes are for 'lexeme default'</td>
 </tr>
 <tr>
 	<td bgcolor = 'firebrick1'>Red nodes are for events</td>
@@ -375,24 +377,27 @@ sub log
 
 sub _process_adverbs
 {
-	my($self, $daughters, $j, $name_map) = @_;
+	my($self, $daughters, $j) = @_;
 
 	my($attr);
+	my($type);
 	my(@adverbs);
 	my($name);
-	my($token);
+	my($token_1, $token_2);
 
 	for my $j ($j + 1 .. $#$daughters)
 	{
 		$name = $$daughters[$j] -> name;
 
-		if ($name =~ /action|blessing_name|boolean|latm_specification/)
-		{
-			$attr  = ($$daughters[$j] -> daughters)[0] -> attributes;
-			$token = $$attr{token};
+		next if ($name =~ /^op_declare/);
 
-			push @adverbs, "$$name_map{$name} =\\> $token";
-		}
+		$attr    = $$daughters[$j] -> attributes;
+		$token_1 = $$attr{token};
+
+		$attr    = ($$daughters[$j] -> daughters)[0] -> attributes;
+		$token_2 = $$attr{token};
+
+		push @adverbs, "$token_1 =\\> $token_2";
 	}
 
 	if ($#adverbs >= 0)
@@ -506,13 +511,12 @@ sub _process_default_rule
 		$self -> graph -> add_edge(from => $self -> root_name, to => $default_name);
 	}
 
-	my(%name_map) = (action => 'action', blessing_name => 'bless');
-	my($adverbs)  = $self -> _process_adverbs($daughters, $j, \%name_map);
+	my($adverbs) = $self -> _process_adverbs($daughters, $j);
 
 	if ($#$adverbs >= 0)
 	{
 		$$attributes{fillcolor} = 'goldenrod';
-		$$attributes{label}     = [@$adverbs];
+		$$attributes{label}     = $adverbs;
 		my($adverb_name)        = "${default_name}_$default_count";
 
 		$self -> add_node(name => $adverb_name, %$attributes);
@@ -609,13 +613,13 @@ sub _process_lexeme_default_rule
 	$self -> add_node(name => $lexeme_name, %$attributes);
 	$self -> graph -> add_edge(from => $self -> root_name, to => $lexeme_name);
 
-	my(%name_map) = (action => 'action', latm_specification => 'latm');
-	my($adverbs)  = $self -> _process_adverbs($daughters, $j, \%name_map);
+	my($adverbs) = $self -> _process_adverbs($daughters, $j);
 
 	if ($#$adverbs >= 0)
 	{
-		$$attributes{label} = $adverbs;
-		my($adverb_name)    = "${lexeme_name}_1";
+		$$attributes{fillcolor} = 'orange';
+		$$attributes{label}     = $adverbs;
+		my($adverb_name)        = "${lexeme_name}_1";
 
 		$self -> add_node(name => $adverb_name, %$attributes);
 		$self -> graph -> add_edge(from => $lexeme_name, to => $adverb_name);
@@ -789,7 +793,7 @@ sub run
 
 ##	$self -> clean_tree;
 
-	# Look over the statements.
+	# Look over the statements/rules.
 
 	my(@rules) = $self -> parser -> cooked_tree -> daughters;
 
@@ -801,16 +805,11 @@ sub run
 
 	for my $i (0 .. $#rules)
 	{
-		# Loop over the components of a single satement.
+		# Loop over the components of a single statement/rule.
 
 		@daughters  = $rules[$i] -> daughters;
 		$attributes = $daughters[1] -> attributes;
-		$type     = $$attributes{token}; # 'bnf' or 'lexeme'.
-
-		if ($type !~ /bnf|lexeme/)
-		{
-			die "Statement type neither bnf nor lexeme: i: $i. \n";
-		}
+		$type       = $$attributes{token}; # 'bnf' or 'lexeme'.
 
 		for my $j (0 .. $#daughters)
 		{
