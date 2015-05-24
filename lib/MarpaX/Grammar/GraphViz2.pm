@@ -265,10 +265,13 @@ q|
 	<td bgcolor = 'orchid'>Orchid nodes are for lexemes</td>
 </tr>
 <tr>
-	<td bgcolor = 'goldenrod'>Golden nodes are for ':default'</td>
+	<td bgcolor = 'orange'>Orange nodes are for ':default'</td>
 </tr>
 <tr>
-	<td bgcolor = 'orange'>Orange nodes are for 'lexeme default'</td>
+	<td bgcolor = 'magenta'>Magenta nodes are for ':discard'</td>
+</tr>
+<tr>
+	<td bgcolor = 'goldenrod'>Golden nodes are for 'lexeme default'</td>
 </tr>
 <tr>
 	<td bgcolor = 'firebrick1'>Red nodes are for events</td>
@@ -501,7 +504,7 @@ sub _process_default_rule
 	my($default_name)  = "\x{a789}default";
 	my($attributes)    =
 	{
-		fillcolor => 'lightblue',
+		fillcolor => 'orange',
 		label     => $default_name,
 	};
 
@@ -515,7 +518,7 @@ sub _process_default_rule
 
 	if ($#$adverbs >= 0)
 	{
-		$$attributes{fillcolor} = 'goldenrod';
+		$$attributes{fillcolor} = 'orange';
 		$$attributes{label}     = $adverbs;
 		my($adverb_name)        = "${default_name}_$default_count";
 
@@ -537,7 +540,7 @@ sub _process_discard_rule
 	my($discard_name)  = "\x{a789}discard";
 	my($attributes)    =
 	{
-		fillcolor => 'lightblue',
+		fillcolor => 'magenta',
 		label     => $discard_name,
 	};
 
@@ -550,7 +553,8 @@ sub _process_discard_rule
 	my($attr)  = $$daughters[$j + 1] -> attributes;
 	my($token) = $$attr{token};
 
-	$$attributes{label} = $token;
+	$$attributes{fillcolor} = 'magenta';
+	$$attributes{label}     = $token;
 
 	$self -> add_node(name => $token, %$attributes);
 	$self -> graph -> add_edge(from => $discard_name, to => $token);
@@ -606,7 +610,7 @@ sub _process_lexeme_default_rule
 	my($lexeme_name) = 'lexeme default';
 	my($attributes)  =
 	{
-		fillcolor => 'lightblue',
+		fillcolor => 'goldenrod',
 		label     => $lexeme_name,
 	};
 
@@ -617,7 +621,7 @@ sub _process_lexeme_default_rule
 
 	if ($#$adverbs >= 0)
 	{
-		$$attributes{fillcolor} = 'orange';
+		$$attributes{fillcolor} = 'goldenrod';
 		$$attributes{label}     = $adverbs;
 		my($adverb_name)        = "${lexeme_name}_1";
 
@@ -754,12 +758,12 @@ sub _process_normal_tokens
 sub _process_start_rule
 {
 	my($self, $rules, $i, $daughters, $j) = @_;
-	my($attr)        = $$daughters[$j] -> attributes;
+	my($attr)        = $$daughters[$j + 2] -> attributes;
 	my($name)        = $$attr{token};
 	my($attributes)  =
 	{
-		fillcolor => 'lightgreen',
-		label     => [{text => '{\:start'}, {text => "$name}"}],
+		fillcolor => 'lightgreen', # Warning: Don't delete the ' ' before the \x.
+		label     => [{text => "{ \x{a789}start"}, {text => "$name}"}],
 	};
 
 	$self -> add_node(name => $name, %$attributes);
@@ -829,7 +833,7 @@ sub run
 			{
 				$self -> _process_lexeme_default_rule(\@rules, $i, \@daughters, $j);
 			}
-			elsif ($name eq ':start') # Warning: $name not $token.
+			elsif ($token eq ':start')
 			{
 				$self -> _process_start_rule(\@rules, $i, \@daughters, $j);
 			}
