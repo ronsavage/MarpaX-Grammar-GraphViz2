@@ -256,9 +256,6 @@ sub add_legend
 q|
 <<table bgcolor = 'white'>
 <tr>
-	<td bgcolor = 'lightblue'>Lightblue nodes are for reserved rule names, etc</td>
-</tr>
-<tr>
 	<td bgcolor = 'orange'>Orange nodes are ':default' rules</td>
 </tr>
 <tr>
@@ -272,6 +269,9 @@ q|
 </tr>
 <tr>
 	<td bgcolor = 'goldenrod'>The golden node is the 'lexeme default' rule</td>
+</tr>
+<tr>
+	<td bgcolor = 'lightblue'>Lightblue nodes are ':lexeme' rules</td>
 </tr>
 <tr>
 	<td bgcolor = 'lightgreen'>The green node is the ':start' rule</td>
@@ -395,6 +395,8 @@ sub _process_adverbs
 
 		$attr    = $$daughters[$j] -> attributes;
 		$token_1 = $$attr{token};
+
+		print "Token 1: $token_1. \n";
 
 		$attr    = ($$daughters[$j] -> daughters)[0] -> attributes;
 		$token_2 = $$attr{token};
@@ -665,14 +667,25 @@ sub _process_lexeme_default_rule
 
 sub _process_lexeme_rule
 {
-	my($self, $index, $a_node) = @_;
-	my($daughters, $adverbs)   = $self -> _process_adverbs([$a_node -> daughters]);
+	my($self, $rules, $i, $daughters, $j) = @_;
+	my($adverbs) = $self -> _process_adverbs($daughters, $j);
+	my($lexeme_name) = ':lexeme';
+	my($attributes)  =
+	{
+		fillcolor => 'lightblue',
+		label     => $lexeme_name,
+	};
 
-	my($name)       = $$daughters[0] -> name;
-	my($lexeme)     = $self -> lexemes;
-	$$lexeme{$name} = $#$adverbs >= 0 ? $adverbs : '';
+	if ($#$adverbs >= 0)
+	{
+		$$attributes{label} = $adverbs;
+		my($adverb_name)    = $$adverbs[0]{type};
 
-	$self -> lexemes($lexeme);
+		$self -> add_node(name => $adverb_name, %$attributes);
+		$self -> graph -> add_edge(from => $lexeme_name, to => $adverb_name);
+	}
+
+#	$self -> lexemes($lexeme); TODO.
 
 } # End of _process_lexeme_rule.
 
@@ -845,6 +858,8 @@ sub run
 
 	for my $i (0 .. $#rules)
 	{
+		print "i: $i. name: ", $rules[$i] -> name, ". \n";
+
 		# Loop over the components of a single statement/rule.
 
 		@daughters = $rules[$i] -> daughters;
@@ -855,21 +870,27 @@ sub run
 			$attributes = $daughters[$j] -> attributes;
 			$token      = $$attributes{token};
 
+			print "\tj: $j. name: $name. token: $token. \n";
+
 			if ($token eq ':default')
 			{
 				$self -> _process_default_rule(\@rules, $i, \@daughters, $j);
-			}
-			elsif ($token eq ':discard')
-			{
-				$self -> _process_discard_rule(\@rules, $i, \@daughters, $j);
 			}
 			elsif ( ($token eq 'discard default') && ($name eq 'lhs') )
 			{
 				$self -> _process_discard_default_rule(\@rules, $i, \@daughters, $j);
 			}
+			elsif ($token eq ':discard')
+			{
+				$self -> _process_discard_rule(\@rules, $i, \@daughters, $j);
+			}
 			elsif ($token eq 'lexeme default')
 			{
 				$self -> _process_lexeme_default_rule(\@rules, $i, \@daughters, $j);
+			}
+			elsif ($token eq ':lexeme')
+			{
+				$self -> _process_lexeme_rule(\@rules, $i, \@daughters, $j);
 			}
 			elsif ($token eq ':start')
 			{
