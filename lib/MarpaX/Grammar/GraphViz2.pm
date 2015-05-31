@@ -21,7 +21,15 @@ use MarpaX::Grammar::Parser;
 
 use Moo;
 
-has bare_name_count =>
+has bare_lexeme_count =>
+(
+	default  => sub{return 0},
+	is       => 'rw',
+	isa      => Int,
+	required => 0,
+);
+
+has bare_rule_count =>
 (
 	default  => sub{return 0},
 	is       => 'rw',
@@ -432,11 +440,13 @@ sub _process_adverbs
 
 # ------------------------------------------------
 
-sub _process_bare_name_rule
+sub _process_bare_lexeme
 {
 	my($self, $rules, $i, $daughters) = @_;
 
-	$self -> bare_name_count($self -> bare_name_count + 1);
+	$self -> bare_lexeme_count($self -> bare_lexeme_count + 1);
+
+	return;
 
 	my($attr)       = ($$daughters[0] -> daughters)[0] -> attributes;
 	my($bare_name)  = $$attr{token};
@@ -444,7 +454,7 @@ sub _process_bare_name_rule
 
 	if ($#$adverbs >= 0)
 	{
-		my($adverb_name) = 'bare_name_' . $self -> bare_name_count;
+		my($adverb_name) = 'bare_name_' . $self -> bare_lexeme_count;
 		my($attributes)  =
 		{
 			fillcolor => 'white',
@@ -457,8 +467,60 @@ sub _process_bare_name_rule
 		$self -> graph -> add_edge(from => $bare_name, to => $adverb_name);
 	}
 
+} # End of _process_bare_lexeme.
+
+# ------------------------------------------------
+
+sub _process_bare_name_rule
+{
+	my($self, $rules, $i, $daughters) = @_;
+	my($context) = $$daughters[1] -> name;
+
+	if ($context eq 'op_declare_bnf')
+	{
+		$self -> _process_bare_rule($rules, $i, $daughters);
+	}
+	else
+	{
+		$self -> _process_bare_lexeme($rules, $i, $daughters);
+	}
 
 } # End of _process_bare_name_rule.
+
+# ------------------------------------------------
+
+sub _process_bare_rule
+{
+	my($self, $rules, $i, $daughters) = @_;
+
+	$self -> bare_rule_count($self -> bare_rule_count + 1);
+
+	my($name)            = 'Rule';
+	my($bare_rule_count) = $self -> bare_rule_count();
+	my($attributes)      =
+	{
+		fillcolor => 'LightCoral',
+		label     => 'Rule',
+	};
+
+	if ($bare_rule_count == 1)
+	{
+		$self -> add_node(name => $name, %$attributes);
+		$self -> graph -> add_edge(from => $self -> root_name, to => $name);
+	}
+
+	my($attr)    = ($$daughters[0] -> daughters)[0] -> attributes;
+	my($token_1) = $$attr{token};
+	$attr        = ($$daughters[2] -> daughters)[0] -> attributes;
+	my($token_2) = $$attr{token};
+	my($rule_name) = "$token_1 =\> $token_2";
+	$$attributes{fillcolor} = 'firebrick1';
+	$$attributes{label}     = $rule_name;
+
+	$self -> add_node(name => $rule_name, %$attributes);
+	$self -> graph -> add_edge(from => $name, to => $rule_name);
+
+} # End of _process_bare_rule.
 
 # ------------------------------------------------
 # This handles prioritized rules and quantized rules.
