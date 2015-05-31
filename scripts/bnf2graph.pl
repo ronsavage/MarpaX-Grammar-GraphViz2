@@ -28,6 +28,7 @@ if ($option_parser -> getoptions
 	'minlevel=s',
 	'output_file=s',
 	'user_bnf_file=s',
+	'verbose=i',
 ) )
 {
 	pod2usage(1) if ($option{'help'});
@@ -64,6 +65,7 @@ bnf2graph.pl [options]
 	-minlevel logOption2
 	-output_file anImageFileName
 	-user_bnf_file aUserSLIF-DSLFileName
+	-verbose $Boolean
 
 Exit value: 0 for success, 1 for failure. Die upon error.
 
@@ -148,6 +150,12 @@ See share/stringparser.bnf for a sample.
 This option is mandatory.
 
 Default: ''.
+
+=item o -verbose $Boolean
+
+Display more or less during debugging.
+
+Default: 0.
 
 =back
 
