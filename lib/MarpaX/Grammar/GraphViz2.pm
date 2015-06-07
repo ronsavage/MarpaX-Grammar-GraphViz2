@@ -21,19 +21,11 @@ use MarpaX::Grammar::Parser;
 
 use Moo;
 
-has bare_lexeme_count =>
+has bnf_name =>
 (
-	default  => sub{return 0},
+	default  => sub{return 'BNF'},
 	is       => 'rw',
-	isa      => Int,
-	required => 0,
-);
-
-has bare_rule_count =>
-(
-	default  => sub{return 0},
-	is       => 'rw',
-	isa      => Int,
+	isa      => Str,
 	required => 0,
 );
 
@@ -77,6 +69,14 @@ has format =>
 	required => 0,
 );
 
+has g1_rules_seen =>
+(
+	default  => sub{return {} },
+	is       => 'rw',
+	isa      => HashRef,
+	required => 0,
+);
+
 has graph =>
 (
 	default  => sub{return ''},
@@ -98,14 +98,6 @@ has lexeme_count =>
 	default  => sub{return 0},
 	is       => 'rw',
 	isa      => Int,
-	required => 0,
-);
-
-has lexemes =>
-(
-	default  => sub{return {} },
-	is       => 'rw',
-	isa      => HashRef,
 	required => 0,
 );
 
@@ -170,14 +162,6 @@ has root_name =>
 	default  => sub{return 'DSL'},
 	is       => 'rw',
 	isa      => Str,
-	required => 0,
-);
-
-has rules =>
-(
-	default  => sub{return {} },
-	is       => 'rw',
-	isa      => HashRef,
 	required => 0,
 );
 
@@ -292,13 +276,13 @@ q|
 	<td bgcolor = 'goldenrod'>The golden node is the 'lexeme default' rule</td>
 </tr>
 <tr>
-	<td bgcolor = 'lightgreen'>The green node is the ':start' rule</td>
+	<td bgcolor = 'lightblue'>The LightBlue node is the ':start' rule</td>
 </tr>
 <tr>
 	<td bgcolor = 'CornflowerBlue'>CornflowerBlue nodes are G1 rules</td>
 </tr>
 <tr>
-	<td bgcolor = 'lightblue'>Lightblue nodes are ':lexeme' rules</td>
+	<td bgcolor = 'lightgreen'>LightGreen nodes are ':lexeme' rules</td>
 </tr>
 </table>>
 |,
@@ -391,124 +375,83 @@ sub _process_bare_lexeme
 {
 	my($self, $daughters) = @_;
 
-	$self -> bare_lexeme_count($self -> bare_lexeme_count + 1);
-
-	my($name)            = 'Lexeme';
-	my($bare_rule_count) = $self -> bare_rule_count();
-	my($attributes)      =
-	{
-		fillcolor => 'LightCoral',
-		label     => 'Rule',
-	};
-
-	if ($bare_rule_count == 1)
-	{
-		$self -> add_node(name => $name, %$attributes);
-		$self -> graph -> add_edge(from => $self -> root_name, to => $name);
-	}
-
-	my(@grand_kids) = $$daughters[0] -> daughters;
-	my($attr)       = $grand_kids[0] -> attributes;
-	my($token_1)    = $$attr{token};
-
-	if ($#grand_kids < 2)
-	{
-		return; # TODO.
-	}
-
-	$attr        = $grand_kids[2] -> attributes;
-	my($token_2) = $$attr{token};
-	my($rule_name) = "$token_1 =\> $token_2";
-	$$attributes{fillcolor} = 'DeepSkyBlue';
-	$$attributes{label}     = $rule_name;
-
-	$self -> add_node(name => $rule_name, %$attributes);
-	$self -> graph -> add_edge(from => $name, to => $rule_name);
-
 } # End of _process_bare_lexeme.
-
-# ------------------------------------------------
-
-sub _process_bare_name_rule
-{
-	my($self, $daughters) = @_;
-	my($context) = $$daughters[1] -> name;
-
-	if ($context eq 'op_declare_bnf')
-	{
-		$self -> _process_bare_rule($daughters);
-	}
-	else
-	{
-		$self -> _process_bare_lexeme($daughters);
-	}
-
-} # End of _process_bare_name_rule.
 
 # ------------------------------------------------
 
 sub _process_bare_rule
 {
 	my($self, $daughters) = @_;
-
-	$self -> bare_rule_count($self -> bare_rule_count + 1);
-
-	my($name)            = 'BNF';
-	my($bare_rule_count) = $self -> bare_rule_count();
-	my($attributes)      =
+	my($attr)       = ($$daughters[0] -> daughters)[0] -> attributes;
+	my($token_1)    = $$attr{token};
+	my($attributes) =
 	{
-		fillcolor => 'DeepSkyBlue',
-		label     => [{text => $name}],
+		fillcolor => 'CornflowerBlue',
+		label     => $token_1,
 	};
 
-	if ($bare_rule_count == 1)
-	{
-		$self -> add_node(name => $name, %$attributes);
-		$self -> graph -> add_edge(from => $self -> root_name, to => $name);
-	}
-
-	my($attr)               = ($$daughters[0] -> daughters)[0] -> attributes;
-	my($token_1)            = $$attr{token};
-	$$attributes{fillcolor} = 'CornflowerBlue';
-	$$attributes{label}     = $token_1;
-
 	$self -> add_node(name => $token_1, %$attributes);
-
-	# If $token_1 has been seen, link its node to the new one.
-
-	my($rules_seen) = $self -> rules;
-
-	if (! $$rules_seen{$token_1})
-	{
-		$self -> graph -> add_edge(from => $name, to => $token_1);
-
-		$$rules_seen{$token_1} = 1;
-	}
 
 	# Loop over the alternative branches within this rule.
 	# Note: There might by N rule tokens before 'alternative'.
 
+	my($rules_seen) = $self -> g1_rules_seen;
+
+	my(@hidden_tokens, @hidden_kids);
 	my(@kids);
 	my(@label);
+	my($name);
 	my($rule_name);
-	my($token_2);
+	my($token_2, $token_3);
 
 	for (my $index = 2; $index <= $#$daughters; $index++)
 	{
-		if ($$daughters[$index] -> name eq 'alternative')
+		$name = $$daughters[$index] -> name;
+
+		if ($name eq 'alternative')
 		{
-			$rule_name               = join(' ', @label);
-			@label                   = ();
-			$$attributes{label}      = $rule_name;
-			$$rules_seen{$rule_name} = 1;
+			$rule_name          = join(' ', map{s/:/\x{a789}/; $_} @label);
+			@label              = ();
+			$$attributes{label} = $rule_name;
 
 			$self -> add_node(name => $rule_name, %$attributes);
 			$self -> graph -> add_edge(from => $token_1, to => $rule_name);
 
+			for (@label)
+			{
+				next if ($_ eq $rule_name);
+
+				$$attributes{label} = $_;
+
+				$self -> add_node(name => $_, %$attributes);
+				$self -> graph -> add_edge(from => $rule_name, to => $_);
+			}
+
 			next;
 		}
+		elsif ($name eq 'parenthesized_rhs_primary_list')
+		{
+			@hidden_kids   = $$daughters[$index] ->daughters;
+			@hidden_tokens = ('(');
 
-		next if ($$daughters[$index] -> name ne 'rhs');
+			for (my $i = 0; $i <= $#hidden_kids; $i++)
+			{
+				$attr = $hidden_kids[$i] -> attributes;
+
+				push @hidden_tokens, $$attr{token};
+			}
+
+			push @hidden_tokens, ')';
+			push @label, join(' ', @hidden_tokens);
+
+			$index++;
+
+			next;
+		}
+		elsif ($name ne 'rhs')
+		{
+			next;
+		}
 
 		$attr = $$daughters[$index] -> attributes;
 		@kids = $$daughters[$index] -> daughters;
@@ -523,16 +466,24 @@ sub _process_bare_rule
 
 	if ($#label >= 0)
 	{
-		$rule_name               = join(' ', @label);
-		$$attributes{label}      = $rule_name;
-		$$rules_seen{$rule_name} = 1;
+		$rule_name          = join(' ', map{s/:/\x{a789}/g; $_} @label);
+		$$attributes{label} = $rule_name;
 
 		$self -> add_node(name => $rule_name, %$attributes);
-
 		$self -> graph -> add_edge(from => $token_1, to => $rule_name);
+
+		for (@label)
+		{
+			next if ($_ eq $rule_name);
+
+			$$attributes{label} = $_;
+
+			$self -> add_node(name => $_, %$attributes);
+			$self -> graph -> add_edge(from => $rule_name, to => $_);
+		}
 	}
 
-	$self -> rules($rules_seen);
+	$self -> g1_rules_seen($rules_seen);
 
 } # End of _process_bare_rule.
 
@@ -549,7 +500,7 @@ sub _process_default_rule
 	my($attributes)    =
 	{
 		fillcolor => 'pink',
-		label     => [{text => " $default_name"}],
+		label     => [{text => " $default_name"}], # Warning: Don't delete the ' ' before the \x.
 	};
 
 	if ($default_count == 1)
@@ -616,7 +567,7 @@ sub _process_discard_rule
 	my($attributes)    =
 	{
 		fillcolor => 'magenta',
-		label     => [{text => " $discard_name"}],
+		label     => [{text => " $discard_name"}], # Warning: Don't delete the ' ' before the \x.
 	};
 
 	if ($discard_count == 1)
@@ -673,37 +624,6 @@ sub _process_lexeme_rule
 
 	$self -> lexeme_count($self -> lexeme_count + 1);
 
-	my($lexeme_count) = $self -> lexeme_count;
-	my($lexeme_name)  = "\x{a789}lexeme";
-	my($attributes)   =
-	{
-		fillcolor => 'lightblue',
-		label     => $lexeme_name,
-	};
-
-	if ($lexeme_count == 1)
-	{
-		$self -> add_node(name => $lexeme_name, %$attributes);
-		$self -> graph -> add_edge(from => $self -> root_name, to => $lexeme_name);
-	}
-
-	my($adverbs) = $self -> _process_adverbs($daughters);
-
-=pod
-
-	if ($#$adverbs >= 0)
-	{
-		$$attributes{label} = $adverbs;
-		my($adverb_name)    = $$adverbs[0]{type};
-
-		$self -> add_node(name => $adverb_name, %$attributes);
-		$self -> graph -> add_edge(from => $lexeme_name, to => $adverb_name);
-	}
-
-=cut
-
-#	$self -> lexemes($lexeme); TODO.
-
 } # End of _process_lexeme_rule.
 
 # ------------------------------------------------
@@ -714,8 +634,8 @@ sub _process_start_rule
 	my($name)       = 'start';
 	my($attributes) =
 	{
-		fillcolor => 'lightgreen', # Warning: Don't delete the ' ' before the \x.
-		label     => [{text => " \x{a789}start"}],
+		fillcolor => 'lightblue',
+		label     => [{text => " \x{a789}start"}], # Warning: Don't delete the ' ' before the \x.
 	};
 
 	$self -> add_node(name => $name, %$attributes);
@@ -741,7 +661,7 @@ sub run
 
 	return $result if ($result == 1);
 
-	# Look over the statementss.
+	# Look over the statements.
 
 	my(@statements) = $self -> parser -> cooked_tree -> daughters;
 
@@ -755,7 +675,7 @@ sub run
 	{
 		if ($self -> verbose)
 		{
-			print "i: $i. name: ", $statements[$i] -> name, ". \n";
+			print "i: @{[$i + 1]}. name: ", $statements[$i] -> name, ". \n";
 		}
 
 		# Loop over the components of a single statement.
@@ -769,12 +689,19 @@ sub run
 
 		if ($self -> verbose)
 		{
-			print "\tname: $name. token: $token. \n";
+			print "\t1st daughter. name: $name. token: $token. \n";
 		}
 
 		if ($token eq 'bare_name')
 		{
-			$self -> _process_bare_name_rule(\@daughters);
+			if ($daughters[1] -> name eq 'op_declare_bnf')
+			{
+				$self -> _process_bare_rule(\@daughters);
+			}
+			else
+			{
+				$self -> _process_bare_lexeme(\@daughters);
+			}
 		}
 		elsif ($token eq ':default')
 		{
