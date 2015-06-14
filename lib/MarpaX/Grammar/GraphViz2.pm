@@ -386,7 +386,7 @@ sub _process_bare_rule
 	my($token_1)    = $$attr{token};
 	my($attributes) =
 	{
-		fillcolor => 'CornflowerBlue',
+		fillcolor => 'LightSkyBlue',
 		label     => $token_1,
 	};
 
@@ -411,7 +411,6 @@ sub _process_bare_rule
 		if ($name eq 'alternative')
 		{
 			$rule_name          = join(' ', map{s/:/\x{a789}/; $_} @label);
-			@label              = ();
 			$$attributes{label} = $rule_name;
 
 			$self -> add_node(name => $rule_name, %$attributes);
@@ -427,11 +426,13 @@ sub _process_bare_rule
 				$self -> graph -> add_edge(from => $rule_name, to => $_);
 			}
 
+			@label = ();
+
 			next;
 		}
 		elsif ($name eq 'parenthesized_rhs_primary_list')
 		{
-			@hidden_kids   = $$daughters[$index] ->daughters;
+			@hidden_kids   = $$daughters[$index] -> daughters;
 			@hidden_tokens = ('(');
 
 			for (my $i = 0; $i <= $#hidden_kids; $i++)
@@ -528,7 +529,6 @@ sub _process_default_rule
 sub _process_discard_default_rule
 {
 	my($self, $daughters) = @_;
-
 	my($discard_name) = "discard default";
 	my($attributes)   =
 	{
@@ -589,6 +589,33 @@ sub _process_discard_rule
 
 # ------------------------------------------------
 
+sub _process_lexeme_adverbs
+{
+	my($self, $daughters) = @_;
+
+	my($attr);
+	my(@adverbs);
+	my(@grand_kids);
+	my($name);
+	my($token_1, $token_2);
+
+	for my $j (2 .. $#$daughters)
+	{
+		$name       = $$daughters[$j] -> name;
+		$attr       = $$daughters[$j] -> attributes;
+		$token_1    = $$attr{token};
+		$attr       = ($$daughters[$j] -> daughters)[0] -> attributes;
+		$token_2    = $$attr{token};
+
+		push @adverbs, [$token_1, $token_2];
+	}
+
+	return [@adverbs];
+
+} # End of _process_lexeme_adverbs.
+
+# ------------------------------------------------
+
 sub _process_lexeme_default_rule
 {
 	my($self, $daughters) = @_;
@@ -624,6 +651,32 @@ sub _process_lexeme_rule
 
 	$self -> lexeme_count($self -> lexeme_count + 1);
 
+	my($adverbs)      = $self -> _process_lexeme_adverbs($daughters);
+	my($lexeme_count) = $self -> lexeme_count;
+	my($lexeme_name)  = shift @$adverbs;
+	$lexeme_name      = $$lexeme_name[1]; # Discard 'bare_name'.
+	my($attributes)   =
+	{
+		fillcolor => 'DeepSkyBlue2',
+		label     => [{text => " $lexeme_name"}], # Warning: Don't delete the ' ' before the \x.
+	};
+
+	if ($#$adverbs >= 0)
+	{
+		@$adverbs = map{"$$_[0] =\\> $$_[1]"} @$adverbs;
+
+		unshift @$adverbs, " \x{a789}lexeme =\\> $lexeme_name";
+
+		$$adverbs[0]          = "\{$$adverbs[0]";
+		$$adverbs[$#$adverbs] .= '}';
+		@$adverbs             = map{ {text => $_} } @$adverbs;
+		$$attributes{label}   = $adverbs;
+		my($adverb_name)      = "${lexeme_name}_$lexeme_count";
+
+		$self -> add_node(name => $adverb_name, %$attributes);
+		$self -> graph -> add_edge(from => $lexeme_name, to => $adverb_name);
+	}
+
 } # End of _process_lexeme_rule.
 
 # ------------------------------------------------
@@ -634,7 +687,7 @@ sub _process_start_rule
 	my($name)       = 'start';
 	my($attributes) =
 	{
-		fillcolor => 'lightblue',
+		fillcolor => 'Turquoise1',
 		label     => [{text => " \x{a789}start"}], # Warning: Don't delete the ' ' before the \x.
 	};
 
