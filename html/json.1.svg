@@ -37,7 +37,7 @@
 </g>
 <!-- start -->
 <g id="node4" class="node"><title>start</title>
-<path fill="lightblue" stroke="black" d="M128,-737.5C128,-737.5 158,-737.5 158,-737.5 164,-737.5 170,-743.5 170,-749.5 170,-749.5 170,-761.5 170,-761.5 170,-767.5 164,-773.5 158,-773.5 158,-773.5 128,-773.5 128,-773.5 122,-773.5 116,-767.5 116,-761.5 116,-761.5 116,-749.5 116,-749.5 116,-743.5 122,-737.5 128,-737.5"/>
+<path fill="#00f5ff" stroke="black" d="M128,-737.5C128,-737.5 158,-737.5 158,-737.5 164,-737.5 170,-743.5 170,-749.5 170,-749.5 170,-761.5 170,-761.5 170,-767.5 164,-773.5 158,-773.5 158,-773.5 128,-773.5 128,-773.5 122,-773.5 116,-767.5 116,-761.5 116,-761.5 116,-749.5 116,-749.5 116,-743.5 122,-737.5 128,-737.5"/>
 <text text-anchor="middle" x="143" y="-751.8" font-family="Times,serif" font-size="14.00">꞉start</text>
 </g>
 <!-- DSL&#45;&gt;start -->
@@ -57,7 +57,7 @@
 </g>
 <!-- json -->
 <g id="node5" class="node"><title>json</title>
-<path fill="lightblue" stroke="black" d="M125,-664.5C125,-664.5 155,-664.5 155,-664.5 161,-664.5 167,-670.5 167,-676.5 167,-676.5 167,-688.5 167,-688.5 167,-694.5 161,-700.5 155,-700.5 155,-700.5 125,-700.5 125,-700.5 119,-700.5 113,-694.5 113,-688.5 113,-688.5 113,-676.5 113,-676.5 113,-670.5 119,-664.5 125,-664.5"/>
+<path fill="#00f5ff" stroke="black" d="M125,-664.5C125,-664.5 155,-664.5 155,-664.5 161,-664.5 167,-670.5 167,-676.5 167,-676.5 167,-688.5 167,-688.5 167,-694.5 161,-700.5 155,-700.5 155,-700.5 125,-700.5 125,-700.5 119,-700.5 113,-694.5 113,-688.5 113,-688.5 113,-676.5 113,-676.5 113,-670.5 119,-664.5 125,-664.5"/>
 <text text-anchor="middle" x="140" y="-678.8" font-family="Times,serif" font-size="14.00">json</text>
 </g>
 <!-- start&#45;&gt;json -->
@@ -67,7 +67,7 @@
 </g>
 <!-- object -->
 <g id="node6" class="node"><title>object</title>
-<polygon fill="CornflowerBlue" stroke="black" points="194,-628 140,-628 140,-592 194,-592 194,-628"/>
+<polygon fill="LightSkyBlue" stroke="black" points="194,-628 140,-628 140,-592 194,-592 194,-628"/>
 <text text-anchor="middle" x="167" y="-606.3" font-family="Times,serif" font-size="14.00">object</text>
 </g>
 <!-- json&#45;&gt;object -->
@@ -77,7 +77,7 @@
 </g>
 <!-- array -->
 <g id="node7" class="node"><title>array</title>
-<polygon fill="CornflowerBlue" stroke="black" points="60,-268 6,-268 6,-232 60,-232 60,-268"/>
+<polygon fill="LightSkyBlue" stroke="black" points="60,-268 6,-268 6,-232 60,-232 60,-268"/>
 <text text-anchor="middle" x="33" y="-246.3" font-family="Times,serif" font-size="14.00">array</text>
 </g>
 <!-- json&#45;&gt;array -->
@@ -86,7 +86,7 @@
 <polygon fill="grey" stroke="grey" points="43.7258,-277.15 37.8568,-268.329 36.9441,-278.885 43.7258,-277.15"/>
 </g>
 <g id="node8" class="node"><title></title>
-<polygon fill="CornflowerBlue" stroke="black" points="162,-127.5 108,-127.5 108,-91.5 162,-91.5 162,-127.5"/>
+<polygon fill="LightSkyBlue" stroke="black" points="162,-127.5 108,-127.5 108,-91.5 162,-91.5 162,-127.5"/>
 </g>
 <!-- object&#45;&gt; -->
 <g id="edge7" class="edge"><title>object&#45;&gt;</title>
@@ -95,7 +95,7 @@
 </g>
 <!-- members -->
 <g id="node9" class="node"><title>members</title>
-<polygon fill="CornflowerBlue" stroke="black" points="233,-556 165,-556 165,-520 233,-520 233,-556"/>
+<polygon fill="LightSkyBlue" stroke="black" points="233,-556 165,-556 165,-520 233,-520 233,-556"/>
 <text text-anchor="middle" x="199" y="-534.3" font-family="Times,serif" font-size="14.00">members</text>
 </g>
 <!-- object&#45;&gt;members -->
@@ -110,7 +110,7 @@
 </g>
 <!-- elements -->
 <g id="node15" class="node"><title>elements</title>
-<polygon fill="CornflowerBlue" stroke="black" points="78.5,-127.5 11.5,-127.5 11.5,-91.5 78.5,-91.5 78.5,-127.5"/>
+<polygon fill="LightSkyBlue" stroke="black" points="78.5,-127.5 11.5,-127.5 11.5,-91.5 78.5,-91.5 78.5,-127.5"/>
 <text text-anchor="middle" x="45" y="-105.8" font-family="Times,serif" font-size="14.00">elements</text>
 </g>
 <!-- array&#45;&gt;elements -->
@@ -120,7 +120,7 @@
 </g>
 <!-- pair -->
 <g id="node10" class="node"><title>pair</title>
-<polygon fill="CornflowerBlue" stroke="black" points="228,-484 174,-484 174,-448 228,-448 228,-484"/>
+<polygon fill="LightSkyBlue" stroke="black" points="228,-484 174,-484 174,-448 228,-448 228,-484"/>
 <text text-anchor="middle" x="201" y="-462.3" font-family="Times,serif" font-size="14.00">pair</text>
 </g>
 <!-- members&#45;&gt;pair -->
@@ -130,7 +130,7 @@
 </g>
 <!-- string value -->
 <g id="node11" class="node"><title>string value</title>
-<polygon fill="CornflowerBlue" stroke="black" points="244.5,-412 163.5,-412 163.5,-376 244.5,-376 244.5,-412"/>
+<polygon fill="LightSkyBlue" stroke="black" points="244.5,-412 163.5,-412 163.5,-376 244.5,-376 244.5,-412"/>
 <text text-anchor="middle" x="204" y="-390.3" font-family="Times,serif" font-size="14.00">string value</text>
 </g>
 <!-- pair&#45;&gt;string value -->
@@ -140,7 +140,7 @@
 </g>
 <!-- string -->
 <g id="node12" class="node"><title>string</title>
-<polygon fill="CornflowerBlue" stroke="black" points="304,-268 250,-268 250,-232 304,-232 304,-268"/>
+<polygon fill="LightSkyBlue" stroke="black" points="304,-268 250,-268 250,-232 304,-232 304,-268"/>
 <text text-anchor="middle" x="277" y="-246.3" font-family="Times,serif" font-size="14.00">string</text>
 </g>
 <!-- string value&#45;&gt;string -->
@@ -150,7 +150,7 @@
 </g>
 <!-- value -->
 <g id="node13" class="node"><title>value</title>
-<polygon fill="CornflowerBlue" stroke="black" points="162,-340 108,-340 108,-304 162,-304 162,-340"/>
+<polygon fill="LightSkyBlue" stroke="black" points="162,-340 108,-340 108,-304 162,-304 162,-340"/>
 <text text-anchor="middle" x="135" y="-318.3" font-family="Times,serif" font-size="14.00">value</text>
 </g>
 <!-- string value&#45;&gt;value -->
@@ -160,7 +160,7 @@
 </g>
 <!-- lstring -->
 <g id="node16" class="node"><title>lstring</title>
-<polygon fill="CornflowerBlue" stroke="black" points="304,-127.5 250,-127.5 250,-91.5 304,-91.5 304,-127.5"/>
+<polygon fill="LightSkyBlue" stroke="black" points="304,-127.5 250,-127.5 250,-91.5 304,-91.5 304,-127.5"/>
 <text text-anchor="middle" x="277" y="-105.8" font-family="Times,serif" font-size="14.00">lstring</text>
 </g>
 <!-- string&#45;&gt;lstring -->
@@ -195,7 +195,7 @@
 </g>
 <!-- number -->
 <g id="node14" class="node"><title>number</title>
-<polygon fill="CornflowerBlue" stroke="black" points="232,-268 172,-268 172,-232 232,-232 232,-268"/>
+<polygon fill="LightSkyBlue" stroke="black" points="232,-268 172,-268 172,-232 232,-232 232,-268"/>
 <text text-anchor="middle" x="202" y="-246.3" font-family="Times,serif" font-size="14.00">number</text>
 </g>
 <!-- value&#45;&gt;number -->
