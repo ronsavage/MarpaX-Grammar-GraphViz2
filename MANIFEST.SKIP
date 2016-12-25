@@ -69,5 +69,4 @@
 \bbuild.com$
 ^MANIFEST\.SKIP
 
-# Avoid archives of this distribution
-\bMarpaX-Grammar-GraphViz2-[\d\.\_]+
+^MarpaX-Grammar-GraphViz2-.*
