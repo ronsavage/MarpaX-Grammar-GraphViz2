@@ -7,6 +7,9 @@ Revision history for Perl extension MarpaX::Grammar::GraphViz2.
 	- No longer exclude share/metag.bnf from the list of files returned by
 		MarpaX::Grammar::GraphViz2::Filer. This means metag.svg is included in the output be the
 		scripts/generate.demo.pl.
+	- Adopt new repo structure. See
+		http://savage.net.au/Ron/html/My.Workflow.for.Building.Distros.html.
+	- Change licence from Artistic to Perl.
 
 1.05  2014-10-22T17:31:00
 	- Bump the required version of MarpaX::Grammar::Parser from V 1.04 to V 1.07. This is necessary
